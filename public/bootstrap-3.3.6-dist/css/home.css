@@ -1,0 +1,19 @@
+.colorbar-header{
+    height: 5px;
+    width: auto;
+    background-color: #00abff;
+}
+
+.colorbar-footer {
+
+}
+
+.logo {
+    text-align: center;
+}
+
+body { padding-top: 70px; }
+
+.pagination {
+    align: center;
+}
