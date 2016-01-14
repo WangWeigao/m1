@@ -4,3 +4,5 @@
 - 在 dev 分支下修改
 - 修改文本以保证 feature1 和 master 分支不冲突
 - 在 dev 分支下 修改 1
+- stash 2
+- stash 3
