@@ -30,21 +30,22 @@ Route::group(['middleware' => ['web']], function () {
     //
 });
 
-/**
- * HOME首页
- */
-// Route::get('/', function () {
-//     return view('home');
-// });
 
 /**
  * 获取所有用户信息
  */
 Route::get('home', 'UserController@getUsers');
-
+Route::get('teachers', 'TeacherController@getTeachers');
 /**
  * 测试路由
  */
 Route::get('test', function () {
     return 'm1 test!';
+});
+
+/**
+ * 测试 jquery 使用
+ */
+Route::get('jquery', function () {
+    return view('jquery');
 });

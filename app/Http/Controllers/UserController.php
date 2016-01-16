@@ -13,7 +13,7 @@ class UserController extends Controller
 {
     public function getUsers()
     {
-        $users = User::where('uid', '<', '300')->get();
+        $users = User::where('uid', '<', '300')->paginate(15);
         return view('home')->with('users', $users);
     }
 }

@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <link rel="stylesheet" href="/bootstrap-3.3.6-dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="/bootstrap-3.3.6-dist/css/home.css">
-        <title>音熊后台管理系统</title>
+        <title>教师管理</title>
     </head>
     <body>
         {{-- 共用头部 --}}
@@ -21,16 +21,16 @@
                     <th>regdate</th>
                     <th>isactive</th>
                 </tr>
-                @foreach($users as $key => $user)
+                @foreach($teachers as $key => $teacher)
                     <tr>
-                        <td>{{ $user->uid }}</td>
-                        <td>{{ $user->cellphone }}</td>
-                        <td>{{ $user->email }}</td>
-                        <td>{{ $user->nickname }}</td>
-                        <td>{{ $user->usertype }}</td>
-                        <td>{{ $user->lastlogin }}</td>
-                        <td>{{ $user->regdate }}</td>
-                        <td>{{ $user->isactive }}</td>
+                        <td>{{ $teacher->uid }}</td>
+                        <td>{{ $teacher->cellphone }}</td>
+                        <td>{{ $teacher->email }}</td>
+                        <td>{{ $teacher->nickname }}</td>
+                        <td>{{ $teacher->usertype }}</td>
+                        <td>{{ $teacher->lastlogin }}</td>
+                        <td>{{ $teacher->regdate }}</td>
+                        <td>{{ $teacher->isactive }}</td>
                     </tr>
                 @endforeach
             </table>
@@ -38,7 +38,7 @@
 
         {{-- 分页 --}}
         <div style="text-align: center">
-            {!! $users->render() !!}
+            {!! $teachers->render() !!}
         </div>
         {{-- 共用尾部 --}}
         @include('footer');
