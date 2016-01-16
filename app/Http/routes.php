@@ -32,20 +32,14 @@ Route::group(['middleware' => ['web']], function () {
 
 
 /**
- * 获取所有用户信息
+ * 获取用户信息
  */
-Route::get('home', 'UserController@getUsers');
-Route::get('teachers', 'TeacherController@getTeachers');
+Route::post('users', 'UserController@queryUsers');
+Route::post('teachers', 'TeacherController@getTeachers');
+Route::get('userinfo/{id}', 'UserController@userDetailInfo');
 /**
  * 测试路由
  */
 Route::get('test', function () {
     return 'm1 test!';
-});
-
-/**
- * 测试 jquery 使用
- */
-Route::get('jquery', function () {
-    return view('jquery');
 });
