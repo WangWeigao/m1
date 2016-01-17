@@ -27,10 +27,10 @@ class User extends Authenticatable
 
     /**
      * 数据库表中没有时间戳字段, 所以禁用
-     * @var [type]
+     * @var boolean
      */
     public $timestamps = false;
-    
+
     /**
      * 获得用户的订单
      * @method orders
@@ -39,5 +39,16 @@ class User extends Authenticatable
     public function orders()
     {
         return $this->hasMany('App\Order', 'student_uid', 'uid');
+    }
+
+
+    /**
+     * 取得教师发布的课程列表
+     * @method lessons
+     * @return [type] [description]
+     */
+    public function lessons()
+    {
+        return $this->hasMany('App\Lesson', 'teacher_uid', 'lid');
     }
 }

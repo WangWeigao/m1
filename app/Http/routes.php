@@ -57,9 +57,14 @@ Route::get('lockuser/{id}', 'UserController@lockUser');
 Route::post('getorders', 'OrderController@getOrders');
 
 /**
+ * 取得所有未审批的课程
+ */
+Route::get('lessons', 'ReleaseAccreditController@lessons');
+
+/**
  * 对教师发布的课程进行审批
  */
-Route::post('accredit', 'ReleaseAccreditController@accredit');
+Route::post('accredit/{id}', 'ReleaseAccreditController@accredit');
 
 /**
  * 测试路由
