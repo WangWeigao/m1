@@ -47,6 +47,9 @@ Route::get('userinfo/{id}', 'UserController@userDetailInfo');
 =======
 Route::get('home', 'UserController@getUsers');
 
+<<<<<<< HEAD
+>>>>>>> parent of 1b0f74d... coding frontend
+=======
 >>>>>>> parent of 1b0f74d... coding frontend
 /**
  * 测试路由

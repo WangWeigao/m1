@@ -22,6 +22,7 @@ class UserController extends Controller
      */
     public function queryUsers(Request $request)
     {
+<<<<<<< HEAD
         //取得要查询的用户名
         $nickname = $request->get('nickname');
 
@@ -65,5 +66,9 @@ class UserController extends Controller
         //
         // return $data;
 
+=======
+        $users = User::where('uid', '<', '300')->get();
+        return view('home')->with('users', $users);
+>>>>>>> parent of 1b0f74d... coding frontend
     }
 }
