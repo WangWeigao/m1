@@ -30,13 +30,24 @@ Route::group(['middleware' => ['web']], function () {
     //
 });
 
+/**
+ * HOME首页
+ */
+// Route::get('/', function () {
+//     return view('home');
+// });
 
 /**
  * 获取用户信息
  */
+<<<<<<< HEAD
 Route::post('users', 'UserController@queryUsers');
 Route::post('teachers', 'TeacherController@getTeachers');
 Route::get('userinfo/{id}', 'UserController@userDetailInfo');
+=======
+Route::get('home', 'UserController@getUsers');
+
+>>>>>>> parent of 1b0f74d... coding frontend
 /**
  * 测试路由
  */

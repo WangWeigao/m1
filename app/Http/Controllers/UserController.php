@@ -41,6 +41,7 @@ class UserController extends Controller
      */
     public function userDetailInfo($id)
     {
+
         //通过用户ID查询详细信息
         $userInfo = User::where('uid', $id)->first();
         // return ($userInfo);

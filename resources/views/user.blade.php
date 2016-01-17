@@ -38,7 +38,16 @@
 
         {{-- 分页 --}}
         <div style="text-align: center">
-            {!! $users->render() !!}
+
+            <ul class="pagination">
+              <li class="disabled"><span>«</span></li>
+              <li class="active"><span>1</span></li>
+              <li><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+              <li><a href="#">4</a></li>
+              <li><a href="#">5</a></li>
+              <li><a href="#">»</a></li> <!-- 下一页 -->
+            </ul>
         </div>
         {{-- 共用尾部 --}}
         @include('footer');
