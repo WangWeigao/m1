@@ -43,8 +43,8 @@ class UserController extends Controller
     public function userDetailInfo($id)
     {
 
-        //通过用户ID查询详细信息, 且包含订单信息
-        $userInfo = User::where('uid', $id)->first();
+        //通过用户ID查询详细信息, 且包含订单信息(usertype=1的为学生)
+        $userInfo = User::where('uid', $id)->where('usertype', 1)->first();
 
         //用户的订单信息
         $orderInfo = $userInfo->orders;
@@ -98,5 +98,5 @@ class UserController extends Controller
         return $result;
     }
 
-    
+
 }

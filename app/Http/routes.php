@@ -51,8 +51,15 @@ Route::get('userinfo/{id}', 'UserController@userDetailInfo');
  */
 Route::get('lockuser/{id}', 'UserController@lockUser');
 
+/**
+ * 按查询时间取得订单
+ */
+Route::post('getorders', 'OrderController@getOrders');
 
-
+/**
+ * 对教师发布的课程进行审批
+ */
+Route::post('accredit', 'ReleaseAccreditController@accredit');
 
 /**
  * 测试路由
