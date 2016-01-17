@@ -26,31 +26,34 @@
 |
 */
 
-Route::group(['middleware' => ['web']], function () {
-    //
-});
-
-/**
- * HOME首页
- */
-// Route::get('/', function () {
-//     return view('home');
+// Route::group(['middleware' => ['web']], function () {
+//     //
 // });
+
 
 /**
  * 获取用户信息
  */
-<<<<<<< HEAD
 Route::post('users', 'UserController@queryUsers');
-Route::post('teachers', 'TeacherController@getTeachers');
-Route::get('userinfo/{id}', 'UserController@userDetailInfo');
-=======
-Route::get('home', 'UserController@getUsers');
 
-<<<<<<< HEAD
->>>>>>> parent of 1b0f74d... coding frontend
-=======
->>>>>>> parent of 1b0f74d... coding frontend
+/**
+ * 获取教师信息
+ */
+Route::post('teachers', 'TeacherController@getTeachers');
+
+/**
+ * 获取单个用户的详细信息
+ */
+Route::get('userinfo/{id}', 'UserController@userDetailInfo');
+
+/**
+ * 对用户进行锁定或解锁
+ */
+Route::get('lockuser/{id}', 'UserController@lockUser');
+
+
+
+
 /**
  * 测试路由
  */

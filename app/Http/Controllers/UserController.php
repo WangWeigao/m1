@@ -43,28 +43,60 @@ class UserController extends Controller
     public function userDetailInfo($id)
     {
 
-        //通过用户ID查询详细信息
+        //通过用户ID查询详细信息, 且包含订单信息
         $userInfo = User::where('uid', $id)->first();
-        // return ($userInfo);
 
         //用户的订单信息
-        // $orderInfo = $userInfo->orders()->get();
-        // $orders = User::where('uid', $id)->first()->orders()->where('oid', '<>', 0)->get();
-        //
-        // foreach ($orders as $key => $order) {
-        //     dd($order);
-        // }
+        $orderInfo = $userInfo->orders;
 
-        $info = Module::where('id', 1);
-        dd($info);
-        //用户的登录信息
-        $loginInfo = '';
-        //
-        // $data['userInfo'] = $userInfo;
-        // $data['orderInfo'] = $orderInfo->get();
-        // $data['loginInfo'] = $loginInfo;
-        //
-        // return $data;
+        /**
+         * 用户登录信息
+         * 因表结构中只有用户最后一次登录的数据, 只能提供这个
+         * @var string
+         */
+        $loginInfo = $userInfo->lastlogin;
 
+        /**
+         * 用户投诉历史
+         * 因没有相关数据表结构, 暂时无法提供这个数据.
+         */
+
+
+        //将用户详情, 订单信息, 登录信息组合为同一个数组
+        $data['userInfo'] = $userInfo;
+        $data['orderInfo'] = $orderInfo;
+        $data['loginInfo'] = $loginInfo;
+
+        //以Json形式返回
+        return $data;
     }
+
+
+    /**
+     * 锁定或解锁用户
+     * @method lockUser
+     * @param  integer   $id 用户ID
+     * @return Json          操作是否成功
+     */
+    public function lockUser($id)
+    {
+        //获取用户激活状态
+        $active = User::where('uid', $id)->first()->isactive;
+
+        /**
+         * 判断用户是否锁定, 以执行相反操作
+         */
+        if ($active) {
+            //取消激活状态(锁定)
+            $result = User::where('uid', $id)->update(['isactive'=>0]);
+
+        }else {
+            //激活(解锁)
+            $result = User::where('uid', $id)->update(['isactive'=>1]);
+        }
+
+        return $result;
+    }
+
+    
 }
