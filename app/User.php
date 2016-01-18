@@ -31,6 +31,11 @@ class User extends Authenticatable
      */
     public $timestamps = false;
 
+    /**
+     * 数据库表的主键
+     * @var string
+     */
+    protected $primaryKey = 'uid';
 
     /*
      * 获得用户的订单
