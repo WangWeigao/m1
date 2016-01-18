@@ -13,7 +13,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'nickname', 'email', 'password',
     ];
 
     /**
@@ -31,7 +31,8 @@ class User extends Authenticatable
      */
     public $timestamps = false;
 
-    /**
+
+    /*
      * 获得用户的订单
      * @method orders
      * @return [type] [description]
@@ -50,5 +51,11 @@ class User extends Authenticatable
     public function lessons()
     {
         return $this->hasMany('App\Lesson', 'teacher_uid', 'lid');
+    }
+
+
+    public function getLogin()
+    {
+        return view('login');
     }
 }
