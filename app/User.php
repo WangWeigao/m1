@@ -31,7 +31,8 @@ class User extends Authenticatable
      */
     public $timestamps = false;
 
-    /**
+
+    /*
      * 获得用户的订单
      * @method orders
      * @return [type] [description]
