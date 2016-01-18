@@ -37,6 +37,18 @@
 					<li><a href="{{ url('/') }}">首页</a></li>
 				</ul>
 
+                <ul class="nav navbar-nav">
+                    <li class="dropdown-toggle" data-toggle="dropdown"></li>
+                    <li class="active"><a href="/users">用户管理</a></li>
+                    <li class=""><a href="/teachers">教师管理</a></li>
+                    <li class=""><a href="">订单管理</a></li>
+                    <li class=""><a href="/lessons">发布审批</a></li>
+                    <li class=""><a href="">客服</a></li>
+                    <li class=""><a href="">结算系统</a></li>
+                    <li class=""><a href="">系统管理</a></li>
+                </ul>
+
+
 				<ul class="nav navbar-nav navbar-right">
 					@if (Auth::guest())
 						<li><a href="{{ url('/auth/login') }}">登录</a></li>

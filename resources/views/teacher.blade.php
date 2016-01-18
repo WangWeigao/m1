@@ -13,21 +13,22 @@
                     <th>regdate</th>
                     <th>isactive</th>
                 </tr>
-                @foreach($users as $key => $user)
+                @foreach($teachers as $key => $teacher)
                     <tr>
-                        <td>{{ $user->uid }}</td>
-                        <td>{{ $user->cellphone }}</td>
-                        <td>{{ $user->email }}</td>
-                        <td>{{ $user->nickname }}</td>
-                        <td>{{ $user->usertype }}</td>
-                        <td>{{ $user->lastlogin }}</td>
-                        <td>{{ $user->regdate }}</td>
-                        <td>{{ $user->isactive }}</td>
+                        <td>{{ $teacher->uid }}</td>
+                        <td>{{ $teacher->cellphone }}</td>
+                        <td>{{ $teacher->email }}</td>
+                        <td>{{ $teacher->nickname }}</td>
+                        <td>{{ $teacher->usertype }}</td>
+                        <td>{{ $teacher->lastlogin }}</td>
+                        <td>{{ $teacher->regdate }}</td>
+                        <td>{{ $teacher->isactive }}</td>
                     </tr>
                 @endforeach
             </table>
             <div class="text-center">
-                {!! $users->render() !!}
+                {{-- 添加分页 --}}
+                {!! $teachers->render() !!}
             </div>
         </div>
 

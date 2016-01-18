@@ -38,7 +38,7 @@ class UserController extends Controller
         $nickname = $request->get('nickname');
 
         //模糊匹配, 查询结果为分页做准备
-        $users = User::where('nickname', 'like', $nickname)->paginate(10);
+        $users = User::where('nickname', 'like', $nickname)->paginate(3);
 
         //将结果传递给 home 视图
         return view('user')->with('users', $users);
