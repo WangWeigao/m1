@@ -4,20 +4,3 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-getLogin	D:\wamp\www\m1\vendor\laravel\framework\src\Illuminate\Foundation\Auth\AuthenticatesUsers.php	/^    public function getLogin()$/;"	function	line:18
-showLoginForm	D:\wamp\www\m1\vendor\laravel\framework\src\Illuminate\Foundation\Auth\AuthenticatesUsers.php	/^    public function showLoginForm()$/;"	function	line:28
-postLogin	D:\wamp\www\m1\vendor\laravel\framework\src\Illuminate\Foundation\Auth\AuthenticatesUsers.php	/^    public function postLogin(Request $request)$/;"	function	line:43
-login	D:\wamp\www\m1\vendor\laravel\framework\src\Illuminate\Foundation\Auth\AuthenticatesUsers.php	/^    public function login(Request $request)$/;"	function	line:54
-is	D:\wamp\www\m1\vendor\laravel\framework\src\Illuminate\Foundation\Auth\AuthenticatesUsers.php	/^        \/\/ If the class is using the ThrottlesLogins trait, we can automatically throttle$/;"	class	line:60
-throttles	D:\wamp\www\m1\vendor\laravel\framework\src\Illuminate\Foundation\Auth\AuthenticatesUsers.php	/^        $throttles = $this->isUsingThrottlesLoginsTrait();$/;"	variable	line:63
-credentials	D:\wamp\www\m1\vendor\laravel\framework\src\Illuminate\Foundation\Auth\AuthenticatesUsers.php	/^        $credentials = $this->getCredentials($request);$/;"	variable	line:69
-handleUserWasAuthenticated	D:\wamp\www\m1\vendor\laravel\framework\src\Illuminate\Foundation\Auth\AuthenticatesUsers.php	/^    protected function handleUserWasAuthenticated(Request $request, $throttles)$/;"	function	line:92
-sendFailedLoginResponse	D:\wamp\www\m1\vendor\laravel\framework\src\Illuminate\Foundation\Auth\AuthenticatesUsers.php	/^    protected function sendFailedLoginResponse(Request $request)$/;"	function	line:111
-getFailedLoginMessage	D:\wamp\www\m1\vendor\laravel\framework\src\Illuminate\Foundation\Auth\AuthenticatesUsers.php	/^    protected function getFailedLoginMessage()$/;"	function	line:125
-getCredentials	D:\wamp\www\m1\vendor\laravel\framework\src\Illuminate\Foundation\Auth\AuthenticatesUsers.php	/^    protected function getCredentials(Request $request)$/;"	function	line:138
-getLogout	D:\wamp\www\m1\vendor\laravel\framework\src\Illuminate\Foundation\Auth\AuthenticatesUsers.php	/^    public function getLogout()$/;"	function	line:148
-logout	D:\wamp\www\m1\vendor\laravel\framework\src\Illuminate\Foundation\Auth\AuthenticatesUsers.php	/^    public function logout()$/;"	function	line:158
-loginUsername	D:\wamp\www\m1\vendor\laravel\framework\src\Illuminate\Foundation\Auth\AuthenticatesUsers.php	/^    public function loginUsername()$/;"	function	line:170
-is	D:\wamp\www\m1\vendor\laravel\framework\src\Illuminate\Foundation\Auth\AuthenticatesUsers.php	/^     * Determine if the class is using the ThrottlesLogins trait.$/;"	class	line:176
-isUsingThrottlesLoginsTrait	D:\wamp\www\m1\vendor\laravel\framework\src\Illuminate\Foundation\Auth\AuthenticatesUsers.php	/^    protected function isUsingThrottlesLoginsTrait()$/;"	function	line:180
-getGuard	D:\wamp\www\m1\vendor\laravel\framework\src\Illuminate\Foundation\Auth\AuthenticatesUsers.php	/^    protected function getGuard()$/;"	function	line:192

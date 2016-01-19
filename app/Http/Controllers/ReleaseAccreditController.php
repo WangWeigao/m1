@@ -24,9 +24,9 @@ class ReleaseAccreditController extends Controller
         * 便于审批后, 1 同意, 0 否决
         * 暂时设定为0, 便于测试
         */
-        $lessons = Lesson::where('valid', 0)->get();
+        $lessons = Lesson::where('valid', 0)->paginate(15);
 
-        return $lessons;
+        return view('lesson')->with('lessons', $lessons);
     }
 
 

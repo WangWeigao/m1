@@ -13,7 +13,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'nickname', 'email', 'password',
+        'name', 'email', 'password',
     ];
 
     /**
@@ -29,13 +29,13 @@ class User extends Authenticatable
      * 数据库表中没有时间戳字段, 所以禁用
      * @var boolean
      */
-    public $timestamps = false;
+    // public $timestamps = false;
+
 
     /**
-     * 数据库表的主键
-     * @var string
+     * 查询用户的表名称
      */
-    protected $primaryKey = 'uid';
+    protected $table = 'admin_users';
 
     /*
      * 获得用户的订单
@@ -44,7 +44,7 @@ class User extends Authenticatable
      */
     public function orders()
     {
-        return $this->hasMany('App\Order', 'student_uid', 'uid');
+        return $this->hasMany('App\Order', 'student_uid', 'id');
     }
 
 
@@ -55,7 +55,7 @@ class User extends Authenticatable
      */
     public function lessons()
     {
-        return $this->hasMany('App\Lesson', 'teacher_uid', 'lid');
+        return $this->hasMany('App\Lesson', 'teacher_uid', 'id');
     }
 
 

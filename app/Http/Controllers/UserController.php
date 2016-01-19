@@ -35,10 +35,10 @@ class UserController extends Controller
     {
 
         //取得要查询的用户名
-        $nickname = $request->get('nickname');
+        $name = $request->get('name');
 
         //模糊匹配, 查询结果为分页做准备
-        $users = User::where('nickname', 'like', $nickname)->paginate(3);
+        $users = User::where('name', 'like', $name)->paginate(3);
 
         //将结果传递给 home 视图
         return view('user')->with('users', $users);

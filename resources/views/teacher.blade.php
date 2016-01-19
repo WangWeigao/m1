@@ -2,12 +2,13 @@
 
 @section('content')
         <div class="container">
+            {!! csrf_field() !!}
             <table class="table table-striped table-hover">
                 <tr>
                     <th>UID</th>
                     <th>cellphone</th>
                     <th>email</th>
-                    <th>nickname</th>
+                    <th>name</th>
                     <th>usertype</th>
                     <th>lastlogin</th>
                     <th>regdate</th>
@@ -18,7 +19,7 @@
                         <td>{{ $teacher->uid }}</td>
                         <td>{{ $teacher->cellphone }}</td>
                         <td>{{ $teacher->email }}</td>
-                        <td>{{ $teacher->nickname }}</td>
+                        <td>{{ $teacher->name }}</td>
                         <td>{{ $teacher->usertype }}</td>
                         <td>{{ $teacher->lastlogin }}</td>
                         <td>{{ $teacher->regdate }}</td>

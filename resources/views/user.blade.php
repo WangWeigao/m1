@@ -7,7 +7,7 @@
                     <th>UID</th>
                     <th>cellphone</th>
                     <th>email</th>
-                    <th>nickname</th>
+                    <th>name</th>
                     <th>usertype</th>
                     <th>lastlogin</th>
                     <th>regdate</th>
@@ -18,7 +18,7 @@
                         <td>{{ $user->uid }}</td>
                         <td>{{ $user->cellphone }}</td>
                         <td>{{ $user->email }}</td>
-                        <td>{{ $user->nickname }}</td>
+                        <td>{{ $user->name }}</td>
                         <td>{{ $user->usertype }}</td>
                         <td>{{ $user->lastlogin }}</td>
                         <td>{{ $user->regdate }}</td>

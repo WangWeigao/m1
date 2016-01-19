@@ -8,6 +8,6 @@ class Order extends Model
 {
     public function user()
     {
-        return $this->belongsTo('App\User', 'uid', 'student_id');
+        return $this->belongsTo('App\User', 'id', 'student_id');
     }
 }
