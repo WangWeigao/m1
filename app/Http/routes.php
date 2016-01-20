@@ -11,9 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 /*
 |--------------------------------------------------------------------------
@@ -26,12 +23,22 @@ Route::get('/', function () {
 |
 */
 
-Route::group(['middleware' => ['web']], function () {
-    //
-});
 
 Route::group(['middleware' => 'web'], function () {
+    /**
+     * Default Route for Login and Register and ForgetPassword
+     */
     Route::auth();
 
+    /**
+     * Root directory of Web
+     */
+    Route::get('/', function () {
+        return view('welcome');
+    });
+
+    /**
+     * Default Route, useless.
+     */
     Route::get('/home', 'HomeController@index');
 });

@@ -23,4 +23,10 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Change the default table users to admin_users
+     * @var string
+     */
+    protected $table = 'admin_users';
 }
