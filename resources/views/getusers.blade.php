@@ -26,3 +26,7 @@
     {!! $users->render() !!}
 </div>
 @endsection
+
+@section('js')
+<script src="{{ asset('js/getusers.js') }}"></script>
+@endsection
