@@ -34,7 +34,7 @@ Route::group(['middleware' => 'web'], function () {
      * Root directory of Web
      */
     Route::get('/', function () {
-        return view('welcome');
+        return redirect('/home');
     });
 
     /**

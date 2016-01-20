@@ -40,14 +40,29 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Laravel
+                    音熊后台管理
                 </a>
             </div>
 
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/home') }}">Home</a></li>
+                    {{-- Authentication Links --}}
+                    @if(Auth::user())
+                        <li><a href="{{ url('/home') }}">Home</a></li>
+                        <li class="dropdown">
+                            <a href="{{ url('/users') }}">用户管理</a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{ url('/userdetails') }}"></a></li>
+                            </ul>
+                        </li>
+                        <li><a href="{{ url('/teachers') }}">教师管理</a></li>
+                        <li><a href="{{ url('/orders') }}">订单管理</a></li>
+                        <li><a href="{{ url('/lessons') }}">发布审批</a></li>
+                        <li><a href="#">客服</a></li>
+                        <li><a href="#">结算系统</a></li>
+                        <li><a href="#">系统管理</a></li>
+                    @endif
                 </ul>
 
                 <!-- Right Side Of Navbar -->
@@ -55,7 +70,7 @@
                     <!-- Authentication Links -->
                     @if (Auth::guest())
                         <li><a href="{{ url('/login') }}">Login</a></li>
-                        <li><a href="{{ url('/register') }}">Register</a></li>
+                        {{-- <li><a href="{{ url('/register') }}">Register</a></li> --}}
                     @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
