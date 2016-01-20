@@ -41,4 +41,14 @@ Route::group(['middleware' => 'web'], function () {
      * Default Route, useless.
      */
     Route::get('/home', 'HomeController@index');
+
+    /**
+     * display users of the conditions
+     */
+    Route::get('/user', 'UserController@index');
+
+    /**
+     * get the Users queried
+     */
+     Route::any('getusers', 'UserController@getUsers');
 });

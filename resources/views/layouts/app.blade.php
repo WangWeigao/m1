@@ -51,7 +51,7 @@
                     @if(Auth::user())
                         <li><a href="{{ url('/home') }}">Home</a></li>
                         <li class="dropdown">
-                            <a href="{{ url('/users') }}">用户管理</a>
+                            <a href="{{ url('/user') }}">用户管理</a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="{{ url('/userdetails') }}"></a></li>
                             </ul>
@@ -92,6 +92,9 @@
     <!-- JavaScripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    @yield('js')
+
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 </body>
 </html>
