@@ -51,4 +51,9 @@ Route::group(['middleware' => 'web'], function () {
      * get the Users queried
      */
      Route::any('getusers', 'UserController@getUsers');
+
+    /**
+    * 获取单个用户的详细信息
+    */
+    Route::get('userdetail/{id}', 'UserController@userDetailInfo');
 });
