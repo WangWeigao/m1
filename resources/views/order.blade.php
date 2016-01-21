@@ -2,34 +2,46 @@
 
 @section('content')
     <div class="container">
-        <div class='col-md-5'>
-            <div class="form-group">
-                <div class='input-group date' id='datetimepicker6'>
-                    <input type='text' class="form-control" />
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
+        <form class="" action="/getorders" method="post">
+            {!! csrf_field() !!}
+            <div class='col-md-3'>
+                <div class="form-group">
+                    <div class='input-group date' id='datetimepicker6'>
+                        <input type='text' class="form-control" name="fromtime" id="fromtime"/>
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class='col-md-5'>
-            <div class="form-group">
-                <div class='input-group date' id='datetimepicker7'>
-                    <input type='text' class="form-control" />
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
+            <div class='col-md-3'>
+                <div class="form-group">
+                    <div class='input-group date' id='datetimepicker7'>
+                        <input type='text' class="form-control" name="totime" id="totime"/>
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
                 </div>
             </div>
-        </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <button type="submit" name="button" class="btn btn-info" id="search">查询</button>
+                </div>
+            </div>
+        </form>
     </div>
+
+@yield('orderList')
+
 @endsection
 
 @section('css')
-<link rel="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.css">
 @endsection
 
 @section('js')
+<script src="{{ url('js/moment.min.js') }}" charset="utf-8"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js" charset="utf-8"></script>
 <script src="{{ url('js/order.js') }}" charset="utf-8"></script>
 @endsection

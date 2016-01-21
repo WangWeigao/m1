@@ -51,7 +51,7 @@ class UserController extends Controller
                      ->join('orders', 'users.uid', '=', 'orders.student_uid')
                      ->select('users.uid', 'users.nickname', 'users.cellphone', 'users.email', 'users.regdate', 'users.lastlogin', DB::raw('count(orders.student_uid) as order_num'))
                      ->groupby('users.uid')
-                     ->paginate(10);
+                     ->paginate(2);
 
         //将结果传递给视图
         return view('getusers')->with('users', $users);
@@ -102,7 +102,7 @@ class UserController extends Controller
         //将用户详情, 订单信息, 登录信息组合为同一个数组
         $data['userInfo'] = $userInfo;
         $data['loginInfo'] = $loginInfo;
-        
+
         //以Json形式返回
         return view('userdetail')->with('data', $data);
     }

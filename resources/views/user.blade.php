@@ -4,6 +4,7 @@
 <div class="container">
     {{-- 用户查询表单 --}}
     <form class="" action="/getusers" method="post">
+        {!! csrf_field() !!}
         <fieldset>
             <legend>用户查询</legend>
             <div class="form-group">

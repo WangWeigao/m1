@@ -61,4 +61,9 @@ Route::group(['middleware' => 'web'], function () {
      * 按时间查询订单, 显示视图
      */
     Route::get('/order', 'OrderController@index');
+
+    /**
+     * 按时间查询订单, 显示查询结果
+     */
+    Route::any('/getorders', 'OrderController@getOrders');
 });
