@@ -29,8 +29,9 @@
             <th>订单时间</th>
             <th>订单号</th>
             <th>金额</th>
-            <th>订单详情</th>
+            <th>课时</th>
             <th>订单状态</th>
+            <th>教师ID</th>
             <th>交易教师</th>
             <th>评分</th>
         </tr>
@@ -41,9 +42,10 @@
             <td>{{ $order->submit_time }}</td>
             <td>{{ $order->oid }}</td>
             <td>{{ $order->price }}</td>
-            <td>{{ $order->price }}</td>
+            <td>{{ $order->lasts }}</td>
             <td>{{ $order->status }}</td>
-            <td>{{ $order->student_uid }}</td>
+            <td>{{ $order->teacher_uid }}</td>
+            <td>{{ $order->teacher_nickname }}</td>
             <td>{{ $order->rating }}</td>
         </tr>
     </table>
