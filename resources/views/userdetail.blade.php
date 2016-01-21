@@ -36,18 +36,17 @@
             <th>评分</th>
         </tr>
         @foreach($data['userInfo']['orders'] as $order)
-
+            <tr>
+                <td>{{ $order->submit_time }}</td>
+                <td>{{ $order->oid }}</td>
+                <td>{{ $order->price }}</td>
+                <td>{{ $order->lasts }}</td>
+                <td>{{ $order->status }}</td>
+                <td>{{ $order->teacher_uid }}</td>
+                <td>{{ $order->teacher_nickname }}</td>
+                <td>{{ $order->rating }}</td>
+            </tr>
         @endforeach
-        <tr>
-            <td>{{ $order->submit_time }}</td>
-            <td>{{ $order->oid }}</td>
-            <td>{{ $order->price }}</td>
-            <td>{{ $order->lasts }}</td>
-            <td>{{ $order->status }}</td>
-            <td>{{ $order->teacher_uid }}</td>
-            <td>{{ $order->teacher_nickname }}</td>
-            <td>{{ $order->rating }}</td>
-        </tr>
     </table>
 </div>
 @endsection
