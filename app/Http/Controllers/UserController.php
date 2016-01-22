@@ -48,13 +48,13 @@ class UserController extends Controller
         //模糊匹配, 查询结果为分页做准备
         $users = OldUser::where('usertype', 1)
                      ->where('nickname', 'like', "%$name%")
-                     ->join('orders', 'users.uid', '=', 'orders.student_uid')
+                     ->leftjoin('orders', 'users.uid', '=', 'orders.student_uid')
                      ->select('users.uid', 'users.nickname', 'users.cellphone', 'users.email', 'users.regdate', 'users.lastlogin', DB::raw('count(orders.student_uid) as order_num'))
                      ->groupby('users.uid')
-                     ->paginate(2);
+                     ->paginate(10);
 
         //将结果传递给视图
-        return view('getusers')->with('users', $users);
+        return view('getusers')->with(['users' => $users, 'name' => $name]);
 
     }
 

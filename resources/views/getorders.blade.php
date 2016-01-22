@@ -27,7 +27,7 @@
         @endforeach
     </table>
     <div class="text-center">
-        {!! $orders->render() !!}
+        {!! $orders->appends(['from_time' => $from_time, 'to_time' => $to_time])->render() !!}
     </div>
 </div>
 @endsection

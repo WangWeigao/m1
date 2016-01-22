@@ -23,7 +23,7 @@
     @endforeach
 </table>
 <div class="text-center">
-    {!! $users->render() !!}
+    {!! $users->appends(['name' => $name])->render() !!}
 </div>
 @endsection
 

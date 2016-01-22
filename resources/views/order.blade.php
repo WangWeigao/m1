@@ -7,7 +7,7 @@
             <div class='col-md-3'>
                 <div class="form-group">
                     <div class='input-group date' id='datetimepicker6'>
-                        <input type='text' class="form-control" name="fromtime" id="fromtime"/>
+                        <input type='text' class="form-control" name="from_time" id="from_time"/>
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
@@ -17,7 +17,7 @@
             <div class='col-md-3'>
                 <div class="form-group">
                     <div class='input-group date' id='datetimepicker7'>
-                        <input type='text' class="form-control" name="totime" id="totime"/>
+                        <input type='text' class="form-control" name="to_time" id="to_time"/>
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
@@ -31,6 +31,7 @@
             </div>
         </form>
     </div>
+
 
 @yield('orderList')
 

@@ -16,6 +16,8 @@ class OrderController extends Controller
     {
         $this->middleware('auth');
     }
+
+
     /**
      * 显示订单查询界面
      * @method index
@@ -39,21 +41,22 @@ class OrderController extends Controller
          * 查询从这个时间开始查询订单
          * 以订单提交时间为准(submit_time字段)
          */
-        $from_time = $request->get('fromtime');
+        $from_time = $request->get('from_time');
 
         /**
          * 查询到这个时间截止的订单
          * 以订单提交时间为止(submit_time字段)
          */
-        $to_time = $request->get('totime');
-DB::connection()->enableQueryLog();
+        $to_time = $request->get('to_time');
+
         /**
          * 按时间跨度查询订单
          */
         $orders = Order::whereBetween('submit_time', [$from_time, $to_time])
                        ->paginate(10);
-        // $orders = Order::paginate(5);
-var_dump(DB::getQueryLog());
-        return view('getorders')->with('orders', $orders);
+        /**
+         * 携带 from_time 和 to_time 以便进行分页, 点击其它页娄时将数据带到跳转的页面
+         */
+        return view('getorders')->with(['orders' => $orders, 'from_time' => $from_time, 'to_time' => $to_time]);
     }
 }
