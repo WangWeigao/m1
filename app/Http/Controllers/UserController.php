@@ -49,7 +49,7 @@ class UserController extends Controller
         $users = OldUser::where('usertype', 1)
                      ->where('nickname', 'like', "%$name%")
                      ->leftjoin('orders', 'users.uid', '=', 'orders.student_uid')
-                     ->select('users.uid', 'users.nickname', 'users.cellphone', 'users.email', 'users.regdate', 'users.lastlogin', DB::raw('count(orders.student_uid) as order_num'))
+                     ->select('users.uid', 'users.nickname', 'users.cellphone', 'users.email', 'users.regdate', 'users.lastlogin', 'users.isactive', DB::raw('count(orders.student_uid) as order_num'))
                      ->groupby('users.uid')
                      ->paginate(10);
 
@@ -67,10 +67,8 @@ class UserController extends Controller
      */
     public function userDetailInfo($id)
     {
-
         //通过用户ID查询详细信息, 且包含订单信息(usertype=1的为学生)
         $userInfo = OldUser::where('uid', $id)->where('usertype', 1)->with('orders')->first();
-
 
         /**
         * 对查出来的结果添加 teacher_uid 和 teacher_nickname 两个字段
@@ -82,6 +80,9 @@ class UserController extends Controller
              */
             $user = Lesson::find($order->lid)->user()->select('uid as teacher_uid', 'nickname as teacher_nickname')->first();
 
+            /**
+             * 给 $userInfo 数组添加教师信息
+             */
             $order->teacher_uid = $user->teacher_uid;
             $order->teacher_nickname = $user->teacher_nickname;
         }
@@ -98,12 +99,38 @@ class UserController extends Controller
          * 因没有相关数据表结构, 暂时无法提供这个数据.
          */
 
-
-        //将用户详情, 订单信息, 登录信息组合为同一个数组
+        /**
+         * 将用户详情, 订单信息, 登录信息组合为同一个数组
+         */
         $data['userInfo'] = $userInfo;
         $data['loginInfo'] = $loginInfo;
 
         //以Json形式返回
         return view('userdetail')->with('data', $data);
+    }
+
+    /**
+     * 锁定或解锁用户
+     * @method lockUser
+     * @param  integer   $id 用户ID
+     * @return Json          操作是否成功
+     */
+    public function lockUser($id)
+    {
+        //获取用户激活状态
+        $active = OldUser::where('uid', $id)->first()->isactive;
+
+        /**
+         * 判断用户是否锁定, 以执行相反操作
+         */
+        if ($active) {
+            //取消激活状态(锁定)
+            $result = OldUser::where('uid', $id)->update(['isactive'=>0]);
+        }else {
+            //激活(解锁)
+            $result = OldUser::where('uid', $id)->update(['isactive'=>1]);
+        }
+
+        return $active;
     }
 }

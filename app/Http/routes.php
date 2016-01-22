@@ -66,4 +66,9 @@ Route::group(['middleware' => 'web'], function () {
      * 按时间查询订单, 显示查询结果
      */
     Route::any('/getorders', 'OrderController@getOrders');
+
+    /**
+     * 锁定或者解锁用户
+     */
+    Route::get('/lockuser/{id}', 'UserController@lockUser');
 });

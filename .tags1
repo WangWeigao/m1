@@ -4,13 +4,3 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-UserController	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^class UserController extends Controller$/;"	class	line:14
-__construct	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^     public function __construct()$/;"	function	line:21
-index	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    public function index()$/;"	function	line:31
-getUsers	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    public function getUsers(Request $request)$/;"	function	line:43
-name	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $name = $request->get('name');$/;"	variable	line:46
-users	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $users = OldUser::where('usertype', 1)$/;"	variable	line:49
-userDetailInfo	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    public function userDetailInfo($id)$/;"	function	line:68
-userInfo	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $userInfo = OldUser::where('uid', $id)->where('usertype', 1)->with('orders')->first();$/;"	variable	line:72
-user	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^            $user = Lesson::find($order->lid)->user()->select('uid as teacher_uid', 'nickname as teacher_nickname')->first();$/;"	variable	line:83
-loginInfo	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $loginInfo = $userInfo->lastlogin;$/;"	variable	line:94
