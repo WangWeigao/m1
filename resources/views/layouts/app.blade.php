@@ -15,6 +15,8 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 
+    @yield('css')
+
     <style>
         body {
             font-family: 'Lato';
@@ -56,8 +58,8 @@
                                 <li><a href="{{ url('/userdetails') }}"></a></li>
                             </ul>
                         </li>
-                        <li><a href="{{ url('/teachers') }}">教师管理</a></li>
-                        <li><a href="{{ url('/orders') }}">订单管理</a></li>
+                        <li><a href="{{ url('/teacher') }}">教师管理</a></li>
+                        <li><a href="{{ url('/order') }}">订单管理</a></li>
                         <li><a href="{{ url('/lessons') }}">发布审批</a></li>
                         <li><a href="#">客服</a></li>
                         <li><a href="#">结算系统</a></li>

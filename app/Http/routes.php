@@ -34,7 +34,7 @@ Route::group(['middleware' => 'web'], function () {
      * Root directory of Web
      */
     Route::get('/', function () {
-        return redirect('/home');
+        return redirect('home');
     });
 
     /**
@@ -50,5 +50,25 @@ Route::group(['middleware' => 'web'], function () {
     /**
      * get the Users queried
      */
-     Route::any('getusers', 'UserController@getUsers');
+     Route::any('/getusers', 'UserController@getUsers');
+
+    /**
+    * 获取单个用户的详细信息
+    */
+    Route::get('/userdetail/{id}', 'UserController@userDetailInfo');
+
+    /**
+     * 按时间查询订单, 显示视图
+     */
+    Route::get('/order', 'OrderController@index');
+
+    /**
+     * 按时间查询订单, 显示查询结果
+     */
+    Route::any('/getorders', 'OrderController@getOrders');
+
+    /**
+     * 锁定或者解锁用户
+     */
+    Route::get('/lockuser/{id}', 'UserController@lockUser');
 });
