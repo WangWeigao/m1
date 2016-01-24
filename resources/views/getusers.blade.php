@@ -1,6 +1,6 @@
 @extends('user')
 @section('searchResult')
-<table class="table table-hover">
+<table class="table table-striped table-hover">
     <tr>
         <th>ID</th>
         <th>用户名</th>
@@ -14,7 +14,7 @@
     </tr>
     @foreach($users as $user)
         <tr>
-            <td><a id="user_id" href="{{ url('/userdetail/' . $user->uid) }}">{{ $user->uid }}</a></td>
+            <td><a class="user_id" href="{{ url('/userdetail/' . $user->uid) }}">{{ $user->uid }}</a></td>
             <td><a href="{{ url('/userdetail/' . $user->uid) }}">{{ $user->nickname }}</a></td>
             <td>{{ $user->cellphone }}</td>
             <td>{{ $user->email }}</td>
@@ -23,11 +23,11 @@
             <td>{{ $user->regdate }}</td>
             <td>
                 <div class="btn-group btn-group-sm">
-                    <button type="button" name="lockuser" id="lockuser" class="btn btn-info btn-warning">锁定</button>
-                    <button type="button" name="viewuser" id="viewuser" class="btn btn-info">查看</button>
+                    <button type="button" class="lockuser" id="{{ $user->uid }}">{{ $user->isactive ? '锁定' : '解锁'  }}</button>
+                    <button type="button" class="btn btn-info">查看</button>
                 </div>
             </td>
-            <td id="isactive">{{ $user->isactive }}</td>
+            <td id="isactive">{{ $user->isactive ? '未锁定' : '已锁定' }}</td>
         </tr>
     @endforeach
 </table>
