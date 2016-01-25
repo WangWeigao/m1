@@ -23,8 +23,8 @@
             <td>{{ $user->regdate }}</td>
             <td>
                 <div class="btn-group btn-group-sm">
-                    <button type="button" class="lockuser" id="{{ $user->uid }}">{{ $user->isactive ? '锁定' : '解锁'  }}</button>
-                    <button type="button" class="btn btn-info">查看</button>
+                    <button type="button" id="{{ $user->uid }}" class="{{ $user->isactive ? 'lockuser btn btn-success' : 'lockuser btn btn-danger' }}">{{ $user->isactive ? '锁定' : '解锁'  }}</button>
+                    <a href="{{ url('/orderdetail/$user->oid') }}"><button type="button" class="btn btn-info btn-sm">查看</button></a>
                 </div>
             </td>
             <td id="isactive">{{ $user->isactive ? '未锁定' : '已锁定' }}</td>
@@ -37,5 +37,5 @@
 @endsection
 
 @section('js')
-<script src="{{ asset('js/getusers.js') }}"></script>
+    <script src="{{ asset('js/getusers.js') }}"></script>
 @endsection

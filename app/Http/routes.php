@@ -71,4 +71,9 @@ Route::group(['middleware' => 'web'], function () {
      * 锁定或者解锁用户
      */
     Route::get('/lockuser/{id}', 'UserController@lockUser');
+
+    /**
+     * 锁定或解锁订单
+     */
+    Route::get('/lockorder/{id}', 'OrderController@lockOrder');
 });

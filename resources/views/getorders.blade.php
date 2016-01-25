@@ -19,10 +19,13 @@
                 <td>{{ $order->rating }}</td>
                 <td>{{ $order->status }}</td>
                 <td>
-                    <button type="button" name="button" class="btn btn-warning btn-sm" name="lock">锁定</button>
-                    <button type="button" name="button" class="btn btn-danger btn-sm" name="cancle">取消</button>
-                    <button type="button" name="button" class="btn btn-info btn-sm" name="view">查看</button>
+                    <div class="form-group">
+                        <button type="button" id="{{ $order->oid }}" class="btn btn-info btn-sm lockorder" >锁定</button>
+                        <button type="button" class="btn btn-info btn-sm cancleorder" >取消</button>
+                        <a href="{{ url('/orderdetail/') . '/' . $order->oid }}"><button type="button" class="btn btn-info btn-sm" >查看</button></a>
+                    </div>
                 </td>
+                {{-- <td>{{ $order->locked }}</td> --}}
             </tr>
         @endforeach
     </table>
@@ -30,4 +33,10 @@
         {!! $orders->appends(['from_time' => $from_time, 'to_time' => $to_time])->render() !!}
     </div>
 </div>
+
+{{-- js脚本 --}}
+@endsection
+
+@section('js')
+    <script src="{{ asset('js/getorders.js') }}"></script>
 @endsection

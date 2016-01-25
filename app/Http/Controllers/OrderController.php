@@ -59,4 +59,10 @@ class OrderController extends Controller
          */
         return view('getorders')->with(['orders' => $orders, 'from_time' => $from_time, 'to_time' => $to_time]);
     }
+
+
+    public function lockOrder($id)
+    {
+        return 1;
+    }
 }

@@ -34,15 +34,17 @@
 
 
 @yield('orderList')
-
 @endsection
 
+{{-- every page private css --}}
 @section('css')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.css">
 @endsection
 
+{{-- every page private js --}}
 @section('js')
-<script src="{{ url('js/moment.min.js') }}" charset="utf-8"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js" charset="utf-8"></script>
-<script src="{{ url('js/order.js') }}" charset="utf-8"></script>
+    {{-- js脚本 --}}
+    <script src="{{ url('js/moment.min.js') }}" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js" charset="utf-8"></script>
+    <script src="{{ url('js/order.js') }}" charset="utf-8"></script>
 @endsection
