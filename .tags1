@@ -4,13 +4,3 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-OrderController	D:\wamp\www\m1\app\Http\Controllers\OrderController.php	/^class OrderController extends Controller$/;"	class	line:13
-__construct	D:\wamp\www\m1\app\Http\Controllers\OrderController.php	/^    public function __construct()$/;"	function	line:15
-index	D:\wamp\www\m1\app\Http\Controllers\OrderController.php	/^    public function index()$/;"	function	line:26
-getOrders	D:\wamp\www\m1\app\Http\Controllers\OrderController.php	/^    public function getOrders(Request $request)$/;"	function	line:38
-from_time	D:\wamp\www\m1\app\Http\Controllers\OrderController.php	/^        $from_time = $request->get('from_time');$/;"	variable	line:44
-to_time	D:\wamp\www\m1\app\Http\Controllers\OrderController.php	/^        $to_time = $request->get('to_time');$/;"	variable	line:50
-orders	D:\wamp\www\m1\app\Http\Controllers\OrderController.php	/^        $orders = Order::whereBetween('submit_time', [$from_time, $to_time])$/;"	variable	line:55
-lockOrder	D:\wamp\www\m1\app\Http\Controllers\OrderController.php	/^    public function lockOrder($id)$/;"	function	line:71
-orderDetailInfo	D:\wamp\www\m1\app\Http\Controllers\OrderController.php	/^    public function orderDetailInfo($id)$/;"	function	line:83
-orderInfo	D:\wamp\www\m1\app\Http\Controllers\OrderController.php	/^        $orderInfo = Order::find($id);$/;"	variable	line:85

@@ -5,8 +5,8 @@
     <table class="table table-striped table-hover">
         <tr>
             <th>订单时间</th>
-            <th>订单号</th>
-            <th>金额</th>
+            <th>订单ID</th>
+            <th>金额(元)</th>
             <th>订单评分</th>
             <th>订单状态</th>
             <th>操作</th>

@@ -54,6 +54,32 @@ class OrderController extends Controller
          */
         $orders = Order::whereBetween('submit_time', [$from_time, $to_time])
                        ->paginate(10);
+
+        // 将 status 的值替换为可识别的内容
+        foreach ($orders as $order) {
+            switch ($order->status) {
+                case '0':
+                    $order->status = '未付款';
+                    break;
+                case '1':
+                    $order->status = '待上课';
+                    break;
+                case '2':
+                    $order->status = '已完成';
+                    break;
+                case '3':
+                    $order->status = '已评价';
+                    break;
+                default:
+                    $order->status = '数据错误';
+                    break;
+            }
+
+            if (empty($order->rating)) {
+                $order->rating = '暂无评分';
+            }
+        }
+
         /**
          * 携带 from_time 和 to_time 以便进行分页, 点击其它页娄时将数据带到跳转的页面
          */
