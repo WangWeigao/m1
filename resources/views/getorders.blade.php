@@ -19,13 +19,12 @@
                 <td>{{ $order->rating }}</td>
                 <td>{{ $order->status }}</td>
                 <td>
-                    <div class="form-group">
+                    <div class="btn-group btn-group-sm">
                         <button type="button" id="{{ $order->oid }}" class="btn btn-info btn-sm lockorder" >锁定</button>
                         <button type="button" class="btn btn-info btn-sm cancleorder" >取消</button>
-                        <a href="{{ url('/orderdetail/') . '/' . $order->oid }}"><button type="button" class="btn btn-info btn-sm" >查看</button></a>
+                        <button type="button" id="{{ $order->oid }}" class="btn btn-info btn-xs detail" >查看</button>
                     </div>
                 </td>
-                {{-- <td>{{ $order->locked }}</td> --}}
             </tr>
         @endforeach
     </table>

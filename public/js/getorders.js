@@ -5,10 +5,15 @@ $(document).ready(function() {
                 '/lockorder/' + $(domEle).attr('id'),
                 function(data) {
                     if (data == 1) {
-                        
+
                     }
                 }
             );
         });
+    });
+
+    // 点击"查看"按钮
+    $(".detail").click(function () {
+        window.location.replace( '/orderdetail/' + $(this).attr('id') );
     });
 });

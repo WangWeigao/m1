@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container">
+    <h3>用户信息</h3>
     <table class="table table-striped">
         <tr>
             <th>ID</th>
@@ -25,7 +26,8 @@
     </table>
 
 @if(count($data['userInfo']['orders']) != 0)
-    <table class="table table-striped">
+    <h3>订单信息</h3>
+    <table class="table table-striped table-hover">
         <tr>
             <th>订单时间</th>
             <th>订单号</th>
@@ -51,7 +53,7 @@
     </table>
 @else
     <div class="text-center">
-        <b>没有订单数据</b>
+        <blockquote>没有订单数据</blockquote>
     </div>
 @endif
 </div>
