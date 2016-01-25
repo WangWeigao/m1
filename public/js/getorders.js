@@ -5,7 +5,7 @@ $(document).ready(function() {
                 '/lockorder/' + $(domEle).attr('id'),
                 function(data) {
                     if (data == 1) {
-
+                        
                     }
                 }
             );

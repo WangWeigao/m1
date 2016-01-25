@@ -9,7 +9,7 @@
             <th>联系方式</th>
             <th>Email</th>
             <th>订单历史</th>
-            <th>注册年</th>
+            <th>注册日期</th>
             <th>最后登陆时间</th>
         </tr>
 
@@ -24,6 +24,7 @@
         </tr>
     </table>
 
+@if(count($data['userInfo']['orders']) != 0)
     <table class="table table-striped">
         <tr>
             <th>订单时间</th>
@@ -48,5 +49,11 @@
             </tr>
         @endforeach
     </table>
+@else
+    <div class="text-center">
+        <b>没有订单数据</b>
+    </div>
+@endif
 </div>
+
 @endsection
