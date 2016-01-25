@@ -52,6 +52,11 @@ Route::group(['middleware' => 'web'], function () {
      */
      Route::any('/getusers', 'UserController@getUsers');
 
+     /**
+     * 锁定或者解锁用户
+     */
+     Route::get('/lockuser/{id}', 'UserController@lockUser');
+
     /**
     * 获取单个用户的详细信息
     */
@@ -63,17 +68,17 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/order', 'OrderController@index');
 
     /**
-     * 按时间查询订单, 显示查询结果
-     */
+    * 按时间查询订单, 显示查询结果
+    */
     Route::any('/getorders', 'OrderController@getOrders');
-
-    /**
-     * 锁定或者解锁用户
-     */
-    Route::get('/lockuser/{id}', 'UserController@lockUser');
 
     /**
      * 锁定或解锁订单
      */
     Route::get('/lockorder/{id}', 'OrderController@lockOrder');
+
+    /**
+     * 获取单个订单的详细信息
+     */
+    Route::get('/orderdetail/{id}', 'OrderController@orderDetailInfo');
 });

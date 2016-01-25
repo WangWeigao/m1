@@ -61,8 +61,63 @@ class OrderController extends Controller
     }
 
 
+    /**
+     * 锁定订单
+     * 由于数据库表设计时没有考虑此种情况, 暂时无法实现锁定订单功能
+     * @method lockOrder
+     * @param  [type]    $id [description]
+     * @return [type]        [description]
+     */
     public function lockOrder($id)
     {
         return 1;
+    }
+
+
+    /**
+     * 订单详细信息
+     * @method orderDetailInfo
+     * @param  [integer]          $id [订单ID]
+     * @return [Json]                 [单个订单的详细信息]
+     */
+    public function orderDetailInfo($id)
+    {
+        $orderInfo = Order::find($id);
+
+        // 将"上门方式"字段值替换成可识别的内容
+        switch ($orderInfo->method) {
+            case '1':
+                $vlaue->method = '老师上门';
+                break;
+            case '2':
+                $orderInfo->method = '学生上门';
+                break;
+            case '3':
+                $orderInfo->method = '可协商';
+                break;
+            default:
+                $orderInfo->method = '数据错误';
+                break;
+        }
+
+        // 将订单状态替换成可识别的内容
+        switch ($orderInfo->status) {
+            case '0':
+                $orderInfo->status = '未支付';
+                break;
+            case '1':
+                $orderInfo->status = '待上课';
+                break;
+            case '2':
+                $orderInfo->status = '已完成';
+                break;
+            case '3':
+                $orderInfo->status = '已评价';
+                break;
+            default:
+                $orderInfo->status = '数据错误';
+                break;
+        }
+        return view('orderdetail')->with('orderInfo', $orderInfo);
     }
 }
