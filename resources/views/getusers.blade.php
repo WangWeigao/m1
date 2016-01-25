@@ -24,7 +24,7 @@
             <td>
                 <div class="btn-group btn-group-sm">
                     <button type="button" id="{{ $user->uid }}" class="{{ $user->isactive ? 'lockuser btn btn-success' : 'lockuser btn btn-danger' }}">{{ $user->isactive ? '锁定' : '解锁'  }}</button>
-                    <a href="{{ url('/orderdetail/$user->oid') }}"><button type="button" class="btn btn-info btn-sm">查看</button></a>
+                    <a href="{{ url('/userdetail/' . $user->uid) }}"><button type="button" class="btn btn-info btn-sm">查看</button></a>
                 </div>
             </td>
             <td id="isactive">{{ $user->isactive ? '未锁定' : '已锁定' }}</td>
