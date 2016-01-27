@@ -3,13 +3,13 @@
 @section('content')
 <div class="container">
     {{-- 用户查询表单 --}}
-    <form class="" action="/getusers" method="post">
+    <form class="" action="/getteachers" method="post">
         {!! csrf_field() !!}
         <fieldset>
-            <legend>用户查询</legend>
+            <legend>教师查询</legend>
             <div class="form-group">
-              {{-- <label for="">用户搜索</label> --}}
-              <input type="text" class="form-control" id="searchName" name="name" placeholder="请输入用户名, 模糊搜索">
+              {{-- <label for="">教师搜索</label> --}}
+              <input type="text" class="form-control" id="searchName" name="name" placeholder="请输入教师名, 模糊搜索">
             </div>
             <button type="submit" name="button" class="btn btn-success" id="search">搜索</button>
         </fieldset>

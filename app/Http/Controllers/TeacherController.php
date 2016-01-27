@@ -8,10 +8,9 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\StudentUser;
-use App\Lesson;
 use DB;
 
-class UserController extends Controller
+class TeacherController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -24,13 +23,13 @@ class UserController extends Controller
      }
 
     /**
-     * Display a listing of the resource.
+     * Display a seaching input.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        return view('user');
+        return view('teacher');
     }
 
 
@@ -38,23 +37,23 @@ class UserController extends Controller
      * 模糊查询用户信息
      * @method queryUserInfo
      * @param  Request       $request 用户请求携带的数据
-     * @return Json          $users   数据传递给视图
+     * @return Json          $teachers   数据传递给视图
      */
-    public function getUsers(Request $request)
+    public function getTeachers(Request $request)
     {
         //取得要查询的用户名
         $name = $request->get('name');
 
         //模糊匹配, 查询结果为分页做准备
-        $users = StudentUser::where('usertype', 1)
+        $teachers = StudentUser::where('usertype', '<>', '1')
                      ->where('nickname', 'like', "%$name%")
                      ->leftjoin('orders', 'users.uid', '=', 'orders.student_uid')
                      ->select('users.uid', 'users.nickname', 'users.cellphone', 'users.email', 'users.regdate', 'users.lastlogin', 'users.isactive', DB::raw('count(orders.student_uid) as order_num'))
                      ->groupby('users.uid')
-                     ->paginate(10);
+                     ->paginate(3);
 
         //将结果传递给视图
-        return view('getusers')->with(['users' => $users, 'name' => $name]);
+        return view('getteachers')->with(['teachers' => $teachers, 'name' => $name]);
 
     }
 
@@ -65,23 +64,23 @@ class UserController extends Controller
      * @param  number           $id 用户ID
      * @return Json             包含用户详情, 订单信息, 登录信息
      */
-    public function userDetailInfo($id)
+    public function teacherDetailInfo($id)
     {
         //通过用户ID查询详细信息, 且包含订单信息(usertype=1的为学生)
-        $userInfo = StudentUser::where('uid', $id)->where('usertype', 1)->with('orders')->first();
+        $teacherInfo = StudentUser::where('uid', $id)->with('orders')->first();
 
         /**
         * 对查出来的结果添加 teacher_uid 和 teacher_nickname 两个字段
         * 以便在表格显示时, 显示出课程中教师相关的信息
         */
-        foreach ($userInfo['orders'] as $order) {
+        foreach ($teacherInfo['orders'] as $order) {
             /**
              * 通过课程lid查询用户信息
              */
             $user = Lesson::find($order->lid)->user()->select('uid as teacher_uid', 'nickname as teacher_nickname')->first();
 
             /**
-             * 给 $userInfo 数组添加教师信息
+             * 给 $teacherInfo 数组添加教师信息
              */
             $order->teacher_uid = $user->teacher_uid;
             $order->teacher_nickname = $user->teacher_nickname;
@@ -92,7 +91,7 @@ class UserController extends Controller
          * 因表结构中只有用户最后一次登录的数据, 只能提供这个
          * @var string
          */
-        $loginInfo = $userInfo->lastlogin;
+        $loginInfo = $teacherInfo->lastlogin;
 
         /**
          * 用户投诉历史
@@ -102,11 +101,11 @@ class UserController extends Controller
         /**
          * 将用户详情, 订单信息, 登录信息组合为同一个数组
          */
-        $data['userInfo'] = $userInfo;
+        $data['teacherInfo'] = $teacherInfo;
         $data['loginInfo'] = $loginInfo;
 
         //以Json形式返回
-        return view('userdetail')->with('data', $data);
+        return view('teacherdetail')->with('data', $data);
     }
 
     /**

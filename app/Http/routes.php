@@ -41,9 +41,9 @@ Route::group(['middleware' => 'web'], function () {
      * Default Route, useless.
      */
     Route::get('/home', 'HomeController@index');
-
+    // --------------------------------------用户路由----------------------------------------------
     /**
-     * display users of the conditions
+     * display users of the conditions(student)
      */
     Route::get('/user', 'UserController@index');
 
@@ -61,7 +61,22 @@ Route::group(['middleware' => 'web'], function () {
     * 获取单个用户的详细信息
     */
     Route::get('/userdetail/{id}', 'UserController@userDetailInfo');
+    // --------------------------------------教师路由----------------------------------------------
+    /**
+     * display the users of conditions(teacher)
+     */
+    Route::get('/teacher', 'TeacherController@index');
 
+    /**
+     * get the Teachers queried
+     */
+    Route::any('/getteachers', 'TeacherController@getTeachers');
+
+    /**
+     * 教师详细信息
+     */
+    Route::get('/teacherdetail/{id}', 'TeacherController@teacherDetailInfo');
+    // --------------------------------------订单路由-------------------------------------------------
     /**
      * 按时间查询订单, 显示视图
      */
