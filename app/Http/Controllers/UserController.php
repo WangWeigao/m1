@@ -51,10 +51,11 @@ class UserController extends Controller
                      ->leftjoin('orders', 'users.uid', '=', 'orders.student_uid')
                      ->select('users.uid', 'users.nickname', 'users.cellphone', 'users.email', 'users.regdate', 'users.lastlogin', 'users.isactive', DB::raw('count(orders.student_uid) as order_num'))
                      ->groupby('users.uid')
+                     ->orderby('users.cellphone')
                      ->paginate(10);
 
         //将结果传递给视图
-        return view('getusers')->with(['users' => $users, 'name' => $name]);
+        return view('getusers')->with(['name' => $name, 'users' => $users]);
 
     }
 

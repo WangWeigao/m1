@@ -97,3 +97,7 @@ Route::group(['middleware' => 'web'], function () {
      */
     Route::get('/orderdetail/{id}', 'OrderController@orderDetailInfo');
 });
+// 测试路由
+Route::any('/test', function() {
+    return view('test');
+});
