@@ -32,10 +32,4 @@
         {!! $orders->appends(['from_time' => $from_time, 'to_time' => $to_time])->render() !!}
     </div>
 </div>
-
-{{-- js脚本 --}}
-@endsection
-
-@section('js')
-    <script src="{{ asset('js/getorders.js') }}"></script>
 @endsection

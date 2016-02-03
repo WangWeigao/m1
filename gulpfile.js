@@ -21,7 +21,7 @@ elixir(function(mix) {
         'font-awesome.min.css',
         'google-font-lato.css',
         'bootstrap.min.css',
-        'bootstrap-datetimepicker.css',
+        'bootstrap-datetimepicker.css'
     ]);
 
     /**
@@ -36,11 +36,15 @@ elixir(function(mix) {
         'user.js',
         'getusers.js',
         'order.js',
-        'getorders.js',
+        'getorders.js'
     ]);
 
     /**
      * 添加时间戳
      */
-    mix.version('css/all.css');
+    mix.version([
+        'css/all.css',
+        'js/all.js',
+    ]);
+
 });
