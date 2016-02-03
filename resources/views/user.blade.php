@@ -17,8 +17,3 @@
     <hr>
     @yield('searchResult')
 @endsection
-
-
-@section('js')
-<script src="{{ asset('js/user.js') }}"></script>
-@endsection
