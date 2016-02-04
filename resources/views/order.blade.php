@@ -31,18 +31,5 @@
             </div>
         </form>
     </div>
-
-
 @yield('orderList')
-
-@endsection
-
-@section('css')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.css">
-@endsection
-
-@section('js')
-<script src="{{ url('js/moment.min.js') }}" charset="utf-8"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js" charset="utf-8"></script>
-<script src="{{ url('js/order.js') }}" charset="utf-8"></script>
 @endsection

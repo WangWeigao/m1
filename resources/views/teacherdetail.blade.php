@@ -15,17 +15,17 @@
         </tr>
 
         <tr>
-            <td>{{ $data['userInfo']->uid }}</td>
-            <td>{{ $data['userInfo']->nickname }}</td>
-            <td>{{ $data['userInfo']->cellphone }}</td>
-            <td>{{ $data['userInfo']->email }}</td>
-            <td>{{ $data['userInfo']->order_num }}</td>
-            <td>{{ $data['userInfo']->lastlogin }}</td>
-            <td>{{ $data['userInfo']->regdate }}</td>
+            <td>{{ $data['teacherInfo']->uid }}</td>
+            <td>{{ $data['teacherInfo']->nickname }}</td>
+            <td>{{ $data['teacherInfo']->cellphone }}</td>
+            <td>{{ $data['teacherInfo']->email }}</td>
+            <td>{{ $data['teacherInfo']->order_num }}</td>
+            <td>{{ $data['teacherInfo']->lastlogin }}</td>
+            <td>{{ $data['teacherInfo']->regdate }}</td>
         </tr>
     </table>
 
-@if(count($data['userInfo']['orders']) != 0)
+@if(count($data['teacherInfo']['orders']) != 0)
     <h3>订单信息</h3>
     <table class="table table-striped table-hover">
         <tr>
@@ -38,7 +38,7 @@
             <th>交易教师</th>
             <th>评分</th>
         </tr>
-        @foreach($data['userInfo']['orders'] as $order)
+        @foreach($data['teacherInfo']['orders'] as $order)
             <tr>
                 <td>{{ $order->submit_time }}</td>
                 <td>{{ $order->oid }}</td>

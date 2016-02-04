@@ -41,9 +41,9 @@ Route::group(['middleware' => 'web'], function () {
      * Default Route, useless.
      */
     Route::get('/home', 'HomeController@index');
-
+    // --------------------------------------用户路由----------------------------------------------
     /**
-     * display users of the conditions
+     * display users of the conditions(student)
      */
     Route::get('/user', 'UserController@index');
 
@@ -52,23 +52,52 @@ Route::group(['middleware' => 'web'], function () {
      */
      Route::any('/getusers', 'UserController@getUsers');
 
+     /**
+     * 锁定或者解锁用户
+     */
+     Route::get('/lockuser/{id}', 'UserController@lockUser');
+
     /**
     * 获取单个用户的详细信息
     */
     Route::get('/userdetail/{id}', 'UserController@userDetailInfo');
+    // --------------------------------------教师路由----------------------------------------------
+    /**
+     * display the users of conditions(teacher)
+     */
+    Route::get('/teacher', 'TeacherController@index');
 
+    /**
+     * get the Teachers queried
+     */
+    Route::any('/getteachers', 'TeacherController@getTeachers');
+
+    /**
+     * 教师详细信息
+     */
+    Route::get('/teacherdetail/{id}', 'TeacherController@teacherDetailInfo');
+    // --------------------------------------订单路由-------------------------------------------------
     /**
      * 按时间查询订单, 显示视图
      */
     Route::get('/order', 'OrderController@index');
 
     /**
-     * 按时间查询订单, 显示查询结果
-     */
+    * 按时间查询订单, 显示查询结果
+    */
     Route::any('/getorders', 'OrderController@getOrders');
 
     /**
-     * 锁定或者解锁用户
+     * 锁定或解锁订单
      */
-    Route::get('/lockuser/{id}', 'UserController@lockUser');
+    Route::get('/lockorder/{id}', 'OrderController@lockOrder');
+
+    /**
+     * 获取单个订单的详细信息
+     */
+    Route::get('/orderdetail/{id}', 'OrderController@orderDetailInfo');
+});
+// 测试路由
+Route::any('/test', function() {
+    return view('test');
 });

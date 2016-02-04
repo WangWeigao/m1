@@ -14,6 +14,6 @@ class Lesson extends Model
      */
     public function user()
     {
-        return $this->belongsTo('App\OldUser', 'teacher_uid', 'uid');
+        return $this->belongsTo('App\StudentUser', 'teacher_uid', 'uid');
     }
 }

@@ -4,10 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class OldUser extends Model
+class StudentUser extends Model
 {
     // 更改数据表为Users
     protected $table = 'users';
+
+    // 更改主键为uid
+    protected $primaryKey = 'uid';
 
     // 不在表中添加 updated_at 和 created_at
     public $timestamps = false;
