@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    $("table").dataTable();
     // 根据按钮的不同含义, 指定不同的CSS样式
     $(".lockuser").each(function (index, domEle) {
         // if ($(this).text() == '解锁') {

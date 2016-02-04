@@ -44,6 +44,8 @@ class UserController extends Controller
     {
         //取得要查询的用户名
         $name = $request->get('name');
+        $field = $request->get('field');
+        $order = $request->get('order');
 
         //模糊匹配, 查询结果为分页做准备
         $users = StudentUser::where('usertype', 1)
@@ -51,11 +53,14 @@ class UserController extends Controller
                      ->leftjoin('orders', 'users.uid', '=', 'orders.student_uid')
                      ->select('users.uid', 'users.nickname', 'users.cellphone', 'users.email', 'users.regdate', 'users.lastlogin', 'users.isactive', DB::raw('count(orders.student_uid) as order_num'))
                      ->groupby('users.uid')
-                     ->orderby('users.cellphone')
-                     ->paginate(10);
-
+                     ->orderby($field, $order)
+                     ->get();
+                    //  由前端分页, 此处暂时用不到
+                    //  ->paginate(10);
+// dd($users);
         //将结果传递给视图
-        return view('getusers')->with(['name' => $name, 'users' => $users]);
+        // return view('getusers')->with(['name' => $name, 'users' => $users]);
+        return view('getusers')->with('users', $users);
 
     }
 
