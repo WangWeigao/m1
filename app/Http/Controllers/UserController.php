@@ -48,13 +48,19 @@ class UserController extends Controller
         $order = $request->get('order');
 
         //模糊匹配, 查询结果为分页做准备
-        $users = StudentUser::where('usertype', 1)
-                     ->where('nickname', 'like', "%$name%")
-                     ->leftjoin('orders', 'users.uid', '=', 'orders.student_uid')
-                     ->select('users.uid', 'users.nickname', 'users.cellphone', 'users.email', 'users.regdate', 'users.lastlogin', 'users.isactive', DB::raw('count(orders.student_uid) as order_num'))
-                     ->groupby('users.uid')
-                     ->orderby($field, $order)
-                     ->get();
+        $users = StudentUser::where('usertype', 1);
+            if (is_numeric($name)) {
+                $users->where('cellphone', 'like', "%$name%");
+            }else {
+                $users->where('nickname', 'like', "%$name%");
+            }
+
+        $users = $users
+                ->leftjoin('orders', 'users.uid', '=', 'orders.student_uid')
+                ->select('users.uid', 'users.nickname', 'users.cellphone', 'users.email', 'users.regdate', 'users.lastlogin', 'users.isactive', DB::raw('count(orders.student_uid) as order_num'))
+                ->groupby('users.uid')
+                ->orderby($field, $order)
+                ->get();
                     //  由前端分页, 此处暂时用不到
                     //  ->paginate(10);
 // dd($users);
