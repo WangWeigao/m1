@@ -96,6 +96,11 @@ Route::group(['middleware' => 'web'], function () {
      * 获取单个订单的详细信息
      */
     Route::get('/orderdetail/{id}', 'OrderController@orderDetailInfo');
+
+    /**
+     * 使用资源路由
+     */
+    Route::resource('/user', 'UserController');
 });
 // 测试路由
 Route::any('/test', function() {
