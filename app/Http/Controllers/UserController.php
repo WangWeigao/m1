@@ -57,7 +57,7 @@ class UserController extends Controller
                 ->get();
                     //  由前端分页, 此处暂时用不到
                     //  ->paginate(10);
-// dd($users);
+
         //将结果传递给视图
         // return view('getusers')->with(['name' => $name, 'users' => $users]);
         return view('user')->with(['users' => $users, 'name' => $name]);
@@ -67,11 +67,11 @@ class UserController extends Controller
 
     /**
      * 查询用户详细信息
-     * @method userDetailInfo
+     * @method show
      * @param  number           $id 用户ID
      * @return Json             包含用户详情, 订单信息, 登录信息
      */
-    public function userDetailInfo($id)
+    public function show($id)
     {
         //通过用户ID查询详细信息, 且包含订单信息(usertype=1的为学生)
         $userInfo = StudentUser::where('uid', $id)->where('usertype', 1)->with('orders')->first();

@@ -2,11 +2,11 @@
 
 @section('content')
 <div class="container">
-    <h3>用户信息</h3>
+    <h3>教师信息</h3>
     <table class="table table-striped">
         <tr>
             <th>ID</th>
-            <th>用户名</th>
+            <th>教师名</th>
             <th>联系方式</th>
             <th>Email</th>
             <th>订单历史</th>

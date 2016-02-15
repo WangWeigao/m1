@@ -2,23 +2,22 @@
 @section('content')
 <div class="container">
 {{-- 用户查询表单 --}}
-<form class="" action="/user" method="get">
-    {!! csrf_field() !!}
-    <fieldset>
-        <legend>用户查询</legend>
-        <div class="form-group">
-          {{-- <label for="">用户搜索</label> --}}
-          <input type="text" class="form-control" id="searchName" name="name" placeholder="请输入用户名或手机号">
-          <input type="hidden" name="field" value="uid">
-          <input type="hidden" name="order" value="asc">
-        </div>
-        <button type="submit" name="button" class="btn btn-success" id="search">搜索</button>
-    </fieldset>
-</form>
+    <form class="" action="/user" method="get">
+        {!! csrf_field() !!}
+        <fieldset>
+            <legend>用户查询</legend>
+            <div class="form-group">
+              {{-- <label for="">用户搜索</label> --}}
+              <input type="text" class="form-control" id="searchName" name="name" placeholder="请输入用户名或手机号">
+              <input type="hidden" name="field" value="uid">
+              <input type="hidden" name="order" value="asc">
+            </div>
+            <button type="submit" name="button" class="btn btn-success" id="search">搜索</button>
+        </fieldset>
+    </form>
 <hr>
 @if(!empty($name))
-
-<table class="table">
+<table class="table table-hover">
     <thead>
         <tr>
             <th>ID</th>
@@ -48,8 +47,8 @@
         <tbody>
             @foreach($users as $user)
             <tr>
-                <td><a class="user_id" href="{{ url('/userdetail/' . $user->uid) }}">{{ $user->uid }}</a></td>
-                <td><a href="{{ url('/userdetail/' . $user->uid) }}">{{ $user->nickname }}</a></td>
+                <td><a class="user_id" href="{{ url('/user/' . $user->uid) }}">{{ $user->uid }}</a></td>
+                <td><a href="{{ url('/user/' . $user->uid) }}">{{ $user->nickname }}</a></td>
                 <td>{{ $user->cellphone }}</td>
                 <td>{{ $user->email }}</td>
                 <td>{{ $user->order_num }}</td>
@@ -58,7 +57,7 @@
                 <td>
                     <div class="btn-group btn-group-sm">
                         <button type="button" id="{{ $user->uid }}" class="{{ $user->isactive ? 'lockuser btn btn-success' : 'lockuser btn btn-danger' }}">{{ $user->isactive ? '锁定' : '解锁'  }}</button>
-                        <a href="{{ url('/userdetail/' . $user->uid) }}"><button type="button" class="btn btn-info btn-sm">查看</button></a>
+                        <a href="{{ url('/user/' . $user->uid) }}"><button type="button" class="btn btn-info btn-sm">查看</button></a>
                     </div>
                 </td>
                 <td id="isactive">{{ $user->isactive ? '未锁定' : '已锁定' }}</td>

@@ -14,6 +14,6 @@ $(document).ready(function() {
 
     // 点击"查看"按钮
     $(".detail").click(function () {
-        window.location.replace( '/orderdetail/' + $(this).attr('id') );
+        window.location.replace( '/order/' + $(this).attr('id') );
     });
 });
