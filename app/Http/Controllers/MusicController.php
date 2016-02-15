@@ -10,13 +10,23 @@ use App\Http\Controllers\Controller;
 class MusicController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+     public function __construct()
+     {
+         $this->middleware('auth');
+     }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        return view('music');
     }
 
     /**
@@ -26,7 +36,7 @@ class MusicController extends Controller
      */
     public function create()
     {
-        //
+        return view('musicadd');
     }
 
     /**
@@ -37,7 +47,7 @@ class MusicController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $file = $request->file('cvs');
     }
 
     /**

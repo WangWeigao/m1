@@ -52,7 +52,14 @@
                     {{-- Authentication Links --}}
                     @if(Auth::user())
                         <li id="home"><a href="{{ url('/home') }}">Home</a></li>
-                        <li id="music"><a href="{{ url('/music') }}">曲库管理</a></li>
+                        <li id="music" class="dropdown">
+                            {{-- <a href="{{ url('/music') }}">曲库管理</a> --}}
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">曲库管理<span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="/music/create">添加曲目</a></li>
+                                <li><a href="/music/index">查找曲目</a></li>
+                            </ul>
+                        </li>
                         <li id="user-manager" class="dropdown">
                             <a href="{{ url('/user') }}">学生管理</a>
                             <ul class="dropdown-menu" role="menu">

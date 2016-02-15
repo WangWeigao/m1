@@ -36,7 +36,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/', function () {
         return redirect('home');
     });
-
+    
+    // --------------------------------------用户路由----------------------------------------------
     /**
      * 曲库路由
      */
