@@ -38,6 +38,11 @@ Route::group(['middleware' => 'web'], function () {
     });
 
     /**
+     * 曲库路由
+     */
+    Route::resource('/music', 'MusicController');
+
+    /**
      * Default Route, useless.
      */
     Route::get('/home', 'HomeController@index');
@@ -69,27 +74,11 @@ Route::group(['middleware' => 'web'], function () {
      * 使用资源路由
      */
     Route::resource('/order', 'OrderController');
-    /**
-     * 按时间查询订单, 显示视图
-     */
-    // Route::get('/order', 'OrderController@index');
-
-    /**
-    * 按时间查询订单, 显示查询结果
-    */
-    // Route::any('/getorders', 'OrderController@getOrders');
 
     /**
      * 锁定或解锁订单
      */
     Route::get('/lockorder/{id}', 'OrderController@lockOrder');
-
-    /**
-     * 获取单个订单的详细信息
-     */
-    // Route::get('/orderdetail/{id}', 'OrderController@orderDetailInfo');
-
-
 });
 // 测试路由
 Route::any('/test', function() {
