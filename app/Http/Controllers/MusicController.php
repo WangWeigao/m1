@@ -27,9 +27,14 @@ class MusicController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('music');
+        $name = $request->get('name') or '';
+        $data = Music::orwhere('name', 'like', "%$name%")
+                    ->orwhere('auth', 'like', "%$name%")
+                    ->get();
+        // return $data;
+        return view('music')->with(['data'=>$data, 'name'=>$name]);
     }
 
     /**
