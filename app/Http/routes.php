@@ -36,11 +36,15 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/', function () {
         return redirect('home');
     });
-    
+
     // --------------------------------------用户路由----------------------------------------------
     /**
-     * 曲库路由
+     * 通过csv文件批量添加数据
      */
+    Route::post('/music/storecsv', 'MusicController@storeCsv');
+    /**
+    * 曲库路由
+    */
     Route::resource('/music', 'MusicController');
 
     /**

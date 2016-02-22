@@ -31,7 +31,7 @@ class MusicController extends Controller
     {
         $name = $request->get('name') or '';
         $data = Music::orwhere('name', 'like', "%$name%")
-                    ->orwhere('auth', 'like', "%$name%")
+                    ->orwhere('author', 'like', "%$name%")
                     ->get();
         // return $data;
         return view('music')->with(['data'=>$data, 'name'=>$name]);
@@ -47,13 +47,51 @@ class MusicController extends Controller
         return view('musicadd');
     }
 
+    public function store(Request $request)
+    {
+        /**
+         * 取得表单中各个项的值
+         */
+        $name = $request->get('title') ? $request->get('title') : '';
+        $author = $request->get('author') ? $request->get('author') : '';
+
+        // 如果文件存在且上传成功
+        if (!($request->hasFile('midi-file') && $request->file('midi-file')->isValid())) {
+            $data['status'] = false;
+            // 文件上传失败
+            $data['errCode'] = 10002;
+            return $data;
+        }
+        if (!empty($name) && !empty($author)) {
+            /**
+             * 插入数据
+             */
+            $music = new Music;
+            $music->name = $name;
+            $music->author = $author;
+            $result = $music->save();
+
+            /**
+             * 保存midi文件
+             */
+            $id = $music->id;
+            $path = public_path() . '/midis';
+            $name = $id . '.mid';
+            $request->file('midi-file')->move($path, $name);
+
+        if ($result) {
+            $data['status'] = true;
+            return $data;
+        }
+    }
+}
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function storeCsv(Request $request)
     {
         /**
          * 验证文件是否存在
@@ -105,7 +143,7 @@ class MusicController extends Controller
         while($arr = fgetcsv($fp)) {
             $music = new Music;
             $music -> name = mb_convert_encoding($arr[0], 'UTF-8', 'GB2312');
-            $music -> auth = mb_convert_encoding($arr[1], 'UTF-8', 'GB2312');
+            $music -> author = mb_convert_encoding($arr[1], 'UTF-8', 'GB2312');
             $music -> filename = mb_convert_encoding($arr[2], 'UTF-8', 'GB2312');
             $result[] = $music->save();
         }
@@ -117,25 +155,6 @@ class MusicController extends Controller
         }
     }
 
-    /**
-     * 获取内容的编码
-     * @param string $str
-     */
-    // function get_encoding($str = "") {
-    	// $encodings = array (
-    	// 	'ASCII',
-    	// 	'UTF-8',
-    	// 	'GBK',
-        //     'GB18030'
-    	// );
-    	// foreach ( $encodings as $encoding ) {
-    	// 	if ($str === mb_convert_encoding ( mb_convert_encoding ( $str, "UTF-8", $encoding ), $encoding, "UTF-8" )) {
-    	// 		return $encoding;
-    	// 	}
-    	// }
-    	// return false;
-        // return mb_convert_encoding($str, 'UTF-8', 'GBK');
-    // }
 
     /**
      * Display the specified resource.

@@ -45,6 +45,9 @@ elixir(function(mix) {
         'getTeachers.js',      // getTeachers页面的js
         'order.js',         // order页面的js
         'getorders.js',     // getorders页面的js
+        'jquery.form.js',   // jquery表单提交插件
+        'music.js',         // music页面的js
+
 
     ]);
 
