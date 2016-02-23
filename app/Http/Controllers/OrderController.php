@@ -40,8 +40,8 @@ class OrderController extends Controller
         /**
          * 按时间跨度查询订单
          */
-        $orders = Order::whereBetween('submit_time', [$from_time, $to_time])
-                       ->paginate(10);
+        $orders = Order::whereBetween('submit_time', [$from_time, $to_time])->get();
+                    //    ->paginate(10);
 
         // 将 status 的值替换为可识别的内容
         foreach ($orders as $order) {
