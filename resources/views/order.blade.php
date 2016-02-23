@@ -41,6 +41,7 @@
                             <th>金额(元)</th>
                             <th>订单评分</th>
                             <th>订单状态</th>
+                            <th>提现</th>
                             <th>操作</th>
                         </tr>
                     </thead>
@@ -51,6 +52,7 @@
                             <th>金额(元)</th>
                             <th>订单评分</th>
                             <th>订单状态</th>
+                            <th>提现</th>
                             <th>操作</th>
                         </tr>
                     </tfoot>
@@ -62,6 +64,7 @@
                                 <td>{{ $order->price }}</td>
                                 <td>{{ $order->rating }}</td>
                                 <td>{{ $order->status }}</td>
+                                <td>{{ $order->encashment }}</td>
                                 <td>
                                     <div class="btn-group btn-group-sm">
                                         <button type="button" id="{{ $order->oid }}" class="btn btn-info btn-sm lockorder" >锁定</button>

@@ -66,6 +66,13 @@ class OrderController extends Controller
             if (empty($order->rating)) {
                 $order->rating = '暂无评分';
             }
+
+            if ($order->encashment) {
+                $order->encashment = '已提现';
+            } else {
+                $order->encashment = '暂未提现';
+            }
+
         }
 
         /**

@@ -22,8 +22,8 @@
             <div class="panel-heading clearfix" >
                 <div class="pull-left">
                     <button class="btn btn-success" data-toggle="modal" data-target="#newPopup" data-backdrop="static">New</button>
-                    <button class="btn btn-warning">Disable</button>
-                    <button class="btn btn-danger">Delete</button>
+                    {{-- <button class="btn btn-warning">Disable</button>
+                    <button class="btn btn-danger">Delete</button> --}}
                     <div id="addResult"></div>
                 </div>
             </div>
