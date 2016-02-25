@@ -153,6 +153,7 @@ class OrderController extends Controller
                 $orderInfo->status = '数据错误';
                 break;
         }
-        return view('orderdetail')->with('orderInfo', $orderInfo);
+        // return view('orderdetail')->with('orderInfo', $orderInfo);
+        return $orderInfo;
     }
 }

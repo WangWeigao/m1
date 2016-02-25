@@ -51,24 +51,13 @@
                         @foreach($data as $item)
                             <tr>
                                 <td>
-                                    <input type="checkbox">
+                                    {{-- <input type="checkbox"> --}}
                                     {{ $item->name }}
                                 </td>
                                 <td>{{ $item->author }}</td>
                                 <td><a href="#">{{ $item->filename }}</a></td>
                                 <td>
-                                    <button	class="btn btn-xs btn-info" data-toggle="modal" data-target="#rolePopUp"><span class="glyphicon glyphicon-list"></span> Info</button>
-                                    <button	class="btn btn-xs btn-success"><span class="glyphicon glyphicon-user"></span> Role</button>
-                                    <div class="btn-group">
-                                    	<button	type="button" class="btn btn-xs btn-primary dropdown-toggle" data-toggle="dropdown">More<span class="caret"></span></button>
-                        				<ul	class="dropdown-menu" role="menu">
-            								<li><a href="#">Projects</a></li>
-            								<li><a href="#">Tasks</a></li>
-            								<li><a href="#">Timesheet</a></li>
-            								<li	class="divider"></li>
-            								<li><a href="#">Others</a></li>
-                        				</ul>
-                                    </div>
+                                    <button class="btn btn-xs btn-info"><span class="glyphicon glyphicon-edit" data-toggle="modal" data-target="#rolePopUp"></span> 编辑</button>
                                 </td>
                             </tr>
                         @endforeach
@@ -80,14 +69,16 @@
     </div>
     {{-- info的弹窗 --}}
     <div class="modal fade"	id="rolePopUp">
-		<div	class="modal-dialog">
-			<div	class="modal-content">
-				<div	class="modal-header">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
 				    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				    <h4 class="modal-title" id="myModalLabel">Roles of Tom	Xu</h4>
+				    <h4 class="modal-title" id="myModalLabel">Roles of Tom Xu</h4>
 				</div>
 				<div class="modal-body">
-					{{-- <table class="table	table-hover">…</table> --}}
+                    <p>
+                        这是modal-body部分
+                    </p>
 				</div>
 				<div class="modal-footer">
                     <button type="button" class="btn btn-default"data-dismiss="modal">Close</button>
