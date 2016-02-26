@@ -47,7 +47,7 @@
                     </tfoot>
                     <tbody>
                         @foreach($data as $item)
-                            <tr>
+                            <tr id="{{ $item->id }}">
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->author }}</td>
                                 <td><a href="#">{{ $item->filename }}</a></td>
@@ -82,15 +82,18 @@
                   </thead>
                   <tbody>
                       <tr>
-                          <td><input type="text" id="edit_title" placeholder="曲目名称"></td>
-                          <td><input type="text" id="edit_author"></td>
+                          <form id="save_detail">
+                              <td><input type="text" id="edit_title" placeholder="曲目名称"></td>
+                              <td><input type="text" id="edit_author"></td>
+                              <input type="hidden" id="edit_id">
+                          </form>
                       </tr>
                   </tbody>
               </table>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">保存修改</button>
+            <button type="button" class="btn btn-primary" id="save" data-dismiss="modal">保存修改</button>
           </div>
         </div>
       </div>
@@ -127,8 +130,8 @@
                     </form>
 				</div>
 				<div class="modal-footer">
-                    <button type="button" class="btn btn-default"data-dismiss="modal" id="createMusic">创建</button>
-                    <button type="button" class="btn btn-default"data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="createMusic">创建</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 				</div>
 			</div>
 		</div>

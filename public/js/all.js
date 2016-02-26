@@ -329,19 +329,6 @@ $(function () {
 });
 
 $(document).ready(function() {
-    // $(".lockorder").each(function (index, domEle) {
-    //     $(domEle).click(function () {
-    //         $.get(
-    //             '/lockorder/' + $(domEle).attr('id'),
-    //             function(data) {
-    //                 if (data == 1) {
-    //
-    //                 }
-    //             }
-    //         );
-    //     });
-    // });
-
     // 点击"查看"按钮
     $(".detail").each(function(index, el) {
         $(this).click(function() {
@@ -1689,6 +1676,43 @@ $(document).ready(function() {
            return false; //最好返回false，因为如果按钮类型是submit,则表单自己又会提交一次;返回false阻止表单再次提交
         }
     });
+
+    // 点击"编辑"按钮
+    $(".edit").each(function(index, el) {
+        $(this).click(function() {
+            $("#edit_id").val($(el).closest('tr').attr('id'));
+            $("#edit_title").val($(el).closest('tr').find('td:eq(0)').text());
+            $("#edit_author").val($(el).closest('tr').find('td:eq(1)').text());
+        });
+    });
+
+    // 点击"保存修改"按钮
+    $("#save").bind('click', function(event) {
+        ajaxSubmitForm();
+        function ajaxSubmitForm() {
+            var option = {
+                url : 'music/' + $("#edit_id").val(),
+                type : 'put',
+                dataType : 'json',
+                data : {
+                    'name' : $("#edit_title").val(),
+                    'author' : $("#edit_author").val()
+                },
+                headers : {
+                    'X-CSRF-TOKEN': $('input[name="_token"]').val()
+                },
+                success : function(data) {
+                    $("#addResult").html("添加成功!");
+                },
+                // error : function(data) {
+                //     alert(JSON.stringify(data) + "--添加失败, 请重试");
+                // }
+            }
+            $("#save_detail").ajaxSubmit(option);
+            return false;
+        }
+    });
+
 });
 
 //# sourceMappingURL=all.js.map

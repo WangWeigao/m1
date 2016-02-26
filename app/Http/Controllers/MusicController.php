@@ -187,7 +187,12 @@ class MusicController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $music = Music::find($id);
+        $music->name = $request->name;
+        $music->author = $request->author;
+        $music->save();
+        $data['status'] = true;
+        // return $data;
     }
 
     /**
