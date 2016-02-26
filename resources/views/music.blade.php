@@ -31,9 +31,7 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>
-                                曲目名称
-                            </th>
+                            <th>曲目名称</th>
                             <th>作者家</th>
                             <th>音频文件</th>
                             <th>操作</th>
@@ -50,14 +48,13 @@
                     <tbody>
                         @foreach($data as $item)
                             <tr>
-                                <td>
-                                    {{-- <input type="checkbox"> --}}
-                                    {{ $item->name }}
-                                </td>
+                                <td>{{ $item->name }}</td>
                                 <td>{{ $item->author }}</td>
                                 <td><a href="#">{{ $item->filename }}</a></td>
                                 <td>
-                                    <button class="btn btn-xs btn-info"><span class="glyphicon glyphicon-edit" data-toggle="modal" data-target="#rolePopUp"></span> 编辑</button>
+                                    <button class="btn btn-xs btn-info edit" data-toggle="modal" data-target="#editPopup" data-backdrop="static">
+                                        <span class="glyphicon glyphicon-edit"></span>编辑
+                                     </button>
                                 </td>
                             </tr>
                         @endforeach
@@ -67,30 +64,42 @@
         </div>
         @endif
     </div>
-    {{-- info的弹窗 --}}
-    <div class="modal fade"	id="rolePopUp">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-				    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				    <h4 class="modal-title" id="myModalLabel">Roles of Tom Xu</h4>
-				</div>
-				<div class="modal-body">
-                    <p>
-                        这是modal-body部分
-                    </p>
-				</div>
-				<div class="modal-footer">
-                    <button type="button" class="btn btn-default"data-dismiss="modal">Close</button>
-				</div>
-			</div>
-		</div>
+    {{-- 编辑窗口 --}}
+    <div class="modal fade" id="editPopup">
+      <div class="modal-dialog" style="width: auto">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id=""></h4>
+          </div>
+          <div class="modal-body">
+              <table class="table">
+                  <thead>
+                      <tr>
+                          <th>曲目名称</th>
+                          <th>作者家</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr>
+                          <td><input type="text" id="edit_title" placeholder="曲目名称"></td>
+                          <td><input type="text" id="edit_author"></td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">保存修改</button>
+          </div>
+        </div>
+      </div>
     </div>
     {{-- New的弹窗 --}}
     <div class="modal fade"	id="newPopup">
-		<div	class="modal-dialog">
-			<div	class="modal-content">
-				<div	class="modal-header">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
 				    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 				    <h4 class="modal-title" id="myModalLabel">添加曲目</h4>
 				</div>

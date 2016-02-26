@@ -44,4 +44,12 @@ $(document).ready(function() {
            return false; //最好返回false，因为如果按钮类型是submit,则表单自己又会提交一次;返回false阻止表单再次提交
         }
     });
+
+    // 点击"编辑"按钮
+    $(".edit").each(function(index, el) {
+        $(this).click(function() {
+            $("#edit_title").val($(el).closest('tr').find('td:eq(0)').text());
+            $("#edit_author").val($(el).closest('tr').find('td:eq(1)').text());
+        });
+    });
 });
