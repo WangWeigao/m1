@@ -6,6 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class StudentUser extends Model
 {
+    /**
+     * 允许导入的字段
+     * @var array
+     */
+    protected $guarded = [];
+
     // 更改数据表为Users
     protected $table = 'users';
 

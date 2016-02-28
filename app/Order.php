@@ -7,8 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     /**
+     * 允许导入的字段
+     * @var array
+     */
+    protected $guarded = [];
+
+    /**
      * orders表的主键
-     * @var integer
+     * @var string
      */
     protected $primaryKey = 'oid';
 

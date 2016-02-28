@@ -52,18 +52,26 @@
                     {{-- Authentication Links --}}
                     @if(Auth::user())
                         <li id="home"><a href="{{ url('/home') }}">Home</a></li>
+                        <li id="music" class="dropdown">
+                            {{-- <a href="{{ url('/music') }}">曲库管理</a> --}}
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">曲库管理<span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="/music/create">添加曲目</a></li>
+                                <li><a href="/music">查找曲目</a></li>
+                            </ul>
+                        </li>
                         <li id="user-manager" class="dropdown">
-                            <a href="{{ url('/user') }}">用户管理</a>
+                            <a href="{{ url('/user') }}">学生管理</a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="{{ url('/userdetails') }}"></a></li>
                             </ul>
                         </li>
                         <li id="teacher-manager"><a href="{{ url('/teacher') }}">教师管理</a></li>
                         <li id="order-manager"><a href="{{ url('/order') }}">订单管理</a></li>
-                        <li><a href="{{ url('/lessons') }}">发布审批</a></li>
-                        <li><a href="#">客服</a></li>
-                        <li><a href="#">结算系统</a></li>
-                        <li><a href="#">系统管理</a></li>
+                        <li class="disabled"><a href="#">结算系统</a></li>
+                        <li class="disabled"><a href="{{ url('/lessons') }}">发布审批</a></li>
+                        <li class="disabled"><a href="#">客服</a></li>
+                        <li class="disabled"><a href="#">系统管理</a></li>
                     @endif
                 </ul>
 

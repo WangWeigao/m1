@@ -42,8 +42,12 @@ elixir(function(mix) {
         'bootstrap-datetimepicker.min.js',  // 日历时间选择器
         'user.js',          // user页面的js
         'getusers.js',      // getusers页面的js
+        'getTeachers.js',      // getTeachers页面的js
         'order.js',         // order页面的js
         'getorders.js',     // getorders页面的js
+        'jquery.form.js',   // jquery表单提交插件
+        'music.js',         // music页面的js
+
 
     ]);
 

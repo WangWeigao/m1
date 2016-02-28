@@ -17,25 +17,13 @@ class OrderController extends Controller
         $this->middleware('auth');
     }
 
-
-    /**
-     * 显示订单查询界面
-     * @method index
-     * @return [type] [description]
-     */
-    public function index()
-    {
-        return view('order');
-    }
-
-
     /**
      * 按时间跨度查询订单
      * @method getOrders
      * @param  Request          $request 用户提交的数据
      * @return Array(Json)               订单信息
      */
-    public function getOrders(Request $request)
+    public function index(Request $request)
     {
         /**
          * 查询从这个时间开始查询订单
@@ -52,8 +40,8 @@ class OrderController extends Controller
         /**
          * 按时间跨度查询订单
          */
-        $orders = Order::whereBetween('submit_time', [$from_time, $to_time])
-                       ->paginate(10);
+        $orders = Order::whereBetween('submit_time', [$from_time, $to_time])->get();
+                    //    ->paginate(10);
 
         // 将 status 的值替换为可识别的内容
         foreach ($orders as $order) {
@@ -78,12 +66,19 @@ class OrderController extends Controller
             if (empty($order->rating)) {
                 $order->rating = '暂无评分';
             }
+
+            if ($order->encashment) {
+                $order->encashment = '已提现';
+            } else {
+                $order->encashment = '暂未提现';
+            }
+
         }
 
         /**
          * 携带 from_time 和 to_time 以便进行分页, 点击其它页娄时将数据带到跳转的页面
          */
-        return view('getorders')->with(['orders' => $orders, 'from_time' => $from_time, 'to_time' => $to_time]);
+        return view('order')->with(['orders' => $orders, 'from_time' => $from_time, 'to_time' => $to_time]);
     }
 
 
@@ -96,17 +91,31 @@ class OrderController extends Controller
      */
     public function lockOrder($id)
     {
-        return 1;
+        //获取用户激活状态
+        $active = Order::where('oid', $id)->first()->isactive;
+
+        /**
+         * 判断用户是否锁定, 以执行相反操作
+         */
+        if ($active) {
+            //取消激活状态(锁定)
+            $result = Order::where('oid', $id)->update(['isactive'=>0]);
+        }else {
+            //激活(解锁)
+            $result = Order::where('oid', $id)->update(['isactive'=>1]);
+        }
+
+        return $active;
     }
 
 
     /**
      * 订单详细信息
-     * @method orderDetailInfo
+     * @method show
      * @param  [integer]          $id [订单ID]
      * @return [Json]                 [单个订单的详细信息]
      */
-    public function orderDetailInfo($id)
+    public function show($id)
     {
         $orderInfo = Order::find($id);
 
@@ -144,6 +153,7 @@ class OrderController extends Controller
                 $orderInfo->status = '数据错误';
                 break;
         }
-        return view('orderdetail')->with('orderInfo', $orderInfo);
+        // return view('orderdetail')->with('orderInfo', $orderInfo);
+        return $orderInfo;
     }
 }

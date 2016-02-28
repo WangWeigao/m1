@@ -23,26 +23,15 @@ class TeacherController extends Controller
      }
 
     /**
-     * Display a seaching input.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return view('teacher');
-    }
-
-
-    /**
      * 模糊查询用户信息
      * @method queryUserInfo
      * @param  Request       $request 用户请求携带的数据
      * @return Json          $teachers   数据传递给视图
      */
-    public function getTeachers(Request $request)
+    public function index(Request $request)
     {
         //取得要查询的用户名
-        $name = $request->get('name');
+        $name = $request->get('name') ? $request->get('name') : '';
 
         //模糊匹配, 查询结果为分页做准备
         $teachers = StudentUser::where('usertype', '<>', '1')
@@ -50,10 +39,11 @@ class TeacherController extends Controller
                      ->leftjoin('orders', 'users.uid', '=', 'orders.student_uid')
                      ->select('users.uid', 'users.nickname', 'users.cellphone', 'users.email', 'users.regdate', 'users.lastlogin', 'users.isactive', DB::raw('count(orders.student_uid) as order_num'))
                      ->groupby('users.uid')
-                     ->paginate(3);
+                    //  ->paginate(3);
+                     ->get();
 
         //将结果传递给视图
-        return view('getteachers')->with(['teachers' => $teachers, 'name' => $name]);
+        return view('teacher')->with(['teachers' => $teachers, 'name' => $name]);
 
     }
 
@@ -64,7 +54,7 @@ class TeacherController extends Controller
      * @param  number           $id 用户ID
      * @return Json             包含用户详情, 订单信息, 登录信息
      */
-    public function teacherDetailInfo($id)
+    public function show($id)
     {
         //通过用户ID查询详细信息, 且包含订单信息(usertype=1的为学生)
         $teacherInfo = StudentUser::where('uid', $id)->with('orders')->first();
@@ -114,7 +104,7 @@ class TeacherController extends Controller
      * @param  integer   $id 用户ID
      * @return Json          操作是否成功
      */
-    public function lockUser($id)
+    public function lockTeacher($id)
     {
         //获取用户激活状态
         $active = StudentUser::where('uid', $id)->first()->isactive;

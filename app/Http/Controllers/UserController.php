@@ -24,54 +24,54 @@ class UserController extends Controller
      }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return view('user');
-    }
-
-
-    /**
      * 模糊查询用户信息
      * @method queryUserInfo
      * @param  Request       $request 用户请求携带的数据
      * @return Json          $users   数据传递给视图
      */
-    public function getUsers(Request $request)
+    public function index(Request $request)
     {
         //取得要查询的用户名
-        $name = $request->get('name');
-        $field = $request->get('field');
-        $order = $request->get('order');
+        $name = $request->get('name') ? $request->get('name') : '';
+
+        /**
+         * 用来排序的字段
+         */
+        // $field = $request->get('field');
+        // $order = $request->get('order');
 
         //模糊匹配, 查询结果为分页做准备
-        $users = StudentUser::where('usertype', 1)
-                     ->where('nickname', 'like', "%$name%")
-                     ->leftjoin('orders', 'users.uid', '=', 'orders.student_uid')
-                     ->select('users.uid', 'users.nickname', 'users.cellphone', 'users.email', 'users.regdate', 'users.lastlogin', 'users.isactive', DB::raw('count(orders.student_uid) as order_num'))
-                     ->groupby('users.uid')
-                     ->orderby($field, $order)
-                     ->get();
+        $users = StudentUser::where('usertype', 1);
+
+        if (is_numeric($name)) {
+            $users->where('cellphone', 'like', "%$name%");
+        }else {
+            $users->where('nickname', 'like', "%$name%");
+        }
+
+        $users = $users
+                ->leftjoin('orders', 'users.uid', '=', 'orders.student_uid')
+                ->select('users.uid', 'users.nickname', 'users.cellphone', 'users.email', 'users.regdate', 'users.lastlogin', 'users.isactive', DB::raw('count(orders.student_uid) as order_num'))
+                ->groupby('users.uid')
+                // ->orderby($field, $order)
+                ->get();
                     //  由前端分页, 此处暂时用不到
                     //  ->paginate(10);
-// dd($users);
+
         //将结果传递给视图
         // return view('getusers')->with(['name' => $name, 'users' => $users]);
-        return view('getusers')->with('users', $users);
+        return view('user')->with(['users' => $users, 'name' => $name]);
 
     }
 
 
     /**
      * 查询用户详细信息
-     * @method userDetailInfo
+     * @method show
      * @param  number           $id 用户ID
      * @return Json             包含用户详情, 订单信息, 登录信息
      */
-    public function userDetailInfo($id)
+    public function show($id)
     {
         //通过用户ID查询详细信息, 且包含订单信息(usertype=1的为学生)
         $userInfo = StudentUser::where('uid', $id)->where('usertype', 1)->with('orders')->first();
