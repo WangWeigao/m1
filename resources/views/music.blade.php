@@ -53,7 +53,10 @@
                                 <td><a href="#">{{ $item->filename }}</a></td>
                                 <td>
                                     <button class="btn btn-xs btn-info edit" data-toggle="modal" data-target="#editPopup" data-backdrop="static">
-                                        <span class="glyphicon glyphicon-edit"></span>编辑
+                                        <span class="glyphicon glyphicon-edit"></span> 编辑
+                                     </button>
+                                    <button class="btn btn-xs btn-info delete">
+                                        <span class="glyphicon glyphicon-remove"></span> 删除
                                      </button>
                                 </td>
                             </tr>

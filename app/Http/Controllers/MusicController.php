@@ -192,7 +192,7 @@ class MusicController extends Controller
         $music->author = $request->author;
         $music->save();
         $data['status'] = true;
-        // return $data;
+        return $data;
     }
 
     /**
@@ -203,6 +203,14 @@ class MusicController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // 删除模型
+        $music = Music::destroy($id);
+        if ($music) {
+            $data['status'] = true;
+        }else {
+            $data['status'] = false;
+        }
+
+        return $data;
     }
 }

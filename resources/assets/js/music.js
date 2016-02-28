@@ -58,8 +58,9 @@ $(document).ready(function() {
     $("#save").bind('click', function(event) {
         ajaxSubmitForm();
         function ajaxSubmitForm() {
+            var $id_value = $("#edit_id").val();
             var option = {
-                url : 'music/' + $("#edit_id").val(),
+                url : 'music/' + $id_value,
                 type : 'put',
                 dataType : 'json',
                 data : {
@@ -70,8 +71,11 @@ $(document).ready(function() {
                     'X-CSRF-TOKEN': $('input[name="_token"]').val()
                 },
                 success : function(data) {
-                    $("#addResult").html("添加成功!");
+                    $("#addResult").html("修改成功!");
                 },
+                error : function(data) {
+                    alert('哦，出了点小问题，再试一次吧');
+                }
                 // error : function(data) {
                 //     alert(JSON.stringify(data) + "--添加失败, 请重试");
                 // }
@@ -79,6 +83,31 @@ $(document).ready(function() {
             $("#save_detail").ajaxSubmit(option);
             return false;
         }
+    });
+
+    // 点击"删除"按钮
+    $(".delete").each(function(indel, el) {
+        $(this).bind('click', function(event) {
+            $.ajax({
+                url: '/music/' + $(el).closest('tr').attr('id'),
+                type: 'DELETE',
+                dataType: 'json',
+                headers : {
+                    'X-CSRF-TOKEN': $('input[name="_token"]').val()
+                }
+            })
+            .done(function() {
+                console.log("success");
+                $(el).closest('tr').remove();
+
+            })
+            .fail(function() {
+                console.log("error");
+            })
+            .always(function() {
+                console.log("complete");
+            });
+        });
     });
 
 });
