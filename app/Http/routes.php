@@ -84,8 +84,10 @@ Route::group(['middleware' => 'web'], function () {
      * 锁定或解锁订单
      */
     Route::get('/lockorder/{id}', 'OrderController@lockOrder');
-});
-// 测试路由
-Route::any('/test', function() {
-    return view('test');
+    // --------------------------------------财务路由-------------------------------------------------
+    Route::resource('/finance', 'FinanceController');
+    // 测试路由
+    Route::get('/test', function() {
+        return view('auth.passwords.reset')->with('token', '123456');
+    });
 });

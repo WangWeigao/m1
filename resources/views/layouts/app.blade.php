@@ -68,7 +68,9 @@
                         </li>
                         <li id="teacher-manager"><a href="{{ url('/teacher') }}">教师管理</a></li>
                         <li id="order-manager"><a href="{{ url('/order') }}">订单管理</a></li>
-                        <li class="disabled"><a href="#">结算系统</a></li>
+                        @can('access-finance')
+                            <li class="disabled"><a href="#">结算系统</a></li>
+                        @endif
                         <li class="disabled"><a href="{{ url('/lessons') }}">发布审批</a></li>
                         <li class="disabled"><a href="#">客服</a></li>
                         <li class="disabled"><a href="#">系统管理</a></li>
@@ -88,6 +90,7 @@
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{ url('/password/reset/token') }}"><i class="fa fa-btn fa-edit"></i>修改密码</a></li>
                                 <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
                             </ul>
                         </li>
