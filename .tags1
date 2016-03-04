@@ -4,15 +4,7 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-PasswordController	D:\wamp\www\m1\app\Http\Controllers\Auth\PasswordController.php	/^class PasswordController extends Controller$/;"	class	line:12
-__construct	D:\wamp\www\m1\app\Http\Controllers\Auth\PasswordController.php	/^    public function __construct()$/;"	function	line:32
-showResetForm	D:\wamp\www\m1\app\Http\Controllers\Auth\PasswordController.php	/^    public function showResetForm()$/;"	function	line:42
-token	D:\wamp\www\m1\app\Http\Controllers\Auth\PasswordController.php	/^        $token = csrf_token();$/;"	variable	line:44
-reset	D:\wamp\www\m1\app\Http\Controllers\Auth\PasswordController.php	/^    public function reset(Request $request)$/;"	function	line:48
-id	D:\wamp\www\m1\app\Http\Controllers\Auth\PasswordController.php	/^        $id                    = $request->user()->id;$/;"	variable	line:57
-email	D:\wamp\www\m1\app\Http\Controllers\Auth\PasswordController.php	/^        $email                 = $request->user()->email;$/;"	variable	line:58
-old_password	D:\wamp\www\m1\app\Http\Controllers\Auth\PasswordController.php	/^        $old_password          = $request->old_password;$/;"	variable	line:59
-password	D:\wamp\www\m1\app\Http\Controllers\Auth\PasswordController.php	/^        $password              = $request->password;$/;"	variable	line:60
-password_confirmation	D:\wamp\www\m1\app\Http\Controllers\Auth\PasswordController.php	/^        $password_confirmation = $request->password_confirmation;$/;"	variable	line:61
-result	D:\wamp\www\m1\app\Http\Controllers\Auth\PasswordController.php	/^        $result = Auth::attempt(['email' => $email, 'password' => $old_password]);$/;"	variable	line:63
-user	D:\wamp\www\m1\app\Http\Controllers\Auth\PasswordController.php	/^            $user = User::find($id);$/;"	variable	line:65
+ajaxSubmitForm	D:\wamp\www\m1\resources\assets\js\rbac_user.js	/^        function ajaxSubmitForm() {$/;"	function	line:16
+success	D:\wamp\www\m1\resources\assets\js\rbac_user.js	/^                success : function(data) {$/;"	function	line:37
+error	D:\wamp\www\m1\resources\assets\js\rbac_user.js	/^                error : function(data) {$/;"	function	line:41
+success	D:\wamp\www\m1\resources\assets\js\rbac_user.js	/^                success : function(data) {$/;"	function	line:65

@@ -73,7 +73,9 @@
                         @endif
                         <li class="disabled"><a href="{{ url('/lessons') }}">发布审批</a></li>
                         <li class="disabled"><a href="#">客服</a></li>
-                        <li class="disabled"><a href="#">系统管理</a></li>
+                        @can('access-finance')
+                            <li class=""><a href="#">系统管理</a></li>
+                        @endcan
                     @endif
                 </ul>
 

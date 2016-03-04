@@ -86,8 +86,10 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/lockorder/{id}', 'OrderController@lockOrder');
     // --------------------------------------财务路由-------------------------------------------------
     Route::resource('/finance', 'FinanceController');
-    // 测试路由
-    Route::get('/test', function() {
-        return view('auth.passwords.reset')->with('token', '123456');
-    });
+    // --------------------------------------RBAC-------------------------------------------------
+    Route::resource('rbac', 'RbacController');
+});
+// 测试路由
+Route::get('/test', function() {
+    return view('auth.passwords.reset')->with('token', '123456');
 });
