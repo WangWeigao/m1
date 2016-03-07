@@ -6,7 +6,6 @@ $(document).ready(function() {
             $("#home").addClass('active');
             break;
         case '/music':
-        case '/music/create':
             $("#music").addClass('active');
             break;
         case '/user':
@@ -31,3 +30,5 @@ $(document).ready(function() {
     //     $(this).addClass('active');
     // });
 });
+
+//# sourceMappingURL=app.js.map

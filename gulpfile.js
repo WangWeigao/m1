@@ -32,8 +32,8 @@ elixir(function(mix) {
      * 合并css文件
      */
     mix.scripts([
-        'jquery.min.js',    // jquery核心文件
-        'bootstrap.min.js', // bootstrap核心文件
+        // 'jquery.min.js',    // jquery核心文件
+        // 'bootstrap.min.js', // bootstrap核心文件
         'jquery.dataTables.min.js',         // 表格排序
         'dataTables.jqueryui.min.js',       // 表格排序
         'dataTables.bootstrap.min.js',      // 表格排序
@@ -48,14 +48,14 @@ elixir(function(mix) {
         'jquery.form.js',   // jquery表单提交插件
         'music.js',         // music页面的js
         'rbac_user.js',     // rbac中的user页面的js
-    ]);
-
+    ])
+    .scripts('app.js', 'public/js/app.js');
     /**
      * 添加时间戳
      */
     mix.version([
         'css/all.css',
         'js/all.js',
+        'js/*.js',
     ]);
-
 });
