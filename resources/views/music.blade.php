@@ -15,58 +15,55 @@
                 <button type="submit" name="button" class="btn btn-success" id="search">搜索</button>
             </fieldset>
         </form>
-        <hr>
 
-        @if(!empty($name))
-        <div class="panel panel-success">
-            <div class="panel-heading clearfix" >
-                <div class="pull-left">
-                    <button class="btn btn-success" data-toggle="modal" data-target="#newPopup" data-backdrop="static">New</button>
+        {{-- @if(!empty($name)) --}}
+        {{-- <div class="panel panel-success"> --}}
+            {{-- <div class="panel-heading clearfix" > --}}
+                {{-- <div class="pull-left"> --}}
+                    {{-- <button class="btn btn-success" data-toggle="modal" data-target="#newPopup" data-backdrop="static">New</button> --}}
                     {{-- <button class="btn btn-warning">Disable</button>
-                    <button class="btn btn-danger">Delete</button> --}}
-                    <div id="addResult"></div>
-                </div>
-            </div>
-            <div class="panel-body">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>曲目名称</th>
-                            <th>作者家</th>
-                            <th>音频文件</th>
-                            <th>操作</th>
-                        </tr>
-                    </thead>
-                    <tfoot>
-                        <tr>
-                            <th>曲目名称</th>
-                            <th>作者家</th>
-                            <th>音频文件</th>
-                            <th>操作</th>
-                        </tr>
-                    </tfoot>
-                    <tbody>
-                        @foreach($data as $item)
-                            <tr id="{{ $item->id }}">
-                                <td>{{ $item->name }}</td>
-                                <td>{{ $item->author }}</td>
-                                <td><a href="#">{{ $item->filename }}</a></td>
-                                <td>
-                                    <button class="btn btn-xs btn-info edit" data-toggle="modal" data-target="#editPopup" data-backdrop="static">
-                                        <span class="glyphicon glyphicon-edit"></span> 编辑
-                                     </button>
-                                    <button class="btn btn-xs btn-info delete">
-                                        <span class="glyphicon glyphicon-remove"></span> 删除
-                                     </button>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+                    {{-- <button class="btn btn-danger">Delete</button> --}}
+                    {{-- <div id="addResult"></div> --}}
+                {{-- </div> --}}
+            {{-- </div> --}}
+            {{-- <div class="panel-body"> --}}
+            {{-- </div> --}}
+            {{-- <div class="panel-footer"> --}}
+            {{-- </div> --}}
+        {{-- </div> --}}
+        {{-- @endif --}}
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>曲目名称</th>
+                    <th>作者家</th>
+                    <th>音频文件</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($musics as $item)
+                    <tr id="{{ $item->id }}">
+                        <td>{{ $item->name }}</td>
+                        <td>{{ $item->author }}</td>
+                        <td><a href="#">{{ $item->filename }}</a></td>
+                        <td>
+                            <button class="btn btn-xs btn-info edit" data-toggle="modal" data-target="#editPopup" data-backdrop="static">
+                                <span class="glyphicon glyphicon-edit"></span> 编辑
+                            </button>
+                            <button class="btn btn-xs btn-info delete">
+                                <span class="glyphicon glyphicon-remove"></span> 删除
+                            </button>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+        <div class="text-center">
+            {!! $musics->render() !!}
         </div>
-        @endif
-    </div>
+        <div class="text-center">
+        </div>
     {{-- 编辑窗口 --}}
     <div class="modal fade" id="editPopup">
       <div class="modal-dialog" style="width: auto">
@@ -139,4 +136,5 @@
 			</div>
 		</div>
     </div>
+</div>
 @endsection

@@ -30,11 +30,12 @@ class MusicController extends Controller
     public function index(Request $request)
     {
         $name = $request->get('name') or '';
-        $data = Music::orwhere('name', 'like', "%$name%")
+        $musics = Music::orwhere('name', 'like', "%$name%")
                     ->orwhere('author', 'like', "%$name%")
-                    ->get();
+                    ->paginate(15);
         // return $data;
-        return view('music')->with(['data'=>$data, 'name'=>$name]);
+        return view('music')->with(['musics'=>$musics, 'name'=>$name]);
+        // return view('music', ['data'=>$data, 'name'=>$name]);
     }
 
     /**

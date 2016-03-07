@@ -54,9 +54,9 @@ class UserController extends Controller
                 ->select('users.uid', 'users.nickname', 'users.cellphone', 'users.email', 'users.regdate', 'users.lastlogin', 'users.isactive', DB::raw('count(orders.student_uid) as order_num'))
                 ->groupby('users.uid')
                 // ->orderby($field, $order)
-                ->get();
+                // ->get();
                     //  由前端分页, 此处暂时用不到
-                    //  ->paginate(10);
+                ->paginate(15);
 
         //将结果传递给视图
         // return view('getusers')->with(['name' => $name, 'users' => $users]);
