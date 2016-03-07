@@ -18,9 +18,9 @@ elixir(function(mix) {
      * 合并css文件
      */
     mix.styles([
-        'font-awesome.min.css',         // font-awesome
-        'google-font-lato.css',         // 谷歌字体
-        'bootstrap.min.css',            // bootstrap主文件
+        // 'font-awesome.min.css',         // font-awesome
+        // 'google-font-lato.css',         // 谷歌字体
+        // 'bootstrap.min.css',            // bootstrap主文件
         'bootstrap-datetimepicker.css', // 日历时间选择器
         'jquery.dataTables.min.css',    //表格排序
         // 'dataTables.jqueryui.min.css',  // 表格排序
@@ -57,5 +57,5 @@ elixir(function(mix) {
         'css/all.css',
         'js/all.js',
     ]);
-    
+
 });
