@@ -48,8 +48,6 @@ elixir(function(mix) {
         'jquery.form.js',   // jquery表单提交插件
         'music.js',         // music页面的js
         'rbac_user.js',     // rbac中的user页面的js
-
-
     ]);
 
     /**
@@ -59,5 +57,5 @@ elixir(function(mix) {
         'css/all.css',
         'js/all.js',
     ]);
-
+    
 });

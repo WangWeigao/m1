@@ -1794,7 +1794,7 @@ $(document).ready(function() {
             $("#save_detail").ajaxSubmit(option);
             return false;
         }
-        // location.reload();
+        location.reload();
     });
 
     // 点击"删除"按钮
