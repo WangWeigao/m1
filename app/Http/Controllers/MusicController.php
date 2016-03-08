@@ -30,12 +30,21 @@ class MusicController extends Controller
     public function index(Request $request)
     {
         $name = $request->get('name') or '';
+
+        if (empty($name)) {
+            return view('music');
+        }
+
+        /**
+         * 按名称和作曲家模糊查询曲目信息
+         * @var Object
+         */
         $musics = Music::orwhere('name', 'like', "%$name%")
                     ->orwhere('author', 'like', "%$name%")
                     ->paginate(15);
-        // return $data;
+                    // return $musics;
+        // $musics = Music::where(DB::raw(concat('name', 'author')), 'like', $name)->paginate(3);
         return view('music')->with(['musics'=>$musics, 'name'=>$name]);
-        // return view('music', ['data'=>$data, 'name'=>$name]);
     }
 
     /**

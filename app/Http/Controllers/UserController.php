@@ -41,7 +41,22 @@ class UserController extends Controller
         // $order = $request->get('order');
 
         //模糊匹配, 查询结果为分页做准备
+
+        /**
+         * 如果查询字段$name为空，则不进行查询
+         */
+        if (empty($name)) {
+            return view('user');
+        }
+
+        /**
+         * 同时模糊匹配"用户名"和"电话号码"
+         * @var Object
+         */
         $users = StudentUser::where('usertype', 1);
+                                // ->orwhere('cellphone', 'like', "%$name%")
+                                // ->orwhere('nickname', 'like', "%$name%");
+                                // ->where('nickname', 'like', "%$name%");
 
         if (is_numeric($name)) {
             $users->where('cellphone', 'like', "%$name%");
@@ -57,6 +72,11 @@ class UserController extends Controller
                 // ->get();
                     //  由前端分页, 此处暂时用不到
                 ->paginate(15);
+
+// return $users;
+        /**
+         * 由于laravel不支持在分页结果
+         */
 
         //将结果传递给视图
         // return view('getusers')->with(['name' => $name, 'users' => $users]);

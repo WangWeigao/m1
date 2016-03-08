@@ -32,38 +32,45 @@
             {{-- </div> --}}
         {{-- </div> --}}
         {{-- @endif --}}
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>曲目名称</th>
-                    <th>作者家</th>
-                    <th>音频文件</th>
-                    <th>操作</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($musics as $item)
-                    <tr id="{{ $item->id }}">
-                        <td>{{ $item->name }}</td>
-                        <td>{{ $item->author }}</td>
-                        <td><a href="#">{{ $item->filename }}</a></td>
-                        <td>
-                            <button class="btn btn-xs btn-info edit" data-toggle="modal" data-target="#editPopup" data-backdrop="static">
-                                <span class="glyphicon glyphicon-edit"></span> 编辑
-                            </button>
-                            <button class="btn btn-xs btn-info delete">
-                                <span class="glyphicon glyphicon-remove"></span> 删除
-                            </button>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-        <div class="text-center">
-            {!! $musics->render() !!}
-        </div>
-        <div class="text-center">
-        </div>
+        @if(!empty($name))
+            @if(count($musics) > 0)
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>曲目名称</th>
+                            <th>作者家</th>
+                            <th>音频文件</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($musics as $item)
+                            <tr id="{{ $item->id }}">
+                                <td>{{ $item->name }}</td>
+                                <td>{{ $item->author }}</td>
+                                <td><a href="#">{{ $item->filename }}</a></td>
+                                <td>
+                                    <button class="btn btn-xs btn-info edit" data-toggle="modal" data-target="#editPopup" data-backdrop="static">
+                                        <span class="glyphicon glyphicon-edit"></span> 编辑
+                                    </button>
+                                    <button class="btn btn-xs btn-info delete">
+                                        <span class="glyphicon glyphicon-remove"></span> 删除
+                                    </button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                <div class="text-center">
+                    {!! $musics->render() !!}
+                </div>
+
+            @else
+                <div class="text-center blockquote">
+                    没有查到相关结果，更换搜索关键词再试试吧
+                </div>
+            @endif
+        @endif
     {{-- 编辑窗口 --}}
     <div class="modal fade" id="editPopup">
       <div class="modal-dialog" style="width: auto">
