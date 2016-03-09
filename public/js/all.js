@@ -1763,6 +1763,20 @@ $(document).ready(function() {
         console.log("complete");
     });
 
+    /**
+     * select下拉式日期选择器
+     */
+     $("#calendar").dateSelector({
+         ctlYearId: null,
+         ctlMonthId: null,
+         ctlDayId: null,
+         defYear: 2000,
+         defMonth: 2,
+         defDay: 1,
+         minYear: 1882,
+         maxYear: 3000
+ });
+
 
 
 });

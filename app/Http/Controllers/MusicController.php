@@ -225,6 +225,11 @@ class MusicController extends Controller
         return $data;
     }
 
+    /**
+     * 获取不同筛选条件中的值
+     * @method getCondations
+     * @return [type]        [description]
+     */
     public function getCondations()
     {
         $intruments = Instrument::select('id', 'name')->get();

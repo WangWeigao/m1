@@ -19,9 +19,9 @@
                 </div>
             {{-- </fieldset> --}}
         </form>
-        <form class="" action="/music" method="get">
+        <form class="form-group" action="/music" method="get">
             {!! csrf_field() !!}
-            <div class="form-inline">
+            <div class="form-inline form-control">
                 <span>筛选待件:</span>
                 <input type="checkbox">乐器
                 <select id="instruments">
@@ -48,7 +48,11 @@
                     <option>请选择</option>
                 </select>
                 <input type="checkbox">添加日期
-                <select id="date_add"></select>
+                <span id="dateSelector">
+                    <select id="idYear" name="idYear" data=""></select>年
+                    <select id="idMonth" name="idMonth" data=""></select>月
+                    <select id="idDay" name="idDay" data=""></select>日
+                </span>
             </div>
         </form>
 

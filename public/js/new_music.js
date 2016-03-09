@@ -142,40 +142,39 @@ $(document).ready(function() {
     /**
      * select下拉式日期选择器
      */
-     var myDate = new Date();
-     $("#dateSelector").DateSelector({
-     ctlYearId: 'idYear',
-     ctlMonthId: 'idMonth',
-     ctlDayId: 'idDay',
-     defYear: myDate.getFullYear(),
-     defMonth: (myDate.getMonth() + 1),
-     defDay: myDate.getDate(),
-     minYear: 1800,
-     maxYear: (myDate.getFullYear() + 1)
-     });
+     $("#calendar").dateSelector({
+         ctlYearId: null,
+         ctlMonthId: null,
+         ctlDayId: null,
+         defYear: 2000,
+         defMonth: 2,
+         defDay: 1,
+         minYear: 1882,
+         maxYear: 3000
+ });
 
 
 
 });
 
 /*
-* jQuery Date Selector Plugin
-* 日期联动选择插件
-* 
-* Demo:
-$("#calendar").DateSelector({
-ctlYearId: <年控件id>,
-ctlMonthId: <月控件id>,
-ctlDayId: <日控件id>,
-defYear: <默认年>,
-defMonth: <默认月>,
-defDay: <默认日>,
-minYear: <最小年|默认为1882年>,
-maxYear: <最大年|默认为本年>
-});
+ * jQuery Date Selector Plugin
+ * 日期联动选择插件
+ *
+ * Demo:
+        $("#calendar").DateSelector({
+                ctlYearId: <年控件id>,
+                ctlMonthId: <月控件id>,
+                ctlDayId: <日控件id>,
+                defYear: <默认年>,
+                defMonth: <默认月>,
+                defDay: <默认日>,
+                minYear: <最小年|默认为1882年>,
+                maxYear: <最大年|默认为本年>
+        });
 
-HTML:<div id="calendar"><SELECT id=idYear></SELECT>年 <SELECT id=idMonth></SELECT>月 <SELECT id=idDay></SELECT>日</div>
-*/
+   HTML:<div id="calendar"><SELECT id=idYear></SELECT>年 <SELECT id=idMonth></SELECT>月 <SELECT id=idDay></SELECT>日</div>
+ */
 (function ($) {
     //SELECT控件设置函数
     function setSelectControl(oSelect, iStart, iLength, iIndex) {
@@ -250,5 +249,6 @@ HTML:<div id="calendar"><SELECT id=idYear></SELECT>年 <SELECT id=idMonth></SELE
             oThis.Day = $(this).val();
         });
     }
-})(jQuery);
-//# sourceMappingURL=music.js.map
+});
+
+//# sourceMappingURL=new_music.js.map

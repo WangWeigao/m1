@@ -139,6 +139,21 @@ $(document).ready(function() {
         console.log("complete");
     });
 
+    /**
+     * select下拉式日期选择器
+     */
+     var myDate = new Date();
+     $("#dateSelector").DateSelector({
+     ctlYearId: 'idYear',
+     ctlMonthId: 'idMonth',
+     ctlDayId: 'idDay',
+     defYear: myDate.getFullYear(),
+     defMonth: (myDate.getMonth() + 1),
+     defDay: myDate.getDate(),
+     minYear: 1800,
+     maxYear: (myDate.getFullYear() + 1)
+     });
+
 
 
 });
