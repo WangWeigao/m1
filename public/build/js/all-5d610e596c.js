@@ -1623,6 +1623,9 @@ function log() {
 }));
 
 $(document).ready(function() {
+    /**
+     * 点击新建按钮
+     */
     $("#createMusic").click(function() {
         ajaxSubmitForm();
         function ajaxSubmitForm() {
@@ -1733,6 +1736,34 @@ $(document).ready(function() {
             });
         });
     });
+
+    /**
+     * 自动拉取筛选待件
+     */
+    $.ajax({
+        url: '/music/condations',
+        type: 'GET',
+        dataType: 'json',
+        headers : {
+            'X-CSRF-TOKEN': $('input[name="_token"]').val()
+        }
+    })
+    .done(function(data) {
+        console.log("success");
+        $.each(data, function(n, value) {
+            var $str = "";
+            $str = "<option value=" + value.id + ">" + value.name + "</option>";
+            $("#instruments").append($str);
+        });
+    })
+    .fail(function(data) {
+        console.log(data);
+    })
+    .always(function() {
+        console.log("complete");
+    });
+
+
 
 });
 

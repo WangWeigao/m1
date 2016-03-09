@@ -4,34 +4,54 @@
         {{-- 用户查询表单 --}}
         <form class="" action="/music" method="get">
             {!! csrf_field() !!}
-            <fieldset>
-                <legend>曲目查询</legend>
-                <div class="form-group">
+            <div class="breadcrumb">
+                <li>曲库管理</li>
+                <li class="active">曲库列表</li>
+            </div>
+            {{-- <fieldset> --}}
+                {{-- <legend>曲目查询</legend> --}}
+                <div class="form-group form-inline">
                     {{-- <label for="">用户搜索</label> --}}
-                    <input type="text" class="form-control" id="searchName" name="name" placeholder="请输入曲目名称或作曲家">
+                    <span>精确搜索: </span><input type="text" class="form-control" id="searchName" name="name" placeholder="请输入曲目名">
                     <input type="hidden" name="field" value="uid">
                     <input type="hidden" name="order" value="asc">
+                    <button type="submit" name="button" class="btn btn-success" id="search">搜索</button>
                 </div>
-                <button type="submit" name="button" class="btn btn-success" id="search">搜索</button>
-            </fieldset>
+            {{-- </fieldset> --}}
+        </form>
+        <form class="" action="/music" method="get">
+            {!! csrf_field() !!}
+            <div class="form-inline">
+                <span>筛选待件:</span>
+                <input type="checkbox">乐器
+                <select id="instruments">
+                    <option>请选择</option>
+                </select>
+                <input type="checkbox">出版社
+                <select id="press">
+                    <option>请选择</option>
+                </select>
+                <input type="checkbox">乐曲类别
+                <select id="category">
+                    <option>请选择</option>
+                </select>
+                <input type="checkbox">乐曲状态
+                <select id="onshelf">
+                    <option value="">请选择</option>
+                    <option value="1">已上架</option>
+                    <option value="0">待审核</option>
+                </select>
+            </div>
+            <div class="form-inline">
+                <input type="checkbox">操作人
+                <select id="operator">
+                    <option>请选择</option>
+                </select>
+                <input type="checkbox">添加日期
+                <select id="date_add"></select>
+            </div>
         </form>
 
-        {{-- @if(!empty($name)) --}}
-        {{-- <div class="panel panel-success"> --}}
-            {{-- <div class="panel-heading clearfix" > --}}
-                {{-- <div class="pull-left"> --}}
-                    {{-- <button class="btn btn-success" data-toggle="modal" data-target="#newPopup" data-backdrop="static">New</button> --}}
-                    {{-- <button class="btn btn-warning">Disable</button>
-                    {{-- <button class="btn btn-danger">Delete</button> --}}
-                    {{-- <div id="addResult"></div> --}}
-                {{-- </div> --}}
-            {{-- </div> --}}
-            {{-- <div class="panel-body"> --}}
-            {{-- </div> --}}
-            {{-- <div class="panel-footer"> --}}
-            {{-- </div> --}}
-        {{-- </div> --}}
-        {{-- @endif --}}
         @if(!empty($name))
             @if(count($musics) > 0)
                 <table class="table table-hover">
@@ -144,4 +164,14 @@
 		</div>
     </div>
 </div>
+@endsection
+
+@section('css')
+    <link rel="stylesheet" href="http://cdn.staticfile.org/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" media="screen" title="no title" charset="utf-8">
+@endsection
+
+@section('js')
+    <script src="http://cdn.staticfile.org/moment.js/2.10.6/moment.min.js"></script>
+    <script src="http://cdn.staticfile.org/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="{{ elixir('js/music.js') }}"></script>
 @endsection

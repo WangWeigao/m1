@@ -45,7 +45,11 @@ Route::group(['middleware' => 'web'], function () {
     /**
     * 曲库路由
     */
+    Route::get('/music/condations', 'MusicController@getCondations');
     Route::resource('/music', 'MusicController');
+    // Route::get('/music/condations', function() {
+    //     return '我真的是condations路由';
+    // });
 
     /**
      * Default Route, useless.

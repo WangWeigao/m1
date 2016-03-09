@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 
 use App\Music;
 use DB;
+use App\Instrument;
 
 class MusicController extends Controller
 {
@@ -222,5 +223,13 @@ class MusicController extends Controller
         }
 
         return $data;
+    }
+
+    public function getCondations()
+    {
+        $intruments = Instrument::select('id', 'name')->get();
+        return $intruments;
+        // $data['status'] = 'sdfsdfsdfsdfsdfsdfsdfdsf';
+        // return $data;
     }
 }

@@ -49,7 +49,8 @@ elixir(function(mix) {
         'music.js',         // music页面的js
         'rbac_user.js',     // rbac中的user页面的js
     ])
-    .scripts('app.js', 'public/js/app.js');
+    .scripts('app.js', 'public/js/app.js')
+    .scripts('music.js', 'public/js/music.js');
     /**
      * 添加时间戳
      */
