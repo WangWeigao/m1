@@ -129,7 +129,7 @@ $(document).ready(function() {
         $.each(data, function(n, value) {
             var $str = "";
             $str = "<option value=" + value.id + ">" + value.name + "</option>";
-            $("#instruments").append($str);
+            $("#instrument").append($str);
         });
     })
     .fail(function(data) {
@@ -154,6 +154,20 @@ $(document).ready(function() {
      maxYear: (myDate.getFullYear() + 1)
      });
 
+    /**
+     * 按筛选条件搜索
+     */
+    $("#date").val($("#idYear").val() + '-' + $("#idMonth").val() + '-' + $("#idDay").val());
+    $("select").each(function(index, el) {
+        $(el).bind('change', function() {
+            // $(el).closest('input').val($(el).val());
+            $(el).siblings('input').val($(el).val());
+            if ($(el).attr('id') === 'idYear' || $(el).attr('id') === 'idMonth' || $(el).attr('id') === 'idDay') {
+                $("#date").val($("#idYear").val() + '-' + $("#idMonth").val() + '-' + $("#idDay").val());
+            }
+            console.log($(el).val());
+        });
+    });
 
 
 });

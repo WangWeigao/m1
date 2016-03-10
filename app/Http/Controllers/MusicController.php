@@ -30,21 +30,51 @@ class MusicController extends Controller
      */
     public function index(Request $request)
     {
-        $name = $request->get('name') or '';
-
-        if (empty($name)) {
-            return view('music');
-        }
+        /**
+         * 取得GET方法传过来的参数
+         * @var [type]
+         */
+        $name       = $request->get('name') or "";
+        $instrument = $request->get('instrument') or "";
+        $press      = $request->get('press') or "";
+        $category   = $request->get('category') or "";
+        $onshelf    = $request->get('onshelf') or "";
+        $operator   = $request->get('operator') or "";
+        $date       = $request->get('date') or "";
 
         /**
-         * 按名称和作曲家模糊查询曲目信息
-         * @var Object
+         * 按传过来的参数不同，组合不同的查询语句
+         * @var Music
          */
-        $musics = Music::orwhere('name', 'like', "%$name%")
-                    ->orwhere('author', 'like', "%$name%")
-                    ->paginate(15);
-                    // return $musics;
-        // $musics = Music::where(DB::raw(concat('name', 'author')), 'like', $name)->paginate(3);
+        $musics = new Music;
+        if (!empty($name)) {
+            $musics = $musics->where('name', 'like', "%$name%");
+        }
+        if (!empty($instrument)) {
+            $musics = $musics->where('instrument_id', '=', "$instrument");
+        }
+        if (!empty($press)) {
+            $musics = $musics->where('press', '=', "$press");
+        }
+        // if (!empty($category)) {
+        //     $musics = $musics->where('category', '=', "$category");
+        // }
+        if (!empty($onshelf)) {
+            $musics = $musics->where('onshelf', '=', "$onshelf");
+        }
+        if (!empty($operator)) {
+            $musics = $musics->where('operator', '=', "$operator");
+        }
+        if (!empty($date)) {
+            $date = $date . " 00:00:00";
+            $musics = $musics->whereBetween('created_at', ["$date", "2016-03-10 00:00:00"]);
+        }
+
+        $musics = $musics->paginate(15);
+
+        /**
+         * 将结果返回给视图
+         */
         return view('music')->with(['musics'=>$musics, 'name'=>$name]);
     }
 

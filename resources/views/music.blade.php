@@ -15,64 +15,99 @@
                     <span>精确搜索: </span><input type="text" class="form-control" id="searchName" name="name" placeholder="请输入曲目名">
                     <input type="hidden" name="field" value="uid">
                     <input type="hidden" name="order" value="asc">
-                    <button type="submit" name="button" class="btn btn-success" id="search">搜索</button>
+                    <button type="submit" name="button" class= "btn btn-success" id="search">搜索</button>
                 </div>
             {{-- </fieldset> --}}
         </form>
         <form class="form-group" action="/music" method="get">
             {!! csrf_field() !!}
-            <div class="form-inline form-control">
-                <span>筛选待件:</span>
-                <input type="checkbox">乐器
-                <select id="instruments">
-                    <option>请选择</option>
-                </select>
-                <input type="checkbox">出版社
-                <select id="press">
-                    <option>请选择</option>
-                </select>
-                <input type="checkbox">乐曲类别
-                <select id="category">
-                    <option>请选择</option>
-                </select>
-                <input type="checkbox">乐曲状态
-                <select id="onshelf">
-                    <option value="">请选择</option>
-                    <option value="1">已上架</option>
-                    <option value="0">待审核</option>
-                </select>
-            </div>
-            <div class="form-inline">
-                <input type="checkbox">操作人
-                <select id="operator">
-                    <option>请选择</option>
-                </select>
-                <input type="checkbox">添加日期
-                <span id="dateSelector">
-                    <select id="idYear" name="idYear" data=""></select>年
-                    <select id="idMonth" name="idMonth" data=""></select>月
-                    <select id="idDay" name="idDay" data=""></select>日
-                </span>
-            </div>
+            <table class="table">
+                <tr>
+                    <td>
+                        <span>筛选待件:</span>
+                    </td>
+                    <td>
+                        <input type="checkbox" name="instrument" value="{{ value('instruments') or '' }}">乐器
+                        <select id="instrument">
+                            <option value="0">请选择</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="checkbox" name="press">出版社
+                        <select id="press">
+                            <option>请选择</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="checkbox" name="category">乐曲类别
+                        <select id="category">
+                            <option>请选择</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="checkbox" name="onshelf">乐曲状态
+                        <select id="onshelf">
+                            <option value="">请选择</option>
+                            <option value="1">已上架</option>
+                            <option value="0">待审核</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        <input type="checkbox" name="operator">操作人
+                        <select id="operator">
+                            <option>请选择</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="checkbox" name="date" id="date">添加日期
+                        <span id="dateSelector">
+                            <select id="idYear" data=""></select>年
+                            <select id="idMonth" data=""></select>月
+                            <select id="idDay" data=""></select>日
+                        </span>
+                    </td>
+                    <td>
+                        <button type="submit" id="condation_search" class="btn btn-success">搜索</button>
+                    </td>
+                </tr>
+            </table>
         </form>
 
-        @if(!empty($name))
+        {{-- @if(!empty($name)) --}}
             @if(count($musics) > 0)
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>曲目名称</th>
-                            <th>作者家</th>
-                            <th>音频文件</th>
+                            <th>乐器</th>
+                            <th>乐曲名</th>
+                            <th>作曲人</th>
+                            <th>版本</th>
+                            <th>出版社</th>
+                            <th>乐曲类别</th>
+                            <th>midi地址</th>
+                            <th>添加日期</th>
+                            <th>乐曲状态</th>
                             <th>操作</th>
+                            <th>操作人</th>
+                            <th>备注</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($musics as $item)
                             <tr id="{{ $item->id }}">
+                                <td>{{ $item->instrument_id }}</td>
                                 <td>{{ $item->name }}</td>
-                                <td>{{ $item->author }}</td>
+                                <td>{{ $item->composer }}</td>
+                                <td>{{ $item->version }}</td>
+                                <td>{{ $item->press }}</td>
+                                <td>乐曲类别</td>
                                 <td><a href="#">{{ $item->filename }}</a></td>
+                                <td>{{ $item->created_at }}</td>
+                                <td>{{ $item->onshelf }}</td>
                                 <td>
                                     <button class="btn btn-xs btn-info edit" data-toggle="modal" data-target="#editPopup" data-backdrop="static">
                                         <span class="glyphicon glyphicon-edit"></span> 编辑
@@ -81,6 +116,8 @@
                                         <span class="glyphicon glyphicon-remove"></span> 删除
                                     </button>
                                 </td>
+                                <td>{{ $item->operator }}</td>
+                                <td>{{ $item->notes }}</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -94,7 +131,7 @@
                     没有查到相关结果，更换搜索关键词再试试吧
                 </div>
             @endif
-        @endif
+        {{-- @endif --}}
     {{-- 编辑窗口 --}}
     <div class="modal fade" id="editPopup">
       <div class="modal-dialog" style="width: auto">
