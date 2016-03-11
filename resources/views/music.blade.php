@@ -83,7 +83,7 @@
             </table>
         </form>
 
-        {{-- @if(!empty($name)) --}}
+        @if(!empty($musics))
             @if(count($musics) > 0)
                 <table class="table table-hover">
                     <thead>
@@ -119,7 +119,7 @@
                                 </td>
                                 <td><a href="#">{{ $item->filename }}</a></td>
                                 <td>{{ $item->created_at }}</td>
-                                <td>{{ $item->onshelf }}</td>
+                                <td>{{ $item->onshelf ? "已上架" : "待审核" }}</td>
                                 <td>
                                     <button class="btn btn-xs btn-info edit" data-toggle="modal" data-target="#editPopup" data-backdrop="static">
                                         <span class="glyphicon glyphicon-edit"></span> 编辑
@@ -143,7 +143,7 @@
                     没有查到相关结果，更换搜索关键词再试试吧
                 </div>
             @endif
-        {{-- @endif --}}
+        @endif
     {{-- 编辑窗口 --}}
     <div class="modal fade" id="editPopup">
       <div class="modal-dialog" style="width: auto">
