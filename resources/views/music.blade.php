@@ -27,25 +27,29 @@
                         <span>筛选待件:</span>
                     </td>
                     <td>
-                        <input type="checkbox" name="instrument" value="{{ value('instruments') or '' }}">乐器
+                        <input type="checkbox" id="input_instrument">
+                        <label for="input_instrument">乐器</label>
                         <select id="instrument">
                             <option value="0">请选择</option>
                         </select>
                     </td>
                     <td>
-                        <input type="checkbox" name="press">出版社
+                        <input type="checkbox" name="press" id="input_press">
+                        <label for="input_press">出版社</label>
                         <select id="press">
                             <option>请选择</option>
                         </select>
                     </td>
                     <td>
-                        <input type="checkbox" name="category">乐曲类别
+                        <input type="checkbox" name="category" id="input_category">
+                        <label for="input_category">乐曲类别</label>
                         <select id="category">
                             <option>请选择</option>
                         </select>
                     </td>
                     <td>
-                        <input type="checkbox" name="onshelf">乐曲状态
+                        <input type="checkbox" name="onshelf" id="input_onshelf">
+                        <label for="input_onshelf">乐曲状态</label>
                         <select id="onshelf">
                             <option value="">请选择</option>
                             <option value="1">已上架</option>
@@ -57,13 +61,15 @@
                     <td>
                     </td>
                     <td>
-                        <input type="checkbox" name="operator">操作人
+                        <input type="checkbox" name="operator" id="input_operator">
+                        <label for="input_operator">操作人</label>
                         <select id="operator">
                             <option>请选择</option>
                         </select>
                     </td>
                     <td>
-                        <input type="checkbox" name="date" id="date">添加日期
+                        <input type="checkbox" name="date" id="date">
+                        <label for="date">出版社</label>
                         <span id="dateSelector">
                             <select id="idYear" data=""></select>年
                             <select id="idMonth" data=""></select>月
@@ -99,14 +105,16 @@
                     <tbody>
                         @foreach($musics as $item)
                             <tr id="{{ $item->id }}">
-                                <td>{{ $item->instrument->name }}</td>
+                                {{-- <td>{{ $item->instrument->name }}</td> --}}
+                                {{-- 不明白为什么此处要用数组，明明是个对象 --}}
+                                <td>{{ $item->instrument['name'] }}</td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->composer }}</td>
                                 <td>{{ $item->version }}</td>
                                 <td>{{ $item->press->name }}</td>
                                 <td>
                                     @foreach($item->tags as $tag)
-                                        <button class="btn btn-warning btn-xs">{{ $tag->name }}</button>
+                                        <span class="">{{ $tag->name }}</span>
                                     @endforeach
                                 </td>
                                 <td><a href="#">{{ $item->filename }}</a></td>
@@ -212,6 +220,11 @@
 @endsection
 
 @section('css')
+    <style media="screen">
+        th {
+            /*width: 300px;*/
+        }
+    </style>
     <link rel="stylesheet" href="http://cdn.staticfile.org/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" media="screen" title="no title" charset="utf-8">
 @endsection
 

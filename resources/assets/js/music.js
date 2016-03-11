@@ -114,7 +114,7 @@ $(document).ready(function() {
     });
 
     /**
-     * 自动拉取筛选待件
+     * 自动拉取"乐器"列表
      */
     $.ajax({
         url: '/music/condations',
@@ -125,18 +125,26 @@ $(document).ready(function() {
         }
     })
     .done(function(data) {
-        console.log("success");
-        $.each(data, function(n, value) {
+        /**
+         * 拉取“乐器”列表
+         */
+        $.each(data.instrument, function(n, value) {
             var $str = "";
             $str = "<option value=" + value.id + ">" + value.name + "</option>";
             $("#instrument").append($str);
         });
+
+        /**
+         * 拉取“出版社”列表
+         */
+        $.each(data.press, function(n, value) {
+            var $str = "";
+            $str = "<option value=" + value.id + ">" + value.name + "</option>";
+            $("#press").append($str);
+        });
     })
     .fail(function(data) {
         console.log(data);
-    })
-    .always(function() {
-        console.log("complete");
     });
 
     /**

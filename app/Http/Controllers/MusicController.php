@@ -57,7 +57,7 @@ class MusicController extends Controller
             $musics = $musics->where('instrument_id', '=', "$instrument");
         }
         if (!empty($press)) {
-            $musics = $musics->where('press', '=', "$press");
+            $musics = $musics->where('press_id', '=', "$press");
         }
         if (!empty($category)) {
             $musics = $musics->whereHas('tags', function ($query) {$query->where('name', '=', "$category");});
@@ -80,7 +80,7 @@ class MusicController extends Controller
         /**
          * 将结果返回给视图
          */
-        return view('music')->with(['musics'=>$musics, 'name'=>$name]);
+        return view('music')->with(['musics' => $musics]);
     }
 
     /**
@@ -267,8 +267,10 @@ class MusicController extends Controller
      */
     public function getCondations()
     {
-        $intruments = Instrument::select('id', 'name')->get();
-        return $intruments;
+        $data['instrument'] = Instrument::select('id', 'name')->get();
+        $data['press'] = \App\Press::select('id', 'name')->get();
+
+        return $data;
         // $data['status'] = 'sdfsdfsdfsdfsdfsdfsdfdsf';
         // return $data;
     }
