@@ -114,7 +114,7 @@ $(document).ready(function() {
     });
 
     /**
-     * 自动拉取"乐器"列表
+     * 自动拉取筛选条件列表
      */
     $.ajax({
         url: '/music/condations',
@@ -141,6 +141,15 @@ $(document).ready(function() {
             var $str = "";
             $str = "<option value=" + value.id + ">" + value.name + "</option>";
             $("#press").append($str);
+        });
+
+        /**
+         * 拉取"乐曲类别"列表
+         */
+        $.each(data.tag, function(n, value) {
+            var $str = "";
+            $str = "<option value=" + value.id + ">" + value.name + "</option>";
+            $("#category").append($str);
         });
     })
     .fail(function(data) {

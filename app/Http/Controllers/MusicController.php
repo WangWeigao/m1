@@ -42,6 +42,7 @@ class MusicController extends Controller
         $operator   = $request->get('operator') or "";
         $date       = $request->get('date') or "";
 
+
         /**
          * 按传过来的参数不同，组合不同的查询语句
          * @var Music
@@ -60,7 +61,9 @@ class MusicController extends Controller
             $musics = $musics->where('press_id', '=', "$press");
         }
         if (!empty($category)) {
-            $musics = $musics->whereHas('tags', function ($query) {$query->where('name', '=', "$category");});
+            $musics = $musics->whereHas('tags', function ($query) use ($category) {
+                $query->where('id',"=", "$category");
+            });
         }
         if (!empty($onshelf)) {
             $musics = $musics->where('onshelf', '=', "$onshelf");
@@ -269,6 +272,7 @@ class MusicController extends Controller
     {
         $data['instrument'] = Instrument::select('id', 'name')->get();
         $data['press'] = \App\Press::select('id', 'name')->get();
+        $data['tag'] = \App\Tag::select('id', 'name')->get();
 
         return $data;
         // $data['status'] = 'sdfsdfsdfsdfsdfsdfsdfdsf';
