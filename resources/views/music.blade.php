@@ -128,7 +128,7 @@
                                         <span class="glyphicon glyphicon-remove"></span> 删除
                                     </button>
                                 </td>
-                                <td>{{ $item->operator }}</td>
+                                <td>{{ $item->user->name }}</td>
                                 <td>{{ $item->notes }}</td>
                             </tr>
                         @endforeach

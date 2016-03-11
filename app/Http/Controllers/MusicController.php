@@ -49,7 +49,8 @@ class MusicController extends Controller
          */
         $musics = Music::with('instrument')
                         ->with('tags')
-                        ->with('press');
+                        ->with('press')
+                        ->with('user');
 
         if (!empty($name)) {
             $musics = $musics->where('name', 'like', "%$name%");
@@ -273,6 +274,9 @@ class MusicController extends Controller
         $data['instrument'] = Instrument::select('id', 'name')->get();
         $data['press'] = \App\Press::select('id', 'name')->get();
         $data['tag'] = \App\Tag::select('id', 'name')->get();
+        $data['operator'] = \App\User::select('id', 'name')->with('musics')->whereHas('musics', function ($query) {
+                                                                $query->groupby('operator');
+                                                            })->groupby('id')->get();
 
         return $data;
         // $data['status'] = 'sdfsdfsdfsdfsdfsdfsdfdsf';

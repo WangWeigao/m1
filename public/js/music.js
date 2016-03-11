@@ -151,6 +151,15 @@ $(document).ready(function() {
             $str = "<option value=" + value.id + ">" + value.name + "</option>";
             $("#category").append($str);
         });
+
+        /**
+         * 拉取"操作人"列表
+         */
+        $.each(data.operator, function(n, value) {
+            var $str = "";
+            $str = "<option value=" + value.id + ">" + value.name + "</option>";
+            $("#operator").append($str);
+        });
     })
     .fail(function(data) {
         console.log(data);

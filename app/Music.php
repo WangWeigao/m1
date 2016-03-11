@@ -35,4 +35,12 @@ class Music extends Model
     {
         return $this->belongsTo('App\Press');
     }
+
+    /**
+     * 取得添加的用户
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'operator');
+    }
 }

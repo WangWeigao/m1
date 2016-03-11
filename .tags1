@@ -15,38 +15,38 @@ onshelf	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $onshe
 operator	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $operator   = $request->get('operator') or "";$/;"	variable	line:42
 date	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $date       = $request->get('date') or "";$/;"	variable	line:43
 musics	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $musics = Music::with('instrument')$/;"	variable	line:50
-musics	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $musics = $musics->where('name', 'like', "%$name%");$/;"	variable	line:55
-musics	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $musics = $musics->where('instrument_id', '=', "$instrument");$/;"	variable	line:58
-musics	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $musics = $musics->where('press_id', '=', "$press");$/;"	variable	line:61
-musics	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $musics = $musics->whereHas('tags', function ($query) use ($category) {$/;"	variable	line:64
-musics	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $musics = $musics->where('onshelf', '=', "$onshelf");$/;"	variable	line:69
-musics	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $musics = $musics->where('operator', '=', "$operator");$/;"	variable	line:72
-date	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $date = $date . " 00:00:00";$/;"	variable	line:75
-musics	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $musics = $musics->whereBetween('created_at', ["$date", "2016-03-10 00:00:00"]);$/;"	variable	line:76
-musics	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $musics = $musics->paginate(15);$/;"	variable	line:79
-musics	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        \/\/ $musics = Music::find(92)->press;$/;"	variable	line:80
-create	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^    public function create()$/;"	function	line:94
-store	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^    public function store(Request $request)$/;"	function	line:99
-name	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $name = $request->get('title') ? $request->get('title') : '';$/;"	variable	line:104
-author	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $author = $request->get('author') ? $request->get('author') : '';$/;"	variable	line:105
-music	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $music = new Music;$/;"	variable	line:118
-result	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $result = $music->save();$/;"	variable	line:121
-id	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $id = $music->id;$/;"	variable	line:126
-path	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $path = public_path() . '\/midis';$/;"	variable	line:127
-name	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $name = $id . '.mid';$/;"	variable	line:128
-storeCsv	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^    public function storeCsv(Request $request)$/;"	function	line:143
-upload_file	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $upload_file = $request->file('csv');$/;"	variable	line:170
-filename	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $filename = time() . '-' . mt_rand() . '.csv';$/;"	variable	line:172
-path	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $path = public_path() . '\/CsvFileForImport\/';$/;"	variable	line:174
-result	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $result = $this->music_import_csv($path, $filename);$/;"	variable	line:182
-music_import_csv	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^    protected function music_import_csv($path, $filename)$/;"	function	line:188
-file	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $file = $path . '\/' . $filename;$/;"	variable	line:190
-fp	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $fp = fopen($file, 'r');$/;"	variable	line:191
-music	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $music = new Music;$/;"	variable	line:193
-show	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^    public function show($id)$/;"	function	line:214
-edit	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^    public function edit($id)$/;"	function	line:225
-update	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^    public function update(Request $request, $id)$/;"	function	line:237
-music	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $music = Music::find($id);$/;"	variable	line:239
-destroy	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^    public function destroy($id)$/;"	function	line:253
-music	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $music = Music::destroy($id);$/;"	variable	line:256
-getCondations	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^    public function getCondations()$/;"	function	line:271
+musics	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $musics = $musics->where('name', 'like', "%$name%");$/;"	variable	line:56
+musics	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $musics = $musics->where('instrument_id', '=', "$instrument");$/;"	variable	line:59
+musics	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $musics = $musics->where('press_id', '=', "$press");$/;"	variable	line:62
+musics	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $musics = $musics->whereHas('tags', function ($query) use ($category) {$/;"	variable	line:65
+musics	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $musics = $musics->where('onshelf', '=', "$onshelf");$/;"	variable	line:70
+musics	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $musics = $musics->where('operator', '=', "$operator");$/;"	variable	line:73
+date	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $date = $date . " 00:00:00";$/;"	variable	line:76
+musics	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $musics = $musics->whereBetween('created_at', ["$date", "2016-03-10 00:00:00"]);$/;"	variable	line:77
+musics	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $musics = $musics->paginate(15);$/;"	variable	line:80
+musics	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        \/\/ $musics = Music::find(92)->press;$/;"	variable	line:81
+create	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^    public function create()$/;"	function	line:95
+store	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^    public function store(Request $request)$/;"	function	line:100
+name	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $name = $request->get('title') ? $request->get('title') : '';$/;"	variable	line:105
+author	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $author = $request->get('author') ? $request->get('author') : '';$/;"	variable	line:106
+music	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $music = new Music;$/;"	variable	line:119
+result	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $result = $music->save();$/;"	variable	line:122
+id	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $id = $music->id;$/;"	variable	line:127
+path	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $path = public_path() . '\/midis';$/;"	variable	line:128
+name	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $name = $id . '.mid';$/;"	variable	line:129
+storeCsv	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^    public function storeCsv(Request $request)$/;"	function	line:144
+upload_file	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $upload_file = $request->file('csv');$/;"	variable	line:171
+filename	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $filename = time() . '-' . mt_rand() . '.csv';$/;"	variable	line:173
+path	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $path = public_path() . '\/CsvFileForImport\/';$/;"	variable	line:175
+result	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $result = $this->music_import_csv($path, $filename);$/;"	variable	line:183
+music_import_csv	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^    protected function music_import_csv($path, $filename)$/;"	function	line:189
+file	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $file = $path . '\/' . $filename;$/;"	variable	line:191
+fp	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $fp = fopen($file, 'r');$/;"	variable	line:192
+music	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $music = new Music;$/;"	variable	line:194
+show	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^    public function show($id)$/;"	function	line:215
+edit	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^    public function edit($id)$/;"	function	line:226
+update	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^    public function update(Request $request, $id)$/;"	function	line:238
+music	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $music = Music::find($id);$/;"	variable	line:240
+destroy	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^    public function destroy($id)$/;"	function	line:254
+music	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $music = Music::destroy($id);$/;"	variable	line:257
+getCondations	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^    public function getCondations()$/;"	function	line:272
