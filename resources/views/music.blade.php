@@ -99,12 +99,16 @@
                     <tbody>
                         @foreach($musics as $item)
                             <tr id="{{ $item->id }}">
-                                <td>{{ $item->instrument_id }}</td>
+                                <td>{{ $item->instrument->name }}</td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->composer }}</td>
                                 <td>{{ $item->version }}</td>
-                                <td>{{ $item->press }}</td>
-                                <td>乐曲类别</td>
+                                <td>{{ $item->press->name }}</td>
+                                <td>
+                                    @foreach($item->tags as $tag)
+                                        <button class="btn btn-warning btn-xs">{{ $tag->name }}</button>
+                                    @endforeach
+                                </td>
                                 <td><a href="#">{{ $item->filename }}</a></td>
                                 <td>{{ $item->created_at }}</td>
                                 <td>{{ $item->onshelf }}</td>

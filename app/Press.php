@@ -4,14 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Instrument extends Model
+class Press extends Model
 {
-    //
+    /**
+     * 一个出版社有很多曲子
+     * @method musics
+     * @return [type] [description]
+     */
     public function musics()
     {
-        /**
-         * 一个乐器有很多首曲子
-         */
         return $this->hasMany('App\Music');
     }
 }

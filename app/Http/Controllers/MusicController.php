@@ -46,7 +46,10 @@ class MusicController extends Controller
          * 按传过来的参数不同，组合不同的查询语句
          * @var Music
          */
-        $musics = new Music;
+        $musics = Music::with('instrument')
+                        ->with('tags')
+                        ->with('press');
+
         if (!empty($name)) {
             $musics = $musics->where('name', 'like', "%$name%");
         }
@@ -56,9 +59,9 @@ class MusicController extends Controller
         if (!empty($press)) {
             $musics = $musics->where('press', '=', "$press");
         }
-        // if (!empty($category)) {
-        //     $musics = $musics->where('category', '=', "$category");
-        // }
+        if (!empty($category)) {
+            $musics = $musics->whereHas('tags', function ($query) {$query->where('name', '=', "$category");});
+        }
         if (!empty($onshelf)) {
             $musics = $musics->where('onshelf', '=', "$onshelf");
         }
@@ -71,6 +74,8 @@ class MusicController extends Controller
         }
 
         $musics = $musics->paginate(15);
+        // $musics = Music::find(92)->press;
+        // return $musics;
 
         /**
          * 将结果返回给视图
