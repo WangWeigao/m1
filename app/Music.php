@@ -12,6 +12,10 @@ class Music extends Model
      */
     protected $guarded = [];
 
+    protected $casts = [
+        'notes' => 'array',
+    ];
+
     /**
      * 曲子所用的乐器
      */
@@ -42,5 +46,13 @@ class Music extends Model
     public function user()
     {
         return $this->belongsTo('App\User', 'operator');
+    }
+
+    /**
+     * 取得备注
+     */
+    public function editor()
+    {
+        return $this->belongsTo('App\User', 'note_operator');
     }
 }

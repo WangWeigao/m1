@@ -50,7 +50,7 @@ elixir(function(mix) {
     //     'rbac_user.js',     // rbac中的user页面的js
     // ])
     mix.scripts('app.js', 'public/js/app.js')
-    .scripts(['music.js', 'dateSelector.js'], 'public/js/music.js');
+    .scripts(['music.js', 'dateSelector.js', 'jquery.form.js'], 'public/js/music.js');
     /**
      * 添加时间戳
      */

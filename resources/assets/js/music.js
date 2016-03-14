@@ -52,10 +52,17 @@ $(document).ready(function() {
     $(".edit").each(function(index, el) {
         $(this).click(function() {
             $("#edit_id").val($(el).closest('tr').attr('id'));
-            $("#edit_title").val($(el).closest('tr').find('td:eq(0)').text());
-            $("#edit_author").val($(el).closest('tr').find('td:eq(1)').text());
+            $("#edit_instrument").append($("#instrument").clone());
+            $("#edit_instrument").val($("#instrument").closest('input').val());
+            $("#edit_name").val($(el).closest('tr').find('td:eq(1)').text());
+            $("#edit_composer").val($(el).closest('tr').find('td:eq(2)').text());
+            $("#edit_version").val($(el).closest('tr').find('td:eq(3)').text());
+            $("#edit_press").val($(el).closest('tr').find('td:eq(4)').text());
+            $("#edit_category").val($(el).closest('tr').find('span').text());
+            $("#edit_notes").val($(el).closest('tr').find('td:eq(11)').text());
         });
     });
+
 
     // 点击"保存修改"按钮
     $("#save").bind('click', function(event) {
@@ -67,8 +74,14 @@ $(document).ready(function() {
                 type : 'put',
                 dataType : 'json',
                 data : {
-                    'name' : $("#edit_title").val(),
-                    'author' : $("#edit_author").val()
+                    'id': $("#edit_id").val(),
+                    'instrument': $("#edit_instrument").val(),
+                    'name': $("#edit_name").val(),
+                    'composer': $("#edit_composer").val(),
+                    'version': $("#edit_version").val(),
+                    'press': $("#edit_press").val(),
+                    'category': $("#edit_category").val(),
+                    'notes': $("#edit_notes").val()
                 },
                 headers : {
                     'X-CSRF-TOKEN': $('input[name="_token"]').val()

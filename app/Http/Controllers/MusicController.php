@@ -53,7 +53,8 @@ class MusicController extends Controller
         $musics = Music::with('instrument')
                         ->with('tags')
                         ->with('press')
-                        ->with('user');
+                        ->with('user')
+                        ->with('editor');
 
         if (!empty($name)) {
             $musics = $musics->where('name', 'like', "%$name%");

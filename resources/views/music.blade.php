@@ -27,7 +27,7 @@
                         <span>筛选待件:</span>
                     </td>
                     <td>
-                        <input type="checkbox" id="input_instrument">
+                        <input type="checkbox" name="instrument" id="input_instrument">
                         <label for="input_instrument">乐器</label>
                         <select id="instrument">
                             <option value="0">请选择</option>
@@ -69,7 +69,7 @@
                     </td>
                     <td>
                         <input type="checkbox" name="date" id="date">
-                        <label for="date">出版社</label>
+                        <label for="date">添加日期</label>
                         <span id="dateSelector">
                             <select id="idYear" data=""></select>年
                             <select id="idMonth" data=""></select>月
@@ -129,7 +129,14 @@
                                     </button>
                                 </td>
                                 <td>{{ $item->user->name }}</td>
-                                <td>{{ $item->notes }}</td>
+                                <td>
+                                    {{ $item->note or ""}}
+                                </td>
+                                @if(!empty($item->note_content))
+                                    <td>{{ $item->editor['name'] }} : {{ $item->note_content }}</td>
+                                @else
+                                    <td></td>
+                                @endif
                             </tr>
                         @endforeach
                     </tbody>
@@ -156,16 +163,26 @@
               <table class="table">
                   <thead>
                       <tr>
-                          <th>曲目名称</th>
-                          <th>作者家</th>
+                          <th>乐器</th>
+                          <th>乐曲名</th>
+                          <th>作曲人</th>
+                          <th>版本</th>
+                          <th>出版社</th>
+                          <th>乐曲类别</th>
+                          <th>备注</th>
                       </tr>
                   </thead>
                   <tbody>
                       <tr>
                           <form id="save_detail">
-                              <td><input type="text" id="edit_title" placeholder="曲目名称"></td>
-                              <td><input type="text" id="edit_author"></td>
                               <input type="hidden" id="edit_id">
+                              <td id="edit_instrument"></td>
+                              <td><input type="text" id="edit_name"></td>
+                              <td><input type="text" id="edit_composer"></td>
+                              <td><input type="text" id="edit_version"></td>
+                              <td><input type="text" id="edit_press"></td>
+                              <td><input type="text" id="edit_category"></td>
+                              <td><input type="text" id="edit_notes"></td>
                           </form>
                       </tr>
                   </tbody>
