@@ -208,6 +208,13 @@ $(document).ready(function() {
         });
     });
 
+    /**
+     * 点击“添加多个乐曲”跳转到指定页面
+     */
+    $("#add_multi_musics").bind('click', function(event) {
+        window.location.href = "/music/create";
+    });
+
 
 });
 

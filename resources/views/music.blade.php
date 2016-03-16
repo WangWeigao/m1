@@ -124,9 +124,9 @@
                                     <button class="btn btn-xs btn-info edit" data-toggle="modal" data-target="#editPopup" data-backdrop="static">
                                         <span class="glyphicon glyphicon-edit"></span> 编辑
                                     </button>
-                                    <button class="btn btn-xs btn-info delete">
-                                        <span class="glyphicon glyphicon-remove"></span> 删除
-                                    </button>
+                                    {{-- <button class="btn btn-xs btn-info delete"> --}}
+                                        {{-- <span class="glyphicon glyphicon-remove"></span> 删除 --}}
+                                    {{-- </button> --}}
                                 </td>
                                 <td>{{ $item->user->name }}</td>
                                 <td>
@@ -151,6 +151,9 @@
                 </div>
             @endif
         @endif
+        <div id="add_one_mucis" class="btn btn-success" data-toggle="modal" data-target="#newPopup" data-backdrop="static">添加单个乐曲</div>
+        <div id="add_multi_musics" class="btn btn-success">添加多个乐曲</div>
+
     {{-- 编辑窗口 --}}
     <div class="modal fade" id="editPopup">
       <div class="modal-dialog" style="width: auto">
@@ -242,10 +245,12 @@
             /*width: 300px;*/
         }
     </style>
+    <link href="http://hayageek.github.io/jQuery-Upload-File/4.0.10/uploadfile.css" rel="stylesheet">
     <link rel="stylesheet" href="http://cdn.staticfile.org/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" media="screen" title="no title" charset="utf-8">
 @endsection
 
 @section('js')
+    <script src="http://hayageek.github.io/jQuery-Upload-File/4.0.10/jquery.uploadfile.min.js"></script>
     <script src="http://cdn.staticfile.org/moment.js/2.10.6/moment.min.js"></script>
     <script src="http://cdn.staticfile.org/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
     <script src="{{ elixir('js/music.js') }}"></script>
