@@ -93,6 +93,7 @@
                             <th>作曲人</th>
                             <th>版本</th>
                             <th>出版社</th>
+                            <th>主办机构</th>
                             <th>乐曲类别</th>
                             <th>midi地址</th>
                             <th>添加日期</th>
@@ -112,6 +113,7 @@
                                 <td>{{ $item->composer }}</td>
                                 <td>{{ $item->version }}</td>
                                 <td>{{ $item->press->name }}</td>
+                                <td>{{ $item->organizer->name }}</td>
                                 <td>
                                     @foreach($item->tags as $tag)
                                         <span class="">{{ $tag->name }}</span>

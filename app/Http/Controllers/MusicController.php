@@ -51,6 +51,7 @@ class MusicController extends Controller
          * @var Music
          */
         $musics = Music::with('instrument')
+                        ->with('organizer')
                         ->with('tags')
                         ->with('press')
                         ->with('user')

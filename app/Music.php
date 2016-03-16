@@ -55,4 +55,12 @@ class Music extends Model
     {
         return $this->belongsTo('App\User', 'note_operator');
     }
+
+    /**
+     * 取得主办机构
+     */
+    public function organizer()
+    {
+        return $this->belongsTo('App\Organizer', 'organizer_id');
+    }
 }
