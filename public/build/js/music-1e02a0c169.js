@@ -1,6 +1,6 @@
 $(document).ready(function() {
     /**
-     * 点击新建按钮
+     * 点击"创建"按钮(相当于点击"新建"之后的保存)
      */
     $("#createMusic").click(function() {
         ajaxSubmitForm();
@@ -25,8 +25,14 @@ $(document).ready(function() {
                type : 'POST',
                dataType : 'json',
                data: {
-                   'name': $("#title").val(),
-                   'author': $("#author").val()
+                   'instrument': $("#add_instrument").val(),
+                   'name': $("#add_name").val(),
+                   'composer': $("#add_composer").val(),
+                   'version': $("#add_version").val(),
+                   'press': $("#add_press").val(),
+                   'organizer': $("#add_organizer").val(),
+                   'category': $("#add_category").val(),
+                   'note_content': $("#add_note_content").val(),
                },
                headers : {
                 //    "ClientCallMode" : "ajax"
@@ -145,6 +151,7 @@ $(document).ready(function() {
             var $str = "";
             $str = "<option value=" + value.id + ">" + value.name + "</option>";
             $("#instrument").append($str);
+            $("#add_instrument").append($str);
         });
 
         /**
@@ -154,6 +161,7 @@ $(document).ready(function() {
             var $str = "";
             $str = "<option value=" + value.id + ">" + value.name + "</option>";
             $("#press").append($str);
+            $("#add_press").append($str);
         });
 
         /**
@@ -163,6 +171,7 @@ $(document).ready(function() {
             var $str = "";
             $str = "<option value=" + value.id + ">" + value.name + "</option>";
             $("#category").append($str);
+            $("#add_category").append($str);
         });
 
         /**

@@ -204,27 +204,65 @@
 			<div class="modal-content">
 				<div class="modal-header">
 				    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				    <h4 class="modal-title" id="myModalLabel">添加曲目</h4>
+				    <h4 class="modal-title" id="myModalLabel">添加单个曲目</h4>
 				</div>
 				<div class="modal-body">
                     <form class="form-horizontal" id="add_music">
                         {!! csrf_field() !!}
                         <div class="form-group">
-                            <label for="musicName" class="col-sm-2 control-label">名称</label>
+                            <label for="add_instrument" class="col-sm-2 control-label">乐器</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="title" name="title" placeholder="请输入乐曲名称">
+                                <select class="form-control" id="add_instrument" name="instrument">
+                                    <option value="0">请选择</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="musicAuthor" class="col-sm-2 control-label">作者</label>
+                            <label for="add_name" class="col-sm-2 control-label">乐曲名</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="author" name="author" placeholder="请输入乐曲作者">
+                                <input type="text" class="form-control" id="add_name" name="name" placeholder="请输入乐曲名称">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="musicFile" class="col-sm-2 control-label">音频文件</label>
+                            <label for="add_composer" class="col-sm-2 control-label">作曲人</label>
                             <div class="col-sm-10">
-                                <input type="file" class="form-control" id="midi-file" name="midi-file" placeholder="上传音频文件">
+                                <input type="text" class="form-control" id="add_composer" name="composer" placeholder="请输入乐曲作者">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add_version" class="col-sm-2 control-label">版本</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="add_version" name="version" placeholder="请输入版本号">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add_press" class="col-sm-2 control-label">出版社</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" id="add_press" name="press">
+                                    <option value="0">请选择</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add_organizer" class="col-sm-2 control-label">主办单位</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" id="add_organizer" name="organizer">
+                                    <option value="0">请选择</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add_category" class="col-sm-2 control-label">乐曲类别</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" id="add_category" name="category">
+                                    <option value="0">请选择</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add_note_content" class="col-sm-2 control-label">备注</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="note_content" value="" id="add_note_content" class="form-control">
                             </div>
                         </div>
                     </form>
