@@ -61,6 +61,13 @@
                     <td>
                     </td>
                     <td>
+                        <input type="checkbox" name="organizer" id="input_organizer">
+                        <label for="input_organizer">主办机构</label>
+                        <select id="organizer">
+                            <option>请选择</option>
+                        </select>
+                    </td>
+                    <td>
                         <input type="checkbox" name="operator" id="input_operator">
                         <label for="input_operator">操作人</label>
                         <select id="operator">
@@ -106,9 +113,7 @@
                     <tbody>
                         @foreach($musics as $item)
                             <tr id="{{ $item->id }}">
-                                {{-- <td>{{ $item->instrument->name }}</td> --}}
-                                {{-- 不明白为什么此处要用数组，明明是个对象 --}}
-                                <td>{{ $item->instrument['name'] }}</td>
+                                <td>{{ $item->instrument->name }}</td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->composer }}</td>
                                 <td>{{ $item->version }}</td>
@@ -267,6 +272,13 @@
                                 <input type="text" name="note_content" value="" id="add_note_content" class="form-control">
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="add_midi_file" class="col-sm-2 control-label">mid文件</label>
+                            <div class="col-sm-10">
+                                <input type="file" name="midi_file" value="" id="add_midi_file" class="form-control">
+                            </div>
+                        </div>
+                        <div class="" id="add_result"></div>
                     </form>
 				</div>
 				<div class="modal-footer">

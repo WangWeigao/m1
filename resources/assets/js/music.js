@@ -5,9 +5,9 @@ $(document).ready(function() {
     $("#createMusic").click(function() {
         ajaxSubmitForm();
         function ajaxSubmitForm() {
-           var value = $("#midi-file").val();
+           var value = $("#add_midi_file").val();
            if (isEmpty(value)) {
-               alert("请先选择文件");
+               console.log('请先添加文件');
                return false;
            }
            function isEmpty( inputStr ) {
@@ -46,7 +46,7 @@ $(document).ready(function() {
 
                },
                error : function(data) {
-                   alert(JSON.stringify(data) + "--上传失败,请刷新后重试");
+                   console.log(JSON.stringify(data) + "--上传失败,请刷新后重试");
                }
            };
            $("#add_music").ajaxSubmit(option);
@@ -172,6 +172,16 @@ $(document).ready(function() {
             $str = "<option value=" + value.id + ">" + value.name + "</option>";
             $("#category").append($str);
             $("#add_category").append($str);
+        });
+
+        /**
+         * 拉取"主办机构"列表
+         */
+        $.each(data.organizer, function(n, value) {
+            var $str = "";
+            $str = "<option value=" + value.id + ">" + value.name + "</option>";
+            $("#organizer").append($str);
+            $("#add_organizer").append($str);
         });
 
         /**

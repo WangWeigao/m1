@@ -39,12 +39,14 @@ class MusicController extends Controller
         $press      = $request->get('press') or "";
         $category   = $request->get('category') or "";
         $onshelf    = $request->get('onshelf') or "";
+        $organizer  = $request->get('organizer') or "";
         $operator   = $request->get('operator') or "";
         $date       = $request->get('date') or "";
 
-        if (empty($name) && empty($instrument) && empty($press) && empty($category) && empty($onshelf) && empty($operator) && empty($date)) {
+        if (empty($name) && empty($instrument) && empty($press)
+            && empty($category) && empty($onshelf) && empty($organizer)
+            && empty($operator) && empty($date)) {
             return view('music');
-            // return "ksjdflkjsdklf";
         }
         /**
          * 按传过来的参数不同，组合不同的查询语句
@@ -74,12 +76,16 @@ class MusicController extends Controller
         if (!empty($onshelf)) {
             $musics = $musics->where('onshelf', '=', "$onshelf");
         }
+        if (!empty($organizer)) {
+            $musics = $musics->where('organizer_id', '=', "$organizer");
+        }
         if (!empty($operator)) {
             $musics = $musics->where('operator', '=', "$operator");
         }
         if (!empty($date)) {
-            $date = $date . " 00:00:00";
-            $musics = $musics->whereBetween('created_at', ["$date", "2016-03-10 00:00:00"]);
+            $date_start = $date . " 00:00:00";
+            $date_end = $date . " 23:23:59";
+            $musics = $musics->whereBetween('created_at', ["$date_start", "$date_end"]);
         }
 
         $musics = $musics->paginate(15);
@@ -104,27 +110,47 @@ class MusicController extends Controller
 
     public function store(Request $request)
     {
+        // return $request->all();
         /**
          * 取得表单中各个项的值
          */
-        $name = $request->get('title') ? $request->get('title') : '';
-        $author = $request->get('author') ? $request->get('author') : '';
+        $name          = $request->get('name') or '';
+        $composer      = $request->get('composer') or '';
+        $instrument_id = $request->get('instrument');
+        $version       = $request->get('version') or '';
+        $press_id      = $request->get('press');
+        $operator      = $request->user()->id;
+        $organizer_id  = $request->get('organizer') or 0;
+        $note_content  = $request->get('note_content') or '';
+        $note_operator = $request->user()->id;
+        $category      = $request->get('category');
 
         // 如果文件存在且上传成功
-        if (!($request->hasFile('midi-file') && $request->file('midi-file')->isValid())) {
+        if (!($request->hasFile('midi_file') && $request->file('midi_file')->isValid())) {
             $data['status'] = false;
             // 文件上传失败
             $data['errCode'] = 10002;
             return $data;
         }
-        if (!empty($name) && !empty($author)) {
+        if (!empty($name) && !empty($composer)) {
             /**
              * 插入数据
              */
             $music = new Music;
             $music->name = $name;
-            $music->author = $author;
+            $music->composer = $composer;
+            $music->instrument_id = $instrument_id;
+            $music->version = $version;
+            $music->press_id = $press_id;
+            $music->operator = $operator;
+            $music->organizer_id = $organizer_id;
+            $music->note_content = $note_content;
+            $music->note_operator = $note_operator;
             $result = $music->save();
+            /**
+             * 插入乐曲分类标签
+             */
+            $music->tags()->attach($category);
 
             /**
              * 保存midi文件
@@ -132,13 +158,13 @@ class MusicController extends Controller
             $id = $music->id;
             $path = public_path() . '/midis';
             $name = $id . '.mid';
-            $request->file('midi-file')->move($path, $name);
+            $request->file('midi_file')->move($path, $name);
 
-        if ($result) {
-            $data['status'] = true;
-            return $data;
+            if ($result) {
+                $data['status'] = true;
+                return $data;
+            }
         }
-    }
 }
     /**
      * Store a newly created resource in storage.
@@ -282,7 +308,7 @@ class MusicController extends Controller
         $data['operator'] = \App\User::select('id', 'name')->with('musics')->whereHas('musics', function ($query) {
                                                                 $query->groupby('operator');
                                                             })->groupby('id')->get();
-
+        $data['organizer'] = \App\Organizer::select('id', 'name')->get();
         return $data;
         // $data['status'] = 'sdfsdfsdfsdfsdfsdfsdfdsf';
         // return $data;
