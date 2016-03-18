@@ -19,72 +19,59 @@
                 </div>
             {{-- </fieldset> --}}
         </form>
-        <form class="form-group" action="/music" method="get">
+        <form action="/music" method="get">
             {!! csrf_field() !!}
-            <table class="table">
+            <table class="table" class="form-group">
+                <td>
+                    <span>筛选待件:</span>
+                </td>
                 <tr>
-                    <td>
-                        <span>筛选待件:</span>
-                    </td>
-                    <td>
-                        <input type="checkbox" name="instrument" id="input_instrument">
+                    <td class="col-sm-3">
+                        <input type="checkbox" name="instrument" id="input_instrument" value="1">
                         <label for="input_instrument">乐器</label>
-                        <select id="instrument">
-                            <option value="0">请选择</option>
-                        </select>
+                        <select id="instrument" class="form-control"></select>
                     </td>
-                    <td>
-                        <input type="checkbox" name="press" id="input_press">
+                    <td class="col-sm-3">
+                        <input type="checkbox" name="press" id="input_press" value="1">
                         <label for="input_press">出版社</label>
-                        <select id="press">
-                            <option>请选择</option>
-                        </select>
+                        <select id="press" class="form-control"></select>
                     </td>
-                    <td>
-                        <input type="checkbox" name="category" id="input_category">
+                    <td class="col-sm-3">
+                        <input type="checkbox" name="category" id="input_category" value="1">
                         <label for="input_category">乐曲类别</label>
-                        <select id="category">
-                            <option>请选择</option>
-                        </select>
+                        <select id="category" class="form-control"></select>
                     </td>
-                    <td>
-                        <input type="checkbox" name="onshelf" id="input_onshelf">
+                    <td class="col-sm-3">
+                        <input type="checkbox" name="onshelf" id="input_onshelf" value="2">
                         <label for="input_onshelf">乐曲状态</label>
-                        <select id="onshelf">
-                            <option value="">请选择</option>
-                            <option value="1">已上架</option>
-                            <option value="0">待审核</option>
+                        <select id="onshelf" class="form-control">
+                            <option value="2">已上架</option>
+                            <option value="1">待审核</option>
                         </select>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                    </td>
-                    <td>
-                        <input type="checkbox" name="organizer" id="input_organizer">
+                        <input type="checkbox" name="organizer" id="input_organizer" value="1">
                         <label for="input_organizer">主办机构</label>
-                        <select id="organizer">
-                            <option>请选择</option>
-                        </select>
+                        <select id="organizer" class="form-control"></select>
                     </td>
                     <td>
-                        <input type="checkbox" name="operator" id="input_operator">
+                        <input type="checkbox" name="operator" id="input_operator" value="1">
                         <label for="input_operator">操作人</label>
-                        <select id="operator">
-                            <option>请选择</option>
-                        </select>
+                        <select id="operator" class="form-control"></select>
                     </td>
                     <td>
                         <input type="checkbox" name="date" id="date">
                         <label for="date">添加日期</label>
-                        <span id="dateSelector">
+                        <span id="dateSelector" class="form-control">
                             <select id="idYear" data=""></select>年
                             <select id="idMonth" data=""></select>月
                             <select id="idDay" data=""></select>日
                         </span>
                     </td>
                     <td>
-                        <button type="submit" id="condation_search" class="btn btn-success">搜索</button>
+                        <button type="submit" id="condation_search" class="btn btn-success form-control">搜索</button>
                     </td>
                 </tr>
             </table>
@@ -113,12 +100,13 @@
                     <tbody>
                         @foreach($musics as $item)
                             <tr id="{{ $item->id }}">
-                                <td>{{ $item->instrument->name }}</td>
+                                <td class="{{ $item->instrument['id'] }}">{{ $item->instrument['name'] }}</td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->composer }}</td>
                                 <td>{{ $item->version }}</td>
-                                <td>{{ $item->press->name }}</td>
-                                <td>{{ $item->organizer->name }}</td>
+                                <td class="{{ $item->press_id }}">{{ $item->press->name }}</td>
+                                <td>{{ $item->organizer['name'] }}</td>
+                                {{-- <td>{{ $item->organizer->name }}</td> --}}
                                 <td>
                                     @foreach($item->tags as $tag)
                                         <span class="">{{ $tag->name }}</span>
@@ -126,10 +114,16 @@
                                 </td>
                                 <td><a href="#">{{ $item->filename }}</a></td>
                                 <td>{{ $item->created_at }}</td>
-                                <td>{{ $item->onshelf ? "已上架" : "待审核" }}</td>
+                                <td>{{ $item->onshelf == 2 ? "已上架" : "待审核" }}</td>
                                 <td>
                                     <button class="btn btn-xs btn-info edit" data-toggle="modal" data-target="#editPopup" data-backdrop="static">
                                         <span class="glyphicon glyphicon-edit"></span> 编辑
+                                    </button>
+                                    <button class="btn btn-xs btn-info edit">
+                                        <span class="glyphicon glyphicon-ok"></span> 审核通过
+                                    </button>
+                                    <button class="btn btn-xs btn-info edit">
+                                        <span class="glyphicon glyphicon-remove"></span> 下架
                                     </button>
                                     {{-- <button class="btn btn-xs btn-info delete"> --}}
                                         {{-- <span class="glyphicon glyphicon-remove"></span> 删除 --}}
@@ -162,7 +156,7 @@
         <div id="add_multi_musics" class="btn btn-success">添加多个乐曲</div>
 
     {{-- 编辑窗口 --}}
-    <div class="modal fade" id="editPopup">
+    <div class="modal fade form-group" id="editPopup">
       <div class="modal-dialog" style="width: auto">
         <div class="modal-content">
           <div class="modal-header">
@@ -186,13 +180,17 @@
                       <tr>
                           <form id="save_detail">
                               <input type="hidden" id="edit_id">
-                              <td id="edit_instrument"></td>
-                              <td><input type="text" id="edit_name"></td>
-                              <td><input type="text" id="edit_composer"></td>
-                              <td><input type="text" id="edit_version"></td>
-                              <td><input type="text" id="edit_press"></td>
-                              <td><input type="text" id="edit_category"></td>
-                              <td><input type="text" id="edit_notes"></td>
+                              <td>
+                                  <select id="edit_instrument" class="form-control"></select>
+                              </td>
+                              <td><input class="form-control" type="text" id="edit_name"></td>
+                              <td><input class="form-control" type="text" id="edit_composer"></td>
+                              <td><input class="form-control" type="text" id="edit_version"></td>
+                              <td>
+                                  <select id="edit_press" class="form-control"></select>
+                              </td>
+                              <td><input class="form-control" type="text" id="edit_category"></td>
+                              <td><input class="form-control" type="text" id="edit_notes"></td>
                           </form>
                       </tr>
                   </tbody>
@@ -220,7 +218,6 @@
                             <label for="add_instrument" class="col-sm-2 control-label">乐器</label>
                             <div class="col-sm-10">
                                 <select class="form-control" id="add_instrument" name="instrument">
-                                    <option value="0">请选择</option>
                                 </select>
                             </div>
                         </div>
@@ -292,11 +289,6 @@
 @endsection
 
 @section('css')
-    <style media="screen">
-        th {
-            /*width: 300px;*/
-        }
-    </style>
     <link href="http://hayageek.github.io/jQuery-Upload-File/4.0.10/uploadfile.css" rel="stylesheet">
     <link rel="stylesheet" href="http://cdn.staticfile.org/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" media="screen" title="no title" charset="utf-8">
 @endsection

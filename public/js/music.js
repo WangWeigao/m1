@@ -58,12 +58,11 @@ $(document).ready(function() {
     $(".edit").each(function(index, el) {
         $(this).click(function() {
             $("#edit_id").val($(el).closest('tr').attr('id'));
-            $("#edit_instrument").append($("#instrument").clone());
-            $("#edit_instrument").val($("#instrument").closest('input').val());
+            $("#edit_instrument").val($(el).closest('tr').find('td:eq(0)').attr('class'));
             $("#edit_name").val($(el).closest('tr').find('td:eq(1)').text());
             $("#edit_composer").val($(el).closest('tr').find('td:eq(2)').text());
             $("#edit_version").val($(el).closest('tr').find('td:eq(3)').text());
-            $("#edit_press").val($(el).closest('tr').find('td:eq(4)').text());
+            $("#edit_press").val($(el).closest('tr').find('td:eq(4)').attr('class'));
             $("#edit_category").val($(el).closest('tr').find('span').text());
             $("#edit_notes").val($(el).closest('tr').find('td:eq(11)').text());
         });
@@ -151,6 +150,8 @@ $(document).ready(function() {
             var $str = "";
             $str = "<option value=" + value.id + ">" + value.name + "</option>";
             $("#instrument").append($str);
+            $("#instrument").val(1);
+            $("#edit_instrument").append($str);
             $("#add_instrument").append($str);
         });
 
@@ -161,6 +162,7 @@ $(document).ready(function() {
             var $str = "";
             $str = "<option value=" + value.id + ">" + value.name + "</option>";
             $("#press").append($str);
+            $("#edit_press").append($str);
             $("#add_press").append($str);
         });
 

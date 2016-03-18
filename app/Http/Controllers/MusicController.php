@@ -36,7 +36,7 @@ class MusicController extends Controller
          */
         $name       = $request->get('name') or "";
         $instrument = $request->get('instrument') or "";
-        $press      = $request->get('press') or "";
+        $press      = $request->get('press') or 0;
         $category   = $request->get('category') or "";
         $onshelf    = $request->get('onshelf') or "";
         $organizer  = $request->get('organizer') or "";
@@ -88,7 +88,24 @@ class MusicController extends Controller
             $musics = $musics->whereBetween('created_at', ["$date_start", "$date_end"]);
         }
 
-        $musics = $musics->paginate(15);
+        $musics = $musics->paginate(15)->appends(
+                                                    ['name'      => $name,
+                                                    'instrument' => $instrument,
+                                                    'press'      => $press,
+                                                    'category'   => $category,
+                                                    'onshelf'    => $onshelf,
+                                                    'organizer'  => $organizer,
+                                                    'operator'   => $operator,
+                                                    'date'       => $date]
+                                                );
+        $name       = $request->get('name') or "";
+        $instrument = $request->get('instrument') or "";
+        $press      = $request->get('press') or 0;
+        $category   = $request->get('category') or "";
+        $onshelf    = $request->get('onshelf') or "";
+        $organizer  = $request->get('organizer') or "";
+        $operator   = $request->get('operator') or "";
+        $date       = $request->get('date') or "";
         // $musics = Music::find(92)->press;
         // return $musics;
 
