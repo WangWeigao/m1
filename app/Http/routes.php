@@ -37,19 +37,27 @@ Route::group(['middleware' => 'web'], function () {
         return redirect('home');
     });
 
-    // --------------------------------------用户路由----------------------------------------------
+    // --------------------------------------乐曲路由----------------------------------------------
     /**
      * 通过csv文件批量添加数据
      */
     Route::post('/music/storecsv', 'MusicController@storeCsv');
+
     /**
     * 曲库路由
     */
     Route::get('/music/condations', 'MusicController@getCondations');
+
+    /**
+     * 乐曲上架
+     */
+    Route::get('/music/putaway/{id}', 'MusicController@putaway');
+
     /**
      * 曲库resource路由
      */
     Route::resource('/music', 'MusicController');
+
 
     /**
      * Default Route, useless.

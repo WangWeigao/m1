@@ -182,7 +182,7 @@ class MusicController extends Controller
                 return $data;
             }
         }
-}
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -285,11 +285,70 @@ class MusicController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // return $request->all();
+        $name          = $request->get('name') or '';
+        $composer      = $request->get('composer') or '';
+        $instrument_id = $request->get('instrument');
+        $version       = $request->get('version') or '';
+        $press_id      = $request->get('press');
+        $organizer_id  = $request->get('organizer') or 0;
+        $note_content  = $request->get('notes') or '';
+        $note_operator = $request->user()->id;
+        // return $request->all();
         $music = Music::find($id);
-        $music->name = $request->name;
-        $music->author = $request->author;
-        $music->save();
-        $data['status'] = true;
+        if (!empty($name)) {
+            $music->name = $name;
+        }
+        if (!empty($composer)) {
+            $music->composer = $composer;
+        }
+        if (!empty($instrument_id)) {
+            $music->instrument_id = $instrument_id;
+        }
+        if (!empty($version)) {
+            $music->version = $version;
+        }
+        if (!empty($press_id)) {
+            $music->press_id = $press_id;
+        }
+        if (!empty($organizer_id)) {
+            $music->organizer_id  = $organizer_id;
+        }
+        if (!empty($note_content)) {
+            $music->note_content = $note_content;
+            $music->note_operator = $note_operator;
+        }
+        $category             = $request->get('category');
+        $category_old         = $request->get('category_old');
+        if(!empty($category_old)) {
+            $music->tags()->updateExistingPivot($category_old, ['tag_id' => $category]);
+        }else {
+            $music->tags()->attach($category);
+        }
+        $result = $music->save();
+        if ($result) {
+            $data['status'] = true;
+        }else {
+            $data['status']  = false;
+            $data['errCode'] = 10013;
+            $data['errMsg']  = '数据更新失败, 稍候再试吧';
+        }
+        return $data;
+    }
+
+    /**
+     * 将"乐曲"上架
+     */
+    public function putaway($id)
+    {
+        $music = Music::find($id);
+        $music->onshelf = 2;
+        $result = $music->save();
+        if ($result) {
+            $data['status'] = true;
+        }else {
+            $data['status'] = false;
+        }
         return $data;
     }
 
@@ -302,13 +361,13 @@ class MusicController extends Controller
     public function destroy($id)
     {
         // 删除模型
-        $music = Music::destroy($id);
-        if ($music) {
+        $music = Music::find($id);
+        $result = $music->delete();
+        if ($result) {
             $data['status'] = true;
         }else {
             $data['status'] = false;
         }
-
         return $data;
     }
 

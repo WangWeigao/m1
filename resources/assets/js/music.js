@@ -63,8 +63,10 @@ $(document).ready(function() {
             $("#edit_composer").val($(el).closest('tr').find('td:eq(2)').text());
             $("#edit_version").val($(el).closest('tr').find('td:eq(3)').text());
             $("#edit_press").val($(el).closest('tr').find('td:eq(4)').attr('class'));
-            $("#edit_category").val($(el).closest('tr').find('span').text());
-            $("#edit_notes").val($(el).closest('tr').find('td:eq(11)').text());
+            $("#edit_organizer").val($(el).closest('tr').find('td:eq(5)').attr('class'));
+            $("#edit_category").val($(el).closest('tr').find('td:eq(6) span').attr('class'));
+            $("#edit_category_old").val($(el).closest('tr').find('td:eq(6) span').attr('class'))
+            $("#edit_notes").val($(el).closest('tr').find('td:eq(12) span:eq(1)').text());
         });
     });
 
@@ -85,7 +87,9 @@ $(document).ready(function() {
                     'composer': $("#edit_composer").val(),
                     'version': $("#edit_version").val(),
                     'press': $("#edit_press").val(),
+                    'organizer': $("#edit_organizer").val(),
                     'category': $("#edit_category").val(),
+                    'category_old': $("#edit_category_old").val(),
                     'notes': $("#edit_notes").val()
                 },
                 headers : {
@@ -105,7 +109,16 @@ $(document).ready(function() {
             return false;
         }
     });
-
+    /**
+     * 点击"审核通过"按钮
+     */
+    $(".putaway").each(function(index, el) {
+        $(this).bind('click', function(event) {
+            $.getJSON('/music/putaway/' + $(el).closest('tr').attr('id'), function(json, textStatus) {
+                console.log('操作成功');
+            });
+        });
+    });
     // 点击"删除"按钮
     $(".delete").each(function(indel, el) {
         $(this).bind('click', function(event) {
@@ -173,6 +186,7 @@ $(document).ready(function() {
             var $str = "";
             $str = "<option value=" + value.id + ">" + value.name + "</option>";
             $("#category").append($str);
+            $("#edit_category").append($str);
             $("#add_category").append($str);
         });
 
@@ -183,6 +197,7 @@ $(document).ready(function() {
             var $str = "";
             $str = "<option value=" + value.id + ">" + value.name + "</option>";
             $("#organizer").append($str);
+            $("#edit_organizer").append($str);
             $("#add_organizer").append($str);
         });
 
@@ -218,13 +233,23 @@ $(document).ready(function() {
      * 按筛选条件搜索
      */
     $("#date").val($("#idYear").val() + '-' + $("#idMonth").val() + '-' + $("#idDay").val());
-    $("select").each(function(index, el) {
+    $(".date_select").each(function(index, el) {
         $(el).bind('change', function() {
             // $(el).closest('input').val($(el).val());
-            $(el).siblings('input').val($(el).val());
+            // $(el).siblings('input').val($(el).val());
             if ($(el).attr('id') === 'idYear' || $(el).attr('id') === 'idMonth' || $(el).attr('id') === 'idDay') {
                 $("#date").val($("#idYear").val() + '-' + $("#idMonth").val() + '-' + $("#idDay").val());
             }
+            console.log($(el).val());
+        });
+    });
+
+    /**
+     * select中选择值改变的时候，同步给select的value赋值
+     */
+    $("select").each(function(index, el) {
+        $(el).bind('change', function(event) {
+            $(el).siblings('input').val($(el).val());
             console.log($(el).val());
         });
     });

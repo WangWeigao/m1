@@ -3,18 +3,17 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Music extends Model
 {
+    use softDeletes;
     /**
      * 允许导入的字段
      * @var array
      */
     protected $guarded = [];
 
-    protected $casts = [
-        'notes' => 'array',
-    ];
 
     /**
      * 曲子所用的乐器

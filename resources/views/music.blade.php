@@ -65,9 +65,9 @@
                         <input type="checkbox" name="date" id="date">
                         <label for="date">添加日期</label>
                         <span id="dateSelector" class="form-control">
-                            <select id="idYear" data=""></select>年
-                            <select id="idMonth" data=""></select>月
-                            <select id="idDay" data=""></select>日
+                            <select class="date_select" id="idYear" data=""></select>年
+                            <select class="date_select" id="idMonth" data=""></select>月
+                            <select class="date_select" id="idDay" data=""></select>日
                         </span>
                     </td>
                     <td>
@@ -104,12 +104,16 @@
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->composer }}</td>
                                 <td>{{ $item->version }}</td>
-                                <td class="{{ $item->press_id }}">{{ $item->press->name }}</td>
-                                <td>{{ $item->organizer['name'] }}</td>
+                                <td class="{{ $item->press_id }}">
+                                    {{ $item->press->name }}
+                                </td>
+                                <td class="{{ $item->organizer_id }}">
+                                    {{ $item->organizer['name'] }}
+                                </td>
                                 {{-- <td>{{ $item->organizer->name }}</td> --}}
                                 <td>
                                     @foreach($item->tags as $tag)
-                                        <span class="">{{ $tag->name }}</span>
+                                        <span class="{{ $tag->id }}">{{ $tag->name }}</span>
                                     @endforeach
                                 </td>
                                 <td><a href="#">{{ $item->filename }}</a></td>
@@ -119,10 +123,10 @@
                                     <button class="btn btn-xs btn-info edit" data-toggle="modal" data-target="#editPopup" data-backdrop="static">
                                         <span class="glyphicon glyphicon-edit"></span> 编辑
                                     </button>
-                                    <button class="btn btn-xs btn-info edit">
+                                    <button class="btn btn-xs btn-info putaway" {{ $item->onshelf ==2 ? 'disabled' : '' }}>
                                         <span class="glyphicon glyphicon-ok"></span> 审核通过
                                     </button>
-                                    <button class="btn btn-xs btn-info edit">
+                                    <button class="btn btn-xs btn-info delete">
                                         <span class="glyphicon glyphicon-remove"></span> 下架
                                     </button>
                                     {{-- <button class="btn btn-xs btn-info delete"> --}}
@@ -130,11 +134,11 @@
                                     {{-- </button> --}}
                                 </td>
                                 <td>{{ $item->user->name }}</td>
-                                <td>
-                                    {{ $item->note or ""}}
-                                </td>
                                 @if(!empty($item->note_content))
-                                    <td>{{ $item->editor['name'] }} : {{ $item->note_content }}</td>
+                                    <td>
+                                        <span>{{ $item->editor['name'] }} :</span>
+                                        <span class="note_content">{{ $item->note_content }}</span>
+                                    </td>
                                 @else
                                     <td></td>
                                 @endif
@@ -172,6 +176,7 @@
                           <th>作曲人</th>
                           <th>版本</th>
                           <th>出版社</th>
+                          <th>主办机构</th>
                           <th>乐曲类别</th>
                           <th>备注</th>
                       </tr>
@@ -189,7 +194,13 @@
                               <td>
                                   <select id="edit_press" class="form-control"></select>
                               </td>
-                              <td><input class="form-control" type="text" id="edit_category"></td>
+                              <td>
+                                  <select id="edit_organizer" class="form-control"></select>
+                              </td>
+                              <td>
+                                  <select id="edit_category" class="form-control"></select>
+                                  <div type="hidden" name="category_old" id="edit_category_old" value="">
+                              </td>
                               <td><input class="form-control" type="text" id="edit_notes"></td>
                           </form>
                       </tr>
