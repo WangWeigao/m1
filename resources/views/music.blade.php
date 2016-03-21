@@ -82,6 +82,7 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
+                            <th><input type="checkbox" id="checkAll"></th>
                             <th>乐器</th>
                             <th>乐曲名</th>
                             <th>作曲人</th>
@@ -100,6 +101,7 @@
                     <tbody>
                         @foreach($musics as $item)
                             <tr id="{{ $item->id }}">
+                                <td><input type="checkbox" name="music_action[]"></td>
                                 <td class="{{ $item->instrument['id'] }}">{{ $item->instrument['name'] }}</td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->composer }}</td>
@@ -146,9 +148,6 @@
                         @endforeach
                     </tbody>
                 </table>
-                <div class="text-center">
-                    {!! $musics->render() !!}
-                </div>
 
             @else
                 <div class="text-center blockquote">
@@ -156,8 +155,13 @@
                 </div>
             @endif
         @endif
+        <div id="allow_all" class="btn btn-success">审核通过</div>
+        <div id="off_shelf" class="btn btn-success">下架</div>
         <div id="add_one_mucis" class="btn btn-success" data-toggle="modal" data-target="#newPopup" data-backdrop="static">添加单个乐曲</div>
         <div id="add_multi_musics" class="btn btn-success">添加多个乐曲</div>
+        <div class="text-center">
+            {!! $musics->render() !!}
+        </div>
 
     {{-- 编辑窗口 --}}
     <div class="modal fade form-group" id="editPopup">

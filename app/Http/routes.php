@@ -54,6 +54,16 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/music/putaway/{id}', 'MusicController@putaway');
 
     /**
+     * 批量乐曲上架
+     */
+    Route::put('/music/putawayMany', 'MusicController@putawayMany');
+
+    /**
+     * 批量乐曲下架
+     */
+    Route::delete('/music/offshelfMany', 'MusicController@offshelfMany');
+
+    /**
      * 曲库resource路由
      */
     Route::resource('/music', 'MusicController');

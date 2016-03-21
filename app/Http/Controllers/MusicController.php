@@ -88,7 +88,7 @@ class MusicController extends Controller
             $musics = $musics->whereBetween('created_at', ["$date_start", "$date_end"]);
         }
 
-        $musics = $musics->paginate(15)->appends(
+        $musics = $musics->paginate(10)->appends(
                                                     ['name'      => $name,
                                                     'instrument' => $instrument,
                                                     'press'      => $press,
@@ -368,6 +368,62 @@ class MusicController extends Controller
         }else {
             $data['status'] = false;
         }
+        return $data;
+    }
+
+    /**
+     * 批量乐曲上架
+     * @method putawayMany
+     * @param  Request     $request [description]
+     * @return json                 [description]
+     */
+    public function putawayMany(Request $request)
+    {
+        $ids = $request->get('ids');
+        foreach ($ids as $id) {
+            // echo $id;
+            $music = Music::find($id);
+            $music->onshelf = 2;
+            $result[] = $music->save();
+        }
+        /**
+         * 合并数组中的重复值
+         */
+        $result_unique = array_unique($result);
+
+        /**
+         * 如果合并后的数组中有'true', 并且数组的元素个数为1, 则返回TRUE
+         */
+        if(in_array(true, $result_unique) && count($result_unique) == 1) {
+            $data['status'] = true;
+        }else {
+            $data['status'] = false;
+        }
+
+        return $data;
+    }
+
+    public function offshelfMany(Request $request)
+    {
+        $ids = $request->get('ids');
+        foreach ($ids as $id) {
+            $music = Music::find($id);
+            $result[] = $music->delete();
+        }
+        /**
+         * 合并数组中的重复值
+         */
+        $result_unique = array_unique($result);
+
+        /**
+         * 如果合并后的数组中有'true', 并且数组的元素个数为1, 则返回TRUE
+         */
+        if(in_array(true, $result_unique) && count($result_unique) == 1) {
+            $data['status'] = true;
+        }else {
+            $data['status'] = false;
+        }
+
         return $data;
     }
 

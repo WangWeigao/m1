@@ -261,6 +261,74 @@ $(document).ready(function() {
         window.location.href = "/music/create";
     });
 
+    /**
+     * 全部选中，全部取消
+     */
+    $("#checkAll").bind('click', function(event) {
+        if (this.checked) {
+            $("input[name='music_action[]']").prop("checked", true);
+        }else {
+            $("input[name='music_action[]']").prop("checked", false);
+        }
+    });
+
+    /**
+     * 批量审核通过
+     */
+    $("#allow_all").bind('click', function() {
+        var ids = [];
+        $("input[name='music_action[]']:checked").each(function(index, el) {
+            ids.push($(el).closest('tr').attr('id'));
+        });
+
+        $.ajax({
+            url: '/music/putawayMany',
+            type: 'PUT',
+            dataType: 'json',
+            data: {'ids': ids},
+            headers: {
+                'X-CSRF-TOKEN': $("input[name='_token']").val()
+            }
+        })
+        .done(function() {
+            console.log("success");
+        })
+        .fail(function() {
+            console.log("error");
+        })
+        .always(function() {
+            console.log("complete");
+        });
+    });
+
+    /**
+     * 批量下架
+     */
+    $("#off_shelf").bind('click', function () {
+        var ids = [];
+        $("input[name='music_action[]']:checked").each(function(index, el) {
+            ids.push($(el).closest('tr').attr('id'));
+        });
+        $.ajax({
+            url: '/music/offshelfMany',
+            type: 'DELETE',
+            dataType: 'json',
+            data: {'ids': ids},
+            headers: {
+                'X-CSRF-TOKEN': $("input[name='_token']").val()
+            }
+        })
+        .done(function() {
+            console.log("success");
+        })
+        .fail(function() {
+            console.log("error");
+        })
+        .always(function() {
+            console.log("complete");
+        });
+
+    });
 
 });
 
