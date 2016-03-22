@@ -160,7 +160,9 @@
         <div id="add_one_mucis" class="btn btn-success" data-toggle="modal" data-target="#newPopup" data-backdrop="static">添加单个乐曲</div>
         <div id="add_multi_musics" class="btn btn-success">添加多个乐曲</div>
         <div class="text-center">
-            {!! $musics->render() !!}
+            @if(!empty($musics))
+                {!! $musics->render() !!}
+            @endif
         </div>
 
     {{-- 编辑窗口 --}}

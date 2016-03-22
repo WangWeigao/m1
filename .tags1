@@ -4,10 +4,3 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-ajaxSubmitForm	D:\wamp\www\m1\resources\assets\js\music.js	/^        function ajaxSubmitForm() {$/;"	function	line:7
-isEmpty	D:\wamp\www\m1\resources\assets\js\music.js	/^           function isEmpty( inputStr ) {$/;"	function	line:13
-success	D:\wamp\www\m1\resources\assets\js\music.js	/^               success : function(data) {$/;"	function	line:35
-error	D:\wamp\www\m1\resources\assets\js\music.js	/^               error : function(data) {$/;"	function	line:42
-ajaxSubmitForm	D:\wamp\www\m1\resources\assets\js\music.js	/^        function ajaxSubmitForm() {$/;"	function	line:70
-success	D:\wamp\www\m1\resources\assets\js\music.js	/^                success : function(data) {$/;"	function	line:89
-error	D:\wamp\www\m1\resources\assets\js\music.js	/^                error : function(data) {$/;"	function	line:92

@@ -44,7 +44,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/music/storecsv', 'MusicController@storeCsv');
 
     /**
-    * 曲库路由
+    * 获取不同筛选条件中的值
     */
     Route::get('/music/condations', 'MusicController@getCondations');
 
@@ -62,6 +62,16 @@ Route::group(['middleware' => 'web'], function () {
      * 批量乐曲下架
      */
     Route::delete('/music/offshelfMany', 'MusicController@offshelfMany');
+
+    /**
+     * 曲库统计
+     */
+    Route::get('/music/musicStatistics', 'MusicController@musicStatistics');
+
+    /**
+     * 按乐器种类取得曲库统计数据
+     */
+    Route::get('/music/musicStatisticsByInstrument', 'MusicController@musicStatisticsByInstrument');
 
     /**
      * 曲库resource路由

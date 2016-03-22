@@ -445,4 +445,65 @@ class MusicController extends Controller
         // $data['status'] = 'sdfsdfsdfsdfsdfsdfsdfdsf';
         // return $data;
     }
+
+    public function musicStatistics()
+    {
+        $request = new Request(['instrumentValue' => 0]);
+        $data = self::musicStatisticsByInstrument($request);
+        return view('musicStatistics')->with('data', $data);
+    }
+
+    /**
+     * 按乐器种类返回统计结果
+     * @method musicStatisticsByInstrument
+     * @param  Request                     $request [description]
+     * @return [json]                               [description]
+     */
+    public function musicStatisticsByInstrument(Request $request)
+    {
+        $instrumentValue = $request->get('instrumentValue');
+        if ($instrumentValue == 0) {
+            $data['allCount']     = Music::count();
+            $data['onshelfCount'] = Music::where('onshelf', 2)->count();
+            $data['waitForCheck'] = Music::where('onshelf', 1)->count();
+            $data['deleteCount']  = Music::onlyTrashed()->count();
+            // 业余考级乐曲统计
+            $data['amateur_allCount']     = Music::whereHas('tags', function ($query) {$query->where('name', '业余考级');})->count();
+            $data['amateur_onshelfCount'] = Music::whereHas('tags', function ($query) {$query->where('name', '业余考级');})->where('onshelf', 2)->count();
+            $data['amateur_waitForCheck'] = Music::whereHas('tags', function ($query) {$query->where('name', '业余考级');})->where('onshelf', 1)->count();
+            $data['amateur_deleteCount']  = Music::whereHas('tags', function ($query) {$query->where('name', '业余考级');})->onlyTrashed()->count();
+            // 专业考级乐曲统计
+            $data['pro_allCount']     = Music::whereHas('tags', function ($query) {$query->where('name', '专业考级');})->count();
+            $data['pro_onshelfCount'] = Music::whereHas('tags', function ($query) {$query->where('name', '专业考级');})->where('onshelf', 2)->count();
+            $data['pro_waitForCheck'] = Music::whereHas('tags', function ($query) {$query->where('name', '专业考级');})->where('onshelf', 1)->count();
+            $data['pro_deleteCount']  = Music::whereHas('tags', function ($query) {$query->where('name', '专业考级');})->onlyTrashed()->count();
+            // 热门曲目统计
+            $data['hot_allCount']     = Music::whereHas('tags', function ($query) {$query->where('name', '热门曲目');})->count();
+            $data['hot_onshelfCount'] = Music::whereHas('tags', function ($query) {$query->where('name', '热门曲目');})->where('onshelf', 2)->count();
+            $data['hot_waitForCheck'] = Music::whereHas('tags', function ($query) {$query->where('name', '热门曲目');})->where('onshelf', 1)->count();
+            $data['hot_deleteCount']  = Music::whereHas('tags', function ($query) {$query->where('name', '热门曲目');})->onlyTrashed()->count();
+        }else {
+            $data['allCount']     = Music::where('instrument_id', $instrumentValue)->count();
+            $data['onshelfCount'] = Music::where('instrument_id', $instrumentValue)->where('onshelf', 2)->count();
+            $data['waitForCheck'] = Music::where('instrument_id', $instrumentValue)->where('onshelf', 1)->count();
+            $data['deleteCount']  = Music::where('instrument_id', $instrumentValue)->onlyTrashed()->count();
+            // 业余考级乐曲统计
+            $data['amateur_allCount']     = Music::where('instrument_id', $instrumentValue)->whereHas('tags', function ($query) {$query->where('name', '业余考级');})->count();
+            $data['amateur_onshelfCount'] = Music::where('instrument_id', $instrumentValue)->whereHas('tags', function ($query) {$query->where('name', '业余考级');})->where('onshelf', 2)->count();
+            $data['amateur_waitForCheck'] = Music::where('instrument_id', $instrumentValue)->whereHas('tags', function ($query) {$query->where('name', '业余考级');})->where('onshelf', 1)->count();
+            $data['amateur_deleteCount']  = Music::where('instrument_id', $instrumentValue)->whereHas('tags', function ($query) {$query->where('name', '业余考级');})->onlyTrashed()->count();
+            // 专业考级乐曲统计
+            $data['pro_allCount']     = Music::where('instrument_id', $instrumentValue)->whereHas('tags', function ($query) {$query->where('name', '专业考级');})->count();
+            $data['pro_onshelfCount'] = Music::where('instrument_id', $instrumentValue)->whereHas('tags', function ($query) {$query->where('name', '专业考级');})->where('onshelf', 2)->count();
+            $data['pro_waitForCheck'] = Music::where('instrument_id', $instrumentValue)->whereHas('tags', function ($query) {$query->where('name', '专业考级');})->where('onshelf', 1)->count();
+            $data['pro_deleteCount']  = Music::where('instrument_id', $instrumentValue)->whereHas('tags', function ($query) {$query->where('name', '专业考级');})->onlyTrashed()->count();
+            // 热门曲目统计
+            $data['hot_allCount']     = Music::where('instrument_id', $instrumentValue)->whereHas('tags', function ($query) {$query->where('name', '热门曲目');})->count();
+            $data['hot_onshelfCount'] = Music::where('instrument_id', $instrumentValue)->whereHas('tags', function ($query) {$query->where('name', '热门曲目');})->where('onshelf', 2)->count();
+            $data['hot_waitForCheck'] = Music::where('instrument_id', $instrumentValue)->whereHas('tags', function ($query) {$query->where('name', '热门曲目');})->where('onshelf', 1)->count();
+            $data['hot_deleteCount']  = Music::where('instrument_id', $instrumentValue)->whereHas('tags', function ($query) {$query->where('name', '热门曲目');})->onlyTrashed()->count();
+        }
+        return $data;
+
+    }
 }
