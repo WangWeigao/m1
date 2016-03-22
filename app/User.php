@@ -29,4 +29,19 @@ class User extends Authenticatable
      * @var string
      */
     protected $table = 'admin_users';
+
+    /**
+     * 用户角色
+     * @method roles
+     * @return [type] [description]
+     */
+    public function roles()
+    {
+        return $this->belongsToMany('App\Role');
+    }
+
+    public function musics()
+    {
+        return $this->hasMany('App\Music', 'operator');
+    }
 }

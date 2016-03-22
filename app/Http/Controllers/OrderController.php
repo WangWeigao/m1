@@ -79,6 +79,7 @@ class OrderController extends Controller
          * 携带 from_time 和 to_time 以便进行分页, 点击其它页娄时将数据带到跳转的页面
          */
         return view('order')->with(['orders' => $orders, 'from_time' => $from_time, 'to_time' => $to_time]);
+        // return view('order')->withInput();
     }
 
 

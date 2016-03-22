@@ -11,24 +11,39 @@
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/password/reset') }}">
                         {!! csrf_field() !!}
 
-                        <input type="hidden" name="token" value="{{ $token }}">
+                        {{-- <input type="hidden" name="token" value="{{ $token }}"> --}}
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">E-Mail Address</label>
+                        {{-- <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}"> --}}
+                            {{-- <label class="col-md-4 control-label">E-Mail Address</label> --}}
+{{--  --}}
+                            {{-- <div class="col-md-6"> --}}
+                                {{-- <input type="email" class="form-control" name="email" value="{{ $email or old('email') }}"> --}}
+{{--  --}}
+                                {{-- @if ($errors->has('email')) --}}
+                                    {{-- <span class="help-block"> --}}
+                                        {{-- <strong>{{ $errors->first('email') }}</strong> --}}
+                                    {{-- </span> --}}
+                                {{-- @endif --}}
+                            {{-- </div> --}}
+                        {{-- </div> --}}
+
+
+                        <div class="form-group{{ $errors->has('old_password') ? ' has-error' : '' }}">
+                            <label class="col-md-4 control-label">Old Password</label>
 
                             <div class="col-md-6">
-                                <input type="email" class="form-control" name="email" value="{{ $email or old('email') }}">
+                                <input type="password" class="form-control" name="old_password">
 
-                                @if ($errors->has('email'))
+                                @if ($errors->has('old_password'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
+                                        <strong>{{ $errors->first('old_password') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Password</label>
+                            <label class="col-md-4 control-label">New Password</label>
 
                             <div class="col-md-6">
                                 <input type="password" class="form-control" name="password">
@@ -67,4 +82,7 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+
+</script>
 @endsection

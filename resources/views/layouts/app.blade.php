@@ -8,13 +8,14 @@
     <title>Laravel</title>
 
     <!-- Fonts -->
-    {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
-    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'> --}}
+    <link href="http://cdn.staticfile.org/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
+    <link href="http://fonts.useso.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
 
     <!-- Styles -->
-    {{-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"> --}}
-    <link href="{{ elixir('css/all.css') }}" rel="stylesheet">
+    <link href="http://cdn.staticfile.org/twitter-bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    {{-- <link href="{{ elixir('css/all.css') }}" rel="stylesheet"> --}}
 
+    {{-- 继承此模板的页面使用的CSS --}}
     @yield('css')
 
     <style>
@@ -56,8 +57,8 @@
                             {{-- <a href="{{ url('/music') }}">曲库管理</a> --}}
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">曲库管理<span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="/music/create">添加曲目</a></li>
-                                <li><a href="/music">查找曲目</a></li>
+                                <li><a href="/music/musicStatistics">曲库统计</a></li>
+                                <li><a href="/music">曲库列表</a></li>
                             </ul>
                         </li>
                         <li id="user-manager" class="dropdown">
@@ -68,10 +69,14 @@
                         </li>
                         <li id="teacher-manager"><a href="{{ url('/teacher') }}">教师管理</a></li>
                         <li id="order-manager"><a href="{{ url('/order') }}">订单管理</a></li>
-                        <li class="disabled"><a href="#">结算系统</a></li>
+                        @can('access-finance')
+                            <li class="disabled"><a href="#">结算系统</a></li>
+                        @endif
                         <li class="disabled"><a href="{{ url('/lessons') }}">发布审批</a></li>
                         <li class="disabled"><a href="#">客服</a></li>
-                        <li class="disabled"><a href="#">系统管理</a></li>
+                        @can('access-finance')
+                            <li class=""><a href="#">系统管理</a></li>
+                        @endcan
                     @endif
                 </ul>
 
@@ -88,6 +93,7 @@
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{ url('/password/reset/token') }}"><i class="fa fa-btn fa-edit"></i>修改密码</a></li>
                                 <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
                             </ul>
                         </li>
@@ -100,9 +106,10 @@
     @yield('content')
 
     <!-- JavaScripts -->
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> --}}
-    <script src="{{ elixir('js/all.js') }}"></script>
+    <script src="http://cdn.staticfile.org/jquery/2.1.4/jquery.min.js"></script>
+    <script src="http://cdn.staticfile.org/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="{{ elixir('js/app.js') }}"></script>
+    {{-- <script src="js/app.js"></script> --}}
 
     @yield('js')
 

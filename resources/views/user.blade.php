@@ -15,7 +15,6 @@
             <button type="submit" name="button" class="btn btn-success" id="search">搜索</button>
         </fieldset>
     </form>
-<hr>
 @if(!empty($name))
 <table class="table table-hover">
     <thead>
@@ -31,19 +30,6 @@
             <th>状态</th>
         </tr>
     </thead>
-    <tfoot>
-        <tr>
-            <th>ID</th>
-            <th>用户名</th>
-            <th>联系方式</th>
-            <th>Email</th>
-            <th>订单历史</th>
-            <th>注册时间</th>
-            <th>最后登陆时间</th>
-            <th>操作</th>
-            <th>状态</th>
-        </tr>
-    </tfoot>
         <tbody>
             @foreach($users as $user)
             <tr>
@@ -55,9 +41,9 @@
                 <td>{{ $user->lastlogin }}</td>
                 <td>{{ $user->regdate }}</td>
                 <td>
-                    <div class="btn-group btn-group-sm">
+                    <div class="btn-group btn-group-xs">
                         <button type="button" id="{{ $user->uid }}" class="{{ $user->isactive ? 'lockuser btn btn-success' : 'lockuser btn btn-danger' }}">{{ $user->isactive ? '锁定' : '解锁'  }}</button>
-                        <a href="{{ url('/user/' . $user->uid) }}"><button type="button" class="btn btn-info btn-sm">查看</button></a>
+                        <a href="{{ url('/user/' . $user->uid) }}"><button type="button" class="btn btn-info btn-xs">查看</button></a>
                     </div>
                 </td>
                 <td id="isactive">{{ $user->isactive ? '未锁定' : '已锁定' }}</td>
@@ -65,10 +51,10 @@
             @endforeach
         </tbody>
 </table>
+{{-- 因使用DataTables插件, 将所有数据给到前端, 由前端分页, 此处暂时用不到 --}}
+<div class="text-center">
+    {!! $users->appends(['name' => $name])->render() !!}
+</div>
 
 @endif
-{{-- 因使用DataTables插件, 将所有数据给到前端, 由前端分页, 此处暂时用不到 --}}
-{{-- <div class="text-center">
-    {!! $users->appends(['name' => $name])->render() !!}
-</div> --}}
 @endsection

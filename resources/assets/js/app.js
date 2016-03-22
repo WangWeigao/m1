@@ -5,6 +5,10 @@ $(document).ready(function() {
         case '/home':
             $("#home").addClass('active');
             break;
+        case '/music':
+        case '/music/create':
+            $("#music").addClass('active');
+            break;
         case '/user':
         case '/getusers':
             $("#user-manager").addClass('active');

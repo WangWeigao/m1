@@ -37,15 +37,47 @@ Route::group(['middleware' => 'web'], function () {
         return redirect('home');
     });
 
-    // --------------------------------------用户路由----------------------------------------------
+    // --------------------------------------乐曲路由----------------------------------------------
     /**
      * 通过csv文件批量添加数据
      */
     Route::post('/music/storecsv', 'MusicController@storeCsv');
+
     /**
-    * 曲库路由
+    * 获取不同筛选条件中的值
     */
+    Route::get('/music/condations', 'MusicController@getCondations');
+
+    /**
+     * 乐曲上架
+     */
+    Route::get('/music/putaway/{id}', 'MusicController@putaway');
+
+    /**
+     * 批量乐曲上架
+     */
+    Route::put('/music/putawayMany', 'MusicController@putawayMany');
+
+    /**
+     * 批量乐曲下架
+     */
+    Route::delete('/music/offshelfMany', 'MusicController@offshelfMany');
+
+    /**
+     * 曲库统计
+     */
+    Route::get('/music/musicStatistics', 'MusicController@musicStatistics');
+
+    /**
+     * 按乐器种类取得曲库统计数据
+     */
+    Route::get('/music/musicStatisticsByInstrument', 'MusicController@musicStatisticsByInstrument');
+
+    /**
+     * 曲库resource路由
+     */
     Route::resource('/music', 'MusicController');
+
 
     /**
      * Default Route, useless.
@@ -84,8 +116,12 @@ Route::group(['middleware' => 'web'], function () {
      * 锁定或解锁订单
      */
     Route::get('/lockorder/{id}', 'OrderController@lockOrder');
+    // --------------------------------------财务路由-------------------------------------------------
+    Route::resource('/finance', 'FinanceController');
+    // --------------------------------------RBAC-------------------------------------------------
+    Route::resource('rbac', 'RbacController');
 });
 // 测试路由
-Route::any('/test', function() {
-    return view('test');
+Route::get('/test', function() {
+    return view('auth.passwords.reset')->with('token', '123456');
 });

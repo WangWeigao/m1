@@ -26,6 +26,9 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies($gate);
 
-        //
+        // 用户授权
+        $gate->define('access-finance', function ($user) {
+            return $user->type === 1;
+        });
     }
 }
