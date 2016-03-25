@@ -76,6 +76,24 @@
 				    </div>
                     <input type="hidden" name="monthValue" value="{{ $data['monthValue'] }}">
                     <div id="month_highcharts" style="height: 400px; margin: 0 auto" ></div>
+                    <div class="form-inline">
+                        <input type="checkbox" name="" value="" id="practice_duration">
+                        <label for="practice_duration">练习时长</label>
+                        <select class="form-control" name="">
+                            <option value="1800">30小时以上</option>
+                            <option value="3600">60小时以上</option>
+                            <option value="5400">90小时以上</option>
+                            <option value="7200">120小时以上</option>
+                        </select>
+                        <input type="checkbox" name="" value="" id="account_type">
+                        <label for="account_type">帐号类型</label>
+                        <select class="form-control" name="">
+                            <option value="3">VIP1</option>
+                            <option value="2">VIP2</option>
+                            <option value="1">普通</option>
+                        </select>
+                        <button type="button" class="form-control">搜索</button>
+                    </div>
 				</div>
 
                 {{-- 本季度 --}}

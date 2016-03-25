@@ -68,8 +68,8 @@
                                 <li><a href="/user/usageStatistics">学生使用情况统计</a></li>
                             </ul>
                         </li>
-                        <li id="teacher-manager"><a href="{{ url('/teacher') }}">教师管理</a></li>
-                        <li id="order-manager"><a href="{{ url('/order') }}">订单管理</a></li>
+                        <li class="disabled" id="teacher-manager"><a href="{{ url('/teacher') }}">教师管理</a></li>
+                        <li class="disabled" id="order-manager"><a href="{{ url('/order') }}">订单管理</a></li>
                         @can('access-finance')
                             <li class="disabled"><a href="#">结算系统</a></li>
                         @endif
