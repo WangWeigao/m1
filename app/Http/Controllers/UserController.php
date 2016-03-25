@@ -188,6 +188,9 @@ class UserController extends Controller
 
          $month_request = new Request(['duration' => 1800, 'date' => 'month']);
          $data['monthCountActive'] = self::activeUser($month_request);    // 今日活跃用户数(机器人使用时长30小时以上)
+        //  $data['monthDayth'] = Carbon::now()->day;
+        $data['monthValue'] = Carbon::now()->day;
+        //  $data['monthArray'] = self::calEveryPeriodAddUsers('month', Carbon::now()->day);
 
         /**
          * 本季度的统计结果
@@ -202,6 +205,7 @@ class UserController extends Controller
 
          $quarter_request = new Request(['duration' => 1800, 'date' => 'quarter']);
          $data['quarterCountActive'] = self::activeUser($quarter_request);    // 今日活跃用户数(机器人使用时长30小时以上)
+        //  $data['QuarterMonth'] = Carbon::now()->nthOfQuarter();
 
         /**
          * 本年的统计结果
@@ -261,5 +265,18 @@ class UserController extends Controller
             }
                 $countTodayActive = $countTodayActive->count();    // 机器人使用时长30分钟以上
         return $countTodayActive;
+    }
+
+    public function calEveryPeriodAddUsers(Request $request)
+    {
+        $period = $request->get('period');
+        $length = $request->get('length');
+        
+        for ($i=1; $i <= $length; $i++) {
+            $today_carbon_start = Carbon::now()->day($i)->startOfDay();
+            $today_carbon_end =  Carbon::now()->day($i)->endOfDay();
+            $data[] = StudentUser::whereBetween('regdate', [$today_carbon_start, $today_carbon_end])->count();   // 今日增加用户数
+        }
+        return $data;
     }
 }

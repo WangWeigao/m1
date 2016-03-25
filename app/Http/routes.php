@@ -95,6 +95,11 @@ Route::group(['middleware' => 'web'], function () {
      */
     Route::get('/user/activeUser', 'UserController@activeUser');
 
+    /**
+     * 取得一个时期内从开始到当前，每个单位时间增加的用户数
+     */
+    Route::get('/user/calEveryPeriodAddUsers', 'UserController@calEveryPeriodAddUsers');
+    
      /**
      * 锁定或者解锁用户
      */

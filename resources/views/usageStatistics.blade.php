@@ -74,7 +74,8 @@
 				    <div class="">
 				        机器人：O2O = <span style="color:red;weight:bold">由于表结构及实现细节暂未商定,此处暂未实现</span><span></span>
 				    </div>
-                    <div id="month_highcharts" style="height: 400px; margin: 0 auto"></div>
+                    <input type="hidden" name="monthValue" value="{{ $data['monthValue'] }}">
+                    <div id="month_highcharts" style="height: 400px; margin: 0 auto" ></div>
 				</div>
 
                 {{-- 本季度 --}}
