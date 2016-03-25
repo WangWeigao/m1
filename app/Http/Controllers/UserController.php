@@ -173,7 +173,7 @@ class UserController extends Controller
         $data['todayCountUsed'] = StudentUser::whereBetween('lastlogin', [$today_carbon_start, $today_carbon_end])->count(); // 今日使用用户数
         $data['todayCountOrder'] = Order::whereBetween('submit_time', [$today_carbon_start, $today_carbon_end])->count();    // 今日订单数
 
-        $today_request = new Request(['duration' => 30, 'date' => 'month']);
+        $today_request = new Request(['duration' => 30, 'date' => 'today']);
         $data['todayCountActive'] = self::activeUser($today_request);    // 今日活跃用户数(机器人使用时长30分钟以上)
 
         /**
@@ -216,7 +216,7 @@ class UserController extends Controller
 
          $year_request = new Request(['duration' => 1800, 'date' => 'year']);
          $data['yearCountActive'] = self::activeUser($year_request);    // 今日活跃用户数(机器人使用时长30小时以上)
-         
+// return $data;
         return view('usageStatistics')->with('data', $data);
     }
 
