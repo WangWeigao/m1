@@ -85,6 +85,16 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/home', 'HomeController@index');
     // --------------------------------------用户路由----------------------------------------------
 
+    /**
+     * 学生使用情况统计
+     */
+    Route::get('/user/usageStatistics', 'UserController@usageStatistics');
+
+    /**
+     * 活跃用户数
+     */
+    Route::get('/user/activeUser', 'UserController@activeUser');
+
      /**
      * 锁定或者解锁用户
      */

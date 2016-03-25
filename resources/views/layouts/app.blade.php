@@ -65,7 +65,7 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">学生管理<span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="/user">学生查询</a></li>
-                                <li><a href="">学生使用情况统计</a></li>
+                                <li><a href="/user/usageStatistics">学生使用情况统计</a></li>
                             </ul>
                         </li>
                         <li id="teacher-manager"><a href="{{ url('/teacher') }}">教师管理</a></li>

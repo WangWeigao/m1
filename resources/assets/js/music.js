@@ -58,15 +58,15 @@ $(document).ready(function() {
     $(".edit").each(function(index, el) {
         $(this).click(function() {
             $("#edit_id").val($(el).closest('tr').attr('id'));
-            $("#edit_instrument").val($(el).closest('tr').find('td:eq(0)').attr('class'));
-            $("#edit_name").val($(el).closest('tr').find('td:eq(1)').text());
-            $("#edit_composer").val($(el).closest('tr').find('td:eq(2)').text());
-            $("#edit_version").val($(el).closest('tr').find('td:eq(3)').text());
-            $("#edit_press").val($(el).closest('tr').find('td:eq(4)').attr('class'));
-            $("#edit_organizer").val($(el).closest('tr').find('td:eq(5)').attr('class'));
-            $("#edit_category").val($(el).closest('tr').find('td:eq(6) span').attr('class'));
-            $("#edit_category_old").val($(el).closest('tr').find('td:eq(6) span').attr('class'))
-            $("#edit_notes").val($(el).closest('tr').find('td:eq(12) span:eq(1)').text());
+            $("#edit_instrument").val($(el).closest('tr').find('td:eq(1)').attr('class'));
+            $("#edit_name").val($(el).closest('tr').find('td:eq(2)').text());
+            $("#edit_composer").val($(el).closest('tr').find('td:eq(3)').text());
+            $("#edit_version").val($(el).closest('tr').find('td:eq(4)').text());
+            $("#edit_press").val($(el).closest('tr').find('td:eq(5)').attr('class'));
+            $("#edit_organizer").val($(el).closest('tr').find('td:eq(6)').attr('class'));
+            $("#edit_category").val($(el).closest('tr').find('td:eq(7) span').attr('class'));
+            $("#edit_category_old").val($(el).closest('tr').find('td:eq(7) span').attr('class'))
+            $("#edit_notes").val($(el).closest('tr').find('td:eq(13) span:eq(1)').text());
         });
     });
 

@@ -10,7 +10,8 @@ use App\Http\Controllers\Controller;
 use App\StudentUser;
 use App\Lesson;
 use DB;
-
+use Carbon\Carbon;
+use App\Order;
 class UserController extends Controller
 {
     /**
@@ -158,5 +159,107 @@ class UserController extends Controller
         }
 
         return $active;
+    }
+
+    public function usageStatistics()
+    {
+        /**
+         * 今日的统计结果
+         */
+        $today_carbon_start = Carbon::now()->startOfDay();
+        $today_carbon_end =  Carbon::now()->endOfDay();
+        $data['countStudents'] = StudentUser::count();  // 用户数
+        $data['todayCountAdd'] = StudentUser::whereBetween('regdate', [$today_carbon_start, $today_carbon_end])->count();   // 今日增加用户数
+        $data['todayCountUsed'] = StudentUser::whereBetween('lastlogin', [$today_carbon_start, $today_carbon_end])->count(); // 今日使用用户数
+        $data['todayCountOrder'] = Order::whereBetween('submit_time', [$today_carbon_start, $today_carbon_end])->count();    // 今日订单数
+
+        $today_request = new Request(['duration' => 30, 'date' => 'month']);
+        $data['todayCountActive'] = self::activeUser($today_request);    // 今日活跃用户数(机器人使用时长30分钟以上)
+
+        /**
+         * 本月的统计结果
+         */
+         $month_carbon_start = Carbon::now()->startOfMonth();
+         $month_carbon_end =  Carbon::now()->endOfMonth();
+        //  $data['countStudents'] = StudentUser::count();  // 用户数
+         $data['monthCountAdd'] = StudentUser::whereBetween('regdate', [$month_carbon_start, $month_carbon_end])->count();   // 今日增加用户数
+         $data['monthCountUsed'] = StudentUser::whereBetween('lastlogin', [$month_carbon_start, $month_carbon_end])->count(); // 今日使用用户数
+         $data['monthCountOrder'] = Order::whereBetween('submit_time', [$month_carbon_start, $month_carbon_end])->count();    // 今日订单数
+
+         $month_request = new Request(['duration' => 1800, 'date' => 'month']);
+         $data['monthCountActive'] = self::activeUser($month_request);    // 今日活跃用户数(机器人使用时长30小时以上)
+
+        /**
+         * 本季度的统计结果
+         */
+         $quarter_carbon_start = Carbon::now()->firstOfQuarter();
+         $quarter_carbon_end =  Carbon::now()->lastOfQuarter();
+        //  return $quarter_carbon_start . '/' . $quarter_carbon_end;
+        //  $data['countStudents'] = StudentUser::count();  // 用户数
+         $data['quarterCountAdd'] = StudentUser::whereBetween('regdate', [$quarter_carbon_start, $quarter_carbon_end])->count();   // 今日增加用户数
+         $data['quarterCountUsed'] = StudentUser::whereBetween('lastlogin', [$quarter_carbon_start, $quarter_carbon_end])->count(); // 今日使用用户数
+         $data['quarterCountOrder'] = Order::whereBetween('submit_time', [$quarter_carbon_start, $quarter_carbon_end])->count();    // 今日订单数
+
+         $quarter_request = new Request(['duration' => 1800, 'date' => 'quarter']);
+         $data['quarterCountActive'] = self::activeUser($quarter_request);    // 今日活跃用户数(机器人使用时长30小时以上)
+
+        /**
+         * 本年的统计结果
+         */
+         $year_carbon_start = Carbon::now()->firstOfQuarter();
+         $year_carbon_end =  Carbon::now()->lastOfQuarter();
+        //  return $year_carbon_start . '/' . $year_carbon_end;
+        //  $data['countStudents'] = StudentUser::count();  // 用户数
+         $data['yearCountAdd'] = StudentUser::whereBetween('regdate', [$year_carbon_start, $year_carbon_end])->count();   // 今日增加用户数
+         $data['yearCountUsed'] = StudentUser::whereBetween('lastlogin', [$year_carbon_start, $year_carbon_end])->count(); // 今日使用用户数
+         $data['yearCountOrder'] = Order::whereBetween('submit_time', [$year_carbon_start, $year_carbon_end])->count();    // 今日订单数
+
+         $year_request = new Request(['duration' => 1800, 'date' => 'year']);
+         $data['yearCountActive'] = self::activeUser($year_request);    // 今日活跃用户数(机器人使用时长30小时以上)
+         
+        return view('usageStatistics')->with('data', $data);
+    }
+
+    /**
+     * 活跃用户数
+     * @method activeUser
+     * @param  Request    $request [其中含有,今日,本月,本季度,本年的标识 以及 是否产生订单的标识]
+     * @return [type]              [活跃的用户数]
+     */
+    public function activeUser(Request $request)
+    {
+        switch ($request->date) {
+            case 'today':
+                $date_start = Carbon::now()->startOfDay();
+                $date_end = Carbon::now()->endOfDay();
+                break;
+            case 'month':
+                $date_start = Carbon::now()->startOfMonth();
+                $date_end = Carbon::now()->endOfMonth();
+                break;
+            case 'quarter':
+                $date_start = Carbon::now()->firstOfQuarter();
+                $date_end = Carbon::now()->lastOfQuarter();
+                break;
+            case 'year':
+                $date_start = Carbon::now()->startOfYear();
+                $date_end = Carbon::now()->endOfYear();
+                break;
+            default:
+                # code...
+                break;
+        }
+// return $date_start . '/' . $date_end;
+        $duration = $request->get('duration');
+        // return $duration;
+        $order  = $request->get('order');
+        $countTodayActive = StudentUser::whereHas('robot_durations', function ($query) use ($duration, $date_start, $date_end)  {
+            $query->whereBetween('created_at', [$date_start, $date_end])->groupby('user_id')->havingRaw("SUM(duration) > $duration");
+        });
+            if ($order) {
+                $countTodayActive = $countTodayActive->has('orders');
+            }
+                $countTodayActive = $countTodayActive->count();    // 机器人使用时长30分钟以上
+        return $countTodayActive;
     }
 }
