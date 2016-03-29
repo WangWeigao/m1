@@ -6,10 +6,20 @@ $(document).ready(function() {
         ajaxSubmitForm();
         function ajaxSubmitForm() {
            var value = $("#add_midi_file").val();
+        //    验证上传文件是否为空
            if (isEmpty(value)) {
-               console.log('请先添加文件');
+               alert('请先添加文件');
+               return false;
+           }else if (isEmpty($("#add_name").val())) {
+               alert('乐曲名不能为空');
                return false;
            }
+           /**
+            * 验证变量是否为空
+            * @method isEmpty
+            * @param  {[type]}  inputStr [传入变量]
+            * @return {Boolean}          [返回的boolean值]
+            */
            function isEmpty( inputStr ) {
                if ( null == inputStr || "" == inputStr ) {
                    return true;
@@ -20,6 +30,8 @@ $(document).ready(function() {
                alert("文件格式错误");
                return false;
            }
+
+
            var option = {
                url : 'music',
                type : 'POST',
@@ -39,18 +51,22 @@ $(document).ready(function() {
                    'X-CSRF-TOKEN': $('input[name="_token"]').val()
                }, //添加请求头部
                success : function(data) {
-                   $("#addResult").html("添加成功");
-                   $("#addResult").hide('slow', function() {
+                //    $("#addResult").html("添加成功");
+                //    $("#addResult").hide('slow', function() {
+                   //
+                //    });
 
-                   });
+                    alert('添加成功!');
+                    $("#newPopup").modal('hide');
 
                },
                error : function(data) {
-                   console.log(JSON.stringify(data) + "--上传失败,请刷新后重试");
+                //    console.log(JSON.stringify(data) + "--上传失败,请刷新后重试");
+                alert('上传失败,请刷新后重试!');
                }
            };
            $("#add_music").ajaxSubmit(option);
-           return false; //最好返回false，因为如果按钮类型是submit,则表单自己又会提交一次;返回false阻止表单再次提交
+           return false; // 最好返回false，因为如果按钮类型是submit,则表单自己又会提交一次;返回false阻止表单再次提交
         }
     });
 

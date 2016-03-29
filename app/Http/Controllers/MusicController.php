@@ -182,6 +182,8 @@ class MusicController extends Controller
              * 保存midi文件
              */
             $id = $music->id;
+            // $source_name = $request->get('midi_file');
+            // return $source_name;
             $path = public_path() . '/midis';
             $name = $id . '.mid';
             // 将文件名保存到DB

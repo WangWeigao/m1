@@ -241,7 +241,7 @@
                         <div class="form-group">
                             <label for="add_name" class="col-sm-2 control-label">乐曲名</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="add_name" name="name" placeholder="请输入乐曲名称">
+                                <input type="text" class="form-control" id="add_name" name="name" placeholder="请输入乐曲名称" required>
                             </div>
                         </div>
                         <div class="form-group">
@@ -296,7 +296,7 @@
                     </form>
 				</div>
 				<div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" id="createMusic">创建</button>
+                    <button type="button" class="btn btn-default" id="createMusic">创建</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 				</div>
 			</div>
