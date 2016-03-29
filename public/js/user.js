@@ -173,8 +173,6 @@ $(document).ready(function() {
             }
         })
         .done(function(data) {
-            console.log(data);
-            // var monthArray = $.map(data, function(el) { return el });
             var monthArray = [];
             $.each(data, function(index, el) {
                 monthArray.push([index+1, el]);

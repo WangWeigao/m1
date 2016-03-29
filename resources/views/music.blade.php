@@ -76,8 +76,6 @@
                 </tr>
             </table>
         </form>
-
-        @if(!empty($musics))
             @if(count($musics) > 0)
                 <table class="table table-hover">
                     <thead>
@@ -99,53 +97,53 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($musics as $item)
-                            <tr id="{{ $item->id }}">
-                                <td><input type="checkbox" name="music_action[]"></td>
-                                <td class="{{ $item->instrument['id'] }}">{{ $item->instrument['name'] }}</td>
-                                <td>{{ $item->name }}</td>
-                                <td>{{ $item->composer }}</td>
-                                <td>{{ $item->version }}</td>
-                                <td class="{{ $item->press_id }}">
-                                    {{ $item->press->name }}
-                                </td>
-                                <td class="{{ $item->organizer_id }}">
-                                    {{ $item->organizer['name'] }}
-                                </td>
-                                {{-- <td>{{ $item->organizer->name }}</td> --}}
-                                <td>
-                                    @foreach($item->tags as $tag)
-                                        <span class="{{ $tag->id }}">{{ $tag->name }}</span>
-                                    @endforeach
-                                </td>
-                                <td><a href="#">{{ $item->filename }}</a></td>
-                                <td>{{ $item->created_at }}</td>
-                                <td>{{ $item->onshelf == 2 ? "已上架" : "待审核" }}</td>
-                                <td>
-                                    <button class="btn btn-xs btn-info edit" data-toggle="modal" data-target="#editPopup" data-backdrop="static">
-                                        <span class="glyphicon glyphicon-edit"></span> 编辑
-                                    </button>
-                                    <button class="btn btn-xs btn-info putaway" {{ $item->onshelf ==2 ? 'disabled' : '' }}>
-                                        <span class="glyphicon glyphicon-ok"></span> 审核通过
-                                    </button>
-                                    <button class="btn btn-xs btn-info delete">
-                                        <span class="glyphicon glyphicon-remove"></span> 下架
-                                    </button>
-                                    {{-- <button class="btn btn-xs btn-info delete"> --}}
-                                        {{-- <span class="glyphicon glyphicon-remove"></span> 删除 --}}
-                                    {{-- </button> --}}
-                                </td>
-                                <td>{{ $item->user->name }}</td>
-                                @if(!empty($item->note_content))
-                                    <td>
-                                        <span>{{ $item->editor['name'] }} :</span>
-                                        <span class="note_content">{{ $item->note_content }}</span>
+                            @foreach($musics as $item)
+                                <tr id="{{ $item->id or ''}}">
+                                    <td><input type="checkbox" name="music_action[]"></td>
+                                    <td class="{{ $item->instrument->id or '' }}">{{ $item->instrument->name or '' }}</td>
+                                    <td>{{ $item->name or ''}}</td>
+                                    <td>{{ $item->composer or ''}}</td>
+                                    <td>{{ $item->version or ''}}</td>
+                                    <td class="{{ $item->press_id or ''}}">
+                                        {{ $item->press->name or ''}}
                                     </td>
-                                @else
-                                    <td></td>
-                                @endif
-                            </tr>
-                        @endforeach
+                                    <td class="{{ $item->organizer_id or ''}}">
+                                        {{ $item->organizer->name or ''}}
+                                    </td>
+                                    {{-- <td>{{ $item->organizer->name }}</td> --}}
+                                    <td>
+                                        @foreach($item->tags as $tag)
+                                            <span class="{{ $tag->id }} or ''">{{ $tag->name or ''}}</span>
+                                        @endforeach
+                                    </td>
+                                    <td><a href="#">{{ $item->filename or ''}}</a></td>
+                                    <td>{{ $item->created_at or ''}}</td>
+                                    <td>{{ $item->onshelf == 2 ? "已上架" : "待审核" }}</td>
+                                    <td>
+                                        <button class="btn btn-xs btn-info edit" data-toggle="modal" data-target="#editPopup" data-backdrop="static">
+                                            <span class="glyphicon glyphicon-edit"></span> 编辑
+                                        </button>
+                                        <button class="btn btn-xs btn-info putaway" {{ $item->onshelf ==2 ? 'disabled' : '' }}>
+                                            <span class="glyphicon glyphicon-ok"></span> 审核通过
+                                        </button>
+                                        <button class="btn btn-xs btn-info delete">
+                                            <span class="glyphicon glyphicon-remove"></span> 下架
+                                        </button>
+                                        {{-- <button class="btn btn-xs btn-info delete"> --}}
+                                        {{-- <span class="glyphicon glyphicon-remove"></span> 删除 --}}
+                                        {{-- </button> --}}
+                                    </td>
+                                    <td>{{ $item->user->name or ''}}</td>
+                                    @if(!empty($item->note_content))
+                                        <td>
+                                            <span>{{ $item->editor->name or ''}} :</span>
+                                            <span class="note_content">{{ $item->note_content or ''}}</span>
+                                        </td>
+                                    @else
+                                        <td></td>
+                                    @endif
+                                </tr>
+                            @endforeach
                     </tbody>
                 </table>
 
@@ -153,8 +151,8 @@
                 <div class="text-center blockquote">
                     没有查到相关结果，更换搜索关键词再试试吧
                 </div>
+                <br>
             @endif
-        @endif
         <div id="allow_all" class="btn btn-success">审核通过</div>
         <div id="off_shelf" class="btn btn-success">下架</div>
         <div id="add_one_mucis" class="btn btn-success" data-toggle="modal" data-target="#newPopup" data-backdrop="static">添加单个乐曲</div>
