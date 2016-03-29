@@ -12,9 +12,6 @@
                 <button type="submit" name="button">导入</button>
             </fieldset>
         </form>
-        {{-- 批量上传midi文件和属性 --}}
-        <div id="fileuploader">Upload</div>
-
     </div>
 
 @endsection

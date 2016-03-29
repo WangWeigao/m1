@@ -76,27 +76,28 @@
                 </tr>
             </table>
         </form>
-            @if(count($musics) > 0)
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th><input type="checkbox" id="checkAll"></th>
-                            <th>乐器</th>
-                            <th>乐曲名</th>
-                            <th>作曲人</th>
-                            <th>版本</th>
-                            <th>出版社</th>
-                            <th>主办机构</th>
-                            <th>乐曲类别</th>
-                            <th>midi地址</th>
-                            <th>添加日期</th>
-                            <th>乐曲状态</th>
-                            <th>操作</th>
-                            <th>操作人</th>
-                            <th>备注</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+            @if(!empty($musics))
+                @if(count($musics) > 0)
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" id="checkAll"></th>
+                                <th>乐器</th>
+                                <th>乐曲名</th>
+                                <th>作曲人</th>
+                                <th>版本</th>
+                                <th>出版社</th>
+                                <th>主办机构</th>
+                                <th>乐曲类别</th>
+                                <th>midi地址</th>
+                                <th>添加日期</th>
+                                <th>乐曲状态</th>
+                                <th>操作</th>
+                                <th>操作人</th>
+                                <th>备注</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             @foreach($musics as $item)
                                 <tr id="{{ $item->id or ''}}">
                                     <td><input type="checkbox" name="music_action[]"></td>
@@ -116,7 +117,7 @@
                                             <span class="{{ $tag->id }} or ''">{{ $tag->name or ''}}</span>
                                         @endforeach
                                     </td>
-                                    <td><a href="#">{{ $item->filename or ''}}</a></td>
+                                    <td><a href="/midis/{{ $item->filename }}">{{ $item->filename or ''}}</a></td>
                                     <td>{{ $item->created_at or ''}}</td>
                                     <td>{{ $item->onshelf == 2 ? "已上架" : "待审核" }}</td>
                                     <td>
@@ -144,14 +145,15 @@
                                     @endif
                                 </tr>
                             @endforeach
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
 
-            @else
-                <div class="text-center blockquote">
-                    没有查到相关结果，更换搜索关键词再试试吧
-                </div>
-                <br>
+                @else
+                    <div class="text-center blockquote">
+                        没有查到相关结果，更换搜索关键词再试试吧
+                    </div>
+                    <br>
+                @endif
             @endif
         <div id="allow_all" class="btn btn-success">审核通过</div>
         <div id="off_shelf" class="btn btn-success">下架</div>

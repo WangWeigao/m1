@@ -128,6 +128,12 @@ class MusicController extends Controller
         return view('musicadd');
     }
 
+    /**
+     * 上传单个midi文件和相关属性
+     * @method store
+     * @param  Request $request [description]
+     * @return [json]           [是否成功]
+     */
     public function store(Request $request)
     {
         // return $request->all();
@@ -178,8 +184,10 @@ class MusicController extends Controller
             $id = $music->id;
             $path = public_path() . '/midis';
             $name = $id . '.mid';
+            // 将文件名保存到DB
+            $music->filename = $name;
+            $music->save();
             $request->file('midi_file')->move($path, $name);
-
             if ($result) {
                 $data['status'] = true;
                 return $data;
@@ -231,14 +239,18 @@ class MusicController extends Controller
          * 调用函数将数据存入数据库
          * @var boolean
          */
-        $result = $this->music_import_csv($path, $filename);
+        $request->path = $path;
+        $request->filename = $filename;
+        $result = $this->music_import_csv($request);
 
         return view('importcsv')->with('result', $result);
 
     }
 
-    protected function music_import_csv($path, $filename)
+    protected function music_import_csv(Request $request)
     {
+        $path = $request->path;
+        $filename = $request->filename;
         $file = $path . '/' . $filename;
         $fp = fopen($file, 'r');
         $i = 0;
@@ -247,43 +259,56 @@ class MusicController extends Controller
                 $i++;
                 continue;
             }
-            // $music = new Music;
-            // $music->name = mb_convert_encoding($arr[0], 'UTF-8', 'GB2312');
+            $music = new Music;
+            $music->name = mb_convert_encoding($arr[0], 'UTF-8', 'GB2312');
             // 查询乐曲id
-            // $instrument = mb_convert_encoding($arr[1], 'UTF-8', 'GB2312');
-            // $instrument_in_db = Instrument::where('name', '=', $instrument)->select('id')->first();
-            // // 如果这个乐器不存在，则先创建
-            // if (empty($instrument_in_db)) {
-            //     $new_instrument = new Instrument(['name' => $instrument]);
-            //     $music->instrument_id = $new_instrument->id;
-            // }else {
-            //     $music->instrument_id = $instrument_in_db->id;
-            // }
+            $instrument = mb_convert_encoding($arr[1], 'UTF-8', 'GB2312');
+            $instrument_in_db = Instrument::where('name', '=', $instrument)->first();
+            // 如果这个乐器不存在，则先创建
+            if (empty($instrument_in_db)) {
+                $new_instrument = new Instrument;
+                $new_instrument->name = $instrument;
+                $new_instrument->save();
+                $music->instrument_id = $new_instrument->id;
+            }else {
+                $music->instrument_id = $instrument_in_db->id;
+            }
             // 作曲人
-            // $music->composer = mb_convert_encoding($arr[2], 'UTF-8', 'GB2312');
+            $music->composer = mb_convert_encoding($arr[2], 'UTF-8', 'GB2312');
             // 版本
-            // $music->version = mb_convert_encoding($arr[3], 'UTF-8', 'GB2312');
+            $music->version = mb_convert_encoding($arr[3], 'UTF-8', 'GB2312');
             // 出版社
-            // $press = mb_convert_encoding($arr[4], 'UTF-8', 'GB2312');
-            // $press_in_db = Press::where('name', $press)->first();
-            // // 如果这个出版社不存在，则先创建
-            // if (empty($press_in_db)) {
-            //     $new_press = new Press(['name' => $press]);
-            //     $music->press_id = $new_press->id;
-            // }else {
-            //     $music->press_id = $press_in_db->id;
-            // }
+            $press = mb_convert_encoding($arr[4], 'UTF-8', 'GB2312');
+            $press_in_db = Press::where('name', $press)->first();
+            // 如果这个出版社不存在，则先创建
+            if (empty($press_in_db)) {
+                $new_press = new Press;
+                $new_press->name = $press;
+                $new_press->save();
+                $music->press_id = $new_press->id;
+            }else {
+                $music->press_id = $press_in_db->id;
+            }
             // 主办单位
-            // $organizer = mb_convert_encoding($arr[5], 'UTF-8', 'GB2312');
-            // $organizer_in_db = Organizer::where('name', $organizer)->first();
-            // // 如果这个主办机构不存在，则先创建
-            // if (empty($organizer_id)) {
-            //     $new_organizer = new Organizer(['name' => $organizer]);
-            //     $music->organizer_id = $new_organizer->id;
-            // }else {
-            //     $music->organizer_id = $organizer_in_db->id;
-            // }
-            // $result[] = $music->save();
+            $organizer = mb_convert_encoding($arr[5], 'UTF-8', 'GB2312');
+            $organizer_in_db = Organizer::where('name', $organizer)->first();
+            // 如果这个主办机构不存在，则先创建
+            if (empty($organizer_in_db)) {
+                $new_organizer = new Organizer;
+                $new_organizer->name = $organizer;
+                $new_organizer->save();
+                $music->organizer_id = $new_organizer->id;
+            }else {
+                $music->organizer_id = $organizer_in_db->id;
+            }
+            // 操作人
+            $music->operator = $request->user()->id;
+            $note_content = mb_convert_encoding($arr[6], 'UTF-8', 'GB2312');
+            if (!empty($note_content)) {
+                $music->note_content = $note_content;
+                $music->note_operator = $request->user()->id;
+            }
+            $result[] = $music->save();
         }
 
         if (!in_array(false, $result)) {
