@@ -13,7 +13,7 @@ use App\Instrument;
 use App\Press;
 use App\Organizer;
 use Carbon\Carbon;
-
+use Response;
 class MusicController extends Controller
 {
     /**
@@ -137,6 +137,7 @@ class MusicController extends Controller
     public function store(Request $request)
     {
         // return $request->all();
+        return $request->file('midi_file')->getClientOriginalName();
         /**
          * 取得表单中各个项的值
          */
@@ -572,5 +573,21 @@ class MusicController extends Controller
         }
         return $data;
 
+    }
+
+
+    public function downloadMusic(Request $request)
+    {
+        $path = public_path('midis') ;
+        // 第一个参数
+        $filename = $path . '/' . $request->get('name');
+        // 第二个参数
+        $newfilename = $request->get('newname') . '.mid';
+        // 第三个参数
+        $headers = array(
+          'Content-Type: audio/mid',
+        );
+
+        return Response::download($filename, $newfilename, $headers);
     }
 }

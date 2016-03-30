@@ -117,7 +117,7 @@
                                             <span class="{{ $tag->id }} or ''">{{ $tag->name or ''}}</span>
                                         @endforeach
                                     </td>
-                                    <td><a href="/midis/{{ $item->filename }}">{{ $item->filename or ''}}</a></td>
+                                    <td><a href="/music/downloadMusic?name={{ $item->filename }}&newname={{ $item->name }}">{{ $item->filename ? $item->name : ''}}</a></td>
                                     <td>{{ $item->created_at or ''}}</td>
                                     <td>{{ $item->onshelf == 2 ? "已上架" : "待审核" }}</td>
                                     <td>

@@ -74,6 +74,11 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/music/musicStatisticsByInstrument', 'MusicController@musicStatisticsByInstrument');
 
     /**
+     * 下载乐曲
+     */
+    Route::get('/music/downloadMusic', 'MusicController@downloadMusic');
+
+    /**
      * 曲库resource路由
      */
     Route::resource('/music', 'MusicController');
@@ -99,7 +104,7 @@ Route::group(['middleware' => 'web'], function () {
      * 取得一个时期内从开始到当前，每个单位时间增加的用户数
      */
     Route::get('/user/calEveryPeriodAddUsers', 'UserController@calEveryPeriodAddUsers');
-    
+
      /**
      * 锁定或者解锁用户
      */
