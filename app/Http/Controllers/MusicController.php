@@ -244,9 +244,9 @@ class MusicController extends Controller
          */
         $request->path = $path;
         $request->filename = $filename;
-        $result = $this->music_import_csv($request);
-
-        return view('importcsv')->with('result', $result);
+        $data = $this->music_import_csv($request);
+// return $data;
+        return view('importcsv')->with('data', $data);
 
     }
 
@@ -257,11 +257,34 @@ class MusicController extends Controller
         $file = $path . '/' . $filename;
         $fp = fopen($file, 'r');
         $i = 0;
+        // 定义空数组，方便下面使用
+        $isUsed_arr = [];
+        // 判断文件名是否有重复
+        while ($arr = fgetcsv($fp)) {
+            $isFree = self::isNoUsedFileName(mb_convert_encoding($arr[7], 'UTF-8', 'GB2312'));
+
+            // 将重复的文件名放入一个数组中
+            if (!$isFree) {
+                $isUsed_arr[] = mb_convert_encoding($arr[7], 'UTF-8', 'GB2312');
+            }
+        }
+        // 如果存在重复的文件名，则返回
+        if (count($isUsed_arr) > 0) {
+            $data['status'] = false;
+            $data['errMsg'] = $isUsed_arr;
+            return $data;
+        }
+
+        // 重置文件指针
+        rewind($fp);
+
         while($arr = fgetcsv($fp)) {
-            if ($i == 0) {
-                $i++;
+            $i++;
+            if ($i == 1) {
                 continue;
             }
+            // 方便后面判断读取了几行
+
             $music = new Music;
             $music->name = mb_convert_encoding($arr[0], 'UTF-8', 'GB2312');
             // 查询乐曲id
@@ -316,13 +339,21 @@ class MusicController extends Controller
             $result[] = $music->save();
         }
 
-        if (!in_array(false, $result)) {
-            return true;
+        if ( $i == 0 || $i == 1 || in_array(false, $result)) {
+            $data['status'] = false;
+            $data['errMsg'] = '表格中没有有效数据';
         }else {
-            return false;
+            $data['status'] = true;
         }
+        return $data;
     }
 
+    // 校验文件名是否已被使用
+    public function isNoUsedFileName($filename)
+    {
+        $result = Music::where('filename', '=', $filename)->first();
+        return $result ? false : true;
+    }
 
     /**
      * Display the specified resource.
