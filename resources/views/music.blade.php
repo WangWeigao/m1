@@ -57,7 +57,7 @@
                         <select id="organizer" class="form-control"></select>
                     </td>
                     <td>
-                        <input type="checkbox" name="operator" id="input_operator" value="1">
+                        <input type="checkbox" name="operator" id="input_operator" value="2">
                         <label for="input_operator">操作人</label>
                         <select id="operator" class="form-control"></select>
                     </td>

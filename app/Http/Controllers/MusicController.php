@@ -306,11 +306,13 @@ class MusicController extends Controller
             }
             // 操作人
             $music->operator = $request->user()->id;
+            // 评论内容
             $note_content = mb_convert_encoding($arr[6], 'UTF-8', 'GB2312');
             if (!empty($note_content)) {
                 $music->note_content = $note_content;
                 $music->note_operator = $request->user()->id;
             }
+            $music->filename = mb_convert_encoding($arr[7], 'UTF-8', 'GB2312');
             $result[] = $music->save();
         }
 
@@ -575,15 +577,22 @@ class MusicController extends Controller
 
     }
 
-
+    /**
+     * 下载mid文件
+     * 实现下载的文件显示乐曲名称,而不是实际的文件名
+     * @method downloadMusic
+     * @param  Request       $request [原文件, 新文件名]
+     * @return [?]                 [请求的下载文件]
+     */
     public function downloadMusic(Request $request)
     {
+        // 真实文件所在的位置
         $path = public_path('midis') ;
-        // 第一个参数
+        // 第一个参数: 原始文件
         $filename = $path . '/' . $request->get('name');
-        // 第二个参数
+        // 第二个参数: 新文件名
         $newfilename = $request->get('newname') . '.mid';
-        // 第三个参数
+        // 第三个参数: 响应头
         $headers = array(
           'Content-Type: audio/mid',
         );
