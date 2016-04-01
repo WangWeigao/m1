@@ -22,6 +22,9 @@ class Add13ColumnsToUsersTable extends Migration
             $table->integer('instrument');      // 需要再加 2 张表
             $table->integer('account_grade');   // 需要再加 1 张表
             $table->datetime('account_end_at');
+            $table->string('submit_data');
+            $table->integer('data_status');
+            $table->integer('account_status');
         });
     }
 
@@ -32,6 +35,18 @@ class Add13ColumnsToUsersTable extends Migration
      */
     public function down()
     {
-        //
-    }
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('seq_num');
+            $table->dropColumn('country');
+            $table->dropColumn('city');
+            $table->dropColumn('sex');
+            $table->dropColumn('study_age');
+            $table->dropColumn('instrument_grade');
+            $table->dropColumn('instrument');
+            $table->dropColumn('account_grade');   
+            $table->dropColumn('account_end_at');
+            $table->dropColumn('submit_data');
+            $table->dropColumn('data_status');
+            $table->dropColumn('account_status');
+        });    }
 }
