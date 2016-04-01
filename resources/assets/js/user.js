@@ -79,6 +79,18 @@ $(document).ready(function() {
         });
     });
 
+    // 点击"第二个"搜索按钮
+    $("#activeUserSearch").bind('click', function(event) {
+        if ($("#practice_duration").prop('checked')) {
+            // 将下拉菜单的值赋给对应的checkbox
+            $("#practice_duration").val($("select[name=practice_duration]").val());
+        }
+        if ($("#account_type").prop('checked')) {
+            // 将下拉菜单的值赋给对应的checkbox
+            $("#account_type").val($("select[name=account_type]").val());
+        }
+    });
+
     /**
      * 本季度
      */

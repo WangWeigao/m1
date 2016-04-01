@@ -23,19 +23,19 @@
 				    <div class="">
 				        今日订单数：<span>{{ $data['todayCountOrder'] }}</span>个
 				    </div>
-				    <div class="today_active_user">
+				    <div class="today_active_user form-inline">
 				        今日活跃用户数：<span id="today_active_user">{{ $data['todayCountActive'] }}</span>个
                         {{-- <form class="form-group"> --}}
                             <input type="checkbox" name="today_input_duration" value="" id="today_input_duration">
                             <label for="today_input_duration">机器人使用时长</label>
-                            <select class="" name="" class="form-control" id="today_duration">
+                            <select name="" class="form-control" id="today_duration">
                                 <option value="30">30分钟以上</option>
                                 <option value="60">1小时以上</option>
                                 <option value="120">2小时以上</option>
                             </select>
                             <input type="checkbox" name="today_input_order" value="" id="today_input_order">
                             <label for="today_input_order">产生订单</label>
-                            <button id="today_search">搜索</button>
+                            <button id="today_search" class="form-control">搜索</button>
                         {{-- </form> --}}
 				    </div>
 				    <div class="">
@@ -57,11 +57,11 @@
 				    <div class="">
 				        本月订单数：<span>{{ $data['monthCountOrder'] }}</span>个
 				    </div>
-				    <div class="month_active_user">
+				    <div class="month_active_user form-inline">
 				        本月活跃用户数：<span id="month_active_user">{{ $data['monthCountActive'] }}</span>个
                             <input type="checkbox" name="month_input_duration" value="" id="month_input_duration">
                             <label for="month_input_duration">机器人使用时长</label>
-                            <select class="" name="" class="form-control" id="month_duration">
+                            <select name="" class="form-control" id="month_duration">
                                 <option value="1800">30小时以上的</option>
                                 <option value="3600">60小时以上的</option>
                                 <option value="5400">90小时以上的</option>
@@ -69,7 +69,7 @@
                             </select>
                             <input type="checkbox" name="month_input_order" value="" id="month_input_order">
                             <label for="month_input_order">产生订单</label>
-                            <button id="month_search">搜索</button>
+                            <button id="month_search" class="form-control">搜索</button>
 				    </div>
 				    <div class="">
 				        机器人：O2O = <span style="color:red;weight:bold">由于表结构及实现细节暂未商定,此处暂未实现</span><span></span>
@@ -79,7 +79,7 @@
                     <div class="form-inline">
                         <input type="checkbox" name="" value="" id="practice_duration">
                         <label for="practice_duration">练习时长</label>
-                        <select class="form-control" name="">
+                        <select class="form-control" name="practice_duration">
                             <option value="1800">30小时以上</option>
                             <option value="3600">60小时以上</option>
                             <option value="5400">90小时以上</option>
@@ -87,12 +87,12 @@
                         </select>
                         <input type="checkbox" name="" value="" id="account_type">
                         <label for="account_type">帐号类型</label>
-                        <select class="form-control" name="">
+                        <select class="form-control" name="account_type">
                             <option value="3">VIP1</option>
                             <option value="2">VIP2</option>
                             <option value="1">普通</option>
                         </select>
-                        <button type="button" class="form-control">搜索</button>
+                        <button type="button" class="form-control" id="activeUserSearch">搜索</button>
                     </div>
 				</div>
 
@@ -110,11 +110,11 @@
 				    <div class="">
 				        本季度订单数：<span>{{ $data['quarterCountOrder'] }}</span>个
 				    </div>
-				    <div class="quarter_active_user">
+				    <div class="quarter_active_user form-inline">
 				        本季度活跃用户数：<span id="quarter_active_user">{{ $data['quarterCountActive'] }}</span>个
                             <input type="checkbox" name="quarter_input_duration" value="" id="quarter_input_duration">
                             <label for="quarter_input_duration">机器人使用时长</label>
-                            <select class="" name="" class="form-control" id="quarter_duration">
+                            <select name="" class="form-control" id="quarter_duration">
                                 <option value="1800">30小时以上的</option>
                                 <option value="3600">60小时以上的</option>
                                 <option value="5400">90小时以上的</option>
@@ -122,7 +122,7 @@
                             </select>
                             <input type="checkbox" name="quarter_input_order" value="" id="quarter_input_order">
                             <label for="quarter_input_order">产生订单</label>
-                            <button id="quarter_search">搜索</button>
+                            <button id="quarter_search" class="form-control">搜索</button>
 				    </div>
 				    <div class="">
 				        机器人：O2O = <span style="color:red;weight:bold">由于表结构及实现细节暂未商定,此处暂未实现</span><span></span>
@@ -142,11 +142,11 @@
 				    <div class="">
 				        本年订单数：<span>{{ $data['yearCountOrder'] }}</span>个
 				    </div>
-				    <div class="year_active_user">
+				    <div class="year_active_user form-inline">
 				        本年活跃用户数：<span id="year_active_user">{{ $data['yearCountActive'] }}</span>个
                             <input type="checkbox" name="year_input_duration" value="" id="year_input_duration">
                             <label for="year_input_duration">机器人使用时长</label>
-                            <select class="" name="" class="form-control" id="year_duration">
+                            <select name="" class="form-control" id="year_duration">
                                 <option value="1800">30小时以上的</option>
                                 <option value="3600">60小时以上的</option>
                                 <option value="5400">90小时以上的</option>
@@ -154,7 +154,7 @@
                             </select>
                             <input type="checkbox" name="year_input_order" value="" id="year_input_order">
                             <label for="year_input_order">产生订单</label>
-                            <button id="year_search">搜索</button>
+                            <button id="year_search" class="form-control">搜索</button>
 				    </div>
 				    <div class="">
 				        机器人：O2O = <span style="color:red;weight:bold">由于表结构及实现细节暂未商定,此处暂未实现</span><span></span>

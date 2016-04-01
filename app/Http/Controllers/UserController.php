@@ -220,7 +220,6 @@ class UserController extends Controller
 
          $year_request = new Request(['duration' => 1800, 'date' => 'year']);
          $data['yearCountActive'] = self::activeUser($year_request);    // 今日活跃用户数(机器人使用时长30小时以上)
-// return $data;
         return view('usageStatistics')->with('data', $data);
     }
 
@@ -253,9 +252,7 @@ class UserController extends Controller
                 # code...
                 break;
         }
-// return $date_start . '/' . $date_end;
         $duration = $request->get('duration');
-        // return $duration;
         $order  = $request->get('order');
         $countTodayActive = StudentUser::whereHas('robot_durations', function ($query) use ($duration, $date_start, $date_end)  {
             $query->whereBetween('created_at', [$date_start, $date_end])->groupby('user_id')->havingRaw("SUM(duration) > $duration");
@@ -271,12 +268,24 @@ class UserController extends Controller
     {
         $period = $request->get('period');
         $length = $request->get('length');
-        
+
         for ($i=1; $i <= $length; $i++) {
             $today_carbon_start = Carbon::now()->day($i)->startOfDay();
             $today_carbon_end =  Carbon::now()->day($i)->endOfDay();
             $data[] = StudentUser::whereBetween('regdate', [$today_carbon_start, $today_carbon_end])->count();   // 今日增加用户数
         }
         return $data;
+    }
+
+    /**
+     * 取得当前月份的活跃用户
+     * @method getActiveUserOfMonth
+     * @return [type]               [description]
+     */
+    public function getActiveUserOfMonth()
+    {
+        $practice_duration = Request::get('practice_duration');
+        $account_type      = Request::get('account_type');
+        // $data = StudentUser::where('')
     }
 }
