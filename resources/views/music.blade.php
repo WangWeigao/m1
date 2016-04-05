@@ -25,7 +25,7 @@
                 <td>
                     <span>筛选待件:</span>
                 </td>
-                <tr>
+                <tr class="form-inline">
                     <td class="col-sm-3">
                         <input type="checkbox" name="instrument" id="input_instrument" value="1">
                         <label for="input_instrument">乐器</label>
@@ -50,7 +50,7 @@
                         </select>
                     </td>
                 </tr>
-                <tr>
+                <tr class="form-inline">
                     <td>
                         <input type="checkbox" name="organizer" id="input_organizer" value="1">
                         <label for="input_organizer">主办机构</label>
@@ -64,7 +64,7 @@
                     <td>
                         <input type="checkbox" name="date" id="date">
                         <label for="date">添加日期</label>
-                        <span id="dateSelector" class="form-control">
+                        <span id="dateSelector" class="">
                             <select class="date_select" id="idYear" data=""></select>年
                             <select class="date_select" id="idMonth" data=""></select>月
                             <select class="date_select" id="idDay" data=""></select>日
@@ -308,6 +308,7 @@
 @section('css')
     <link href="http://hayageek.github.io/jQuery-Upload-File/4.0.10/uploadfile.css" rel="stylesheet">
     <link rel="stylesheet" href="http://cdn.staticfile.org/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="/css/music.css" media="screen" title="no title" charset="utf-8">
 @endsection
 
 @section('js')

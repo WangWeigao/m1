@@ -19,10 +19,10 @@ class UserController extends Controller
      *
      * @return void
      */
-     public function __construct()
-     {
-         $this->middleware('auth');
-     }
+    public function __construct()
+    {
+     $this->middleware('auth');
+    }
 
     /**
      * 模糊查询用户信息
@@ -74,13 +74,11 @@ class UserController extends Controller
                     //  由前端分页, 此处暂时用不到
                 ->paginate(15);
 
-// return $users;
         /**
          * 由于laravel不支持在分页结果
          */
 
         //将结果传递给视图
-        // return view('getusers')->with(['name' => $name, 'users' => $users]);
         return view('user')->with(['users' => $users, 'name' => $name]);
 
     }

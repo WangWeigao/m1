@@ -13,18 +13,15 @@ class Add13ColumnsToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('seq_num');
-            $table->integer('country');     // 需要再加 1 张表
-            $table->integer('city');        // 需要再加 1 张表
-            $table->string('sex');          // 性别
-            $table->integer('study_age');   // 学龄
-            $table->integer('instrument_grade');    // 需要再加 1 张表
-            $table->integer('instrument');      // 需要再加 2 张表
-            $table->integer('account_grade');   // 需要再加 1 张表
+            $table->integer('seq_num');         // 编号
+            $table->integer('province_id');     // 已有一张province表
+            $table->integer('city_id');         // 已有一张city表
+            $table->string('sex');              // 性别
+            $table->integer('study_age');       // 学龄
+            $table->integer('user_grade');      // 用户"水平等级"
+            $table->integer('account_grade');   // 帐号等级
             $table->datetime('account_end_at'); // 账号截止时间
-            $table->string('submit_data');      // 
-            $table->integer('data_status');
-            $table->integer('account_status');
+            $table->integer('account_status');  // 1.待审核 2.被退回 3.已上线
         });
     }
 
@@ -37,16 +34,14 @@ class Add13ColumnsToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('seq_num');
-            $table->dropColumn('country');
-            $table->dropColumn('city');
+            $table->dropColumn('province_id');
+            $table->dropColumn('city_id');
             $table->dropColumn('sex');
             $table->dropColumn('study_age');
-            $table->dropColumn('instrument_grade');
-            $table->dropColumn('instrument');
+            $table->dropColumn('user_grade');
             $table->dropColumn('account_grade');
             $table->dropColumn('account_end_at');
-            $table->dropColumn('submit_data');
-            $table->dropColumn('data_status');
             $table->dropColumn('account_status');
-        });    }
+        });
+    }
 }
