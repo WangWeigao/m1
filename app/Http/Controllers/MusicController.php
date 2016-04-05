@@ -137,7 +137,7 @@ class MusicController extends Controller
     public function store(Request $request)
     {
         // return $request->all();
-        return $request->file('midi_file')->getClientOriginalName();
+        // return $request->file('midi_file')->getClientOriginalName();
         /**
          * 取得表单中各个项的值
          */
