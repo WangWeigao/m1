@@ -13,6 +13,9 @@ $(document).ready(function() {
            }else if (isEmpty($("#add_name").val())) {
                alert('乐曲名不能为空');
                return false;
+           }else if (isEmpty($("#add_composer").val())) {
+               alert('作曲人不能为空');
+               return false;
            }
            /**
             * 验证变量是否为空

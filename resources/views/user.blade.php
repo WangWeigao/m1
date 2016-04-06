@@ -32,13 +32,13 @@
                 {{-- 水平等级 --}}
                 <input type="checkbox" name="name" value="" id="user_grade">
                 <label for="user_grade">水平等级</label>
-                <select class="" name="">
+                <select class="form-control" name="">
                     <option>水平等级</option>
                 </select>
                 {{-- 注册时间 --}}
                 <input type="checkbox" name="name" value="" id="reg_time">
                 <label for="reg_time">注册时间</label>
-                <select class="" name="">
+                <select class="form-control" name="">
                     <option value="day">新用户</option>
                     <option value="week">一周内</option>
                     <option value="month">一月内</option>
@@ -49,7 +49,7 @@
                 {{-- 帐号级别 --}}
                 <input type="checkbox" name="" value="" id="account_grade">
                 <label for="account_grade">帐号级别</label>
-                <select class="" name="">
+                <select class="form-control" name="">
                     <option value="vip1">VIP1</option>
                     <option value="vip2">VIP2</option>
                     <option value="free">免费</option>
@@ -58,13 +58,36 @@
                 {{-- 帐号截止日期 --}}
                 <input type="checkbox" name="" value="" id="account_end_at">
                 <label for="account_end_at">帐号截止日期</label>
-                <select class="" name="">
+                <select class="form-control" name="">
                     <option value="week">一周内</option>
                     <option value="month">一个月内</option>
                     <option value="two_months">二个月内</option>
                 </select>
                 <input type="hidden" name="field" value="uid">
                 <input type="hidden" name="order" value="asc">
+            </div>
+            <div class="form-inline">
+                {{-- 本月使用时长 --}}
+                <input type="checkbox" name="" value="" id="month_duration">
+                <label for="month_duration">本月使用时长</label>
+                <select class="form-control" name="">
+                    <option value="1h">1小时以内的</option>
+                    <option value="5h">5小时以内的</option>
+                    <option value="10h">10小时以内的</option>
+                    <option value="30h">30小时以内的</option>
+                    <option value="60h">60小时以内的</option>
+                    <option value="60h+">60小时以上</option>
+                    <option value="0h">未使用</option>
+                </select>
+                {{-- 帐号状态 --}}
+                <input type="checkbox" name="" value="" id="account_status">
+                <label for="account_status">帐号状态</label>
+                <select class="" name="">
+                    <option value="near_expire">帐号到期</option>
+                    <option value="lock">锁定</option>
+                    <option vlaue="normal">正常</option>
+                    <option vlaue="expire">未续费</option>
+                </select>
             </div>
         {{-- </fieldset> --}}
     </form>

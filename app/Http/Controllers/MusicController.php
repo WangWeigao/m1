@@ -163,17 +163,17 @@ class MusicController extends Controller
             /**
              * 插入数据
              */
-            $music = new Music;
-            $music->name = $name;
-            $music->composer = $composer;
+            $music                = new Music;
+            $music->name          = $name;
+            $music->composer      = $composer;
             $music->instrument_id = $instrument_id;
-            $music->version = $version;
-            $music->press_id = $press_id;
-            $music->operator = $operator;
-            $music->organizer_id = $organizer_id;
-            $music->note_content = $note_content;
+            $music->version       = $version;
+            $music->press_id      = $press_id;
+            $music->operator      = $operator;
+            $music->organizer_id  = $organizer_id;
+            $music->note_content  = $note_content;
             $music->note_operator = $note_operator;
-            $result = $music->save();
+            $result               = $music->save();
             /**
              * 插入乐曲分类标签
              */
