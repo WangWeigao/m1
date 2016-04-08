@@ -119,6 +119,7 @@ Route::group(['middleware' => 'web'], function () {
      * 根据省份获取城市列表
      */
     Route::get('/user/cities/{id}', 'UserController@getCities');
+    Route::get('/user/playRecords', 'UserController@playRecords');
 
     /**
      * 使用资源路由
@@ -155,5 +156,4 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/test', function() {
         return view('auth.passwords.reset')->with('token', '123456');
     });
-    Route::get('/user/playRecords', 'UserController@playRecords');
 });

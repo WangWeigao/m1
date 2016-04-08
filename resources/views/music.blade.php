@@ -281,14 +281,21 @@
                             <label for="add_section_duration" class="col-sm-2 control-label">分段时间</label>
                             <div class="col-sm-10">
                                 <select class="form-control" name="section_duration">
-                                    
+                                    <option value="2">2秒</option>
+                                    <option value="3">3秒</option>
+                                    <option value="5">5秒</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="add_track" class="col-sm-2 control-label">轨道数</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="track" placeholder="请输入轨道数">
+                                <select class="form-control" name="track">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                </select>
                             </div>
                         </div>
 

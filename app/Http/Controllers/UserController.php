@@ -310,6 +310,7 @@ class UserController extends Controller
 
     public function playRecords()
     {
-        # code...
+        $play_records = \App\Play_record::all();
+        return $play_records;
     }
 }
