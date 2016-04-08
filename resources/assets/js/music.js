@@ -85,7 +85,9 @@ $(document).ready(function() {
             $("#edit_organizer").val($(el).closest('tr').find('td:eq(6)').attr('class'));
             $("#edit_category").val($(el).closest('tr').find('td:eq(7) span').attr('class'));
             $("#edit_category_old").val($(el).closest('tr').find('td:eq(7) span').attr('class'))
-            $("#edit_notes").val($(el).closest('tr').find('td:eq(13) span:eq(1)').text());
+            $("#edit_section_duration").val($.trim($(el).closest('tr').find('td:eq(13)').text()));
+            $("#edit_track").val($.trim($(el).closest('tr').find('td:eq(14)').text()));
+            $("#edit_notes").val($(el).closest('tr').find('.note_content').text());
         });
     });
 
@@ -109,6 +111,8 @@ $(document).ready(function() {
                     'organizer': $("#edit_organizer").val(),
                     'category': $("#edit_category").val(),
                     'category_old': $("#edit_category_old").val(),
+                    'section_duration': $("#edit_section_duration").val(),
+                    'track': $("#edit_track").val(),
                     'notes': $("#edit_notes").val()
                 },
                 headers : {

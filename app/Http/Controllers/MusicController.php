@@ -391,16 +391,18 @@ class MusicController extends Controller
     public function update(Request $request, $id)
     {
         // return $request->all();
-        $name          = $request->get('name') or '';
-        $composer      = $request->get('composer') or '';
-        $instrument_id = $request->get('instrument');
-        $version       = $request->get('version') or '';
-        $press_id      = $request->get('press');
-        $organizer_id  = $request->get('organizer') or 0;
-        $note_content  = $request->get('notes') or '';
-        $note_operator = $request->user()->id;
+        $name             = $request->get('name') or '';
+        $composer         = $request->get('composer') or '';
+        $instrument_id    = $request->get('instrument');
+        $version          = $request->get('version') or '';
+        $press_id         = $request->get('press');
+        $organizer_id     = $request->get('organizer') or 0;
+        $section_duration = $request->get('section_duration');
+        $track            = $request->get('track');
+        $note_content     = $request->get('notes') or '';
+        $note_operator    = $request->user()->id;
         // return $request->all();
-        $music = Music::find($id);
+        $music            = Music::find($id);
         if (!empty($name)) {
             $music->name = $name;
         }
@@ -418,6 +420,12 @@ class MusicController extends Controller
         }
         if (!empty($organizer_id)) {
             $music->organizer_id  = $organizer_id;
+        }
+        if (!empty($section_duration)) {
+            $music->section_duration = $section_duration;
+        }
+        if (!empty($track)) {
+            $music->track = $track;
         }
         if (!empty($note_content)) {
             $music->note_content = $note_content;

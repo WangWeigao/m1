@@ -94,6 +94,8 @@
                             <th>乐曲状态</th>
                             <th>操作</th>
                             <th>操作人</th>
+                            <th>分段时间</th>
+                            <th>轨道</th>
                             <th>备注</th>
                         </tr>
                     </thead>
@@ -130,6 +132,8 @@
                                 </button>
                             </td>
                             <td>{{ $item->user->name or ''}}</td>
+                            <td>{{ $item->section_duration }}</td>
+                            <td>{{ $item->track }}</td>
                             @if(!empty($item->note_content))
                                 <td>
                                     <span>{{ $item->editor->name or ''}} :</span>
@@ -181,6 +185,8 @@
                           <th>出版社</th>
                           <th>主办机构</th>
                           <th>乐曲类别</th>
+                          <th>分段时间</th>
+                          <th>轨道数</th>
                           <th>备注</th>
                       </tr>
                   </thead>
@@ -203,6 +209,21 @@
                               <td>
                                   <select id="edit_category" class="form-control"></select>
                                   <div type="hidden" name="category_old" id="edit_category_old" value="">
+                              </td>
+                              <td>
+                                  <select id="edit_section_duration" class="form-control">
+                                      <option value="2">2秒</option>
+                                      <option value="3">3秒</option>
+                                      <option value="5">5秒</option>
+                                  </select>
+                              </td>
+                              <td>
+                                  <select id="edit_track" class="form-control">
+                                      <option value="1">1</option>
+                                      <option value="2">2</option>
+                                      <option value="3">3</option>
+                                      <option value="4">4</option>
+                                  </select>
                               </td>
                               <td><input class="form-control" type="text" id="edit_notes"></td>
                           </form>
