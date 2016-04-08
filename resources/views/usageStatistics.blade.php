@@ -168,7 +168,7 @@
 @endsection
 
 @section('js')
-    <script src="{{ elixir('js/user.js') }}"></script>
+    <script src="{{ elixir('js/userUsageStatics.js') }}"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
 @endsection

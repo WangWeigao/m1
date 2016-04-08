@@ -141,16 +141,18 @@ class MusicController extends Controller
         /**
          * 取得表单中各个项的值
          */
-        $name          = $request->get('name') or '';
-        $composer      = $request->get('composer') or '';
-        $instrument_id = $request->get('instrument');
-        $version       = $request->get('version') or '';
-        $press_id      = $request->get('press');
-        $operator      = $request->user()->id;
-        $organizer_id  = $request->get('organizer') or 0;
-        $note_content  = $request->get('note_content') or '';
-        $note_operator = $request->user()->id;
-        $category      = $request->get('category');
+        $name             = $request->get('name') or '';
+        $composer         = $request->get('composer') or '';
+        $instrument_id    = $request->get('instrument');
+        $version          = $request->get('version') or '';
+        $press_id         = $request->get('press');
+        $operator         = $request->user()->id;
+        $organizer_id     = $request->get('organizer') or 0;
+        $note_content     = $request->get('note_content') or '';
+        $note_operator    = $request->user()->id;
+        $category         = $request->get('category');
+        $section_duration = $request->get('section_duration');
+        $track            = $request->get('track');
 
         // 如果文件存在且上传成功
         if (!($request->hasFile('midi_file') && $request->file('midi_file')->isValid())) {
@@ -163,17 +165,19 @@ class MusicController extends Controller
             /**
              * 插入数据
              */
-            $music                = new Music;
-            $music->name          = $name;
-            $music->composer      = $composer;
-            $music->instrument_id = $instrument_id;
-            $music->version       = $version;
-            $music->press_id      = $press_id;
-            $music->operator      = $operator;
-            $music->organizer_id  = $organizer_id;
-            $music->note_content  = $note_content;
-            $music->note_operator = $note_operator;
-            $result               = $music->save();
+            $music                   = new Music;
+            $music->name             = $name;
+            $music->composer         = $composer;
+            $music->instrument_id    = $instrument_id;
+            $music->version          = $version;
+            $music->press_id         = $press_id;
+            $music->operator         = $operator;
+            $music->organizer_id     = $organizer_id;
+            $music->note_content     = $note_content;
+            $music->note_operator    = $note_operator;
+            $music->section_duration = $section_duration;
+            $music->track            = $track;
+            $result                  = $music->save();
             /**
              * 插入乐曲分类标签
              */

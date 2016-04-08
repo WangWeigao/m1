@@ -1,269 +1,138 @@
 $(document).ready(function() {
     /**
-     * 今日
+     * select下拉式日期选择器(注册时间段的开始时间)
      */
-    // 初始化"机器人使用时长"为30分钟
-    $("input[name=today_input_duration]").val(30);
-    // 初始化"产生订单"值为1
-    $("input[name=today_input_order]").val(1);
-    $("#today_duration").bind('change', function(event) {
-        $("input[name=today_input_duration]").val($("#today_duration").val());
-    });
-    // 点击"搜索按钮"
-    $("#today_search").bind('click', function(event) {
-        if ($("input[name=today_input_duration]").prop('checked')) {
-            var $duration = $(".today_active_user input[name=today_input_duration]").val();
-        }else {
-            var $duration = 0;
+     var myDate = new Date();
+     $("#date_start").DateSelector({
+         ctlYearId: 'idYear',
+         ctlMonthId: 'idMonth',
+         ctlDayId: 'idDay',
+         defYear: myDate.getFullYear(),
+         defMonth: (myDate.getMonth() + 1),
+         defDay: myDate.getDate(),
+         minYear: 1800,
+         maxYear: (myDate.getFullYear() + 1)
+     });
+
+     /**
+      * select下拉式日期选择器(注册时间段的结束时间)
+      */
+     var myDate2 = new Date();
+     $("#date_end").DateSelector({
+         ctlYearId: 'idYear2',
+         ctlMonthId: 'idMonth2',
+         ctlDayId: 'idDay2',
+         defYear: myDate2.getFullYear(),
+         defMonth: (myDate2.getMonth() + 1),
+         defDay: myDate2.getDate(),
+         minYear: 1800,
+         maxYear: (myDate2.getFullYear() + 1)
+     });
+
+    /**
+     * "地域"中的省份显示
+     */
+    $.ajax({
+        url: '/user/provinces',
+        type: 'GET',
+        dataType: 'json',
+        headers: {
+            'X-CSRF-TOKEN': $("input[name='_token']").val()
         }
-        if ($("input[name=today_input_order]").prop('checked')) {
-            var $order = $(".today_active_user input[name=today_input_order]").val();
-        }else {
-            var $order = 0;
-        }
-        $.ajax({
-            url: '/user/activeUser',
-            type: 'get',
-            dataType: '',
-            data: {
-                date: 'today',
-                duration: $duration,
-                order: $order
-            }
-        })
-        .done(function(data) {
-            $("#today_active_user").text(data);
-        })
-        .fail(function() {
-            console.log("error");
+    })
+    .done(function(data) {
+
+        // 填充省份的下拉菜单
+        $.each(data, function(index, el) {
+            var str = '<option value=' + el.pid + '>' + el.name + '</option>';
+            $("#province").append(str);
         });
+        // 设置默认省份
+        $("#province").val(data[2].pid);
+        // 设置默认城市
+        $("#city option:eq(0)").text('上海');
+        $("#city option:eq(0)").val(6);
+        $("#city").val(6);
+        // 设置相应的 input 的 value
+        $("input[name='area']").val(6);
     });
 
     /**
-     * 本月
+     * 根据省份取得"城市列表"
      */
-    // 初始化"机器人使用时长"为1800分钟
-    $("input[name=month_input_duration]").val(1800);
-    // 初始化"产生订单"值为1
-    $("input[name=month_input_order]").val(1);
-    $("#month_duration").bind('change', function(event) {
-        $("input[name=month_input_duration]").val($("#month_duration").val());
-    });
-    // 点击"搜索按钮"
-    $("#month_search").bind('click', function(event) {
-        if ($("input[name=month_input_duration]").prop('checked')) {
-            var $duration = $(".month_active_user input[name=month_input_duration]").val();
-        }else {
-            var $duration = 0;
-        }
-        if ($("input[name=month_input_order]").prop('checked')) {
-            var $order = $(".month_active_user input[name=month_input_order]").val();
-        }else {
-            var $order = 0;
-        }
+    $("#province").bind('change', function(event) {
         $.ajax({
-            url: '/user/activeUser',
-            type: 'get',
-            dataType: '',
-            data: {
-                date: 'month',
-                duration: $duration,
-                order: $order
-            }
-        })
-        .done(function(data) {
-            $("#month_active_user").text(data);
-        })
-        .fail(function() {
-            console.log("error");
-        });
-    });
-
-    // 点击"第二个"搜索按钮
-    $("#activeUserSearch").bind('click', function(event) {
-        if ($("#practice_duration").prop('checked')) {
-            // 将下拉菜单的值赋给对应的checkbox
-            $("#practice_duration").val($("select[name=practice_duration]").val());
-        }
-        if ($("#account_type").prop('checked')) {
-            // 将下拉菜单的值赋给对应的checkbox
-            $("#account_type").val($("select[name=account_type]").val());
-        }
-
-        $.ajax({
-            url: '/path/to/file',
-            type: 'default GET (Other values: POST)',
-            dataType: 'default: Intelligent Guess (Other values: xml, json, script, or html)',
-            data: {param1: 'value1'}
-        })
-        .done(function() {
-            console.log("success");
-        })
-        .fail(function() {
-            console.log("error");
-        })
-        .always(function() {
-            console.log("complete");
-        });
-
-    });
-
-    /**
-     * 本季度
-     */
-    // 初始化"机器人使用时长"为1800分钟
-    $("input[name=quarter_input_duration]").val(1800);
-    // 初始化"产生订单"值为1
-    $("input[name=quarter_input_order]").val(1);
-    $("#quarter_duration").bind('change', function(event) {
-        $("input[name=quarter_input_duration]").val($("#quarter_duration").val());
-    });
-    // 点击"搜索按钮"
-    $("#quarter_search").bind('click', function(event) {
-        if ($("input[name=quarter_input_duration]").prop('checked')) {
-            var $duration = $(".quarter_active_user input[name=quarter_input_duration]").val();
-        }else {
-            var $duration = 0;
-        }
-        if ($("input[name=quarter_input_order]").prop('checked')) {
-            var $order = $(".quarter_active_user input[name=quarter_input_order]").val();
-        }else {
-            var $order = 0;
-        }
-        $.ajax({
-            url: '/user/activeUser',
-            type: 'get',
-            dataType: '',
-            data: {
-                date: 'quarter',
-                duration: $duration,
-                order: $order
-            }
-        })
-        .done(function(data) {
-            $("#quarter_active_user").text(data);
-        })
-        .fail(function() {
-            console.log("error");
-        });
-    });
-    /**
-     * 本年
-     */
-    // 初始化"机器人使用时长"为1800分钟
-    $("input[name=year_input_duration]").val(1800);
-    // 初始化"产生订单"值为1
-    $("input[name=year_input_order]").val(1);
-    $("#year_duration").bind('change', function(event) {
-        $("input[name=year_input_duration]").val($("#year_duration").val());
-    });
-    // 点击"搜索按钮"
-    $("#year_search").bind('click', function(event) {
-        if ($("input[name=year_input_duration]").prop('checked')) {
-            var $duration = $(".year_active_user input[name=year_input_duration]").val();
-        }else {
-            var $duration = 0;
-        }
-        if ($("input[name=year_input_order]").prop('checked')) {
-            var $order = $(".year_active_user input[name=year_input_order]").val();
-        }else {
-            var $order = 0;
-        }
-        $.ajax({
-            url: '/user/activeUser',
-            type: 'get',
-            dataType: '',
-            data: {
-                date: 'year',
-                duration: $duration,
-                order: $order
-            }
-        })
-        .done(function(data) {
-            $("#year_active_user").text(data);
-        })
-        .fail(function() {
-            console.log("error");
-        });
-    });
-
-    // 绘制柱状图
-    $(function (data) {
-        $.ajax({
-            url: '/user/calEveryPeriodAddUsers',
-            type: 'get',
+            url: '/user/cities/' + $("#province").val(),
+            type: 'GET',
             dataType: 'json',
-            data: {
-                'period':'month',
-                'length':$("input[name=monthValue]").val()
-            },
-            header: {
-                'X-CSRF-Token': $("input[name=_token]").val()
+            headers: {
+                'X-CSRF-Token': $("input[name='_token']").val()
             }
         })
         .done(function(data) {
-            var monthArray = [];
+            // 清空下拉菜单
+            $("#city").children('option').remove();
+            // 填充下拉菜单中的城市列表
             $.each(data, function(index, el) {
-                monthArray.push([index+1, el]);
+                var str = '<option value=' + el.cid + '>' + el.name + '</option>';
+                $("#city").append(str);
             });
-            console.log(monthArray);
-            // 绘制柱状图
-            $('#month_highcharts').highcharts({
-                chart: {
-                    type: 'column'
-                },
-                title: {
-                    text: '本月每日增长人数统计图表'
-                },
-                subtitle: {
-                    text: ''
-                },
-                xAxis: {
-                    type: 'category',
-                    labels: {
-                        rotation: -45,
-                        style: {
-                            fontSize: '13px',
-                            fontFamily: 'Verdana, sans-serif'
-                        }
-                    }
-                },
-                yAxis: {
-                    min: 0,
-                    title: {
-                        text: '人数'
-                    }
-                },
-                legend: {
-                    enabled: false
-                },
-                tooltip: {
-                    pointFormat: '新增用户数: <b>{point.y:.f} 个人</b>'
-                },
-                series: [{
-                    name: 'Population',
-                    data: monthArray,
-                    dataLabels: {
-                        enabled: true,
-                        rotation: -90,
-                        color: '#FFFFFF',
-                        align: 'right',
-                        format: '{point.y:.f}', // one decimal
-                        y: 10, // 10 pixels down from the top
-                        style: {
-                            fontSize: '13px',
-                            fontFamily: 'Verdana, sans-serif'
-                        }
-                    }
-                }]
-            });
-        })
-        .fail(function() {
-            console.log("error");
-        })
-        .always(function() {
-            console.log("complete");
+            // 设置默认值
+            $("#city").val(data[0].cid);
+            // 设置对应的 input 的 value
+            $("input[name='area']").val(data[0].cid);
         });
-
     });
+
+    /**
+     * 地域(城市)改变时修改「地域」值
+     */
+    $("#city").bind('change', function () {
+        // 把select的值赋给对应的input
+        $("input[name='area']").val($("#city").val());
+    });
+    /**
+     * "水平等级"改变时修改 input 的 value
+     */
+    $("#user_grade").val(1);                // 设置 select 的默认值
+    $("input[name='user_grade']").val(1);   // 设置 input 的默认值
+    $("#user_grade").bind('change', function () {
+        $("input[name='user_grade']").val($("#user_grade").val());
+    });
+
+    /**
+     * "注册时间"改变时修改 input 的 value
+     */
+    $("#reg_time").val("day");   // 设置 select 的默认值
+    $("input[name='reg_time']").val("day");
+    $("#reg_time").bind('change', function () {
+        $("input[name='reg_time']").val($("#reg_time").val());  // 给input赋值
+    });
+
+    /**
+     * 搜索『按筛选条件』
+     */
+    $("#search_condition").bind('click', function(event) {
+        ajaxSubmitForm();
+        function ajaxSubmitForm() {
+            var option = {
+                url: '/user',
+                type: 'GET',
+                dataType: 'json',
+                data:{},
+                headers: {
+                    'X-CSRF-TOKEN': $("input[name='_token']").val()
+                },
+                success: function(data) {
+                    console.log('搜索成功');
+                },
+                error: function(data) {
+                    console.log('啊哦，搜索引擎开小差了');
+                }
+            };
+            $("#search_user").ajaxSubmit(option);
+            return false;
+        }
+    });
+
 });

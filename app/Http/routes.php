@@ -105,15 +105,25 @@ Route::group(['middleware' => 'web'], function () {
      */
     Route::get('/user/calEveryPeriodAddUsers', 'UserController@calEveryPeriodAddUsers');
 
-     /**
+    /**
      * 锁定或者解锁用户
      */
-     Route::get('/lockuser/{id}', 'UserController@lockUser');
+    Route::get('/lockuser/{id}', 'UserController@lockUser');
 
-     /**
-      * 使用资源路由
-      */
-     Route::resource('/user', 'UserController');
+    /**
+     * 获取所有省份
+     */
+    Route::get('/user/provinces', 'UserController@getProvinces');
+
+    /**
+     * 根据省份获取城市列表
+     */
+    Route::get('/user/cities/{id}', 'UserController@getCities');
+
+    /**
+     * 使用资源路由
+     */
+    Route::resource('/user', 'UserController');
 
     // --------------------------------------教师路由----------------------------------------------
 

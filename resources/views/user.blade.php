@@ -8,7 +8,7 @@
     </div>
 
     {{-- 用户查询表单 --}}
-    <form class="" action="/user" method="get">
+    <form class="" action="/user" method="get" id="search_user">
         {!! csrf_field() !!}
         {{-- <fieldset> --}}
             {{-- <legend>用户查询</legend> --}}
@@ -18,27 +18,47 @@
                 <input type="text" class="form-control" id="searchName" name="name" placeholder="请输入用户名/手机号/电子邮件">
                 <button type="submit" name="button" class="btn btn-success" id="search">搜索</button>
             </div>
-            <div class="form-inline">
+            <div class="form-group form-inline">
                 <div>筛选待件</div>
                 {{-- 地域 --}}
-                <input type="checkbox" name="" value="" id="area">
+                <input type="checkbox" name="area" value="" id="area">
                 <label for="area">地域</label>
-                <select class="form-control" name="">
+                <select class="form-control" id="province">
                     <option>省份</option>
                 </select>
-                <select class="form-control" name="">
+                <select class="form-control" id="city">
                     <option>城市</option>
                 </select>
                 {{-- 水平等级 --}}
-                <input type="checkbox" name="name" value="" id="user_grade">
-                <label for="user_grade">水平等级</label>
-                <select class="form-control" name="">
-                    <option>水平等级</option>
+                <input type="checkbox" name="user_grade" value="" id="l-user-grade">
+                <label for="l-user-grade">水平等级</label>
+                <select class="form-control" id="user_grade">
+                    <option value="0">水平等级</option>
+                    <option value="1">业余1级</option>
+                    <option value="2">业余2级</option>
+                    <option value="3">业余3级</option>
+                    <option value="4">业余4级</option>
+                    <option value="5">业余5级</option>
+                    <option value="6">业余6级</option>
+                    <option value="7">业余7级</option>
+                    <option value="8">业余8级</option>
+                    <option value="9">业余9级</option>
+                    <option value="10">业余10级</option>
+                    <option value="11">专业1级</option>
+                    <option value="12">专业2级</option>
+                    <option value="13">专业3级</option>
+                    <option value="14">专业4级</option>
+                    <option value="15">专业5级</option>
+                    <option value="16">专业6级</option>
+                    <option value="17">专业7级</option>
+                    <option value="18">专业8级</option>
+                    <option value="19">专业9级</option>
+                    <option value="20">专业10级</option>
                 </select>
                 {{-- 注册时间 --}}
-                <input type="checkbox" name="name" value="" id="reg_time">
-                <label for="reg_time">注册时间</label>
-                <select class="form-control" name="">
+                <input type="checkbox" name="reg_time" value="" id="l-reg-time">
+                <label for="l-reg-time">注册时间</label>
+                <select class="form-control" id="reg_time">
                     <option value="day">新用户</option>
                     <option value="week">一周内</option>
                     <option value="month">一月内</option>
@@ -66,7 +86,7 @@
                 <input type="hidden" name="field" value="uid">
                 <input type="hidden" name="order" value="asc">
             </div>
-            <div class="form-inline">
+            <div class="form-group form-inline">
                 {{-- 本月使用时长 --}}
                 <input type="checkbox" name="" value="" id="month_duration">
                 <label for="month_duration">本月使用时长</label>
@@ -82,12 +102,47 @@
                 {{-- 帐号状态 --}}
                 <input type="checkbox" name="" value="" id="account_status">
                 <label for="account_status">帐号状态</label>
-                <select class="" name="">
+                <select class="form-control" name="">
                     <option value="near_expire">帐号到期</option>
                     <option value="lock">锁定</option>
                     <option vlaue="normal">正常</option>
                     <option vlaue="expire">未续费</option>
                 </select>
+                {{-- 本月用时大幅变化 --}}
+                <input type="checkbox" name="" value="" id="change_duration">
+                <label for="change_duration">本月用户大幅变化</label>
+                <select class="form-control" name="">
+                    <option value="up20h">上升20小时以上</option>
+                    <option value="up30h">上升30小时以上</option>
+                    <option value="up50h">上升50小时以上</option>
+                    <option value="down20h">下降20小时以上</option>
+                    <option value="down30h">下降30小时以上</option>
+                    <option value="down50h">下降50小时以上</option>
+                </select>
+                {{-- 活跃度 --}}
+                <input type="checkbox" name="" value="" id="liveness">
+                <label for="liveness">活跃度</label>
+                <select class="form-control" name="">
+                    <option value="active_user">活跃用户</option>
+                    <option value="sleep_user">休眠用户</option>
+                    <option value="death_user">死亡用户</option>
+                </select>
+            </div>
+            <div class="form-group form-inline">
+                <input type="checkbox" name="" value="" id="reg_timezone">
+                <label for="reg_timezone">注册时间段</label>
+                <span id="date_start" class="">
+                    <select class="date_select" id="idYear" data=""></select>年
+                    <select class="date_select" id="idMonth" data=""></select>月
+                    <select class="date_select" id="idDay" data=""></select>日
+                </span>
+                <span>到</span>
+                <span id="date_end" class="">
+                    <select class="date_select2" id="idYear2" data=""></select>年
+                    <select class="date_select2" id="idMonth2" data=""></select>月
+                    <select class="date_select2" id="idDay2" data=""></select>日
+                </span>
+                <button type="button" class="form-control btn-success" id="search_condition">搜索</button>
             </div>
         {{-- </fieldset> --}}
     </form>
@@ -133,4 +188,8 @@
 </div>
 
 @endif
+@endsection
+
+@section('js')
+    <script src="{{ elixir('js/user.js') }}"></script>
 @endsection

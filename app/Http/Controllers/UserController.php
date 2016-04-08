@@ -83,7 +83,6 @@ class UserController extends Controller
 
     }
 
-
     /**
      * 查询用户详细信息
      * @method show
@@ -92,46 +91,46 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //通过用户ID查询详细信息, 且包含订单信息(usertype=1的为学生)
-        $userInfo = StudentUser::where('uid', $id)->where('usertype', 1)->with('orders')->first();
-
-        /**
-        * 对查出来的结果添加 teacher_uid 和 teacher_nickname 两个字段
-        * 以便在表格显示时, 显示出课程中教师相关的信息
-        */
-        foreach ($userInfo['orders'] as $order) {
-            /**
-             * 通过课程lid查询用户信息
-             */
-            $user = Lesson::find($order->lid)->user()->select('uid as teacher_uid', 'nickname as teacher_nickname')->first();
-
-            /**
-             * 给 $userInfo 数组添加教师信息
-             */
-            $order->teacher_uid = $user->teacher_uid;
-            $order->teacher_nickname = $user->teacher_nickname;
-        }
-
-        /**
-         * 用户登录信息
-         * 因表结构中只有用户最后一次登录的数据, 只能提供这个
-         * @var string
-         */
-        $loginInfo = $userInfo->lastlogin;
-
-        /**
-         * 用户投诉历史
-         * 因没有相关数据表结构, 暂时无法提供这个数据.
-         */
-
-        /**
-         * 将用户详情, 订单信息, 登录信息组合为同一个数组
-         */
-        $data['userInfo'] = $userInfo;
-        $data['loginInfo'] = $loginInfo;
-
-        //以Json形式返回
-        return view('userdetail')->with('data', $data);
+        // //通过用户ID查询详细信息, 且包含订单信息(usertype=1的为学生)
+        // $userInfo = StudentUser::where('uid', $id)->where('usertype', 1)->with('orders')->first();
+        //
+        // /**
+        // * 对查出来的结果添加 teacher_uid 和 teacher_nickname 两个字段
+        // * 以便在表格显示时, 显示出课程中教师相关的信息
+        // */
+        // foreach ($userInfo['orders'] as $order) {
+        //     /**
+        //      * 通过课程lid查询用户信息
+        //      */
+        //     $user = Lesson::find($order->lid)->user()->select('uid as teacher_uid', 'nickname as teacher_nickname')->first();
+        //
+        //     /**
+        //      * 给 $userInfo 数组添加教师信息
+        //      */
+        //     $order->teacher_uid = $user->teacher_uid;
+        //     $order->teacher_nickname = $user->teacher_nickname;
+        // }
+        //
+        // /**
+        //  * 用户登录信息
+        //  * 因表结构中只有用户最后一次登录的数据, 只能提供这个
+        //  * @var string
+        //  */
+        // $loginInfo = $userInfo->lastlogin;
+        //
+        // /**
+        //  * 用户投诉历史
+        //  * 因没有相关数据表结构, 暂时无法提供这个数据.
+        //  */
+        //
+        // /**
+        //  * 将用户详情, 订单信息, 登录信息组合为同一个数组
+        //  */
+        // $data['userInfo'] = $userInfo;
+        // $data['loginInfo'] = $loginInfo;
+        //
+        // //以Json形式返回
+        // return view('userdetail')->with('data', $data);
     }
 
     /**
@@ -140,25 +139,30 @@ class UserController extends Controller
      * @param  integer   $id 用户ID
      * @return Json          操作是否成功
      */
-    public function lockUser($id)
-    {
-        //获取用户激活状态
-        $active = StudentUser::where('uid', $id)->first()->isactive;
+    // public function lockUser($id)
+    // {
+    //     //获取用户激活状态
+    //     $active = StudentUser::where('uid', $id)->first()->isactive;
+    //
+    //     /**
+    //      * 判断用户是否锁定, 以执行相反操作
+    //      */
+    //     if ($active) {
+    //         //取消激活状态(锁定)
+    //         $result = StudentUser::where('uid', $id)->update(['isactive'=>0]);
+    //     }else {
+    //         //激活(解锁)
+    //         $result = StudentUser::where('uid', $id)->update(['isactive'=>1]);
+    //     }
+    //
+    //     return $active;
+    // }
 
-        /**
-         * 判断用户是否锁定, 以执行相反操作
-         */
-        if ($active) {
-            //取消激活状态(锁定)
-            $result = StudentUser::where('uid', $id)->update(['isactive'=>0]);
-        }else {
-            //激活(解锁)
-            $result = StudentUser::where('uid', $id)->update(['isactive'=>1]);
-        }
-
-        return $active;
-    }
-
+    /**
+     * 学生使用情况统计
+     * @method usageStatistics
+     * @return [json]          [description]
+     */
     public function usageStatistics()
     {
         /**
@@ -285,5 +289,22 @@ class UserController extends Controller
         $practice_duration = Request::get('practice_duration');
         $account_type      = Request::get('account_type');
         // $data = StudentUser::where('')
+    }
+
+    /**
+     * 获取所有省份
+     * @method getProvinces
+     * @return [type]       [description]
+     */
+    public function getProvinces()
+    {
+        $data = \App\Province::where('pid', '>', 0)->get();
+        return $data;
+    }
+
+    public function getCities($id)
+    {
+        $cities = \App\City::where('pid', $id)->get();
+        return $cities;
     }
 }
