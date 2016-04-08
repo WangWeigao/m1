@@ -308,9 +308,47 @@ class UserController extends Controller
         return $cities;
     }
 
+    /**
+     * 获取弹奏记录
+     * @method playRecords
+     * @return [type]      [description]
+     */
     public function playRecords()
     {
-        $play_records = \App\Play_record::all();
-        return $play_records;
+        /**
+         * 获取所有弹奏记录
+         */
+        $play_records = \App\Play_record::with('music')->get();
+
+        /**
+         * 将记录中的midi_path字符串, 分隔成数组
+         */
+        foreach ($play_records as $key => $value) {
+            $value->midi_path = explode(',', $value->midi_path);
+        }
+
+        return view('playRecords')->with('play_records', $play_records);
     }
+
+    /**
+     * 下载midi文件
+     * @method downloadMusic
+     * @param  Request       $request [原文件, 新文件名]
+     * @return [?]                 [请求的下载文件]
+     */
+    // public function downloadMidi(Request $request)
+    // {
+    //     // 真实文件所在的位置
+    //     $path = public_path('midis') ;
+    //     // 第一个参数: 原始文件
+    //     $filename = $path . '/' . $request->get('name');
+    //     // 第二个参数: 新文件名
+    //     $newfilename = $request->get('newname') . '.mid';
+    //     // 第三个参数: 响应头
+    //     $headers = array(
+    //       'Content-Type: audio/mid',
+    //     );
+    //
+    //     return Response::download($filename, $newfilename, $headers);
+    // }
 }
