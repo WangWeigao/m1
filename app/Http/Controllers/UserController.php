@@ -307,4 +307,9 @@ class UserController extends Controller
         $cities = \App\City::where('pid', $id)->get();
         return $cities;
     }
+
+    public function playRecords()
+    {
+        # code...
+    }
 }

@@ -66,6 +66,7 @@
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="/user">学生查询</a></li>
                                 <li><a href="/user/usageStatistics">学生使用情况统计</a></li>
+                                <li><a href="/user/playRecords">弹奏记录</a></li>
                             </ul>
                         </li>
                         <li class="disabled" id="teacher-manager"><a href="{{ url('/teacher') }}">教师管理</a></li>
