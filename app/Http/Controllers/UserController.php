@@ -318,7 +318,9 @@ class UserController extends Controller
         /**
          * 获取所有弹奏记录
          */
-        $play_records = \App\Play_record::with('music')->get();
+        $play_records = \App\Play_record::with(['music' => function ($query) {
+            $query->withTrashed();
+        }])->get();
 
         /**
          * 将记录中的midi_path字符串, 分隔成数组
