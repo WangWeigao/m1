@@ -475,7 +475,7 @@ class MusicController extends Controller
     {
         // 删除模型
         $music = Music::find($id);
-        $result = $music->delete();
+        $result = $music->forceDelete();
         if ($result) {
             $data['status'] = true;
         }else {

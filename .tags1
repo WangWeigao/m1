@@ -105,7 +105,7 @@ music	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $music =
 result	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $result = $music->save();$/;"	variable	line:459
 destroy	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^    public function destroy($id)$/;"	function	line:474
 music	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $music = Music::find($id);$/;"	variable	line:477
-result	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $result = $music->delete();$/;"	variable	line:478
+result	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $result = $music->forceDelete();$/;"	variable	line:478
 putawayMany	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^    public function putawayMany(Request $request)$/;"	function	line:493
 ids	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $ids = $request->get('ids');$/;"	variable	line:495
 music	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $music = Music::find($id);$/;"	variable	line:498
