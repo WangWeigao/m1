@@ -19,4 +19,4 @@ $(document).ready(function() {
     });
 });
 
-//# sourceMappingURL=all.js.map
+//# sourceMappingURL=musicadd.js.map

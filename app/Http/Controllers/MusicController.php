@@ -10,7 +10,10 @@ use App\Http\Controllers\Controller;
 use App\Music;
 use DB;
 use App\Instrument;
-
+use App\Press;
+use App\Organizer;
+use Carbon\Carbon;
+use Response;
 class MusicController extends Controller
 {
     /**
@@ -125,22 +128,31 @@ class MusicController extends Controller
         return view('musicadd');
     }
 
+    /**
+     * 上传单个midi文件和相关属性
+     * @method store
+     * @param  Request $request [description]
+     * @return [json]           [是否成功]
+     */
     public function store(Request $request)
     {
         // return $request->all();
+        // return $request->file('midi_file')->getClientOriginalName();
         /**
          * 取得表单中各个项的值
          */
-        $name          = $request->get('name') or '';
-        $composer      = $request->get('composer') or '';
-        $instrument_id = $request->get('instrument');
-        $version       = $request->get('version') or '';
-        $press_id      = $request->get('press');
-        $operator      = $request->user()->id;
-        $organizer_id  = $request->get('organizer') or 0;
-        $note_content  = $request->get('note_content') or '';
-        $note_operator = $request->user()->id;
-        $category      = $request->get('category');
+        $name             = $request->get('name') or '';
+        $composer         = $request->get('composer') or '';
+        $instrument_id    = $request->get('instrument');
+        $version          = $request->get('version') or '';
+        $press_id         = $request->get('press');
+        $operator         = $request->user()->id;
+        $organizer_id     = $request->get('organizer') or 0;
+        $note_content     = $request->get('note_content') or '';
+        $note_operator    = $request->user()->id;
+        $category         = $request->get('category');
+        $section_duration = $request->get('section_duration');
+        $track            = $request->get('track');
 
         // 如果文件存在且上传成功
         if (!($request->hasFile('midi_file') && $request->file('midi_file')->isValid())) {
@@ -153,17 +165,19 @@ class MusicController extends Controller
             /**
              * 插入数据
              */
-            $music = new Music;
-            $music->name = $name;
-            $music->composer = $composer;
-            $music->instrument_id = $instrument_id;
-            $music->version = $version;
-            $music->press_id = $press_id;
-            $music->operator = $operator;
-            $music->organizer_id = $organizer_id;
-            $music->note_content = $note_content;
-            $music->note_operator = $note_operator;
-            $result = $music->save();
+            $music                   = new Music;
+            $music->name             = $name;
+            $music->composer         = $composer;
+            $music->instrument_id    = $instrument_id;
+            $music->version          = $version;
+            $music->press_id         = $press_id;
+            $music->operator         = $operator;
+            $music->organizer_id     = $organizer_id;
+            $music->note_content     = $note_content;
+            $music->note_operator    = $note_operator;
+            $music->section_duration = $section_duration;
+            $music->track            = $track;
+            $result                  = $music->save();
             /**
              * 插入乐曲分类标签
              */
@@ -173,10 +187,14 @@ class MusicController extends Controller
              * 保存midi文件
              */
             $id = $music->id;
+            // $source_name = $request->get('midi_file');
+            // return $source_name;
             $path = public_path() . '/midis';
             $name = $id . '.mid';
+            // 将文件名保存到DB
+            $music->filename = $name;
+            $music->save();
             $request->file('midi_file')->move($path, $name);
-
             if ($result) {
                 $data['status'] = true;
                 return $data;
@@ -228,31 +246,118 @@ class MusicController extends Controller
          * 调用函数将数据存入数据库
          * @var boolean
          */
-        $result = $this->music_import_csv($path, $filename);
-
-        return view('importcsv')->with('result', $result);
+        $request->path = $path;
+        $request->filename = $filename;
+        $data = $this->music_import_csv($request);
+// return $data;
+        return view('importcsv')->with('data', $data);
 
     }
 
-    protected function music_import_csv($path, $filename)
+    protected function music_import_csv(Request $request)
     {
+        $path = $request->path;
+        $filename = $request->filename;
         $file = $path . '/' . $filename;
         $fp = fopen($file, 'r');
+        $i = 0;
+        // 定义空数组，方便下面使用
+        $isUsed_arr = [];
+        // 判断文件名是否有重复
+        while ($arr = fgetcsv($fp)) {
+            $isFree = self::isNoUsedFileName(mb_convert_encoding($arr[7], 'UTF-8', 'GB2312'));
+
+            // 将重复的文件名放入一个数组中
+            if (!$isFree) {
+                $isUsed_arr[] = mb_convert_encoding($arr[7], 'UTF-8', 'GB2312');
+            }
+        }
+        // 如果存在重复的文件名，则返回
+        if (count($isUsed_arr) > 0) {
+            $data['status'] = false;
+            $data['errMsg'] = $isUsed_arr;
+            return $data;
+        }
+
+        // 重置文件指针
+        rewind($fp);
+
         while($arr = fgetcsv($fp)) {
+            $i++;
+            if ($i == 1) {
+                continue;
+            }
+            // 方便后面判断读取了几行
+
             $music = new Music;
-            $music -> name = mb_convert_encoding($arr[0], 'UTF-8', 'GB2312');
-            $music -> author = mb_convert_encoding($arr[1], 'UTF-8', 'GB2312');
-            $music -> filename = mb_convert_encoding($arr[2], 'UTF-8', 'GB2312');
+            $music->name = mb_convert_encoding($arr[0], 'UTF-8', 'GB2312');
+            // 查询乐曲id
+            $instrument = mb_convert_encoding($arr[1], 'UTF-8', 'GB2312');
+            $instrument_in_db = Instrument::where('name', '=', $instrument)->first();
+            // 如果这个乐器不存在，则先创建
+            if (empty($instrument_in_db)) {
+                $new_instrument = new Instrument;
+                $new_instrument->name = $instrument;
+                $new_instrument->save();
+                $music->instrument_id = $new_instrument->id;
+            }else {
+                $music->instrument_id = $instrument_in_db->id;
+            }
+            // 作曲人
+            $music->composer = mb_convert_encoding($arr[2], 'UTF-8', 'GB2312');
+            // 版本
+            $music->version = mb_convert_encoding($arr[3], 'UTF-8', 'GB2312');
+            // 出版社
+            $press = mb_convert_encoding($arr[4], 'UTF-8', 'GB2312');
+            $press_in_db = Press::where('name', $press)->first();
+            // 如果这个出版社不存在，则先创建
+            if (empty($press_in_db)) {
+                $new_press = new Press;
+                $new_press->name = $press;
+                $new_press->save();
+                $music->press_id = $new_press->id;
+            }else {
+                $music->press_id = $press_in_db->id;
+            }
+            // 主办单位
+            $organizer = mb_convert_encoding($arr[5], 'UTF-8', 'GB2312');
+            $organizer_in_db = Organizer::where('name', $organizer)->first();
+            // 如果这个主办机构不存在，则先创建
+            if (empty($organizer_in_db)) {
+                $new_organizer = new Organizer;
+                $new_organizer->name = $organizer;
+                $new_organizer->save();
+                $music->organizer_id = $new_organizer->id;
+            }else {
+                $music->organizer_id = $organizer_in_db->id;
+            }
+            // 操作人
+            $music->operator = $request->user()->id;
+            // 评论内容
+            $note_content = mb_convert_encoding($arr[6], 'UTF-8', 'GB2312');
+            if (!empty($note_content)) {
+                $music->note_content = $note_content;
+                $music->note_operator = $request->user()->id;
+            }
+            $music->filename = mb_convert_encoding($arr[7], 'UTF-8', 'GB2312');
             $result[] = $music->save();
         }
 
-        if (!in_array(false, $result)) {
-            return true;
+        if ( $i == 0 || $i == 1 || in_array(false, $result)) {
+            $data['status'] = false;
+            $data['errMsg'] = '表格中没有有效数据';
         }else {
-            return false;
+            $data['status'] = true;
         }
+        return $data;
     }
 
+    // 校验文件名是否已被使用
+    public function isNoUsedFileName($filename)
+    {
+        $result = Music::where('filename', '=', $filename)->first();
+        return $result ? false : true;
+    }
 
     /**
      * Display the specified resource.
@@ -286,16 +391,18 @@ class MusicController extends Controller
     public function update(Request $request, $id)
     {
         // return $request->all();
-        $name          = $request->get('name') or '';
-        $composer      = $request->get('composer') or '';
-        $instrument_id = $request->get('instrument');
-        $version       = $request->get('version') or '';
-        $press_id      = $request->get('press');
-        $organizer_id  = $request->get('organizer') or 0;
-        $note_content  = $request->get('notes') or '';
-        $note_operator = $request->user()->id;
+        $name             = $request->get('name') or '';
+        $composer         = $request->get('composer') or '';
+        $instrument_id    = $request->get('instrument');
+        $version          = $request->get('version') or '';
+        $press_id         = $request->get('press');
+        $organizer_id     = $request->get('organizer') or 0;
+        $section_duration = $request->get('section_duration');
+        $track            = $request->get('track');
+        $note_content     = $request->get('notes') or '';
+        $note_operator    = $request->user()->id;
         // return $request->all();
-        $music = Music::find($id);
+        $music            = Music::find($id);
         if (!empty($name)) {
             $music->name = $name;
         }
@@ -313,6 +420,12 @@ class MusicController extends Controller
         }
         if (!empty($organizer_id)) {
             $music->organizer_id  = $organizer_id;
+        }
+        if (!empty($section_duration)) {
+            $music->section_duration = $section_duration;
+        }
+        if (!empty($track)) {
+            $music->track = $track;
         }
         if (!empty($note_content)) {
             $music->note_content = $note_content;
@@ -362,7 +475,7 @@ class MusicController extends Controller
     {
         // 删除模型
         $music = Music::find($id);
-        $result = $music->delete();
+        $result = $music->forceDelete();
         if ($result) {
             $data['status'] = true;
         }else {
@@ -505,5 +618,28 @@ class MusicController extends Controller
         }
         return $data;
 
+    }
+
+    /**
+     * 下载mid文件
+     * 实现下载的文件显示乐曲名称,而不是实际的文件名
+     * @method downloadMusic
+     * @param  Request       $request [原文件, 新文件名]
+     * @return [?]                 [请求的下载文件]
+     */
+    public function downloadMusic(Request $request)
+    {
+        // 真实文件所在的位置
+        $path = public_path('midis') ;
+        // 第一个参数: 原始文件
+        $filename = $path . '/' . $request->get('name');
+        // 第二个参数: 新文件名
+        $newfilename = $request->get('newname') . '.mid';
+        // 第三个参数: 响应头
+        $headers = array(
+          'Content-Type: audio/mid',
+        );
+
+        return Response::download($filename, $newfilename, $headers);
     }
 }

@@ -6,12 +6,12 @@
         <li class="active">曲库统计</li>
     </div>
 
-    <div class="container" style="margin-left:30px; line-height:25px;">
+    <div class="container" style="margin-left:20%; line-height:25px;">
         <p>
-            库内所有乐曲总数：3050首
+            库内所有乐曲总数：{{  $data['allCount'] }}首
         </p>
         <p>
-            库内所有已上架的乐曲总数：2013首
+            库内所有已上架的乐曲总数：{{  $data['onshelfCount'] }}首
         </p>
         <br/>
         <select class="" name="" id="stat_instrument">

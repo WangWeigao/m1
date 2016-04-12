@@ -74,6 +74,11 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/music/musicStatisticsByInstrument', 'MusicController@musicStatisticsByInstrument');
 
     /**
+     * 下载乐曲
+     */
+    Route::get('/music/downloadMusic', 'MusicController@downloadMusic');
+
+    /**
      * 曲库resource路由
      */
     Route::resource('/music', 'MusicController');
@@ -85,15 +90,41 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/home', 'HomeController@index');
     // --------------------------------------用户路由----------------------------------------------
 
-     /**
+    /**
+     * 学生使用情况统计
+     */
+    Route::get('/user/usageStatistics', 'UserController@usageStatistics');
+
+    /**
+     * 活跃用户数
+     */
+    Route::get('/user/activeUser', 'UserController@activeUser');
+
+    /**
+     * 取得一个时期内从开始到当前，每个单位时间增加的用户数
+     */
+    Route::get('/user/calEveryPeriodAddUsers', 'UserController@calEveryPeriodAddUsers');
+
+    /**
      * 锁定或者解锁用户
      */
-     Route::get('/lockuser/{id}', 'UserController@lockUser');
+    Route::get('/lockuser/{id}', 'UserController@lockUser');
 
-     /**
-      * 使用资源路由
-      */
-     Route::resource('/user', 'UserController');
+    /**
+     * 获取所有省份
+     */
+    Route::get('/user/provinces', 'UserController@getProvinces');
+
+    /**
+     * 根据省份获取城市列表
+     */
+    Route::get('/user/cities/{id}', 'UserController@getCities');
+    Route::get('/user/playRecords', 'UserController@playRecords');
+
+    /**
+     * 使用资源路由
+     */
+    Route::resource('/user', 'UserController');
 
     // --------------------------------------教师路由----------------------------------------------
 
@@ -120,8 +151,9 @@ Route::group(['middleware' => 'web'], function () {
     Route::resource('/finance', 'FinanceController');
     // --------------------------------------RBAC-------------------------------------------------
     Route::resource('rbac', 'RbacController');
-});
-// 测试路由
-Route::get('/test', function() {
-    return view('auth.passwords.reset')->with('token', '123456');
+
+    // 测试路由
+    Route::get('/test', function() {
+        return view('auth.passwords.reset')->with('token', '123456');
+    });
 });

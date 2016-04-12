@@ -17,19 +17,20 @@ elixir(function(mix) {
     /**
      * 合并css文件
      */
-    mix.styles([
-        // 'font-awesome.min.css',         // font-awesome
-        // 'google-font-lato.css',         // 谷歌字体
-        // 'bootstrap.min.css',            // bootstrap主文件
-        'bootstrap-datetimepicker.css', // 日历时间选择器
-        'jquery.dataTables.min.css',    //表格排序
-        // 'dataTables.jqueryui.min.css',  // 表格排序
-        // 'dataTables.bootstrap.min.css', // 表格排序
-        // 'jquery.dataTables_themeroller.css',    //表格排序
-    ]);
+    // mix.styles([
+    //     // 'font-awesome.min.css',         // font-awesome
+    //     // 'google-font-lato.css',         // 谷歌字体
+    //     // 'bootstrap.min.css',            // bootstrap主文件
+    //     'bootstrap-datetimepicker.css', // 日历时间选择器
+    //     'jquery.dataTables.min.css',    //表格排序
+    //     // 'dataTables.jqueryui.min.css',  // 表格排序
+    //     // 'dataTables.bootstrap.min.css', // 表格排序
+    //     // 'jquery.dataTables_themeroller.css',    //表格排序
+    // ])
+    mix.styles('music.css', 'public/css/music.css');
 
     /**
-     * 合并css文件
+     * 合并js文件
      */
     // mix.scripts([
     //     // 'jquery.min.js',    // jquery核心文件
@@ -51,7 +52,10 @@ elixir(function(mix) {
     // ])
     mix.scripts('app.js', 'public/js/app.js')
     .scripts(['music.js', 'dateSelector.js', 'jquery.form.js'], 'public/js/music.js')
-    .scripts(['musicStatistics.js'], 'public/js/musicStatistics.js');
+    .scripts(['musicStatistics.js'], 'public/js/musicStatistics.js')
+    .scripts(['userUsageStatics.js'], 'public/js/userUsageStatics.js')
+    .scripts(['user.js', 'dateSelector.js', 'jquery.form.js'], 'public/js/user.js')
+    .scripts(['musicadd.js'], 'public/js/musicadd.js');
     /**
      * 添加时间戳
      */

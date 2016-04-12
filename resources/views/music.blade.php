@@ -25,7 +25,7 @@
                 <td>
                     <span>筛选待件:</span>
                 </td>
-                <tr>
+                <tr class="form-inline">
                     <td class="col-sm-3">
                         <input type="checkbox" name="instrument" id="input_instrument" value="1">
                         <label for="input_instrument">乐器</label>
@@ -50,21 +50,21 @@
                         </select>
                     </td>
                 </tr>
-                <tr>
+                <tr class="form-inline">
                     <td>
                         <input type="checkbox" name="organizer" id="input_organizer" value="1">
                         <label for="input_organizer">主办机构</label>
                         <select id="organizer" class="form-control"></select>
                     </td>
                     <td>
-                        <input type="checkbox" name="operator" id="input_operator" value="1">
+                        <input type="checkbox" name="operator" id="input_operator" value="2">
                         <label for="input_operator">操作人</label>
                         <select id="operator" class="form-control"></select>
                     </td>
                     <td>
                         <input type="checkbox" name="date" id="date">
                         <label for="date">添加日期</label>
-                        <span id="dateSelector" class="form-control">
+                        <span id="dateSelector" class="">
                             <select class="date_select" id="idYear" data=""></select>年
                             <select class="date_select" id="idMonth" data=""></select>月
                             <select class="date_select" id="idDay" data=""></select>日
@@ -76,50 +76,51 @@
                 </tr>
             </table>
         </form>
-
-        @if(!empty($musics))
-            @if(count($musics) > 0)
+        @if(isset($musics))
                 <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th><input type="checkbox" id="checkAll"></th>
-                            <th>乐器</th>
-                            <th>乐曲名</th>
-                            <th>作曲人</th>
-                            <th>版本</th>
-                            <th>出版社</th>
-                            <th>主办机构</th>
-                            <th>乐曲类别</th>
-                            <th>midi地址</th>
-                            <th>添加日期</th>
-                            <th>乐曲状态</th>
-                            <th>操作</th>
-                            <th>操作人</th>
-                            <th>备注</th>
-                        </tr>
-                    </thead>
+                    @if(count($musics) > 0)
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" id="checkAll"></th>
+                                <th>乐器</th>
+                                <th>乐曲名</th>
+                                <th>作曲人</th>
+                                <th>版本</th>
+                                <th>出版社</th>
+                                <th>主办机构</th>
+                                <th>乐曲类别</th>
+                                <th>midi地址</th>
+                                <th>添加日期</th>
+                                <th>乐曲状态</th>
+                                <th>操作</th>
+                                <th>操作人</th>
+                                <th>分段时间</th>
+                                <th>轨道</th>
+                                <th>备注</th>
+                            </tr>
+                        </thead>
+                    @endif
                     <tbody>
-                        @foreach($musics as $item)
-                            <tr id="{{ $item->id }}">
+                        @forelse($musics as $item)
+                            <tr id="{{ $item->id or ''}}">
                                 <td><input type="checkbox" name="music_action[]"></td>
-                                <td class="{{ $item->instrument['id'] }}">{{ $item->instrument['name'] }}</td>
-                                <td>{{ $item->name }}</td>
-                                <td>{{ $item->composer }}</td>
-                                <td>{{ $item->version }}</td>
-                                <td class="{{ $item->press_id }}">
-                                    {{ $item->press->name }}
+                                <td class="{{ $item->instrument->id or '' }}">{{ $item->instrument->name or '' }}</td>
+                                <td>{{ $item->name or ''}}</td>
+                                <td>{{ $item->composer or ''}}</td>
+                                <td>{{ $item->version or ''}}</td>
+                                <td class="{{ $item->press_id or ''}}">
+                                    {{ $item->press->name or ''}}
                                 </td>
-                                <td class="{{ $item->organizer_id }}">
-                                    {{ $item->organizer['name'] }}
+                                <td class="{{ $item->organizer_id or ''}}">
+                                    {{ $item->organizer->name or ''}}
                                 </td>
-                                {{-- <td>{{ $item->organizer->name }}</td> --}}
                                 <td>
                                     @foreach($item->tags as $tag)
-                                        <span class="{{ $tag->id }}">{{ $tag->name }}</span>
+                                        <span class="{{ $tag->id  or ''}}">{{ $tag->name or ''}}</span>
                                     @endforeach
                                 </td>
-                                <td><a href="#">{{ $item->filename }}</a></td>
-                                <td>{{ $item->created_at }}</td>
+                                <td><a href="/music/downloadMusic?name={{ $item->filename }}&newname={{ $item->name }}">{{ $item->filename ? $item->name : ''}}</a></td>
+                                <td>{{ $item->created_at or ''}}</td>
                                 <td>{{ $item->onshelf == 2 ? "已上架" : "待审核" }}</td>
                                 <td>
                                     <button class="btn btn-xs btn-info edit" data-toggle="modal" data-target="#editPopup" data-backdrop="static">
@@ -131,29 +132,31 @@
                                     <button class="btn btn-xs btn-info delete">
                                         <span class="glyphicon glyphicon-remove"></span> 下架
                                     </button>
-                                    {{-- <button class="btn btn-xs btn-info delete"> --}}
-                                        {{-- <span class="glyphicon glyphicon-remove"></span> 删除 --}}
-                                    {{-- </button> --}}
                                 </td>
-                                <td>{{ $item->user->name }}</td>
+                                <td>{{ $item->user->name or ''}}</td>
+                                <td>{{ $item->section_duration }}</td>
+                                <td>{{ $item->track }}</td>
                                 @if(!empty($item->note_content))
                                     <td>
-                                        <span>{{ $item->editor['name'] }} :</span>
-                                        <span class="note_content">{{ $item->note_content }}</span>
+                                        <span>{{ $item->editor->name or ''}} :</span>
+                                        <span class="note_content">{{ $item->note_content or ''}}</span>
                                     </td>
                                 @else
                                     <td></td>
                                 @endif
                             </tr>
-                        @endforeach
+                        @empty
+                            {{-- @if(Input::get()) --}}
+                            {{-- @else --}}
+                            <div class="text-center blockquote">
+                                没有查到相关结果，更换搜索关键词再试试吧
+                            </div>
+                            <br>
+                            {{-- @endif --}}
+                        @endforelse
                     </tbody>
                 </table>
 
-            @else
-                <div class="text-center blockquote">
-                    没有查到相关结果，更换搜索关键词再试试吧
-                </div>
-            @endif
         @endif
         <div id="allow_all" class="btn btn-success">审核通过</div>
         <div id="off_shelf" class="btn btn-success">下架</div>
@@ -184,6 +187,8 @@
                           <th>出版社</th>
                           <th>主办机构</th>
                           <th>乐曲类别</th>
+                          <th>分段时间</th>
+                          <th>轨道数</th>
                           <th>备注</th>
                       </tr>
                   </thead>
@@ -206,6 +211,21 @@
                               <td>
                                   <select id="edit_category" class="form-control"></select>
                                   <div type="hidden" name="category_old" id="edit_category_old" value="">
+                              </td>
+                              <td>
+                                  <select id="edit_section_duration" class="form-control">
+                                      <option value="2">2秒</option>
+                                      <option value="3">3秒</option>
+                                      <option value="5">5秒</option>
+                                  </select>
+                              </td>
+                              <td>
+                                  <select id="edit_track" class="form-control">
+                                      <option value="1">1</option>
+                                      <option value="2">2</option>
+                                      <option value="3">3</option>
+                                      <option value="4">4</option>
+                                  </select>
                               </td>
                               <td><input class="form-control" type="text" id="edit_notes"></td>
                           </form>
@@ -241,7 +261,7 @@
                         <div class="form-group">
                             <label for="add_name" class="col-sm-2 control-label">乐曲名</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="add_name" name="name" placeholder="请输入乐曲名称">
+                                <input type="text" class="form-control" id="add_name" name="name" placeholder="请输入乐曲名称" required>
                             </div>
                         </div>
                         <div class="form-group">
@@ -281,6 +301,28 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="add_section_duration" class="col-sm-2 control-label">分段时间</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" name="section_duration">
+                                    <option value="2">2秒</option>
+                                    <option value="3">3秒</option>
+                                    <option value="5">5秒</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add_track" class="col-sm-2 control-label">轨道数</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" name="track">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label for="add_note_content" class="col-sm-2 control-label">备注</label>
                             <div class="col-sm-10">
                                 <input type="text" name="note_content" value="" id="add_note_content" class="form-control">
@@ -296,7 +338,7 @@
                     </form>
 				</div>
 				<div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" id="createMusic">创建</button>
+                    <button type="button" class="btn btn-default" id="createMusic">创建</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 				</div>
 			</div>
@@ -306,13 +348,14 @@
 @endsection
 
 @section('css')
-    <link href="http://hayageek.github.io/jQuery-Upload-File/4.0.10/uploadfile.css" rel="stylesheet">
-    <link rel="stylesheet" href="http://cdn.staticfile.org/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" media="screen" title="no title" charset="utf-8">
+    {{-- <link href="http://hayageek.github.io/jQuery-Upload-File/4.0.10/uploadfile.css" rel="stylesheet"> --}}
+    {{-- <link rel="stylesheet" href="http://cdn.staticfile.org/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" media="screen" title="no title" charset="utf-8"> --}}
+    <link rel="stylesheet" href="/css/music.css" media="screen" title="no title" charset="utf-8">
 @endsection
 
 @section('js')
-    <script src="http://hayageek.github.io/jQuery-Upload-File/4.0.10/jquery.uploadfile.min.js"></script>
-    <script src="http://cdn.staticfile.org/moment.js/2.10.6/moment.min.js"></script>
-    <script src="http://cdn.staticfile.org/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+    {{-- <script src="http://hayageek.github.io/jQuery-Upload-File/4.0.10/jquery.uploadfile.min.js"></script> --}}
+    {{-- <script src="http://cdn.staticfile.org/moment.js/2.10.6/moment.min.js"></script> --}}
+    {{-- <script src="http://cdn.staticfile.org/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script> --}}
     <script src="{{ elixir('js/music.js') }}"></script>
 @endsection

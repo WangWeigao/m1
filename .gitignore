@@ -4,3 +4,4 @@ Homestead.yaml
 Homestead.json
 .env
 /public/CsvFileForImport
+/public/midis

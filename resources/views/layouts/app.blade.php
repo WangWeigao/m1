@@ -8,11 +8,11 @@
     <title>Laravel</title>
 
     <!-- Fonts -->
-    <link href="http://cdn.staticfile.org/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
-    <link href="http://fonts.useso.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
+    <link href="http://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
+    <link href="http://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
 
     <!-- Styles -->
-    <link href="http://cdn.staticfile.org/twitter-bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap.css" rel="stylesheet">
     {{-- <link href="{{ elixir('css/all.css') }}" rel="stylesheet"> --}}
 
     {{-- 继承此模板的页面使用的CSS --}}
@@ -62,13 +62,15 @@
                             </ul>
                         </li>
                         <li id="user-manager" class="dropdown">
-                            <a href="{{ url('/user') }}">学生管理</a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">学生管理<span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url('/userdetails') }}"></a></li>
+                                <li><a href="/user">学生查询</a></li>
+                                <li><a href="/user/usageStatistics">学生使用情况统计</a></li>
+                                <li><a href="/user/playRecords">弹奏记录</a></li>
                             </ul>
                         </li>
-                        <li id="teacher-manager"><a href="{{ url('/teacher') }}">教师管理</a></li>
-                        <li id="order-manager"><a href="{{ url('/order') }}">订单管理</a></li>
+                        <li class="disabled" id="teacher-manager"><a href="{{ url('/teacher') }}">教师管理</a></li>
+                        <li class="disabled" id="order-manager"><a href="{{ url('/order') }}">订单管理</a></li>
                         @can('access-finance')
                             <li class="disabled"><a href="#">结算系统</a></li>
                         @endif
@@ -106,8 +108,8 @@
     @yield('content')
 
     <!-- JavaScripts -->
-    <script src="http://cdn.staticfile.org/jquery/2.1.4/jquery.min.js"></script>
-    <script src="http://cdn.staticfile.org/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="http://apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="{{ elixir('js/app.js') }}"></script>
     {{-- <script src="js/app.js"></script> --}}
 

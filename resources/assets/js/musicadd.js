@@ -18,5 +18,3 @@ $(document).ready(function() {
        extraObj.startUpload();
     });
 });
-
-//# sourceMappingURL=all.js.map

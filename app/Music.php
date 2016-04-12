@@ -14,6 +14,10 @@ class Music extends Model
      */
     protected $guarded = [];
 
+    /**
+     * 允许软删除
+     */
+    protected $dates = ['deleted_at'];
 
     /**
      * 曲子所用的乐器
