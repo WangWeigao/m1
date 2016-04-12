@@ -10,7 +10,7 @@ $(document).ready(function() {
          defYear: myDate.getFullYear(),
          defMonth: (myDate.getMonth() + 1),
          defDay: myDate.getDate(),
-         minYear: 1800,
+         minYear: 2015,
          maxYear: (myDate.getFullYear() + 1)
      });
 
@@ -25,7 +25,7 @@ $(document).ready(function() {
          defYear: myDate2.getFullYear(),
          defMonth: (myDate2.getMonth() + 1),
          defDay: myDate2.getDate(),
-         minYear: 1800,
+         minYear: 2015,
          maxYear: (myDate2.getFullYear() + 1)
      });
 
@@ -110,6 +110,33 @@ $(document).ready(function() {
     });
 
     /**
+     * 注册时间段被修改时(开始时间)
+     */
+    $str = $("#idYear").val() + '-'
+            + $("#idMonth").val() + '-'
+            + $("#idDay").val();
+    $("input[name='reg_timezone']").val($str);
+    $("#idYear,#idMonth,#idDay").bind('change', function(event) {
+        $str = $("#idYear").val() + '-'
+                + $("#idMonth").val() + '-'
+                + $("#idDay").val();
+        $("input[name='reg_timezone']").val($str);
+    });
+    /**
+     * 注册时间段被修改时(截止时间)
+     */
+    $str = $("#idYear2").val() + '-'
+            + $("#idMonth2").val() + '-'
+            + $("#idDay2").val();
+    $("input[name='reg_timezone']").attr('data-endtime', $str);
+    $("#idYear2,#idMonth2,#idDay2").bind('change', function(event) {
+        $str = $("#idYear2").val() + '-'
+                + $("#idMonth2").val() + '-'
+                + $("#idDay2").val();
+    $("input[name='reg_timezone']").attr('data-endtime', $str);
+    });
+
+    /**
      * 搜索『按筛选条件』
      */
     $("#search_condition").bind('click', function(event) {
@@ -119,7 +146,9 @@ $(document).ready(function() {
                 url: '/user',
                 type: 'GET',
                 dataType: 'json',
-                data:{},
+                data:{
+                    'reg_end_time':$("input[name='reg_timezone']").prop('checked') ? $("input[name='reg_timezone']").attr('data-endtime') : ''
+                },
                 headers: {
                     'X-CSRF-TOKEN': $("input[name='_token']").val()
                 },

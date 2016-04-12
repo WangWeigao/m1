@@ -67,7 +67,7 @@
                     <option value="one_more_year">一年以上</option>
                 </select>
                 {{-- 帐号级别 --}}
-                <input type="checkbox" name="" value="" id="account_grade">
+                <input type="checkbox" name="account_grade" value="" id="account_grade">
                 <label for="account_grade">帐号级别</label>
                 <select class="form-control" name="">
                     <option value="vip1">VIP1</option>
@@ -76,7 +76,7 @@
                     <option value="all">全部</option>
                 </select>
                 {{-- 帐号截止日期 --}}
-                <input type="checkbox" name="" value="" id="account_end_at">
+                <input type="checkbox" name="account_end_at" value="" id="account_end_at">
                 <label for="account_end_at">帐号截止日期</label>
                 <select class="form-control" name="">
                     <option value="week">一周内</option>
@@ -88,7 +88,7 @@
             </div>
             <div class="form-group form-inline">
                 {{-- 本月使用时长 --}}
-                <input type="checkbox" name="" value="" id="month_duration">
+                <input type="checkbox" name="month_duration" value="" id="month_duration">
                 <label for="month_duration">本月使用时长</label>
                 <select class="form-control" name="">
                     <option value="1h">1小时以内的</option>
@@ -100,7 +100,7 @@
                     <option value="0h">未使用</option>
                 </select>
                 {{-- 帐号状态 --}}
-                <input type="checkbox" name="" value="" id="account_status">
+                <input type="checkbox" name="account_status" value="" id="account_status">
                 <label for="account_status">帐号状态</label>
                 <select class="form-control" name="">
                     <option value="near_expire">帐号到期</option>
@@ -109,7 +109,7 @@
                     <option vlaue="expire">未续费</option>
                 </select>
                 {{-- 本月用时大幅变化 --}}
-                <input type="checkbox" name="" value="" id="change_duration">
+                <input type="checkbox" name="change_duration" value="" id="change_duration">
                 <label for="change_duration">本月用户大幅变化</label>
                 <select class="form-control" name="">
                     <option value="up20h">上升20小时以上</option>
@@ -120,16 +120,15 @@
                     <option value="down50h">下降50小时以上</option>
                 </select>
                 {{-- 活跃度 --}}
-                <input type="checkbox" name="" value="" id="liveness">
+                <input type="checkbox" name="liveness" value="" id="liveness">
                 <label for="liveness">活跃度</label>
                 <select class="form-control" name="">
                     <option value="active_user">活跃用户</option>
                     <option value="sleep_user">休眠用户</option>
                     <option value="death_user">死亡用户</option>
                 </select>
-            </div>
-            <div class="form-group form-inline">
-                <input type="checkbox" name="" value="" id="reg_timezone">
+                {{-- 注册时间段 --}}
+                <input type="checkbox" name="reg_timezone" value="" id="reg_timezone">
                 <label for="reg_timezone">注册时间段</label>
                 <span id="date_start" class="">
                     <select class="date_select" id="idYear" data=""></select>年

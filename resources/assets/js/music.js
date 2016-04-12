@@ -252,9 +252,6 @@ $(document).ready(function() {
      maxYear: (myDate.getFullYear() + 1)
      });
 
-    /**
-     * 按筛选条件搜索
-     */
     $("#date").val($("#idYear").val() + '-' + $("#idMonth").val() + '-' + $("#idDay").val());
     $(".date_select").each(function(index, el) {
         $(el).bind('change', function() {
