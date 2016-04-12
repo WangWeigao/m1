@@ -76,18 +76,18 @@ $(document).ready(function() {
     // 点击"编辑"按钮
     $(".edit").each(function(index, el) {
         $(this).click(function() {
-            $("#edit_id").val($(el).closest('tr').attr('id'));
-            $("#edit_instrument").val($(el).closest('tr').find('td:eq(1)').attr('class'));
-            $("#edit_name").val($(el).closest('tr').find('td:eq(2)').text());
-            $("#edit_composer").val($(el).closest('tr').find('td:eq(3)').text());
-            $("#edit_version").val($(el).closest('tr').find('td:eq(4)').text());
-            $("#edit_press").val($(el).closest('tr').find('td:eq(5)').attr('class'));
-            $("#edit_organizer").val($(el).closest('tr').find('td:eq(6)').attr('class'));
-            $("#edit_category").val($(el).closest('tr').find('td:eq(7) span').attr('class'));
-            $("#edit_category_old").val($(el).closest('tr').find('td:eq(7) span').attr('class'))
-            $("#edit_section_duration").val($.trim($(el).closest('tr').find('td:eq(13)').text()));
-            $("#edit_track").val($.trim($(el).closest('tr').find('td:eq(14)').text()));
-            $("#edit_notes").val($(el).closest('tr').find('.note_content').text());
+            $("#edit_id").val($(el).closest('tr').attr('id'));                                      // 乐曲id
+            $("#edit_instrument").val($(el).closest('tr').find('td:eq(1)').attr('class'));          // 乐器
+            $("#edit_name").val($(el).closest('tr').find('td:eq(2)').text());                       // 乐曲名
+            $("#edit_composer").val($(el).closest('tr').find('td:eq(3)').text());                   // 作曲人
+            $("#edit_version").val($(el).closest('tr').find('td:eq(4)').text());                    // 版本
+            $("#edit_press").val($(el).closest('tr').find('td:eq(5)').attr('class'));               // 出版社
+            $("#edit_organizer").val($(el).closest('tr').find('td:eq(6)').attr('class'));           // 主办机构
+            $("#edit_category").val($(el).closest('tr').find('td:eq(7) span').attr('class'));       // 乐曲类别
+            $("#edit_category_old").val($(el).closest('tr').find('td:eq(7) span').attr('class'))    // 改变之前的"乐曲类别"
+            $("#edit_section_duration").val($.trim($(el).closest('tr').find('td:eq(13)').text()));  // 分段时间
+            $("#edit_track").val($.trim($(el).closest('tr').find('td:eq(14)').text()));             // 轨道
+            $("#edit_notes").val($(el).closest('tr').find('.note_content').text());                 // 备注
         });
     });
 
