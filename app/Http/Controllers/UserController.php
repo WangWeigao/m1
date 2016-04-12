@@ -329,6 +329,16 @@ class UserController extends Controller
             $value->midi_path = explode(',', $value->midi_path);
         }
 
+        foreach ($play_records as $value) {
+            $temp_value = $value->midi_path;
+            foreach ($temp_value as $v) {
+                $temp = explode('public', $v);
+                $v = $temp[1];
+            }
+            // dd($temp_value);
+            $value->midi_path = $temp_value;
+        }
+// return $play_records;
         return view('playRecords')->with('play_records', $play_records);
     }
 
@@ -338,7 +348,7 @@ class UserController extends Controller
      * @param  Request       $request [原文件, 新文件名]
      * @return [?]                 [请求的下载文件]
      */
-    // public function downloadMidi(Request $request)
+    // public function downloadSectionMidi(Request $request)
     // {
     //     // 真实文件所在的位置
     //     $path = public_path('midis') ;

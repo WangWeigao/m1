@@ -77,7 +77,6 @@
             </table>
         </form>
         @if(isset($musics))
-            @forelse($musics as $item)
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -100,6 +99,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @forelse($musics as $item)
                         <tr id="{{ $item->id or ''}}">
                             <td><input type="checkbox" name="music_action[]"></td>
                             <td class="{{ $item->instrument->id or '' }}">{{ $item->instrument->name or '' }}</td>
@@ -143,17 +143,17 @@
                                 <td></td>
                             @endif
                         </tr>
+                    @empty
+                        {{-- @if(Input::get()) --}}
+                        {{-- @else --}}
+                        <div class="text-center blockquote">
+                            没有查到相关结果，更换搜索关键词再试试吧
+                        </div>
+                        <br>
+                        {{-- @endif --}}
+                    @endforelse
                     </tbody>
                 </table>
-            @empty
-                {{-- @if(Input::get()) --}}
-                {{-- @else --}}
-                    <div class="text-center blockquote">
-                        没有查到相关结果，更换搜索关键词再试试吧
-                    </div>
-                    <br>
-                {{-- @endif --}}
-            @endforelse
 
         @endif
         <div id="allow_all" class="btn btn-success">审核通过</div>
