@@ -27,7 +27,8 @@ elixir(function(mix) {
     //     // 'dataTables.bootstrap.min.css', // 表格排序
     //     // 'jquery.dataTables_themeroller.css',    //表格排序
     // ])
-    mix.styles('music.css', 'public/css/music.css');
+    mix.styles('music.css', 'public/css/music.css')
+        .styles('user.css', 'public/css/user.css');
 
     /**
      * 合并js文件
