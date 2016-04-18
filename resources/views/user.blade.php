@@ -22,6 +22,7 @@
                 <div>筛选待件</div>
                 {{-- 地域 --}}
                 <input type="checkbox" name="area" value="" id="area">
+                <input type="checkbox" name="province" value="" id="" style="display:none">
                 <label for="area">地域</label>
                 <select class="" id="province">
                     <option>省份</option>

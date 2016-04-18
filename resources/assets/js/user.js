@@ -1,4 +1,6 @@
 $(document).ready(function() {
+
+
     /**
      * select下拉式日期选择器(注册时间段的开始时间)
      */
@@ -91,6 +93,13 @@ $(document).ready(function() {
         // 把select的值赋给对应的input
         $("input[name='area']").val($("#city").val());
     });
+    // $("input[name='area']").bind('click', function () {
+    //     if ($("input[name='area']").prop('checked')) {
+    //         $("input[name='province']").prop('checked', true);
+    //     } else {
+    //         $("input[name='province']").prop('checked', false);
+    //     }
+    // });
     /**
      * "水平等级"改变时修改 input 的 value
      */
@@ -218,5 +227,114 @@ $(document).ready(function() {
     //         return false;
     //     }
     // });
+    /**
+     * 保持url中含有内容的 input 为选中状态
+     */
+     //方法二：
+     (function ($) {
+         $.getUrlParam = function (name) {
+             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+             var r = window.location.search.substr(1).match(reg);
+             if (r != null) return unescape(r[2]); return null;
+         }
+     })(jQuery);
+
+     //方法二：
+     var user_cellphone_email = $.getUrlParam('user_cellphone_email');
+     var area                 = $.getUrlParam('area');
+     var user_grade           = $.getUrlParam('user_grade');
+     var reg_time             = $.getUrlParam('reg_time');
+     var account_grade        = $.getUrlParam('account_grade');
+     var account_end_at       = $.getUrlParam('account_end_at');
+     var month_duration       = $.getUrlParam('month_duration');
+     var account_status       = $.getUrlParam('account_status');
+     var change_duration      = $.getUrlParam('change_duration');
+     var liveness             = $.getUrlParam('liveness');
+     var reg_start_time       = $.getUrlParam('reg_start_time');
+     var reg_end_time         = $.getUrlParam('reg_end_time');
+     var field                = $.getUrlParam('field');
+     var order                = $.getUrlParam('order');
+
+     if (user_cellphone_email != '' && user_grade != null) {
+        $("input[name=user_cellphone_email]").val(user_cellphone_email);
+     }
+
+     if (area != '' && area != null) {
+        // $("input[name=area]").val(area);
+        // $("#province").val(province);
+        // $("#area").val(area);
+     }
+
+     if (user_grade != '' && user_grade != null) {
+         $("#user_grade").val(user_grade);
+         $("input[name=user_grade]").val(user_grade);
+         $("input[name=user_grade]").prop('checked', true);
+     }
+
+     if (reg_time != '' && reg_time != null) {
+         $("#reg_time").val(reg_time);
+         $("input[name=reg_time]").val(reg_time);
+         $("input[name=reg_time]").prop('checked', true);
+     }
+
+    if (account_grade != '' && account_grade != null) {
+         $("#account_grade").val(account_grade);
+         $("input[name=account_grade]").val(account_grade);
+         $("input[name=account_grade]").prop('checked', true);
+    }
+
+     if (account_end_at != '' && account_end_at != null) {
+         $("#account_end_at").val(account_end_at);
+         $("input[name=account_end_at]").val(account_end_at);
+         $("input[name=account_end_at]").prop('checked', true);
+     }
+
+     if (month_duration != '' && month_duration != null) {
+         $("#month_duration").val(month_duration);
+         $("input[name=month_duration]").val(month_duration);
+         $("input[name=month_duration]").prop('checked', true);
+     }
+
+     if (account_status != '' && account_status != null) {
+         $("#account_status").val(account_status);
+         $("input[name=account_status]").val(account_status);
+         $("input[name=account_status]").prop('checked', true);
+     }
+
+     if (change_duration != '' && change_duration != null) {
+         $("#change_duration").val(change_duration);
+         $("input[name=change_duration]").val(change_duration);
+         $("input[name=change_duration]").prop('checked', true);
+     }
+
+     if (liveness != '' && liveness != null) {
+         $("#liveness").val(liveness);
+         $("input[name=liveness]").val(liveness);
+         $("input[name=liveness]").prop('checked', true);
+     }
+
+     if (reg_start_time != '' && reg_start_time != null) {
+         $("#idYear").val(reg_start_time.split('-')[0]);
+         $("#idMonth").val(reg_start_time.split('-')[1]);
+         $("#idDay").val(reg_start_time.split('-')[2]);
+         $("input[name=reg_start_time]").val(reg_start_time);
+         $("input[name=reg_start_time]").prop('checked', true);
+     }
+
+     if (reg_end_time != '' && reg_end_time != null) {
+         $("#idYear2").val(reg_end_time.split('-')[0]);
+         $("#idMonth2").val(reg_end_time.split('-')[1]);
+         $("#idDay2").val(reg_end_time.split('-')[2]);
+         $("input[name=reg_end_time]").val(reg_end_time);
+         $("input[name=reg_end_time]").prop('checked', true);
+     }
+
+     if (field != '' && field != null) {
+        $("input[name=field]").val(field);
+     }
+
+     if (order != '' && order != null) {
+        $("input[name=order]").val(order);
+     }
 
 });
