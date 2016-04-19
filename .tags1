@@ -4,124 +4,110 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-MusicController	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^class MusicController extends Controller$/;"	class	line:17
-__construct	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^     public function __construct()$/;"	function	line:24
-index	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^    public function index(Request $request)$/;"	function	line:34
-name	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $name       = $request->get('name') or "";$/;"	variable	line:40
-instrument	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $instrument = $request->get('instrument') or "";$/;"	variable	line:41
-press	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $press      = $request->get('press') or 0;$/;"	variable	line:42
-category	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $category   = $request->get('category') or "";$/;"	variable	line:43
-onshelf	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $onshelf    = $request->get('onshelf') or "";$/;"	variable	line:44
-organizer	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $organizer  = $request->get('organizer') or "";$/;"	variable	line:45
-operator	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $operator   = $request->get('operator') or "";$/;"	variable	line:46
-date	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $date       = $request->get('date') or "";$/;"	variable	line:47
-musics	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $musics = Music::with('instrument')$/;"	variable	line:58
-musics	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $musics = $musics->where('name', 'like', "%$name%");$/;"	variable	line:66
-musics	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $musics = $musics->where('instrument_id', '=', "$instrument");$/;"	variable	line:69
-musics	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $musics = $musics->where('press_id', '=', "$press");$/;"	variable	line:72
-musics	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $musics = $musics->whereHas('tags', function ($query) use ($category) {$/;"	variable	line:75
-musics	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $musics = $musics->where('onshelf', '=', "$onshelf");$/;"	variable	line:80
-musics	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $musics = $musics->where('organizer_id', '=', "$organizer");$/;"	variable	line:83
-musics	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $musics = $musics->where('operator', '=', "$operator");$/;"	variable	line:86
-date_start	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $date_start = $date . " 00:00:00";$/;"	variable	line:89
-date_end	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $date_end = $date . " 23:23:59";$/;"	variable	line:90
-musics	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $musics = $musics->whereBetween('created_at', ["$date_start", "$date_end"]);$/;"	variable	line:91
-musics	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $musics = $musics->paginate(10)->appends($/;"	variable	line:94
-name	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $name       = $request->get('name') or "";$/;"	variable	line:104
-instrument	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $instrument = $request->get('instrument') or "";$/;"	variable	line:105
-press	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $press      = $request->get('press') or 0;$/;"	variable	line:106
-category	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $category   = $request->get('category') or "";$/;"	variable	line:107
-onshelf	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $onshelf    = $request->get('onshelf') or "";$/;"	variable	line:108
-organizer	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $organizer  = $request->get('organizer') or "";$/;"	variable	line:109
-operator	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $operator   = $request->get('operator') or "";$/;"	variable	line:110
-date	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $date       = $request->get('date') or "";$/;"	variable	line:111
-musics	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        \/\/ $musics = Music::find(92)->press;$/;"	variable	line:112
-create	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^    public function create()$/;"	function	line:126
-store	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^    public function store(Request $request)$/;"	function	line:137
-name	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $name             = $request->get('name') or '';$/;"	variable	line:144
-composer	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $composer         = $request->get('composer') or '';$/;"	variable	line:145
-instrument_id	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $instrument_id    = $request->get('instrument');$/;"	variable	line:146
-version	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $version          = $request->get('version') or '';$/;"	variable	line:147
-press_id	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $press_id         = $request->get('press');$/;"	variable	line:148
-operator	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $operator         = $request->user()->id;$/;"	variable	line:149
-organizer_id	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $organizer_id     = $request->get('organizer') or 0;$/;"	variable	line:150
-note_content	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $note_content     = $request->get('note_content') or '';$/;"	variable	line:151
-note_operator	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $note_operator    = $request->user()->id;$/;"	variable	line:152
-category	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $category         = $request->get('category');$/;"	variable	line:153
-section_duration	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $section_duration = $request->get('section_duration');$/;"	variable	line:154
-track	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $track            = $request->get('track');$/;"	variable	line:155
-music	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $music                   = new Music;$/;"	variable	line:168
-result	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $result                  = $music->save();$/;"	variable	line:180
-id	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $id = $music->id;$/;"	variable	line:189
-source_name	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            \/\/ $source_name = $request->get('midi_file');$/;"	variable	line:190
-path	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $path = public_path() . '\/midis';$/;"	variable	line:192
-name	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $name = $id . '.mid';$/;"	variable	line:193
-storeCsv	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^    public function storeCsv(Request $request)$/;"	function	line:210
-upload_file	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $upload_file = $request->file('csv');$/;"	variable	line:237
-filename	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $filename = time() . '-' . mt_rand() . '.csv';$/;"	variable	line:239
-path	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $path = public_path() . '\/CsvFileForImport\/';$/;"	variable	line:241
-data	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $data = $this->music_import_csv($request);$/;"	variable	line:251
-music_import_csv	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^    protected function music_import_csv(Request $request)$/;"	function	line:257
-path	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $path = $request->path;$/;"	variable	line:259
-filename	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $filename = $request->filename;$/;"	variable	line:260
-file	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $file = $path . '\/' . $filename;$/;"	variable	line:261
-fp	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $fp = fopen($file, 'r');$/;"	variable	line:262
-i	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $i = 0;$/;"	variable	line:263
-isUsed_arr	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $isUsed_arr = [];$/;"	variable	line:265
-isFree	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $isFree = self::isNoUsedFileName(mb_convert_encoding($arr[7], 'UTF-8', 'GB2312'));$/;"	variable	line:268
-music	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $music = new Music;$/;"	variable	line:292
-instrument	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $instrument = mb_convert_encoding($arr[1], 'UTF-8', 'GB2312');$/;"	variable	line:295
-instrument_in_db	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $instrument_in_db = Instrument::where('name', '=', $instrument)->first();$/;"	variable	line:296
-new_instrument	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^                $new_instrument = new Instrument;$/;"	variable	line:299
-press	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $press = mb_convert_encoding($arr[4], 'UTF-8', 'GB2312');$/;"	variable	line:311
-press_in_db	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $press_in_db = Press::where('name', $press)->first();$/;"	variable	line:312
-new_press	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^                $new_press = new Press;$/;"	variable	line:315
-organizer	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $organizer = mb_convert_encoding($arr[5], 'UTF-8', 'GB2312');$/;"	variable	line:323
-organizer_in_db	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $organizer_in_db = Organizer::where('name', $organizer)->first();$/;"	variable	line:324
-new_organizer	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^                $new_organizer = new Organizer;$/;"	variable	line:327
-note_content	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $note_content = mb_convert_encoding($arr[6], 'UTF-8', 'GB2312');$/;"	variable	line:337
-i	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        if ( $i == 0 || $i == 1 || in_array(false, $result)) {$/;"	variable	line:346
-isNoUsedFileName	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^    public function isNoUsedFileName($filename)$/;"	function	line:356
-result	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $result = Music::where('filename', '=', $filename)->first();$/;"	variable	line:358
-show	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^    public function show($id)$/;"	function	line:368
-edit	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^    public function edit($id)$/;"	function	line:379
-update	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^    public function update(Request $request, $id)$/;"	function	line:391
-name	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $name             = $request->get('name') or '';$/;"	variable	line:394
-composer	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $composer         = $request->get('composer') or '';$/;"	variable	line:395
-instrument_id	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $instrument_id    = $request->get('instrument');$/;"	variable	line:396
-version	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $version          = $request->get('version') or '';$/;"	variable	line:397
-press_id	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $press_id         = $request->get('press');$/;"	variable	line:398
-organizer_id	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $organizer_id     = $request->get('organizer') or 0;$/;"	variable	line:399
-section_duration	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $section_duration = $request->get('section_duration');$/;"	variable	line:400
-track	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $track            = $request->get('track');$/;"	variable	line:401
-note_content	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $note_content     = $request->get('notes') or '';$/;"	variable	line:402
-note_operator	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $note_operator    = $request->user()->id;$/;"	variable	line:403
-music	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $music            = Music::find($id);$/;"	variable	line:405
-category	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $category             = $request->get('category');$/;"	variable	line:434
-category_old	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $category_old         = $request->get('category_old');$/;"	variable	line:435
-result	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $result = $music->save();$/;"	variable	line:441
-putaway	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^    public function putaway($id)$/;"	function	line:455
-music	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $music = Music::find($id);$/;"	variable	line:457
-result	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $result = $music->save();$/;"	variable	line:459
-destroy	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^    public function destroy($id)$/;"	function	line:474
-music	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $music = Music::find($id);$/;"	variable	line:477
-result	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $result = $music->forceDelete();$/;"	variable	line:478
-putawayMany	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^    public function putawayMany(Request $request)$/;"	function	line:493
-ids	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $ids = $request->get('ids');$/;"	variable	line:495
-music	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $music = Music::find($id);$/;"	variable	line:498
-result_unique	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $result_unique = array_unique($result);$/;"	variable	line:505
-offshelfMany	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^    public function offshelfMany(Request $request)$/;"	function	line:519
-ids	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $ids = $request->get('ids');$/;"	variable	line:521
-music	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^            $music = Music::find($id);$/;"	variable	line:523
-result_unique	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $result_unique = array_unique($result);$/;"	variable	line:529
-getCondations	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^    public function getCondations()$/;"	function	line:548
-musicStatistics	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^    public function musicStatistics()$/;"	function	line:562
-request	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $request = new Request(['instrumentValue' => 0]);$/;"	variable	line:564
-data	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $data = self::musicStatisticsByInstrument($request);$/;"	variable	line:565
-musicStatisticsByInstrument	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^    public function musicStatisticsByInstrument(Request $request)$/;"	function	line:575
-instrumentValue	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $instrumentValue = $request->get('instrumentValue');$/;"	variable	line:577
-downloadMusic	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^    public function downloadMusic(Request $request)$/;"	function	line:630
-path	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $path = public_path('midis') ;$/;"	variable	line:633
-filename	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $filename = $path . '\/' . $request->get('name');$/;"	variable	line:635
-newfilename	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $newfilename = $request->get('newname') . '.mid';$/;"	variable	line:637
-headers	D:\wamp\www\m1\app\Http\Controllers\MusicController.php	/^        $headers = array($/;"	variable	line:639
+UserController	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^class UserController extends Controller$/;"	class	line:15
+__construct	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    public function __construct()$/;"	function	line:22
+index	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    public function index(Request $request)$/;"	function	line:33
+user_cellphone_email	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $user_cellphone_email = $request->get('user_cellphone_email', '');  \/\/ 用户名|手机号|邮箱$/;"	variable	line:35
+city_id	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $city_id              = $request->get('area', '');                  \/\/ 地域(城市ID)$/;"	variable	line:36
+user_grade	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $user_grade           = $request->get('user_grade', '');            \/\/ 水平等级$/;"	variable	line:37
+reg_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $reg_time             = $request->get('reg_time', '');              \/\/ 注册时间$/;"	variable	line:38
+account_grade	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $account_grade        = $request->get('account_grade', '');         \/\/ 帐号级别$/;"	variable	line:39
+account_end_at	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $account_end_at       = $request->get('account_end_at', '');        \/\/ 帐号截止日期$/;"	variable	line:40
+month_duration	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $month_duration       = $request->get('month_duration', '');        \/\/ 本月使用时长$/;"	variable	line:41
+account_status	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $account_status       = $request->get('account_status', '');        \/\/ 帐号状态$/;"	variable	line:42
+change_duration	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $change_duration      = $request->get('change_duration', '');       \/\/ 本月用时大幅变化$/;"	variable	line:43
+liveness	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $liveness             = $request->get('liveness', '');              \/\/ 活跃度$/;"	variable	line:44
+reg_start_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $reg_start_time       = $request->get('reg_start_time', '');        \/\/ 注册时间段》开始时间$/;"	variable	line:45
+reg_end_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $reg_end_time         = $request->get('reg_end_time', '');          \/\/ 注册时间段》结束时间$/;"	variable	line:46
+field	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        \/\/ $field = $request->get('field');$/;"	variable	line:53
+order	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        \/\/ $order = $request->get('order');$/;"	variable	line:54
+users	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $users = StudentUser::where('usertype', 1);$/;"	variable	line:78
+start_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $start_time = Carbon::now()->startOfDay();$/;"	variable	line:107
+end_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $end_time   = Carbon::now()->endOfDay();$/;"	variable	line:108
+start_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $start_time = Carbon::now()->subWeek();$/;"	variable	line:111
+end_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $end_time   = Carbon::now()->endOfDay();$/;"	variable	line:112
+start_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $start_time = Carbon::now()->subMonth();$/;"	variable	line:115
+end_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $end_time   = Carbon::now()->endOfDay();$/;"	variable	line:116
+start_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $start_time = Carbon::now()->subMonths(6);$/;"	variable	line:119
+end_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $end_time   = Carbon::now()->endOfDay();$/;"	variable	line:120
+start_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $start_time = Carbon::now()->subyear();$/;"	variable	line:123
+end_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $end_time   = Carbon::now()->endOfDay();$/;"	variable	line:124
+start_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $start_time = Carbon::minValue();$/;"	variable	line:127
+end_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $end_time   = Carbon::now()->endOfDay();$/;"	variable	line:128
+start_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $start_time = Carbon::minValue();$/;"	variable	line:131
+end_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $end_time   = Carbon::maxValue();$/;"	variable	line:132
+account_grade	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $account_grade = 0;$/;"	variable	line:145
+account_grade	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $account_grade = 1;$/;"	variable	line:148
+account_grade	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $account_grade = 2;$/;"	variable	line:151
+account_grade	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $account_grade = 0;$/;"	variable	line:154
+account_grade	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^             || $account_grade == '1'$/;"	variable	line:158
+account_grade	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^             || $account_grade == '2') {$/;"	variable	line:159
+start_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $start_time = Carbon::now()->subWeek();$/;"	variable	line:170
+end_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $end_time   = Carbon::now()->endOfDay();$/;"	variable	line:171
+start_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $start_time = Carbon::now()->subMonth();$/;"	variable	line:174
+end_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $end_time   = Carbon::now()->endOfDay();$/;"	variable	line:175
+start_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $start_time = Carbon::now()->subMonths(2);$/;"	variable	line:178
+end_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $end_time   = Carbon::now()->endOfDay();$/;"	variable	line:179
+users	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        \/\/ $users = $users->get();$/;"	variable	line:222
+users	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        \/\/ $users = StudentUser::where('usertype', 1);$/;"	variable	line:229
+users	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        \/\/ $users = $users$/;"	variable	line:240
+users	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $users = $users->orderBy('regdate')->get();$/;"	variable	line:259
+show	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    public function show($id)$/;"	function	line:270
+userInfo	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        \/\/ $userInfo = StudentUser::where('uid', $id)->where('usertype', 1)->with('orders')->first();$/;"	variable	line:273
+user	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        \/\/     $user = Lesson::find($order->lid)->user()->select('uid as teacher_uid', 'nickname as teacher_nickname')->first();$/;"	variable	line:283
+loginInfo	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        \/\/ $loginInfo = $userInfo->lastlogin;$/;"	variable	line:297
+lockUser	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    \/\/ public function lockUser($id)$/;"	function	line:320
+active	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    \/\/     $active = StudentUser::where('uid', $id)->first()->isactive;$/;"	variable	line:323
+result	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    \/\/         $result = StudentUser::where('uid', $id)->update(['isactive'=>0]);$/;"	variable	line:330
+result	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    \/\/         $result = StudentUser::where('uid', $id)->update(['isactive'=>1]);$/;"	variable	line:333
+usageStatistics	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    public function usageStatistics()$/;"	function	line:344
+today_carbon_start	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $today_carbon_start = Carbon::now()->startOfDay();$/;"	variable	line:349
+today_carbon_end	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $today_carbon_end =  Carbon::now()->endOfDay();$/;"	variable	line:350
+today_request	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $today_request = new Request(['duration' => 30, 'date' => 'today']);$/;"	variable	line:356
+month_carbon_start	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^         $month_carbon_start = Carbon::now()->startOfMonth();$/;"	variable	line:362
+month_carbon_end	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^         $month_carbon_end =  Carbon::now()->endOfMonth();$/;"	variable	line:363
+month_request	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^         $month_request = new Request(['duration' => 1800, 'date' => 'month']);$/;"	variable	line:369
+quarter_carbon_start	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^         $quarter_carbon_start = Carbon::now()->firstOfQuarter();$/;"	variable	line:378
+quarter_carbon_end	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^         $quarter_carbon_end =  Carbon::now()->lastOfQuarter();$/;"	variable	line:379
+quarter_request	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^         $quarter_request = new Request(['duration' => 1800, 'date' => 'quarter']);$/;"	variable	line:386
+year_carbon_start	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^         $year_carbon_start = Carbon::now()->firstOfQuarter();$/;"	variable	line:393
+year_carbon_end	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^         $year_carbon_end =  Carbon::now()->lastOfQuarter();$/;"	variable	line:394
+year_request	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^         $year_request = new Request(['duration' => 1800, 'date' => 'year']);$/;"	variable	line:401
+activeUser	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    public function activeUser(Request $request)$/;"	function	line:412
+date_start	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                $date_start = Carbon::now()->startOfDay();$/;"	variable	line:416
+date_end	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                $date_end = Carbon::now()->endOfDay();$/;"	variable	line:417
+date_start	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                $date_start = Carbon::now()->startOfMonth();$/;"	variable	line:420
+date_end	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                $date_end = Carbon::now()->endOfMonth();$/;"	variable	line:421
+date_start	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                $date_start = Carbon::now()->firstOfQuarter();$/;"	variable	line:424
+date_end	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                $date_end = Carbon::now()->lastOfQuarter();$/;"	variable	line:425
+date_start	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                $date_start = Carbon::now()->startOfYear();$/;"	variable	line:428
+date_end	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                $date_end = Carbon::now()->endOfYear();$/;"	variable	line:429
+duration	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $duration = $request->get('duration');$/;"	variable	line:435
+order	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $order  = $request->get('order');$/;"	variable	line:436
+countTodayActive	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $countTodayActive = StudentUser::whereHas('robot_durations', function ($query) use ($duration, $date_start, $date_end)  {$/;"	variable	line:437
+countTodayActive	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                $countTodayActive = $countTodayActive->has('orders');$/;"	variable	line:441
+countTodayActive	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                $countTodayActive = $countTodayActive->count();    \/\/ 机器人使用时长30分钟以上$/;"	variable	line:443
+calEveryPeriodAddUsers	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    public function calEveryPeriodAddUsers(Request $request)$/;"	function	line:447
+period	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $period = $request->get('period');$/;"	variable	line:449
+length	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $length = $request->get('length');$/;"	variable	line:450
+today_carbon_start	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^            $today_carbon_start = Carbon::now()->day($i)->startOfDay();$/;"	variable	line:453
+today_carbon_end	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^            $today_carbon_end =  Carbon::now()->day($i)->endOfDay();$/;"	variable	line:454
+getActiveUserOfMonth	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    public function getActiveUserOfMonth()$/;"	function	line:465
+practice_duration	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $practice_duration = Request::get('practice_duration');$/;"	variable	line:467
+account_type	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $account_type      = Request::get('account_type');$/;"	variable	line:468
+data	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        \/\/ $data = StudentUser::where('')$/;"	variable	line:469
+getProvinces	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    public function getProvinces()$/;"	function	line:477
+data	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $data = \\App\\Province::where('pid', '>', 0)->get();$/;"	variable	line:479
+getCities	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    public function getCities($id)$/;"	function	line:483
+cities	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $cities = \\App\\City::where('pid', $id)->get();$/;"	variable	line:485
+playRecords	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    public function playRecords()$/;"	function	line:494
+play_records	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $play_records = \\App\\Play_record::with(['music' => function ($query) {$/;"	variable	line:499
+key	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        foreach ($play_records as $key => $value) {$/;"	variable	line:506
+temp_value	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^            $temp_value = $value->midi_path;$/;"	variable	line:511
+temp	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                $temp = explode('public', $v);$/;"	variable	line:513
+v	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                $v = $temp[1];$/;"	variable	line:514
+downloadSectionMidi	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    \/\/ public function downloadSectionMidi(Request $request)$/;"	function	line:529
+path	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    \/\/     $path = public_path('midis') ;$/;"	variable	line:532
+filename	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    \/\/     $filename = $path . '\/' . $request->get('name');$/;"	variable	line:534
+newfilename	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    \/\/     $newfilename = $request->get('newname') . '.mid';$/;"	variable	line:536
+headers	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    \/\/     $headers = array($/;"	variable	line:538

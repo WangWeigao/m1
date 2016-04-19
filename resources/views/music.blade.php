@@ -261,7 +261,7 @@
                         <div class="form-group">
                             <label for="add_name" class="col-sm-2 control-label">乐曲名</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="add_name" name="name" placeholder="请输入乐曲名称" required>
+                                <input type="text" class="form-control" id="add_name" placeholder="请输入乐曲名称" required>
                             </div>
                         </div>
                         <div class="form-group">

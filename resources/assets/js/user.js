@@ -1,4 +1,6 @@
 $(document).ready(function() {
+
+
     /**
      * select下拉式日期选择器(注册时间段的开始时间)
      */
@@ -91,6 +93,13 @@ $(document).ready(function() {
         // 把select的值赋给对应的input
         $("input[name='area']").val($("#city").val());
     });
+    // $("input[name='area']").bind('click', function () {
+    //     if ($("input[name='area']").prop('checked')) {
+    //         $("input[name='province']").prop('checked', true);
+    //     } else {
+    //         $("input[name='province']").prop('checked', false);
+    //     }
+    // });
     /**
      * "水平等级"改变时修改 input 的 value
      */
@@ -110,58 +119,223 @@ $(document).ready(function() {
     });
 
     /**
-     * 注册时间段被修改时(开始时间)
+     * "帐号级别"改变时修改 input 的 value
+     */
+    $("#account_grade").val("vip1");    // 设置 select 的默认值
+    $("input[name='account_grade']").val("vip1");   // 给 input 赋值
+    $("#account_grade").bind('change', function () {
+        $("input[name='account_grade']").val($("#account_grade").val());
+    })
+
+    /**
+     * "帐号截止日期"改变时修改 input 的 value
+     */
+     $("#account_end_at").val("week");    // 设置 select 的默认值
+     $("input[name='account_end_at']").val("week");   // 给 input 赋值
+     $("#account_end_at").bind('change', function () {
+         $("input[name='account_end_at']").val($("#account_end_at").val());
+     })
+
+    /**
+     * "本月使用时长"改变时修改 input 的 value
+     */
+     $("#month_duration").val("1h");    // 设置 select 的默认值
+     $("input[name='month_duration']").val("1h");   // 给 input 赋值
+     $("#month_duration").bind('change', function () {
+         $("input[name='month_duration']").val($("#month_duration").val());
+     })
+
+    /**
+     * "帐号状态"改变时修改 input 的 value
+     */
+     $("#account_status").val("near_expire");    // 设置 select 的默认值
+     $("input[name='account_status']").val("near_expire");   // 给 input 赋值
+     $("#account_status").bind('change', function () {
+         $("input[name='account_status']").val($("#account_status").val());
+     })
+
+    /**
+     * "本月用户大幅变化"改变时修改 input 的 value
+     */
+     $("#change_duration").val("up20h");    // 设置 select 的默认值
+     $("input[name='change_duration']").val("up20h");   // 给 input 赋值
+     $("#change_duration").bind('change', function () {
+         $("input[name='change_duration']").val($("#change_duration").val());
+     })
+
+    /**
+     * "注册时间段"被修改时(开始时间)
      */
     $str = $("#idYear").val() + '-'
             + $("#idMonth").val() + '-'
             + $("#idDay").val();
-    $("input[name='reg_timezone']").val($str);
+    $("input[name='reg_start_time']").val($str);
     $("#idYear,#idMonth,#idDay").bind('change', function(event) {
         $str = $("#idYear").val() + '-'
                 + $("#idMonth").val() + '-'
                 + $("#idDay").val();
-        $("input[name='reg_timezone']").val($str);
+        $("input[name='reg_start_time']").val($str);
     });
     /**
-     * 注册时间段被修改时(截止时间)
+     * "注册时间段"被修改时(截止时间)
      */
     $str = $("#idYear2").val() + '-'
             + $("#idMonth2").val() + '-'
             + $("#idDay2").val();
-    $("input[name='reg_timezone']").attr('data-endtime', $str);
+    $("input[name='reg_end_time']").val($str);
     $("#idYear2,#idMonth2,#idDay2").bind('change', function(event) {
         $str = $("#idYear2").val() + '-'
                 + $("#idMonth2").val() + '-'
                 + $("#idDay2").val();
-    $("input[name='reg_timezone']").attr('data-endtime', $str);
+    $("input[name='reg_end_time']").val($str);
     });
 
     /**
-     * 搜索『按筛选条件』
+     * 若"注册时间段"被选中,则同时选中"截止时间", 取消时也一样
      */
-    $("#search_condition").bind('click', function(event) {
-        ajaxSubmitForm();
-        function ajaxSubmitForm() {
-            var option = {
-                url: '/user',
-                type: 'GET',
-                dataType: 'json',
-                data:{
-                    'reg_end_time':$("input[name='reg_timezone']").prop('checked') ? $("input[name='reg_timezone']").attr('data-endtime') : ''
-                },
-                headers: {
-                    'X-CSRF-TOKEN': $("input[name='_token']").val()
-                },
-                success: function(data) {
-                    console.log('搜索成功');
-                },
-                error: function(data) {
-                    console.log('啊哦，搜索引擎开小差了');
-                }
-            };
-            $("#search_user").ajaxSubmit(option);
-            return false;
+    $("input[name='reg_start_time']").bind('click', function () {
+        if ($("input[name='reg_start_time']").prop('checked')) {
+            $("input[name='reg_end_time']").prop('checked', true);
+        } else {
+            $("input[name='reg_end_time']").prop('checked', false);
         }
     });
+    /**
+     * 搜索『按筛选条件』
+     */
+    // $("#search_condition").bind('click', function(event) {
+    //     ajaxSubmitForm();
+    //     function ajaxSubmitForm() {
+    //         var option = {
+    //             url: '/user',
+    //             type: 'GET',
+    //             dataType: 'json',
+    //             data:{
+    //                 'reg_end_time':$("input[name='reg_timezone']").prop('checked') ? $("input[name='reg_timezone']").attr('data-endtime') : ''
+    //             },
+    //             headers: {
+    //                 'X-CSRF-TOKEN': $("input[name='_token']").val()
+    //             },
+    //             success: function(data) {
+    //                 console.log('搜索成功');
+    //             },
+    //             error: function(data) {
+    //                 console.log('啊哦，搜索引擎开小差了');
+    //             }
+    //         };
+    //         $("#search_user").ajaxSubmit(option);
+    //         return false;
+    //     }
+    // });
+
+    /**
+     * 保持url中含有内容的 input 为选中状态
+     */
+     // 获取 url 中的参数
+     (function ($) {
+         $.getUrlParam = function (name) {
+             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+             var r = window.location.search.substr(1).match(reg);
+             if (r != null) return unescape(r[2]); return null;
+         }
+     })(jQuery);
+
+     // 调用 getUrlParam 方法
+     var user_cellphone_email = $.getUrlParam('user_cellphone_email');
+     var area                 = $.getUrlParam('area');
+     var user_grade           = $.getUrlParam('user_grade');
+     var reg_time             = $.getUrlParam('reg_time');
+     var account_grade        = $.getUrlParam('account_grade');
+     var account_end_at       = $.getUrlParam('account_end_at');
+     var month_duration       = $.getUrlParam('month_duration');
+     var account_status       = $.getUrlParam('account_status');
+     var change_duration      = $.getUrlParam('change_duration');
+     var liveness             = $.getUrlParam('liveness');
+     var reg_start_time       = $.getUrlParam('reg_start_time');
+     var reg_end_time         = $.getUrlParam('reg_end_time');
+     var field                = $.getUrlParam('field');
+     var order                = $.getUrlParam('order');
+
+     if (user_cellphone_email != '' && user_grade != null) {
+        $("input[name=user_cellphone_email]").val(user_cellphone_email);
+     }
+
+     if (area != '' && area != null) {
+        // $("input[name=area]").val(area);
+        // $("#province").val(province);
+        // $("#area").val(area);
+     }
+
+     if (user_grade != '' && user_grade != null) {
+         $("#user_grade").val(user_grade);
+         $("input[name=user_grade]").val(user_grade);
+         $("input[name=user_grade]").prop('checked', true);
+     }
+
+     if (reg_time != '' && reg_time != null) {
+         $("#reg_time").val(reg_time);
+         $("input[name=reg_time]").val(reg_time);
+         $("input[name=reg_time]").prop('checked', true);
+     }
+
+    if (account_grade != '' && account_grade != null) {
+         $("#account_grade").val(account_grade);
+         $("input[name=account_grade]").val(account_grade);
+         $("input[name=account_grade]").prop('checked', true);
+    }
+
+     if (account_end_at != '' && account_end_at != null) {
+         $("#account_end_at").val(account_end_at);
+         $("input[name=account_end_at]").val(account_end_at);
+         $("input[name=account_end_at]").prop('checked', true);
+     }
+
+     if (month_duration != '' && month_duration != null) {
+         $("#month_duration").val(month_duration);
+         $("input[name=month_duration]").val(month_duration);
+         $("input[name=month_duration]").prop('checked', true);
+     }
+
+     if (account_status != '' && account_status != null) {
+         $("#account_status").val(account_status);
+         $("input[name=account_status]").val(account_status);
+         $("input[name=account_status]").prop('checked', true);
+     }
+
+     if (change_duration != '' && change_duration != null) {
+         $("#change_duration").val(change_duration);
+         $("input[name=change_duration]").val(change_duration);
+         $("input[name=change_duration]").prop('checked', true);
+     }
+
+     if (liveness != '' && liveness != null) {
+         $("#liveness").val(liveness);
+         $("input[name=liveness]").val(liveness);
+         $("input[name=liveness]").prop('checked', true);
+     }
+
+     if (reg_start_time != '' && reg_start_time != null) {
+         $("#idYear").val(reg_start_time.split('-')[0]);
+         $("#idMonth").val(reg_start_time.split('-')[1]);
+         $("#idDay").val(reg_start_time.split('-')[2]);
+         $("input[name=reg_start_time]").val(reg_start_time);
+         $("input[name=reg_start_time]").prop('checked', true);
+     }
+
+     if (reg_end_time != '' && reg_end_time != null) {
+         $("#idYear2").val(reg_end_time.split('-')[0]);
+         $("#idMonth2").val(reg_end_time.split('-')[1]);
+         $("#idDay2").val(reg_end_time.split('-')[2]);
+         $("input[name=reg_end_time]").val(reg_end_time);
+         $("input[name=reg_end_time]").prop('checked', true);
+     }
+
+     if (field != '' && field != null) {
+        $("input[name=field]").val(field);
+     }
+
+     if (order != '' && order != null) {
+        $("input[name=order]").val(order);
+     }
 
 });

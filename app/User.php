@@ -30,6 +30,7 @@ class User extends Authenticatable
      */
     protected $table = 'admin_users';
 
+
     /**
      * 用户角色
      * @method roles
@@ -43,5 +44,10 @@ class User extends Authenticatable
     public function musics()
     {
         return $this->hasMany('App\Music', 'operator');
+    }
+
+    public function robot_durations()
+    {
+        return $this->hasMany('App\RobotDuration', 'user_id', 'uid');
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 
 class test001Controller extends Controller
 {
@@ -16,7 +17,20 @@ class test001Controller extends Controller
      */
     public function index()
     {
-        //
+        // 测试Carbon
+        // $now = Carbon::now();
+        // $compare = Carbon::now()->addWeek();
+        // return $now . '<br>' . $compare;
+
+        // 测试 Convert string To array
+        $users = \App\StudentUser::find(268);
+        $instruments = $users->instrument_id;
+        return $users;
+        // if (in_array([1,2], $instruments)) {
+        //     echo '1 在 $instrument 中';
+        // } else {
+        //     echo '1 不在 $instrument 中';
+        // }
     }
 
     /**

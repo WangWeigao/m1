@@ -32,8 +32,20 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        //取得要查询的用户名
-        $name = $request->get('name') ? $request->get('name') : '';
+        // DB::connection()->enableQueryLog();
+
+        $user_cellphone_email = $request->get('user_cellphone_email', '');  // 用户名|手机号|邮箱
+        $city_id              = $request->get('area', '');                  // 地域(城市ID)
+        $user_grade           = $request->get('user_grade', '');            // 水平等级
+        $reg_time             = $request->get('reg_time', '');              // 注册时间
+        $account_grade        = $request->get('account_grade', '');         // 帐号级别
+        $account_end_at       = $request->get('account_end_at', '');        // 帐号截止日期
+        $month_duration       = $request->get('month_duration', '');        // 本月使用时长
+        $account_status       = $request->get('account_status', '');        // 帐号状态
+        $change_duration      = $request->get('change_duration', '');       // 本月用时大幅变化
+        $liveness             = $request->get('liveness', '');              // 活跃度
+        $reg_start_time       = $request->get('reg_start_time', '');        // 注册时间段 > 开始时间
+        $reg_end_time         = $request->get('reg_end_time', '');          // 注册时间段 > 结束时间
 
         /**
          * 用来排序的字段
@@ -41,46 +53,346 @@ class UserController extends Controller
         // $field = $request->get('field');
         // $order = $request->get('order');
 
-        //模糊匹配, 查询结果为分页做准备
-
         /**
          * 如果查询字段$name为空，则不进行查询
          */
-        if (empty($name)) {
-            return view('user');
+        if (empty($user_cellphone_email)
+            && empty($city_id)
+            && empty($user_grade)
+            && empty($reg_time)
+            && empty($account_grade)
+            && empty($account_end_at)
+            && empty($month_duration)
+            && empty($account_status)
+            && empty($change_duration)
+            && empty($liveness)
+            && empty($reg_start_time)
+            && empty($reg_end_time)) {
+                return view('user');
         }
+
+        /**
+         * 按字段不为这的情况，进行SQL语句拼接
+         * "用户名"不为空
+         */
+        $users = StudentUser::where('usertype', 1);
+        if (!empty($user_cellphone_email)) {
+            $users->where(function  ($query) use ($user_cellphone_email) {
+                $query->where('nickname', 'like', "%{$user_cellphone_email}%")
+                        ->orWhere('cellphone', 'like', "%{$user_cellphone_email}%")
+                        ->orWhere('email', 'like', "%{$user_cellphone_email}%");
+            });
+        }
+
+        /**
+         * "地域"不为空
+         */
+        if (!empty($city_id)) {
+            $users->where('city_id', $city_id);
+        }
+
+        /**
+         * "水平等级"不为空
+         */
+        if (!empty($user_grade)) {
+            $users->where('user_grade', $user_grade);
+        }
+
+        /**
+         * "注册时间"不为空
+         */
+        if (!empty($reg_time)) {
+            switch ($reg_time) {
+                case 'day':
+                    $start_time = Carbon::now()->startOfDay();
+                    $end_time   = Carbon::now()->endOfDay();
+                    break;
+                case 'week':
+                    $start_time = Carbon::now()->subWeek();
+                    $end_time   = Carbon::now()->endOfDay();
+                    break;
+                case 'month':
+                    $start_time = Carbon::now()->subMonth();
+                    $end_time   = Carbon::now()->endOfDay();
+                    break;
+                case 'half_year':
+                    $start_time = Carbon::now()->subMonths(6);
+                    $end_time   = Carbon::now()->endOfDay();
+                    break;
+                case 'year':
+                    $start_time = Carbon::now()->subyear();
+                    $end_time   = Carbon::now()->endOfDay();
+                    break;
+                case 'one_more_year':
+                    $start_time = Carbon::minValue();
+                    $end_time   = Carbon::now()->endOfDay();
+                    break;
+                default:
+                    $start_time = Carbon::minValue();
+                    $end_time   = Carbon::maxValue();
+                    break;
+            }
+
+            $users->whereBetween('regdate', [$start_time, $end_time]);
+        }
+
+        /**
+         * "帐号级别"不为空
+         */
+        if (!empty($account_grade)) {
+            switch ($account_grade) {
+                case 'free':
+                    $account_grade = 0;
+                    break;
+                case 'vip1':
+                    $account_grade = 1;
+                    break;
+                case 'vip2':
+                    $account_grade = 2;
+                    break;
+                default:
+                    $account_grade = 0;
+                    break;
+            }
+            if ($account_grade == '0'
+             || $account_grade == '1'
+             || $account_grade == '2') {
+                $users->where('account_grade', $account_grade);
+            }
+        }
+
+        /**
+         * "帐号截止日期"不为空
+         */
+        if (!empty($account_end_at)) {
+            switch ($account_end_at) {
+                case 'week':
+                    $start_time = Carbon::now()->subWeek();
+                    $end_time   = Carbon::now()->endOfDay();
+                    break;
+                case 'month':
+                    $start_time = Carbon::now()->subMonth();
+                    $end_time   = Carbon::now()->endOfDay();
+                    break;
+                case 'two_months':
+                    $start_time = Carbon::now()->subMonths(2);
+                    $end_time   = Carbon::now()->endOfDay();
+                    break;
+
+                default:
+                    # code...
+                    break;
+            }
+            $users->whereBetween('account_end_at', [$start_time, $end_time]);
+        }
+
+        /**
+         * "本月使用时长"不为空
+         */
+        if (!empty($month_duration)) {
+            switch ($month_duration) {
+                case '1h':
+                    $duration = 1*60;   // 1小时以内
+                    break;
+                case '5h':
+                    $duration = 5*60;   // 5小时以内
+                    break;
+                case '10h':
+                    $duration = 10*60;   // 10小时以内
+                    break;
+                case '30h':
+                    $duration = 30*60;   // 30小时以内
+                    break;
+                case '60h':
+                    $duration = 60*60;   // 60小时以内
+                    break;
+                case '60h_more':
+                    $duration = 60*60+1; // 60小时以上
+                    break;
+                case '0h':
+                    $duration = 0;       // 未使用
+                    break;
+                default:
+                    $duration = -1;      //
+                    break;
+            }
+            if ($duration > 0 && $duration < 10*60+1) {     // 60小时以内的所有
+                $users->whereHas('robot_durations', function ($query) use ($duration) {
+                    $query->havingRaw("SUM(robot_durations.duration) <= $duration")
+                            ->groupBy('robot_durations.user_id');
+                });
+            } elseif ($duration == 0) {     // 未使用
+                $users->whereNotExists(function ($query) use ($duration) {
+                    $query->select(DB::raw(1))
+                          ->from('robot_durations')
+                          ->whereRaw('robot_durations.user_id = users.uid');
+                });
+            } elseif ($duration == 60*60+1) {   // 60小时以上
+                $users->whereHas('robot_durations', function ($query) use ($duration) {
+                    $query->groupBy('robot_durations.user_id')
+                          ->havingRaw("SUM(robot_durations.duration) > $duration");
+                });
+            } else {
+                $users->has('robot_durations'); // 如果出现其它情况，则显示所有"使用过的用户"
+            }
+        }
+
+        /**
+         * "帐号状态"不为空
+         */
+        if (!empty($account_status)) {
+            switch ($account_status) {
+                case 'near_expire': // 到期
+                    $start_time = Carbon::now()->SubWeek();
+                    $end_time   = Carbon::now()->endOfDay();
+                    $users->whereIn('account_grade', [1,2])
+                          ->whereBetween('account_end_at', [$start_time, $end_time]);
+                    break;
+                case 'lock':    //锁定
+                    $users->where('isactive', 0);
+                    break;
+                case 'normal':                                                      // 正常[确保为“免费用户”，或“到期时间大于一周”的vip用户]
+                    $users->where('isactive', 1)                                    // 用户未锁定
+                          ->where(function ($query) {
+                              $query->where('account_grade', 0)                     // 免费用户
+                                    ->orwhere(function ($query_1) {
+                                        $query_1->whereIn('account_grade', [1,2])   // 到期时间大于一周的收费用户
+                                                ->where('account_end_at', '>', Carbon::now()->addWeek());
+                                    });
+                          });
+                    break;
+                case 'expire':  // 未续费
+                    $users->whereIn('account_grade', [1,2])
+                          ->whereBetween('account_end_at', '<', Carbon::now());
+                      break;
+                default:
+                    # code...
+                    break;
+            }
+        }
+
+        /**
+         * "本月用户大幅变化"不为空
+         */
+        if (!empty($change_duration)) {
+            switch ($change_duration) {
+                case 'up20h':
+                $start_time = Carbon::now()->subMonth();
+                $end_time   = Carbon::now()->endOfDay();
+                    $users->whereHas('robot_durations', function ($query) {
+                        $query->groupBy('robot_durations.user_id')
+                              ->havingRaw("select SUM(robot_durations.duration) as duration_sum_now where ");
+                    });
+                    break;
+                case 'up30h':
+                    break;
+                case 'up50h':
+                    break;
+                case 'down20h':
+                    break;
+                case 'down30h':
+                    break;
+                case 'down50h':
+                    break;
+                default:
+                    # code...
+                    break;
+            }
+        }
+        /**
+         * "活跃度"不为空
+         */
+        if (!empty($liveness)) {
+            # 具体细节待研究
+        }
+
+        /**
+         * "注册时间段"不为空
+         */
+        if (!empty($reg_start_time)) {
+            $start_time = Carbon::parse($reg_start_time)->startOfDay();
+            $end_time   = Carbon::parse($reg_end_time)->endOfDay();
+            $users->whereBetween('regdate', [$start_time, $end_time]);
+        }
+
 
         /**
          * 同时模糊匹配"用户名"和"电话号码"
          * @var Object
          */
-        $users = StudentUser::where('usertype', 1);
-                                // ->orwhere('cellphone', 'like', "%$name%")
-                                // ->orwhere('nickname', 'like', "%$name%");
-                                // ->where('nickname', 'like', "%$name%");
+        // $users = StudentUser::where('usertype', 1);
+        //                         // ->orwhere('cellphone', 'like', "%$name%")
+        //                         // ->orwhere('nickname', 'like', "%$name%");
+        //                         // ->where('nickname', 'like', "%$name%");
+        //
+        // if (is_numeric($name)) {
+        //     $users->where('cellphone', 'like', "%$name%");
+        // }else {
+        //     $users->where('nickname', 'like', "%$name%");
+        // }
+        //
+        // $users = $users
+        //         ->leftjoin('orders', 'users.uid', '=', 'orders.student_uid')
+        //         ->select('users.uid', 'users.nickname', 'users.cellphone', 'users.email', 'users.regdate', 'users.lastlogin', 'users.isactive', DB::raw('count(orders.student_uid) as order_num'))
+        //         ->groupby('users.uid')
+        //         // ->orderby($field, $order)
+        //         // ->get();
+        //             //  由前端分页, 此处暂时用不到
+        //         ->paginate(15);
+            $start_time = Carbon::now()->subMonth();
+            $end_time   = Carbon::now()->endOfDay();
+            $preMonth_start_time = Carbon::now()->subMonth(2);
+            $preMonth_end_time   = Carbon::now()->subMonth()->endOfDay();
 
-        if (is_numeric($name)) {
-            $users->where('cellphone', 'like', "%$name%");
-        }else {
-            $users->where('nickname', 'like', "%$name%");
+            // $users->select('*');
+            $users->orderBy('regdate');
+            $users = $users->paginate(10)->appends([
+            'user_cellphone_email' => $user_cellphone_email,
+            'city_id'              => $city_id,
+            'user_grade'           => $user_grade,
+            'reg_time'             => $reg_time,
+            'account_grade'        => $account_grade,
+            'account_end_at'       => $account_end_at,
+            'month_duration'      => $month_duration,
+            'account_status'      => $account_status,
+            'change_duration'     => $change_duration,
+            'liveness'            => $liveness,
+            'reg_start_time'      => $reg_start_time,
+            'reg_end_time'        => $reg_end_time
+        ]);
+        // return $users;
+        foreach ($users as $key => $v) {
+            if (!$v->isactive) {
+                $v->status = '锁定';
+            } else {
+                if ($v->account_grade == 0) {
+                    $v->status = '正常';
+                } elseif ($v->account_grade == 1) {     // 如果为vip1用户
+                    if (Carbon::now() < Carbon::parse($v->account_end_at)                  // 还在有效期
+                        && Carbon::now()->addMonth() > Carbon::parse($v->account_end_at)   // 有效期不足一个月
+                        ) {
+                        $v->status = '未续费';
+                    } elseif (Carbon::now() > Carbon::parse($v->account_end_at)) {
+                        $v->status = 'vip已过期';
+                    } else {
+                        $v->status = '正常';
+                    }
+                } elseif ($v->account_grade == 2) {
+                    if (Carbon::now() < Carbon::parse($v->account_end_at)                  // 还在有效期
+                        && Carbon::now()->addWeek() > Carbon::parse($v->account_end_at)   // 有效期不足一个周
+                        ) {
+                        $v->status = '未续费';
+                    } elseif (Carbon::now() > Carbon::parse($v->account_end_at)) {
+                        $v->status = 'vip已过期';
+                    } else {
+                        $v->status = '正常';
+                    }
+                } else {
+                    $v->status = '正常';
+                }
+            }
         }
-
-        $users = $users
-                ->leftjoin('orders', 'users.uid', '=', 'orders.student_uid')
-                ->select('users.uid', 'users.nickname', 'users.cellphone', 'users.email', 'users.regdate', 'users.lastlogin', 'users.isactive', DB::raw('count(orders.student_uid) as order_num'))
-                ->groupby('users.uid')
-                // ->orderby($field, $order)
-                // ->get();
-                    //  由前端分页, 此处暂时用不到
-                ->paginate(15);
-
-        /**
-         * 由于laravel不支持在分页结果
-         */
-
-        //将结果传递给视图
-        return view('user')->with(['users' => $users, 'name' => $name]);
-
+        return view('user')->with('users', $users);
     }
 
     /**

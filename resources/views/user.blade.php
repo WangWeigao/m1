@@ -15,24 +15,25 @@
             <div class="form-group form-inline">
                 {{-- <label for="">用户搜索</label> --}}
                 <div>精确搜索</div>
-                <input type="text" class="form-control" id="searchName" name="name" placeholder="请输入用户名/手机号/电子邮件">
+                <input type="text" class="form-control" id="searchName" name="user_cellphone_email" placeholder="请输入用户名/手机号/电子邮件">
                 <button type="submit" name="button" class="btn btn-success" id="search">搜索</button>
             </div>
             <div class="form-group form-inline">
                 <div>筛选待件</div>
                 {{-- 地域 --}}
                 <input type="checkbox" name="area" value="" id="area">
+                <input type="checkbox" name="province" value="" id="" style="display:none">
                 <label for="area">地域</label>
-                <select class="form-control" id="province">
+                <select class="" id="province">
                     <option>省份</option>
                 </select>
-                <select class="form-control" id="city">
+                <select class="" id="city">
                     <option>城市</option>
                 </select>
                 {{-- 水平等级 --}}
                 <input type="checkbox" name="user_grade" value="" id="l-user-grade">
                 <label for="l-user-grade">水平等级</label>
-                <select class="form-control" id="user_grade">
+                <select class="" id="user_grade">
                     <option value="0">水平等级</option>
                     <option value="1">业余1级</option>
                     <option value="2">业余2级</option>
@@ -58,7 +59,7 @@
                 {{-- 注册时间 --}}
                 <input type="checkbox" name="reg_time" value="" id="l-reg-time">
                 <label for="l-reg-time">注册时间</label>
-                <select class="form-control" id="reg_time">
+                <select class="" id="reg_time">
                     <option value="day">新用户</option>
                     <option value="week">一周内</option>
                     <option value="month">一月内</option>
@@ -67,18 +68,18 @@
                     <option value="one_more_year">一年以上</option>
                 </select>
                 {{-- 帐号级别 --}}
-                <input type="checkbox" name="account_grade" value="" id="account_grade">
-                <label for="account_grade">帐号级别</label>
-                <select class="form-control" name="">
+                <input type="checkbox" name="account_grade" value="" id="l_account_grade">
+                <label for="l_account_grade">帐号级别</label>
+                <select class="" name="" id="account_grade">
                     <option value="vip1">VIP1</option>
                     <option value="vip2">VIP2</option>
                     <option value="free">免费</option>
                     <option value="all">全部</option>
                 </select>
                 {{-- 帐号截止日期 --}}
-                <input type="checkbox" name="account_end_at" value="" id="account_end_at">
-                <label for="account_end_at">帐号截止日期</label>
-                <select class="form-control" name="">
+                <input type="checkbox" name="account_end_at" value="" id="l_account_end_at">
+                <label for="l_account_end_at">帐号截止日期</label>
+                <select class="" name="" id="account_end_at">
                     <option value="week">一周内</option>
                     <option value="month">一个月内</option>
                     <option value="two_months">二个月内</option>
@@ -88,30 +89,30 @@
             </div>
             <div class="form-group form-inline">
                 {{-- 本月使用时长 --}}
-                <input type="checkbox" name="month_duration" value="" id="month_duration">
-                <label for="month_duration">本月使用时长</label>
-                <select class="form-control" name="">
+                <input type="checkbox" name="month_duration" value="" id="l_month_duration">
+                <label for="l_month_duration">本月使用时长</label>
+                <select class="" name="" id="month_duration">
                     <option value="1h">1小时以内的</option>
                     <option value="5h">5小时以内的</option>
                     <option value="10h">10小时以内的</option>
                     <option value="30h">30小时以内的</option>
                     <option value="60h">60小时以内的</option>
-                    <option value="60h+">60小时以上</option>
+                    <option value="60h_more">60小时以上</option>
                     <option value="0h">未使用</option>
                 </select>
                 {{-- 帐号状态 --}}
-                <input type="checkbox" name="account_status" value="" id="account_status">
-                <label for="account_status">帐号状态</label>
-                <select class="form-control" name="">
+                <input type="checkbox" name="account_status" value="" id="l_account_status">
+                <label for="l_account_status">帐号状态</label>
+                <select class="" name="" id="account_status">
                     <option value="near_expire">帐号到期</option>
                     <option value="lock">锁定</option>
-                    <option vlaue="normal">正常</option>
-                    <option vlaue="expire">未续费</option>
+                    <option value="normal">正常</option>
+                    <option value="expire">未续费</option>
                 </select>
                 {{-- 本月用时大幅变化 --}}
-                <input type="checkbox" name="change_duration" value="" id="change_duration">
-                <label for="change_duration">本月用户大幅变化</label>
-                <select class="form-control" name="">
+                <input type="checkbox" name="change_duration" value="" id="l_change_duration">
+                <label for="l_change_duration">本月用户大幅变化</label>
+                <select class="" name="" id="change_duration">
                     <option value="up20h">上升20小时以上</option>
                     <option value="up30h">上升30小时以上</option>
                     <option value="up50h">上升50小时以上</option>
@@ -120,73 +121,121 @@
                     <option value="down50h">下降50小时以上</option>
                 </select>
                 {{-- 活跃度 --}}
-                <input type="checkbox" name="liveness" value="" id="liveness">
-                <label for="liveness">活跃度</label>
-                <select class="form-control" name="">
+                <input type="checkbox" name="liveness" value="" id="l_liveness">
+                <label for="l_liveness">活跃度</label>
+                <select class="" name="" id="liveness">
                     <option value="active_user">活跃用户</option>
                     <option value="sleep_user">休眠用户</option>
                     <option value="death_user">死亡用户</option>
                 </select>
+            </div>
+            <div class="form-group form-inline">
                 {{-- 注册时间段 --}}
-                <input type="checkbox" name="reg_timezone" value="" id="reg_timezone">
-                <label for="reg_timezone">注册时间段</label>
-                <span id="date_start" class="">
+                <input type="checkbox" name="reg_start_time" value="" id="l_reg_timezone">
+                <label for="l_reg_timezone">注册时间段</label>
+                <span id="date_start" class="" id="l_reg_timezone">
                     <select class="date_select" id="idYear" data=""></select>年
                     <select class="date_select" id="idMonth" data=""></select>月
                     <select class="date_select" id="idDay" data=""></select>日
                 </span>
                 <span>到</span>
+                <input type="checkbox" name="reg_end_time" value="" style="display: none">
                 <span id="date_end" class="">
                     <select class="date_select2" id="idYear2" data=""></select>年
                     <select class="date_select2" id="idMonth2" data=""></select>月
                     <select class="date_select2" id="idDay2" data=""></select>日
                 </span>
-                <button type="button" class="form-control btn-success" id="search_condition">搜索</button>
+                <button type="submit" class="btn btn-success" id="search_condition">搜索</button>
             </div>
         {{-- </fieldset> --}}
     </form>
-@if(!empty($name))
+@if(!empty($users))
 <table class="table table-hover">
     <thead>
         <tr>
-            <th>ID</th>
-            <th>用户名</th>
-            <th>联系方式</th>
-            <th>Email</th>
-            <th>订单历史</th>
-            <th>注册时间</th>
-            <th>最后登陆时间</th>
+            <th><a href="#">全选</a></th>
+            <th>编号</th>
+            <th>用户帐号</th>
+            <th>手机号</th>
+            <th>电子邮箱</th>
+            <th>地区</th>
+            <th>性别</th>
+            <th>学龄</th>
+            <th>水平等级</th>
+            <th>指定乐器</th>
+            <th>注册日期</th>
+            <th>账号级别</th>
+            <th>账号截止日期</th>
+            <th>上月使用时长</th>
+            <th>本月使用时长</th>
+            <th>账户状态</th>
             <th>操作</th>
-            <th>状态</th>
         </tr>
     </thead>
         <tbody>
             @foreach($users as $user)
             <tr>
-                <td><a class="user_id" href="{{ url('/user/' . $user->uid) }}">{{ $user->uid }}</a></td>
+                <td><input type="checkbox"></td>
+                <input type="hidden" name="user_id" value="{{ url('/user/' . $user->uid) }}">
+                {{-- 编号 --}}
+                <td><a href="#">{{ $user->seq_num }}</a></td>
+                {{-- 用户帐号 --}}
                 <td><a href="{{ url('/user/' . $user->uid) }}">{{ $user->nickname }}</a></td>
+                {{-- 电话号码 --}}
                 <td>{{ $user->cellphone }}</td>
+                {{-- 电子邮箱 --}}
                 <td>{{ $user->email }}</td>
-                <td>{{ $user->order_num }}</td>
-                <td>{{ $user->lastlogin }}</td>
-                <td>{{ $user->regdate }}</td>
+                {{-- 地区 --}}
+                <td>{{ $user->city_id }}</td>
+                {{-- 性别 --}}
+                <td>{{ $user->sex }}</td>
+                {{-- 学龄 --}}
+                <td>{{ $user->study_age }}</td>
+                {{-- 水平等级 --}}
+                <td>{{ $user->user_grade }}</td>
+                {{-- 指定乐器 --}}
                 <td>
-                    <div class="btn-group btn-group-xs">
-                        <button type="button" id="{{ $user->uid }}" class="{{ $user->isactive ? 'lockuser btn btn-success' : 'lockuser btn btn-danger' }}">{{ $user->isactive ? '锁定' : '解锁'  }}</button>
-                        <a href="{{ url('/user/' . $user->uid) }}"><button type="button" class="btn btn-info btn-xs">查看</button></a>
-                    </div>
+                    @if(!empty($user->instrument_id))
+                        @foreach($user->instrument_id as $instrument)
+                            {{ $instrument['name'] }}/
+                        @endforeach
+                    @endif
                 </td>
-                <td id="isactive">{{ $user->isactive ? '未锁定' : '已锁定' }}</td>
+                {{-- 注册日期 --}}
+                <td>{{ $user->regdate }}</td>
+                {{-- 账号级别 --}}
+                <td>{{ $user->account_grade }}</td>
+                {{-- 账号截止日期 --}}
+                <td>{{ $user->account_end_at }}</td>
+                {{-- 上月使用时长 --}}
+                <td>{{ $user->duration_preMonth }}</td>
+                {{-- 本月使用时长 --}}
+                <td>{{ $user->duration_Month }}</td>
+                {{-- 账户状态 --}}
+                <td>
+                    {{ $user->status }}
+                </td>
+                <td>
+                    <button type="button" id="{{ $user->uid }}" class="{{ $user->isactive ? 'lockuser btn btn-success btn-xs' : 'lockuser btn btn-danger' }}">
+                        {{ $user->isactive ? '锁定' : '解锁'  }}
+                    </button>
+                    <a href="{{ url('/user/' . $user->uid) }}">
+                        <button type="button" class="btn btn-info btn-xs">查看</button>
+                    </a>
+                </td>
             </tr>
             @endforeach
         </tbody>
 </table>
-{{-- 因使用DataTables插件, 将所有数据给到前端, 由前端分页, 此处暂时用不到 --}}
 <div class="text-center">
-    {!! $users->appends(['name' => $name])->render() !!}
+    {!! $users->render() !!}
 </div>
-
 @endif
+
+@endsection
+
+@section('css')
+    <link rel="stylesheet" href="/css/user.css">
 @endsection
 
 @section('js')

@@ -21,6 +21,13 @@ class StudentUser extends Model
     // 不在表中添加 updated_at 和 created_at
     public $timestamps = false;
 
+    /**
+     * 需要被强制转换类型的字段
+     */
+    protected $casts = [
+     'instrument_id' => 'json'
+    ];
+
     /*
      * 获得用户的订单
      * @method orders

@@ -153,7 +153,5 @@ Route::group(['middleware' => 'web'], function () {
     Route::resource('rbac', 'RbacController');
 
     // 测试路由
-    Route::get('/test', function() {
-        return view('auth.passwords.reset')->with('token', '123456');
-    });
+    Route::get('/test', 'test001Controller@index');
 });

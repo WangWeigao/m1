@@ -1,0 +1,6 @@
+th, tr, td {
+    white-space:nowrap;
+}
+/*input[name='user_cellphone_email'] {
+    width: 600px;
+}*/
