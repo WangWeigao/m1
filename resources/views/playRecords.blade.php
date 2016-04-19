@@ -10,7 +10,7 @@
         </tr>
         @forelse($play_records as $item)
             <tr>
-                <td>{{ $item->music->name }}</td>
+                <td>{{ $item->music->name or '' }}</td>
                 <td><a href="{{ $item->wav_path }}">{{ $item->wav_path }}</a></td>
                 <td>
                     {{-- <div class="panel-group" id="accordion">
