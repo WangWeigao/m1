@@ -110,7 +110,7 @@
                     <option value="expire">未续费</option>
                 </select>
                 {{-- 本月用时大幅变化 --}}
-                <input type="checkbox" name="change_duration" value="" id="l_change_duration">
+                <input type="checkbox" name="change_duration" value="" id="l_change_duration" disabled="disabled">
                 <label for="l_change_duration">本月用户大幅变化</label>
                 <select class="" name="" id="change_duration">
                     <option value="up20h">上升20小时以上</option>
@@ -121,7 +121,7 @@
                     <option value="down50h">下降50小时以上</option>
                 </select>
                 {{-- 活跃度 --}}
-                <input type="checkbox" name="liveness" value="" id="l_liveness">
+                <input type="checkbox" name="liveness" value="" id="l_liveness" disabled="disabled">
                 <label for="l_liveness">活跃度</label>
                 <select class="" name="" id="liveness">
                     <option value="active_user">活跃用户</option>
@@ -161,13 +161,13 @@
             <th>地区</th>
             <th>性别</th>
             <th>学龄</th>
-            <th>水平等级</th>
+            <th><a>水平等级</a></th>
             <th>指定乐器</th>
-            <th>注册日期</th>
+            <th><a>注册日期</a></th>
             <th>账号级别</th>
-            <th>账号截止日期</th>
-            <th>上月使用时长</th>
-            <th>本月使用时长</th>
+            <th><a>账号截止日期</a></th>
+            <th><a>上月使用时长</a></th>
+            <th><a>本月使用时长</a></th>
             <th>账户状态</th>
             <th>操作</th>
         </tr>
@@ -216,7 +216,7 @@
                     {{ $user->status }}
                 </td>
                 <td>
-                    <button type="button" id="{{ $user->uid }}" class="{{ $user->isactive ? 'lockuser btn btn-success btn-xs' : 'lockuser btn btn-danger' }}">
+                    <button type="button" id="{{ $user->uid }}" class="{{ $user->isactive ? 'lockuser btn btn-success btn-xs' : 'lockuser btn btn-danger btn-xs' }}">
                         {{ $user->isactive ? '锁定' : '解锁'  }}
                     </button>
                     <a href="{{ url('/user/' . $user->uid) }}">

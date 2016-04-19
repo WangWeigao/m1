@@ -164,6 +164,15 @@ $(document).ready(function() {
      })
 
     /**
+     * "活跃度"改变时修改 input 的 value
+     */
+     $("#liveness").val("active_user");    // 设置 select 的默认值
+     $("input[name='liveness']").val("active_user");   // 给 input 赋值
+     $("#liveness").bind('change', function () {
+         $("input[name='liveness']").val($("#liveness").val());
+     })
+
+    /**
      * "注册时间段"被修改时(开始时间)
      */
     $str = $("#idYear").val() + '-'
@@ -338,4 +347,98 @@ $(document).ready(function() {
         $("input[name=order]").val(order);
      }
 
+     /**
+      * 修改 URL 中的参数值
+      */
+     //para_name 参数名称 para_value 参数值 url所要更改参数的网址
+     function setUrlParam(para_name, para_value) {
+         var strNewUrl = new String();
+         var strUrl = new String();
+         var url = new String();
+         url= window.location.href;
+         strUrl = window.location.href;
+         //alert(strUrl);
+         if (strUrl.indexOf("?") != -1) {
+             strUrl = strUrl.substr(strUrl.indexOf("?") + 1);
+             //alert(strUrl);
+             if (strUrl.toLowerCase().indexOf(para_name.toLowerCase()) == -1) {
+                 strNewUrl = url + "&" + para_name + "=" + para_value;
+                 window.location = strNewUrl;
+                 //return strNewUrl;
+             } else {
+                 var aParam = strUrl.split("&");
+                 //alert(aParam.length);
+                 for (var i = 0; i < aParam.length; i++) {
+                     if (aParam[i].substr(0, aParam[i].indexOf("=")).toLowerCase() == para_name.toLowerCase()) {
+                         aParam[i] = aParam[i].substr(0, aParam[i].indexOf("=")) + "=" + para_value;
+                     }
+                 }
+                 strNewUrl = url.substr(0, url.indexOf("?") + 1) + aParam.join("&");
+                 //alert(strNewUrl);
+                 window.location = strNewUrl;
+                 //return strNewUrl;
+             }
+         } else {
+             strUrl += "?" + para_name + "=" + para_value;
+             //alert(strUrl);
+             window.location=strUrl;
+         }
+     }
+
+     /**
+      * 获取 URL 中的参数
+      */
+      function getUrlParam(name) {
+         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+         var r = window.location.search.substr(1).match(reg);
+         if (r != null) return unescape(r[2]); return null;
+     }
+
+     // “水平等级”排序
+     $("a:contains('水平等级')").click(function(event) {
+         console.log(getUrlParam('order'));
+         if (getUrlParam('order') == 'desc') {
+             setUrlParam('field', 'user_grade');
+             setUrlParam('order', 'asc');
+         } else {
+             setUrlParam('field', 'user_grade');
+             setUrlParam('order', 'desc');
+         }
+     });
+
+     // “注册日期”排序
+     $("a:contains('注册日期')").click(function(event) {
+         console.log(getUrlParam('order'));
+         if (getUrlParam('order') == 'desc') {
+             setUrlParam('field', 'regdate');
+             setUrlParam('order', 'asc');
+         } else {
+             setUrlParam('field', 'regdate');
+             setUrlParam('order', 'desc');
+         }
+     });
+
+     // “账号截止日期”排序
+     $("a:contains('账号截止日期')").click(function(event) {
+         console.log(getUrlParam('order'));
+         if (getUrlParam('order') == 'desc') {
+             setUrlParam('field', 'account_end_at');
+             setUrlParam('order', 'asc');
+         } else {
+             setUrlParam('field', 'account_end_at');
+             setUrlParam('order', 'desc');
+         }
+     });
+
+     // “上月使用时长”排序
+     $("a:contains('上月使用时长')").click(function(event) {
+         console.log(getUrlParam('order'));
+         if (getUrlParam('order') == 'desc') {
+             setUrlParam('field', 'account_end_at');
+             setUrlParam('order', 'asc');
+         } else {
+             setUrlParam('field', 'account_end_at');
+             setUrlParam('order', 'desc');
+         }
+     });
 });

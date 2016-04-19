@@ -46,6 +46,8 @@ class UserController extends Controller
         $liveness             = $request->get('liveness', '');              // 活跃度
         $reg_start_time       = $request->get('reg_start_time', '');        // 注册时间段 > 开始时间
         $reg_end_time         = $request->get('reg_end_time', '');          // 注册时间段 > 结束时间
+        $field                = $request->get('field');                     // 排序字段
+        $order                = $request->get('order');                     // 排序方式
 
         /**
          * 用来排序的字段
@@ -277,12 +279,12 @@ class UserController extends Controller
         if (!empty($change_duration)) {
             switch ($change_duration) {
                 case 'up20h':
-                $start_time = Carbon::now()->subMonth();
-                $end_time   = Carbon::now()->endOfDay();
-                    $users->whereHas('robot_durations', function ($query) {
-                        $query->groupBy('robot_durations.user_id')
-                              ->havingRaw("select SUM(robot_durations.duration) as duration_sum_now where ");
-                    });
+                // $start_time = Carbon::now()->subMonth();
+                // $end_time   = Carbon::now()->endOfDay();
+                //     $users->whereHas('robot_durations', function ($query) {
+                //         $query->groupBy('robot_durations.user_id')
+                //               ->havingRaw("select SUM(robot_durations.duration) as duration_sum_now where ");
+                //     });
                     break;
                 case 'up30h':
                     break;
@@ -345,7 +347,7 @@ class UserController extends Controller
             $preMonth_end_time   = Carbon::now()->subMonth()->endOfDay();
 
             // $users->select('*');
-            $users->orderBy('regdate');
+            $users->orderBy($field, $order);
             $users = $users->paginate(10)->appends([
             'user_cellphone_email' => $user_cellphone_email,
             'city_id'              => $city_id,
