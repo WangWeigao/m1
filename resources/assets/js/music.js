@@ -189,6 +189,12 @@ $(document).ready(function() {
             $("#instrument").val("1");
             $("#edit_instrument").append($str);
             $("#add_instrument").append($str);
+            // 保持搜索条件
+            if (instrument != '' && instrument != null) {
+                $("#instrument").val(instrument);
+                $("input[name=instrument]").val(instrument);
+                $("input[name=instrument]").prop('checked', true);
+            }
         });
 
         /**
@@ -200,6 +206,12 @@ $(document).ready(function() {
             $("#press").append($str);
             $("#edit_press").append($str);
             $("#add_press").append($str);
+            // 保持搜索条件
+            if (press != '' && press != null) {
+                $("#press").val(press);
+                $("input[name=press]").val(press);
+                $("input[name=press]").prop('checked', true);
+            }
         });
 
         /**
@@ -211,6 +223,12 @@ $(document).ready(function() {
             $("#category").append($str);
             $("#edit_category").append($str);
             $("#add_category").append($str);
+            // 保持搜索条件
+            if (category != '' && category != null) {
+                $("#category").val(category);
+                $("input[name=category]").val(category);
+                $("input[name=category]").prop('checked', true);
+            }
         });
 
         /**
@@ -222,6 +240,12 @@ $(document).ready(function() {
             $("#organizer").append($str);
             $("#edit_organizer").append($str);
             $("#add_organizer").append($str);
+            // 保持搜索条件
+            if (organizer != '' && organizer != null) {
+                $("#organizer").val(organizer);
+                $("input[name=organizer]").val(organizer);
+                $("input[name=organizer]").prop('checked', true);
+            }
         });
 
         /**
@@ -231,6 +255,12 @@ $(document).ready(function() {
             var $str = "";
             $str = "<option value=" + value.id + ">" + value.name + "</option>";
             $("#operator").append($str);
+            // 保持搜索条件
+            if (operator != '' && operator != null) {
+                $("#operator").val(operator);
+                $("input[name=operator]").val(operator);
+                $("input[name=operator]").prop('checked', true);
+            }
         });
     })
     .fail(function(data) {
@@ -248,7 +278,7 @@ $(document).ready(function() {
      defYear: myDate.getFullYear(),
      defMonth: (myDate.getMonth() + 1),
      defDay: myDate.getDate(),
-     minYear: 1800,
+     minYear: 2015,
      maxYear: (myDate.getFullYear() + 1)
      });
 
@@ -260,9 +290,17 @@ $(document).ready(function() {
             if ($(el).attr('id') === 'idYear' || $(el).attr('id') === 'idMonth' || $(el).attr('id') === 'idDay') {
                 $("#date").val($("#idYear").val() + '-' + $("#idMonth").val() + '-' + $("#idDay").val());
             }
-            console.log($(el).val());
         });
     });
+    // 保持搜索条件
+    var date = $.getUrlParam('date');
+    if (date != '' && date != null) {
+        $("#idYear").val(date.split('-')[0]);
+        $("#idMonth").val(date.split('-')[1]);
+        $("#idDay").val(date.split('-')[2]);
+        $("input[name=date]").val(date);
+        $("input[name=date]").prop('checked', true);
+    }
 
     /**
      * select中选择值改变的时候，同步给select的value赋值
@@ -350,4 +388,21 @@ $(document).ready(function() {
 
     });
 
+    // 获取 URL 中的参数
+    var name       = $.getUrlParam('name');
+    var instrument = $.getUrlParam('instrument');
+    var press      = $.getUrlParam('press');
+    var category   = $.getUrlParam('category');
+    var onshelf    = $.getUrlParam('onshelf');
+    var organizer  = $.getUrlParam('organizer');
+    var operator   = $.getUrlParam('operator');
+    if (name != '' && name != null) {
+        $("input[name=name]").val(name);
+    }
+
+    if (onshelf != '' && onshelf != null) {
+        $("#onshelf").val(onshelf);
+        $("input[name=onshelf]").val(onshelf);
+        $("input[name=onshelf]").prop('checked', true);
+    }
 });

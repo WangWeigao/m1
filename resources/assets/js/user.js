@@ -227,10 +227,11 @@ $(document).ready(function() {
     //         return false;
     //     }
     // });
+
     /**
      * 保持url中含有内容的 input 为选中状态
      */
-     //方法二：
+     // 获取 url 中的参数
      (function ($) {
          $.getUrlParam = function (name) {
              var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
@@ -239,7 +240,7 @@ $(document).ready(function() {
          }
      })(jQuery);
 
-     //方法二：
+     // 调用 getUrlParam 方法
      var user_cellphone_email = $.getUrlParam('user_cellphone_email');
      var area                 = $.getUrlParam('area');
      var user_grade           = $.getUrlParam('user_grade');
