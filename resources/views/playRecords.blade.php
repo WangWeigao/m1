@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+    <div class="container">
+
     <table class="table table-bordered table-hover">
         <tr>
             <th>乐曲名</th>
@@ -75,4 +77,13 @@
 			</div>
 		</div>
     </div> --}}
+</div>
+@endsection
+
+@section('css')
+    <style media="screen">
+        th, tr, td {
+            white-space: nowrap;
+        }
+    </style>
 @endsection

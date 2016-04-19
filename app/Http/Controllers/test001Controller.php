@@ -17,20 +17,19 @@ class test001Controller extends Controller
      */
     public function index()
     {
-        // 测试Carbon
-        // $now = Carbon::now();
-        // $compare = Carbon::now()->addWeek();
-        // return $now . '<br>' . $compare;
-
-        // 测试 Convert string To array
-        $users = \App\StudentUser::find(268);
-        $instruments = $users->instrument_id;
-        return $users;
-        // if (in_array([1,2], $instruments)) {
-        //     echo '1 在 $instrument 中';
-        // } else {
-        //     echo '1 不在 $instrument 中';
+        // $records = \App\Play_record::whereIn('id', [4,26]);
+        // foreach ($records as $record) {
+        //     $paths = explode(',', $record->midi_path);
+        //     foreach ($paths as $path) {
+        //         $path_temp[] = explode('public', $path)[1];
+        //     }
+        //
         // }
+        // $path_list = explode(',', $path_list);
+        // foreach ($path_list as $v) {
+        //     $path_list_temp[] = explode('public', $v)[1];
+        // }
+        // $path_list$path_list_temp;
     }
 
     /**
