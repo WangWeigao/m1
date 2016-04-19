@@ -641,15 +641,15 @@ class UserController extends Controller
             $value->midi_path = explode(',', $value->midi_path);
         }
 
-        foreach ($play_records as $value) {
-            $temp_value = $value->midi_path;
-            foreach ($temp_value as $v) {
-                $temp = explode('public', $v);
-                $v = $temp[1];
-            }
+        // foreach ($play_records as $value) {
+        //     $temp_value = $value->midi_path;
+        //     foreach ($temp_value as $v) {
+        //         $temp = explode('public', $v);
+        //         $v = $temp[1];
+        //     }
             // dd($temp_value);
-            $value->midi_path = $temp_value;
-        }
+            // $value->midi_path = $temp_value;
+        // }
 // return $play_records;
         return view('playRecords')->with('play_records', $play_records);
     }
