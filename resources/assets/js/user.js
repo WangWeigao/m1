@@ -461,25 +461,46 @@ $(document).ready(function() {
          $("input[name='user_action[]']:checked").each(function(index, el) {
              ids.push($(el).closest('tr').attr('id'));
          });
+        $confirm = confirm('确定要锁定所选用户?');
+        if ($confirm) {
+            $.ajax({
+                url: '/user/lockUsers',
+                type: 'PUT',
+                dataType: 'json',
+                data: {'ids': ids},
+                headers: {
+                    'X-CSRF-TOKEN': $("input[name=_token]").val()
+                }
+            })
+            .done(function() {
+                location.reload();
+            })
+        }
+     });
 
-         $.ajax({
-             url: '/user/lockUsers',
-             type: 'PUT',
-             dataType: 'json',
-             data: {'ids': ids},
-             headers: {
-                 'X-CSRF-TOKEN': $("input[name=_token]").val()
-             }
-         })
-         .done(function() {
-             console.log("success");
-         })
-         .fail(function() {
-             console.log("error");
-         })
-         .always(function() {
-             console.log("complete");
+     /**
+      * 解锁选中的用户
+      */
+     $("#unlock_all").bind('click', function(event) {
+         var ids = [];
+         $("input[name='user_action[]']:checked").each(function(index, el) {
+             ids.push($(el).closest('tr').attr('id'));
          });
-
+         $confirm = confirm('确定要解锁所选用户?');
+         if ($confirm) {
+             $.ajax({
+                 url: '/user/unlockUsers',
+                 type: 'PUT',
+                 dataType: 'json',
+                 data: {'ids': ids},
+                 headers: {
+                     'X-CSRF-TOKEN': $("input[name=_token]").val()
+                 }
+             })
+             .done(function() {
+                 console.log("success");
+                 location.reload();
+             })
+         }
      });
 });

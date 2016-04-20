@@ -678,6 +678,12 @@ class UserController extends Controller
     //     return Response::download($filename, $newfilename, $headers);
     // }
 
+    /**
+     * 锁定选中的用户
+     * @method lockUsers
+     * @param  Request   $request [description]
+     * @return [type]             [description]
+     */
     public function lockUsers(Request $request)
     {
         $ids =  $request->get('ids');
@@ -688,7 +694,33 @@ class UserController extends Controller
         }
         // 合并数组中的重复值
         $unique_result = array_unique($result);
-        
+
+        // 如果数组中有且只有true,则操作全部成功
+        if (in_array('true', $unique_result) && count($unique_result) == 1) {
+            $data['status'] = true;
+        } else {
+            $data['status'] = false;
+        }
+        return $data;
+    }
+
+    /**
+     * 解锁选中的用户
+     * @method unlockUsers
+     * @param  Request   $request [description]
+     * @return [type]             [description]
+     */
+    public function unlockUsers(Request $request)
+    {
+        $ids =  $request->get('ids');
+        foreach ($ids as $id) {
+            $user = StudentUser::find($id);
+            $user->isactive = 1;
+            $result[] = $user->save();
+        }
+        // 合并数组中的重复值
+        $unique_result = array_unique($result);
+
         // 如果数组中有且只有true,则操作全部成功
         if (in_array('true', $unique_result) && count($unique_result) == 1) {
             $data['status'] = true;

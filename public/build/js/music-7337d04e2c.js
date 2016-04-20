@@ -349,14 +349,8 @@ $(document).ready(function() {
             }
         })
         .done(function() {
-            console.log("success");
+            location.reload();
         })
-        .fail(function() {
-            console.log("error");
-        })
-        .always(function() {
-            console.log("complete");
-        });
     });
 
     /**
@@ -377,14 +371,8 @@ $(document).ready(function() {
             }
         })
         .done(function() {
-            console.log("success");
+            location.reload();
         })
-        .fail(function() {
-            console.log("error");
-        })
-        .always(function() {
-            console.log("complete");
-        });
 
     });
 

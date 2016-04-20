@@ -131,6 +131,11 @@ Route::group(['middleware' => 'web'], function () {
     Route::put('/user/lockUsers', 'UserController@lockUsers');
 
     /**
+     * 解锁选中的用户
+     */
+    Route::put('/user/unlockUsers', 'UserController@unlockUsers');
+
+    /**
      * 使用资源路由
      */
     Route::resource('/user', 'UserController');
