@@ -441,4 +441,45 @@ $(document).ready(function() {
              setUrlParam('order', 'desc');
          }
      });
+
+     /**
+      * 全部选中，全部取消
+      */
+     $("#checkAll").bind('click', function(event) {
+         if (this.checked) {
+             $("input[name='user_action[]']").prop("checked", true);
+         }else {
+             $("input[name='user_action[]']").prop("checked", false);
+         }
+     });
+
+     /**
+      * 锁定选中的用户
+      */
+     $("#lock_all").bind('click', function(event) {
+         var ids = [];
+         $("input[name='user_action[]']:checked").each(function(index, el) {
+             ids.push($(el).closest('tr').attr('id'));
+         });
+
+         $.ajax({
+             url: '/user/lockUsers',
+             type: 'PUT',
+             dataType: 'json',
+             data: {'ids': ids},
+             headers: {
+                 'X-CSRF-TOKEN': $("input[name=_token]").val()
+             }
+         })
+         .done(function() {
+             console.log("success");
+         })
+         .fail(function() {
+             console.log("error");
+         })
+         .always(function() {
+             console.log("complete");
+         });
+
+     });
 });

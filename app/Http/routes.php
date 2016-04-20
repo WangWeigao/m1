@@ -119,7 +119,16 @@ Route::group(['middleware' => 'web'], function () {
      * 根据省份获取城市列表
      */
     Route::get('/user/cities/{id}', 'UserController@getCities');
+
+    /**
+     * 播放记录
+     */
     Route::get('/user/playRecords', 'UserController@playRecords');
+
+    /**
+     * 锁定选中的用户
+     */
+    Route::put('/user/lockUsers', 'UserController@lockUsers');
 
     /**
      * 使用资源路由

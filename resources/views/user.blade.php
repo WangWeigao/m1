@@ -153,7 +153,7 @@
 <table class="table table-hover">
     <thead>
         <tr>
-            <th><a href="#">全选</a></th>
+            <th><input type="checkbox" id="checkAll"></th>
             <th>编号</th>
             <th>用户帐号</th>
             <th>手机号</th>
@@ -174,9 +174,9 @@
     </thead>
         <tbody>
             @foreach($users as $user)
-            <tr>
-                <td><input type="checkbox"></td>
-                <input type="hidden" name="user_id" value="{{ url('/user/' . $user->uid) }}">
+            <tr id="{{ $user->uid }}">
+                <td><input type="checkbox" name="user_action[]"></td>
+                <input type="hidden" name="user_id" value="{{ $user->uid }}">
                 {{-- 编号 --}}
                 <td><a href="#">{{ $user->seq_num }}</a></td>
                 {{-- 用户帐号 --}}
@@ -227,6 +227,9 @@
             @endforeach
         </tbody>
 </table>
+<div class="btn btn-danger" id="lock_all">锁定</div>
+<div class="btn btn-success" id="unlock_all">解锁</div>
+<div class="btn btn-info" id="notice_all">通知</div>
 <div class="text-center">
     {!! $users->render() !!}
 </div>
