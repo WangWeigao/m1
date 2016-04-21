@@ -225,8 +225,9 @@
                         <button type="button" id="{{ $user->uid }}" class="{{ $user->isactive ? 'lockuser btn btn-success btn-xs' : 'lockuser btn btn-danger btn-xs' }}">
                             {{ $user->isactive ? '锁定' : '解锁'  }}
                         </button>
-                        <a href="{{ url('/user/' . $user->uid) }}">
-                            <button type="button" class="btn btn-info btn-xs">查看</button>
+                        <a style="cursor:pointer">
+                            <button type="button" class="btn btn-info btn-xs send_msg_single" id=""
+                                    data-toggle="modal" data-target=".m_notify_all">通知</button>
                         </a>
                     </td>
                 </tr>
@@ -239,6 +240,7 @@
     <div class="text-center">
         {!! $users->render() !!}
     </div>
+    {{-- 通知选中用户，模态框 --}}
     <div class="modal fade m_notify_all" id="" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -247,7 +249,15 @@
             <h4 class="modal-title" id="">通知内容</h4>
           </div>
           <div class="modal-body">
-              <input type="text" name="message" value="" class="form-control" placeholder="添加通知内容">
+              <div class="form-group">
+                  <select class="form-control" name="" id="select_multi">
+                      <option value="1">通知账号到期</option>
+                      <option value="2">通知资料到期</option>
+                      <option value="3">通知违规与禁言</option>
+                      <option value="4">通知重新提交资料，并输入理由</option>
+                  </select>
+                  <input type="hidden" class="form-control" name="message" value="" placeholder="请输入理由">
+              </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

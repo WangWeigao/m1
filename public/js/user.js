@@ -461,6 +461,10 @@ $(document).ready(function() {
          $("input[name='user_action[]']:checked").each(function(index, el) {
              ids.push($(el).closest('tr').attr('id'));
          });
+         // 如果没有选择用户，中断退出
+         if (ids.length == 0) {
+             return alert('请先选择用户');
+         }
         $confirm = confirm('确定要锁定所选用户?');
         if ($confirm) {
             $.ajax({
@@ -479,6 +483,36 @@ $(document).ready(function() {
      });
 
      /**
+      * 锁定单个用户
+      */
+      $(".lockuser").each(function(index, el) {
+          $(el).click(function(event) {
+              var id = $(el).attr('id');
+              $.ajax({
+                  url: '/user/lockuser/' + id,
+                  type: 'GET',
+                  dataType: 'json'
+              })
+              .done(function(data) {
+                  if (data) {
+                      $(el).attr('class', 'lockuser btn btn-success btn-xs');
+                      $(el).text('锁定');
+                  } else {
+                      $(el).attr('class', 'lockuser btn btn-danger btn-xs');
+                      $(el).text('解锁');
+                  }
+              })
+              .fail(function() {
+                  console.log("error");
+              })
+              .always(function() {
+                  console.log("complete");
+              });
+
+          });
+      });
+
+     /**
       * 解锁选中的用户
       */
      $("#unlock_all").bind('click', function(event) {
@@ -486,6 +520,9 @@ $(document).ready(function() {
          $("input[name='user_action[]']:checked").each(function(index, el) {
              ids.push($(el).closest('tr').attr('id'));
          });
+         if (ids.length == 0) {
+             return alert('请先选择用户');
+         }
          $confirm = confirm('确定要解锁所选用户?');
          if ($confirm) {
              $.ajax({
@@ -507,20 +544,42 @@ $(document).ready(function() {
      /**
       * 通知选中的用户
       */
+     // 判断是否已选择用户
+     $("#notify_all").click(function() {
+         // 由于之后会弹出模态框，暂时没有找到解决方法
+     });
      $("#send_message").bind('click', function(event) {
          var ids = [];
          $("input[name='user_action[]']:checked").each(function(index, el) {
              ids.push($(el).closest('tr').attr('id'));
          });
-         $confirm = confirm('确定要通知所选用户?');
+         if (ids.length == 0) {
+             return alert('请先选择用户');
+         }
+         $confirm = confirm('确定要通知用户?');
          if ($confirm) {
+             switch ($("#select_multi").val()) {
+                 case '1':
+                    var message = '账号到期';
+                     break;
+                 case '2':
+                    var message = '资料到期';
+                     break;
+                 case '3':
+                    var message = '违规与禁言';
+                     break;
+                 case '4':
+                    var message = '重新提交资料:' + $("input[name='message']").val();
+                     break;
+                 default:
+             }
              $.ajax({
                  url: '/user/notifyUsers',
                  type: 'POST',
                  dataType: 'json',
                  data: {
                      'user_id': ids,
-                     'message': $("input[name='message']").val()
+                     'message': message
                  },
                  headers: {
                      'X-CSRF-TOKEN': $("input[name=_token]").val()
@@ -537,9 +596,34 @@ $(document).ready(function() {
              })
              .fail(function() {
                  alert('通知失败！');
+                 // 关闭模态框
+                 $(".m_notify_all").modal('hide');
+                 // 取消所有的选中项
+                 $("input[name='user_action[]']:checked").each(function(index, el) {
+                     $(el).prop('checked', false);
+                 });
              })
          }
      });
+     // 如果选中第四项，则出现输入框
+     $("#select_multi").click(function(event) {
+        if ($("#select_multi").val() == 4) {
+            $("input[name='message']").attr('type', 'text');
+        } else {
+            $("input[name='message']").attr('type', 'hidden');
+        }
+     });
+
+     /**
+      * 通知单个用户
+      */
+     $(".send_msg_single").each(function(index, el) {
+         $(el).click(function(event) {
+             $(el).closest('tr').find('input').prop('checked', true);
+             console.log('printing checkbox log...');
+         });
+     });
+     // 如果输入框为空，则不允许点击“发送通知”
 });
 
 /*

@@ -108,7 +108,7 @@ Route::group(['middleware' => 'web'], function () {
     /**
      * 锁定或者解锁用户
      */
-    Route::get('/lockuser/{id}', 'UserController@lockUser');
+    Route::get('/user/lockuser/{id}', 'UserController@lockUser');
 
     /**
      * 获取所有省份

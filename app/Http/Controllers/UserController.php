@@ -454,24 +454,24 @@ class UserController extends Controller
      * @param  integer   $id 用户ID
      * @return Json          操作是否成功
      */
-    // public function lockUser($id)
-    // {
-    //     //获取用户激活状态
-    //     $active = StudentUser::where('uid', $id)->first()->isactive;
-    //
-    //     /**
-    //      * 判断用户是否锁定, 以执行相反操作
-    //      */
-    //     if ($active) {
-    //         //取消激活状态(锁定)
-    //         $result = StudentUser::where('uid', $id)->update(['isactive'=>0]);
-    //     }else {
-    //         //激活(解锁)
-    //         $result = StudentUser::where('uid', $id)->update(['isactive'=>1]);
-    //     }
-    //
-    //     return $active;
-    // }
+    public function lockUser($id)
+    {
+        //获取用户激活状态
+        $active = StudentUser::where('uid', $id)->first()->isactive;
+
+        /**
+         * 判断用户是否锁定, 以执行相反操作
+         */
+        if ($active) {
+            //取消激活状态(锁定)
+            $result = StudentUser::where('uid', $id)->update(['isactive'=>0]);
+        }else {
+            //激活(解锁)
+            $result = StudentUser::where('uid', $id)->update(['isactive'=>1]);
+        }
+
+        return $active ? 0 : 1;
+    }
 
     /**
      * 学生使用情况统计
