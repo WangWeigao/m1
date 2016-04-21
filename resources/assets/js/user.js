@@ -503,4 +503,41 @@ $(document).ready(function() {
              })
          }
      });
+
+     /**
+      * 通知选中的用户
+      */
+     $("#send_message").bind('click', function(event) {
+         var ids = [];
+         $("input[name='user_action[]']:checked").each(function(index, el) {
+             ids.push($(el).closest('tr').attr('id'));
+         });
+         $confirm = confirm('确定要通知所选用户?');
+         if ($confirm) {
+             $.ajax({
+                 url: '/user/notifyUsers',
+                 type: 'POST',
+                 dataType: 'json',
+                 data: {
+                     'user_id': ids,
+                     'message': $("input[name='message']").val()
+                 },
+                 headers: {
+                     'X-CSRF-TOKEN': $("input[name=_token]").val()
+                 }
+             })
+             .done(function() {
+                 alert("通知成功！");
+                 // 关闭模态框
+                 $(".m_notify_all").modal('hide');
+                 // 取消所有的选中项
+                 $("input[name='user_action[]']:checked").each(function(index, el) {
+                     $(el).prop('checked', false);
+                 });
+             })
+             .fail(function() {
+                 alert('通知失败！');
+             })
+         }
+     });
 });

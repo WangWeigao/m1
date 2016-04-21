@@ -338,19 +338,21 @@ $(document).ready(function() {
         $("input[name='music_action[]']:checked").each(function(index, el) {
             ids.push($(el).closest('tr').attr('id'));
         });
-
-        $.ajax({
-            url: '/music/putawayMany',
-            type: 'PUT',
-            dataType: 'json',
-            data: {'ids': ids},
-            headers: {
-                'X-CSRF-TOKEN': $("input[name='_token']").val()
-            }
-        })
-        .done(function() {
-            location.reload();
-        })
+        $confirm = confirm('确认要批量审核通过所选乐曲?');
+        if ($confirm) {
+            $.ajax({
+                url: '/music/putawayMany',
+                type: 'PUT',
+                dataType: 'json',
+                data: {'ids': ids},
+                headers: {
+                    'X-CSRF-TOKEN': $("input[name='_token']").val()
+                }
+            })
+            .done(function() {
+                location.reload();
+            })
+        }
     });
 
     /**
@@ -361,18 +363,21 @@ $(document).ready(function() {
         $("input[name='music_action[]']:checked").each(function(index, el) {
             ids.push($(el).closest('tr').attr('id'));
         });
-        $.ajax({
-            url: '/music/offshelfMany',
-            type: 'DELETE',
-            dataType: 'json',
-            data: {'ids': ids},
-            headers: {
-                'X-CSRF-TOKEN': $("input[name='_token']").val()
-            }
-        })
-        .done(function() {
-            location.reload();
-        })
+        $confirm = confirm('确认要批量下回所选乐曲?');
+        if ($confirm) {
+            $.ajax({
+                url: '/music/offshelfMany',
+                type: 'DELETE',
+                dataType: 'json',
+                data: {'ids': ids},
+                headers: {
+                    'X-CSRF-TOKEN': $("input[name='_token']").val()
+                }
+            })
+            .done(function() {
+                location.reload();
+            })
+        }
 
     });
 

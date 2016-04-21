@@ -150,91 +150,113 @@
         {{-- </fieldset> --}}
     </form>
 @if(!empty($users))
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th><input type="checkbox" id="checkAll"></th>
-            <th>编号</th>
-            <th>用户帐号</th>
-            <th>手机号</th>
-            <th>电子邮箱</th>
-            <th>地区</th>
-            <th>性别</th>
-            <th>学龄</th>
-            <th><a>水平等级</a></th>
-            <th>指定乐器</th>
-            <th><a>注册日期</a></th>
-            <th>账号级别</th>
-            <th><a>账号截止日期</a></th>
-            <th><a>上月使用时长</a></th>
-            <th><a>本月使用时长</a></th>
-            <th>账户状态</th>
-            <th>操作</th>
-        </tr>
-    </thead>
-        <tbody>
-            @foreach($users as $user)
-            <tr id="{{ $user->uid }}">
-                <td><input type="checkbox" name="user_action[]"></td>
-                <input type="hidden" name="user_id" value="{{ $user->uid }}">
-                {{-- 编号 --}}
-                <td><a href="#">{{ $user->seq_num }}</a></td>
-                {{-- 用户帐号 --}}
-                <td><a href="{{ url('/user/' . $user->uid) }}">{{ $user->nickname }}</a></td>
-                {{-- 电话号码 --}}
-                <td>{{ $user->cellphone }}</td>
-                {{-- 电子邮箱 --}}
-                <td>{{ $user->email }}</td>
-                {{-- 地区 --}}
-                <td>{{ $user->city_id }}</td>
-                {{-- 性别 --}}
-                <td>{{ $user->sex }}</td>
-                {{-- 学龄 --}}
-                <td>{{ $user->study_age }}</td>
-                {{-- 水平等级 --}}
-                <td>{{ $user->user_grade }}</td>
-                {{-- 指定乐器 --}}
-                <td>
-                    @if(!empty($user->instrument_id))
-                        @foreach($user->instrument_id as $instrument)
-                            {{ $instrument['name'] }}/
-                        @endforeach
-                    @endif
-                </td>
-                {{-- 注册日期 --}}
-                <td>{{ $user->regdate }}</td>
-                {{-- 账号级别 --}}
-                <td>{{ $user->account_grade }}</td>
-                {{-- 账号截止日期 --}}
-                <td>{{ $user->account_end_at }}</td>
-                {{-- 上月使用时长 --}}
-                <td>{{ $user->duration_preMonth }}</td>
-                {{-- 本月使用时长 --}}
-                <td>{{ $user->duration_Month }}</td>
-                {{-- 账户状态 --}}
-                <td>
-                    {{ $user->status }}
-                </td>
-                <td>
-                    <button type="button" id="{{ $user->uid }}" class="{{ $user->isactive ? 'lockuser btn btn-success btn-xs' : 'lockuser btn btn-danger btn-xs' }}">
-                        {{ $user->isactive ? '锁定' : '解锁'  }}
-                    </button>
-                    <a href="{{ url('/user/' . $user->uid) }}">
-                        <button type="button" class="btn btn-info btn-xs">查看</button>
-                    </a>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-</table>
-<div class="btn btn-danger" id="lock_all">锁定</div>
-<div class="btn btn-success" id="unlock_all">解锁</div>
-<div class="btn btn-info" id="notice_all">通知</div>
-<div class="text-center">
-    {!! $users->render() !!}
-</div>
+    <table class="table table-hover">
+        <thead>
+            @if(count($users) > 0)
+                <tr>
+                    <th><input type="checkbox" id="checkAll"></th>
+                    <th>编号</th>
+                    <th>用户帐号</th>
+                    <th>手机号</th>
+                    <th>电子邮箱</th>
+                    <th>地区</th>
+                    <th>性别</th>
+                    <th>学龄</th>
+                    <th><a style="cursor:pointer">水平等级</a></th>
+                    <th>指定乐器</th>
+                    <th><a style="cursor:pointer">注册日期</a></th>
+                    <th>账号级别</th>
+                    <th><a style="cursor:pointer">账号截止日期</a></th>
+                    <th><a style="cursor:pointer">上月使用时长</a></th>
+                    <th><a style="cursor:pointer">本月使用时长</a></th>
+                    <th>账户状态</th>
+                    <th>操作</th>
+                </tr>
+            @else
+                <div class="text-center">
+                    没有查询到相关数据，更换查询条件再试试吧
+                </div>
+            @endif
+        </thead>
+            <tbody>
+                @foreach($users as $user)
+                <tr id="{{ $user->uid }}">
+                    <td><input type="checkbox" name="user_action[]"></td>
+                    <input type="hidden" name="user_id" value="{{ $user->uid }}">
+                    {{-- 编号 --}}
+                    <td><a href="#">{{ $user->seq_num }}</a></td>
+                    {{-- 用户帐号 --}}
+                    <td><a href="{{ url('/user/' . $user->uid) }}">{{ $user->nickname }}</a></td>
+                    {{-- 电话号码 --}}
+                    <td>{{ $user->cellphone }}</td>
+                    {{-- 电子邮箱 --}}
+                    <td>{{ $user->email }}</td>
+                    {{-- 地区 --}}
+                    <td>{{ $user->city_id }}</td>
+                    {{-- 性别 --}}
+                    <td>{{ $user->sex }}</td>
+                    {{-- 学龄 --}}
+                    <td>{{ $user->study_age }}</td>
+                    {{-- 水平等级 --}}
+                    <td>{{ $user->user_grade }}</td>
+                    {{-- 指定乐器 --}}
+                    <td>
+                        @if(!empty($user->instrument_id))
+                            @foreach($user->instrument_id as $instrument)
+                                {{ $instrument['name'] }}/
+                            @endforeach
+                        @endif
+                    </td>
+                    {{-- 注册日期 --}}
+                    <td>{{ $user->regdate }}</td>
+                    {{-- 账号级别 --}}
+                    <td>{{ $user->account_grade }}</td>
+                    {{-- 账号截止日期 --}}
+                    <td>{{ $user->account_end_at }}</td>
+                    {{-- 上月使用时长 --}}
+                    <td>{{ $user->duration_preMonth }}</td>
+                    {{-- 本月使用时长 --}}
+                    <td>{{ $user->duration_Month }}</td>
+                    {{-- 账户状态 --}}
+                    <td>
+                        {{ $user->status }}
+                    </td>
+                    <td>
+                        <button type="button" id="{{ $user->uid }}" class="{{ $user->isactive ? 'lockuser btn btn-success btn-xs' : 'lockuser btn btn-danger btn-xs' }}">
+                            {{ $user->isactive ? '锁定' : '解锁'  }}
+                        </button>
+                        <a href="{{ url('/user/' . $user->uid) }}">
+                            <button type="button" class="btn btn-info btn-xs">查看</button>
+                        </a>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+    </table>
+    <div class="btn btn-danger" id="lock_all">锁定</div>
+    <div class="btn btn-success" id="unlock_all">解锁</div>
+    <div class="btn btn-info" id="notify_all" data-toggle="modal" data-target=".m_notify_all">通知</div>
+    <div class="text-center">
+        {!! $users->render() !!}
+    </div>
+    <div class="modal fade m_notify_all" id="" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="">通知内容</h4>
+          </div>
+          <div class="modal-body">
+              <input type="text" name="message" value="" class="form-control" placeholder="添加通知内容">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="send_message">发送通知</button>
+          </div>
+        </div>
+      </div>
+    </div>
 @endif
-
 @endsection
 
 @section('css')

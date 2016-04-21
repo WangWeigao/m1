@@ -4,10 +4,14 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-ajaxSubmitForm	D:\wamp\www\m1\resources\assets\js\music.js	/^        function ajaxSubmitForm() {$/;"	function	line:7
-isEmpty	D:\wamp\www\m1\resources\assets\js\music.js	/^           function isEmpty( inputStr ) {$/;"	function	line:26
-success	D:\wamp\www\m1\resources\assets\js\music.js	/^               success : function(data) {$/;"	function	line:56
-error	D:\wamp\www\m1\resources\assets\js\music.js	/^               error : function(data) {$/;"	function	line:66
-ajaxSubmitForm	D:\wamp\www\m1\resources\assets\js\music.js	/^        function ajaxSubmitForm() {$/;"	function	line:98
-success	D:\wamp\www\m1\resources\assets\js\music.js	/^                success : function(data) {$/;"	function	line:121
-error	D:\wamp\www\m1\resources\assets\js\music.js	/^                error : function(data) {$/;"	function	line:124
+test001Controller	D:\wamp\www\m1\app\Http\Controllers\test001Controller.php	/^class test001Controller extends Controller$/;"	class	line:11
+index	D:\wamp\www\m1\app\Http\Controllers\test001Controller.php	/^    public function index()$/;"	function	line:18
+id	D:\wamp\www\m1\app\Http\Controllers\test001Controller.php	/^        $id = 1;$/;"	variable	line:20
+user	D:\wamp\www\m1\app\Http\Controllers\test001Controller.php	/^        $user = \\Redis::get('user:profile:'.$id);$/;"	variable	line:21
+values	D:\wamp\www\m1\app\Http\Controllers\test001Controller.php	/^        $values = \\Redis::lrange('names', 2, 5);$/;"	variable	line:25
+create	D:\wamp\www\m1\app\Http\Controllers\test001Controller.php	/^    public function create()$/;"	function	line:34
+store	D:\wamp\www\m1\app\Http\Controllers\test001Controller.php	/^    public function store(Request $request)$/;"	function	line:45
+show	D:\wamp\www\m1\app\Http\Controllers\test001Controller.php	/^    public function show($id)$/;"	function	line:56
+edit	D:\wamp\www\m1\app\Http\Controllers\test001Controller.php	/^    public function edit($id)$/;"	function	line:67
+update	D:\wamp\www\m1\app\Http\Controllers\test001Controller.php	/^    public function update(Request $request, $id)$/;"	function	line:79
+destroy	D:\wamp\www\m1\app\Http\Controllers\test001Controller.php	/^    public function destroy($id)$/;"	function	line:90

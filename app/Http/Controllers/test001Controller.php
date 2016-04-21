@@ -17,19 +17,14 @@ class test001Controller extends Controller
      */
     public function index()
     {
-        // $records = \App\Play_record::whereIn('id', [4,26]);
-        // foreach ($records as $record) {
-        //     $paths = explode(',', $record->midi_path);
-        //     foreach ($paths as $path) {
-        //         $path_temp[] = explode('public', $path)[1];
-        //     }
-        //
-        // }
-        // $path_list = explode(',', $path_list);
-        // foreach ($path_list as $v) {
-        //     $path_list_temp[] = explode('public', $v)[1];
-        // }
-        // $path_list$path_list_temp;
+        $id = 1;
+        $user = \Redis::get('user:profile:'.$id);
+        // return view('user.profile', ['user' => $user]);
+        // \Redis::set('names1', 'Taylor');
+
+        // $values = \Redis::lrange('names1', 2, 5);
+        // return $values;
+        return $user;
     }
 
     /**

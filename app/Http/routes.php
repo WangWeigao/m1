@@ -136,6 +136,11 @@ Route::group(['middleware' => 'web'], function () {
     Route::put('/user/unlockUsers', 'UserController@unlockUsers');
 
     /**
+     * 通知选中的用户
+     */
+    Route::post('/user/notifyUsers', 'UserController@notifyUsers');
+
+    /**
      * 使用资源路由
      */
     Route::resource('/user', 'UserController');

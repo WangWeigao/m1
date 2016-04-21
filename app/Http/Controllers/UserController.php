@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 
 use App\StudentUser;
 use App\Lesson;
+use App\Notification;
 use DB;
 use Carbon\Carbon;
 use App\Order;
@@ -728,5 +729,30 @@ class UserController extends Controller
             $data['status'] = false;
         }
         return $data;
+    }
+
+    /**
+     * 通知选中的用户
+     * @method notifyUsers
+     * @param  Request     $request [description]
+     * @return Json                 [description]
+     */
+    public function notifyUsers(Request $request)
+    {
+        $message = $request->get('message');
+        $ids = $request->get('user_id');
+        foreach ($ids as $id) {
+            $notification = new Notification;
+            $notification->user_id = $id;
+            $notification->message = $message;
+            $result = $notification->save();
+            if ($result) {
+                $data['status'] = true;
+            } else {
+                $data['status'] = false;
+                $data['errMsg'] = '通知失败';
+            }
+            return $data;
+        }
     }
 }
