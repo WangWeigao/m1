@@ -503,9 +503,20 @@ class UserController extends Controller
      * @method showActionHistory
      * @return Response            [description]
      */
-    public function showActionHistory()
+    public function showActionHistory($id)
     {
-        # 活动内容需要客户端提交信息，具体待协商
+        $user = StudentUser::with('user_actions')->find($id);
+        foreach ($user->user_actions as $value) {
+            if (!empty($value->duration)) {
+                $temp = gmstrftime("%H %M %S", $value->duration);
+                $temp_array = explode(' ', $temp);
+                $value->duration = $temp_array[0] . '小时'
+                                 . $temp_array[1] . '分'
+                                 . $temp_array[2] . '秒';
+            }
+        }
+        // return $user;
+        return view('useractionhistory')->with('user', $user);
     }
 
     /**

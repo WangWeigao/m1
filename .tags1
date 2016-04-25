@@ -4,3 +4,154 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
+UserController	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^class UserController extends Controller$/;"	class	line:17
+__construct	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    public function __construct()$/;"	function	line:24
+index	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    public function index(Request $request)$/;"	function	line:35
+user_cellphone_email	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $user_cellphone_email = $request->get('user_cellphone_email', '');  \/\/ 用户名|手机号|邮箱$/;"	variable	line:39
+city_id	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $city_id              = $request->get('area', '');                  \/\/ 地域(城市ID)$/;"	variable	line:40
+user_grade	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $user_grade           = $request->get('user_grade', '');            \/\/ 水平等级$/;"	variable	line:41
+reg_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $reg_time             = $request->get('reg_time', '');              \/\/ 注册时间$/;"	variable	line:42
+account_grade	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $account_grade        = $request->get('account_grade', '');         \/\/ 帐号级别$/;"	variable	line:43
+account_end_at	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $account_end_at       = $request->get('account_end_at', '');        \/\/ 帐号截止日期$/;"	variable	line:44
+month_duration	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $month_duration       = $request->get('month_duration', '');        \/\/ 本月使用时长$/;"	variable	line:45
+account_status	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $account_status       = $request->get('account_status', '');        \/\/ 帐号状态$/;"	variable	line:46
+change_duration	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $change_duration      = $request->get('change_duration', '');       \/\/ 本月用时大幅变化$/;"	variable	line:47
+liveness	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $liveness             = $request->get('liveness', '');              \/\/ 活跃度$/;"	variable	line:48
+reg_start_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $reg_start_time       = $request->get('reg_start_time', '');        \/\/ 注册时间段 > 开始时间$/;"	variable	line:49
+reg_end_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $reg_end_time         = $request->get('reg_end_time', '');          \/\/ 注册时间段 > 结束时间$/;"	variable	line:50
+field	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $field                = $request->get('field');                     \/\/ 排序字段$/;"	variable	line:51
+order	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $order                = $request->get('order');                     \/\/ 排序方式$/;"	variable	line:52
+field	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        \/\/ $field = $request->get('field');$/;"	variable	line:57
+order	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        \/\/ $order = $request->get('order');$/;"	variable	line:58
+users	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $users = StudentUser::where('usertype', 1);$/;"	variable	line:82
+start_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $start_time = Carbon::now()->startOfDay();$/;"	variable	line:111
+end_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $end_time   = Carbon::now()->endOfDay();$/;"	variable	line:112
+start_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $start_time = Carbon::now()->subWeek();$/;"	variable	line:115
+end_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $end_time   = Carbon::now()->endOfDay();$/;"	variable	line:116
+start_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $start_time = Carbon::now()->subMonth();$/;"	variable	line:119
+end_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $end_time   = Carbon::now()->endOfDay();$/;"	variable	line:120
+start_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $start_time = Carbon::now()->subMonths(6);$/;"	variable	line:123
+end_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $end_time   = Carbon::now()->endOfDay();$/;"	variable	line:124
+start_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $start_time = Carbon::now()->subyear();$/;"	variable	line:127
+end_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $end_time   = Carbon::now()->endOfDay();$/;"	variable	line:128
+start_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $start_time = Carbon::minValue();$/;"	variable	line:131
+end_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $end_time   = Carbon::now()->endOfDay();$/;"	variable	line:132
+start_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $start_time = Carbon::minValue();$/;"	variable	line:135
+end_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $end_time   = Carbon::maxValue();$/;"	variable	line:136
+account_grade	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $account_grade = 0;$/;"	variable	line:149
+account_grade	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $account_grade = 1;$/;"	variable	line:152
+account_grade	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $account_grade = 2;$/;"	variable	line:155
+account_grade	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $account_grade = 0;$/;"	variable	line:158
+account_grade	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^             || $account_grade == '1'$/;"	variable	line:162
+account_grade	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^             || $account_grade == '2') {$/;"	variable	line:163
+start_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $start_time = Carbon::now()->subWeek();$/;"	variable	line:174
+end_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $end_time   = Carbon::now()->endOfDay();$/;"	variable	line:175
+start_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $start_time = Carbon::now()->subMonth();$/;"	variable	line:178
+end_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $end_time   = Carbon::now()->endOfDay();$/;"	variable	line:179
+start_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $start_time = Carbon::now()->subMonths(2);$/;"	variable	line:182
+end_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $end_time   = Carbon::now()->endOfDay();$/;"	variable	line:183
+duration	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $duration = 1*60;   \/\/ 1小时以内$/;"	variable	line:199
+duration	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $duration = 5*60;   \/\/ 5小时以内$/;"	variable	line:202
+duration	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $duration = 10*60;   \/\/ 10小时以内$/;"	variable	line:205
+duration	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $duration = 30*60;   \/\/ 30小时以内$/;"	variable	line:208
+duration	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $duration = 60*60;   \/\/ 60小时以内$/;"	variable	line:211
+duration	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $duration = 60*60+1; \/\/ 60小时以上$/;"	variable	line:214
+duration	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $duration = 0;       \/\/ 未使用$/;"	variable	line:217
+duration	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $duration = -1;      \/\/$/;"	variable	line:220
+start_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $start_time = Carbon::now()->SubWeek();$/;"	variable	line:250
+end_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                    $end_time   = Carbon::now()->endOfDay();$/;"	variable	line:251
+start_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                \/\/ $start_time = Carbon::now()->subMonth();$/;"	variable	line:284
+end_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                \/\/ $end_time   = Carbon::now()->endOfDay();$/;"	variable	line:285
+start_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^            $start_time = Carbon::parse($reg_start_time)->startOfDay();$/;"	variable	line:317
+end_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^            $end_time   = Carbon::parse($reg_end_time)->endOfDay();$/;"	variable	line:318
+users	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        \/\/ $users = StudentUser::where('usertype', 1);$/;"	variable	line:327
+users	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        \/\/ $users = $users$/;"	variable	line:338
+start_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^            $start_time = Carbon::now()->subMonth();$/;"	variable	line:346
+end_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^            $end_time   = Carbon::now()->endOfDay();$/;"	variable	line:347
+preMonth_start_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^            $preMonth_start_time = Carbon::now()->subMonth(2);$/;"	variable	line:348
+preMonth_end_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^            $preMonth_end_time   = Carbon::now()->subMonth()->endOfDay();$/;"	variable	line:349
+users	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^            $users = $users->paginate(10)->appends([$/;"	variable	line:353
+key	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        foreach ($users as $key => $v) {$/;"	variable	line:368
+show	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    public function show($id)$/;"	function	line:408
+userInfo	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        \/\/ $userInfo = StudentUser::where('uid', $id)->where('usertype', 1)->with('orders')->first();$/;"	variable	line:411
+user	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        \/\/     $user = Lesson::find($order->lid)->user()->select('uid as teacher_uid', 'nickname as teacher_nickname')->first();$/;"	variable	line:421
+loginInfo	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        \/\/ $loginInfo = $userInfo->lastlogin;$/;"	variable	line:435
+showBasicInfo	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    public function showBasicInfo($id)$/;"	function	line:457
+user	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $user       = StudentUser::find($id);$/;"	variable	line:459
+start_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $start_time = Carbon::now()->startOfMonth();$/;"	variable	line:461
+end_time	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $end_time   = Carbon::now()->endOfDay();$/;"	variable	line:462
+showActionHistory	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    public function showActionHistory($id)$/;"	function	line:506
+user	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $user = StudentUser::with('user_actions')->find($id);$/;"	variable	line:508
+temp	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                $temp = gmstrftime("%H %M %S", $value->duration);$/;"	variable	line:511
+temp_array	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                $temp_array = explode(' ', $temp);$/;"	variable	line:512
+showRecordHistory	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    public function showRecordHistory()$/;"	function	line:528
+showOrderHistory	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    public function showOrderHistory()$/;"	function	line:538
+showSocialHistory	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    public function showSocialHistory()$/;"	function	line:548
+lockUser	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    public function lockUser($id)$/;"	function	line:559
+active	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $active = StudentUser::where('uid', $id)->first()->isactive;$/;"	variable	line:562
+result	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^            $result = StudentUser::where('uid', $id)->update(['isactive'=>0]);$/;"	variable	line:569
+result	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^            $result = StudentUser::where('uid', $id)->update(['isactive'=>1]);$/;"	variable	line:572
+usageStatistics	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    public function usageStatistics()$/;"	function	line:583
+today_carbon_start	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $today_carbon_start = Carbon::now()->startOfDay();$/;"	variable	line:588
+today_carbon_end	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $today_carbon_end =  Carbon::now()->endOfDay();$/;"	variable	line:589
+today_request	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $today_request = new Request(['duration' => 30, 'date' => 'today']);$/;"	variable	line:595
+month_carbon_start	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^         $month_carbon_start = Carbon::now()->startOfMonth();$/;"	variable	line:601
+month_carbon_end	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^         $month_carbon_end =  Carbon::now()->endOfMonth();$/;"	variable	line:602
+month_request	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^         $month_request = new Request(['duration' => 1800, 'date' => 'month']);$/;"	variable	line:608
+quarter_carbon_start	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^         $quarter_carbon_start = Carbon::now()->firstOfQuarter();$/;"	variable	line:617
+quarter_carbon_end	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^         $quarter_carbon_end =  Carbon::now()->lastOfQuarter();$/;"	variable	line:618
+quarter_request	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^         $quarter_request = new Request(['duration' => 1800, 'date' => 'quarter']);$/;"	variable	line:625
+year_carbon_start	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^         $year_carbon_start = Carbon::now()->firstOfQuarter();$/;"	variable	line:632
+year_carbon_end	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^         $year_carbon_end =  Carbon::now()->lastOfQuarter();$/;"	variable	line:633
+year_request	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^         $year_request = new Request(['duration' => 1800, 'date' => 'year']);$/;"	variable	line:640
+activeUser	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    public function activeUser(Request $request)$/;"	function	line:651
+date_start	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                $date_start = Carbon::now()->startOfDay();$/;"	variable	line:655
+date_end	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                $date_end = Carbon::now()->endOfDay();$/;"	variable	line:656
+date_start	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                $date_start = Carbon::now()->startOfMonth();$/;"	variable	line:659
+date_end	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                $date_end = Carbon::now()->endOfMonth();$/;"	variable	line:660
+date_start	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                $date_start = Carbon::now()->firstOfQuarter();$/;"	variable	line:663
+date_end	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                $date_end = Carbon::now()->lastOfQuarter();$/;"	variable	line:664
+date_start	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                $date_start = Carbon::now()->startOfYear();$/;"	variable	line:667
+date_end	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                $date_end = Carbon::now()->endOfYear();$/;"	variable	line:668
+duration	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $duration = $request->get('duration');$/;"	variable	line:674
+order	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $order  = $request->get('order');$/;"	variable	line:675
+countTodayActive	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $countTodayActive = StudentUser::whereHas('robot_durations', function ($query) use ($duration, $date_start, $date_end)  {$/;"	variable	line:676
+countTodayActive	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                $countTodayActive = $countTodayActive->has('orders');$/;"	variable	line:680
+countTodayActive	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^                $countTodayActive = $countTodayActive->count();    \/\/ 机器人使用时长30分钟以上$/;"	variable	line:682
+calEveryPeriodAddUsers	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    public function calEveryPeriodAddUsers(Request $request)$/;"	function	line:686
+period	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $period = $request->get('period');$/;"	variable	line:688
+length	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $length = $request->get('length');$/;"	variable	line:689
+today_carbon_start	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^            $today_carbon_start = Carbon::now()->day($i)->startOfDay();$/;"	variable	line:692
+today_carbon_end	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^            $today_carbon_end =  Carbon::now()->day($i)->endOfDay();$/;"	variable	line:693
+getActiveUserOfMonth	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    public function getActiveUserOfMonth()$/;"	function	line:704
+practice_duration	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $practice_duration = Request::get('practice_duration');$/;"	variable	line:706
+account_type	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $account_type      = Request::get('account_type');$/;"	variable	line:707
+data	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        \/\/ $data = StudentUser::where('')$/;"	variable	line:708
+getProvinces	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    public function getProvinces()$/;"	function	line:716
+data	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $data = \\App\\Province::where('pid', '>', 0)->get();$/;"	variable	line:718
+getCities	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    public function getCities($id)$/;"	function	line:722
+cities	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $cities = \\App\\City::where('pid', $id)->get();$/;"	variable	line:724
+playRecords	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    public function playRecords()$/;"	function	line:733
+play_records	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $play_records = \\App\\Play_record::with(['music' => function ($query) {$/;"	variable	line:738
+key	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        foreach ($play_records as $key => $value) {$/;"	variable	line:745
+temp_value	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        \/\/     $temp_value = $value->midi_path;$/;"	variable	line:750
+temp	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        \/\/         $temp = explode('public', $v);$/;"	variable	line:752
+v	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        \/\/         $v = $temp[1];$/;"	variable	line:753
+downloadSectionMidi	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    \/\/ public function downloadSectionMidi(Request $request)$/;"	function	line:768
+path	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    \/\/     $path = public_path('midis') ;$/;"	variable	line:771
+filename	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    \/\/     $filename = $path . '\/' . $request->get('name');$/;"	variable	line:773
+newfilename	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    \/\/     $newfilename = $request->get('newname') . '.mid';$/;"	variable	line:775
+headers	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    \/\/     $headers = array($/;"	variable	line:777
+lockUsers	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    public function lockUsers(Request $request)$/;"	function	line:790
+ids	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $ids =  $request->get('ids');$/;"	variable	line:792
+user	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^            $user = StudentUser::find($id);$/;"	variable	line:794
+unique_result	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $unique_result = array_unique($result);$/;"	variable	line:799
+unlockUsers	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    public function unlockUsers(Request $request)$/;"	function	line:816
+ids	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $ids =  $request->get('ids');$/;"	variable	line:818
+user	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^            $user = StudentUser::find($id);$/;"	variable	line:820
+unique_result	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $unique_result = array_unique($result);$/;"	variable	line:825
+notifyUsers	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^    public function notifyUsers(Request $request)$/;"	function	line:842
+message	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $message = $request->get('message');$/;"	variable	line:844
+ids	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^        $ids = $request->get('user_id');$/;"	variable	line:845
+notification	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^            $notification = new Notification;$/;"	variable	line:847
+result	D:\wamp\www\m1\app\Http\Controllers\UserController.php	/^            $result = $notification->save();$/;"	variable	line:850

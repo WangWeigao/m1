@@ -53,4 +53,9 @@ class StudentUser extends Model
     {
         return $this->hasMany('App\RobotDuration', 'user_id', 'uid');
     }
+
+    public function user_actions()
+    {
+        return $this->hasMany('App\UserAction', 'user_id', 'uid');
+    }
 }

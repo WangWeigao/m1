@@ -25,7 +25,8 @@ class test001Controller extends Controller
         // $values = \Redis::lrange('names1', 2, 5);
         // return $values;
         // return $user;
-        return microtime();
+        // return microtime();
+        return gmstrftime('%H:%M:%S',600);
     }
 
     /**
