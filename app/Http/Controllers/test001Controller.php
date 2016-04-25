@@ -17,14 +17,15 @@ class test001Controller extends Controller
      */
     public function index()
     {
-        $id = 1;
-        $user = \Redis::get('user:profile:'.$id);
+        // $id = 1;
+        // $user = \Redis::get('user:profile:'.$id);
         // return view('user.profile', ['user' => $user]);
         // \Redis::set('names1', 'Taylor');
 
         // $values = \Redis::lrange('names1', 2, 5);
         // return $values;
-        return $user;
+        // return $user;
+        return microtime();
     }
 
     /**

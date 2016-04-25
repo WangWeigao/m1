@@ -141,6 +141,32 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/user/notifyUsers', 'UserController@notifyUsers');
 
     /**
+     * 单个用户的“基本信息”
+     */
+    Route::get('/user/basicinfo/{id}', 'UserController@showBasicInfo');
+
+    /**
+     * 单个用户的“活动历史”
+     */
+    Route::get('/user/actionhistory/{id}', 'UserController@showActionHistory');
+
+    /**
+     * 单个用户的“成绩历史”
+     */
+    Route::get('/user/recordhistory/{id}', 'UserController@showRecordHistory');
+
+    /**
+     * 单个用户的“订单历史”
+     */
+    Route::get('/user/orderhistory/{id}', 'UserController@showOrderHistory');
+
+    /**
+     * 单个用户的“社交历史”
+     */
+    Route::get('/user/socialhistory/{id}', 'UserController@showSocialHistory');
+
+
+    /**
      * 使用资源路由
      */
     Route::resource('/user', 'UserController');

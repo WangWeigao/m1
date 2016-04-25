@@ -13,6 +13,7 @@ use App\Notification;
 use DB;
 use Carbon\Carbon;
 use App\Order;
+use App\RobotDuration;
 class UserController extends Controller
 {
     /**
@@ -446,6 +447,96 @@ class UserController extends Controller
         //
         // //以Json形式返回
         // return view('userdetail')->with('data', $data);
+    }
+
+    /**
+     * 单个用户的“基本信息”
+     * @method showBasicInfo
+     * @return [type]        [description]
+     */
+    public function showBasicInfo($id)
+    {
+        $user       = StudentUser::find($id);
+        // 本月使用时长
+        $start_time = Carbon::now()->startOfMonth();
+        $end_time   = Carbon::now()->endOfDay();
+        $user['duration_month'] = RobotDuration::select(DB::raw('SUM(duration) as sum_duration'))
+                                                ->where('user_id', $id)
+                                                ->whereBetween('created_at', [$start_time, $end_time])
+                                                ->groupBy('user_id')
+                                                ->get();
+        if (!$user->isactive) {
+            $user->status = '锁定';
+        } else {
+            if ($user->account_grade == 0) {
+                $user->status = '正常';
+            } elseif ($user->account_grade == 1) {     // 如果为vip1用户
+                if (Carbon::now() < Carbon::parse($user->account_end_at)                  // 还在有效期
+                    && Carbon::now()->addMonth() > Carbon::parse($user->account_end_at)   // 有效期不足一个月
+                    ) {
+                    $user->status = '未续费';
+                } elseif (Carbon::now() > Carbon::parse($user->account_end_at)) {
+                    $user->status = 'vip已过期';
+                } else {
+                    $user->status = '正常';
+                }
+            } elseif ($user->account_grade == 2) {
+                if (Carbon::now() < Carbon::parse($user->account_end_at)                  // 还在有效期
+                    && Carbon::now()->addWeek() > Carbon::parse($user->account_end_at)   // 有效期不足一个周
+                    ) {
+                    $user->status = '未续费';
+                } elseif (Carbon::now() > Carbon::parse($user->account_end_at)) {
+                    $user->status = 'vip已过期';
+                } else {
+                    $user->status = '正常';
+                }
+            } else {
+                $user->status = '正常';
+            }
+        }
+        // return $user;
+        return view('userbasicinfo')->with('user', $user);
+    }
+
+    /**
+     * 单个用户的“活动历史”
+     * @method showActionHistory
+     * @return Response            [description]
+     */
+    public function showActionHistory()
+    {
+        # 活动内容需要客户端提交信息，具体待协商
+    }
+
+    /**
+     * 单个用户的“成绩历史”
+     * @method showRecordHistory
+     * @param  string            $value [description]
+     * @return Response                   [description]
+     */
+    public function showRecordHistory()
+    {
+        # code...
+    }
+
+    /**
+     * 单个用户的“订单历史”
+     * @method showOrderHistory
+     * @return Response           [description]
+     */
+    public function showOrderHistory()
+    {
+        # code...
+    }
+
+    /**
+     * 单个用户的社交历史
+     * @method showSocialHistory
+     * @return [type]            [description]
+     */
+    public function showSocialHistory()
+    {
+        # code...
     }
 
     /**
