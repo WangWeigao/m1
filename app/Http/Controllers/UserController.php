@@ -14,6 +14,7 @@ use DB;
 use Carbon\Carbon;
 use App\Order;
 use App\RobotDuration;
+use App\Play_record;
 class UserController extends Controller
 {
     /**
@@ -525,9 +526,16 @@ class UserController extends Controller
      * @param  string            $value [description]
      * @return Response                   [description]
      */
-    public function showRecordHistory()
+    public function showRecordHistory($id)
     {
-        # code...
+        $records = Play_record::where('user_id', $id)->paginate();
+        foreach ($records as $record) {
+            // 将以逗号分隔的midi文件路径，合并成数组
+            $record->midi_path = explode(',', $record->midi_path);
+        }
+        // return $records;
+        return view('userrecordhistory')
+                ->with(['records' => $records, 'user_id' => $id]);
     }
 
     /**

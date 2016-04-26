@@ -28,7 +28,8 @@ elixir(function(mix) {
     //     // 'jquery.dataTables_themeroller.css',    //表格排序
     // ])
     mix.styles('music.css', 'public/css/music.css')
-        .styles('user.css', 'public/css/user.css');
+        .styles('user.css', 'public/css/user.css')
+        .styles('userrecordhistory.css', 'public/css/userrecordhistory.css');
 
     /**
      * 合并js文件
@@ -65,5 +66,6 @@ elixir(function(mix) {
         'css/all.css',
         'js/all.js',
         'js/*.js',
+        'css/*.css'
     ]);
 });

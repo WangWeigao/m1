@@ -11,6 +11,14 @@ class Play_record extends Model
      * 允许软删除
      */
     protected $dates = ['deleted_at'];
+
+    /**
+     *
+     */
+    protected $casts = [
+        'errors' => 'array'
+    ];
+
     public function music()
     {
         return $this->belongsTo('App\Music', 'music_id', 'id');

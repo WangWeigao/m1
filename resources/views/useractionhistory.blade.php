@@ -17,23 +17,28 @@
                 <a href="/user/socialhistory/{{ $user->uid }}" class="btn btn-default">社交历史</a>
             </div>
         </div>
-
-        <h3>活动历史</h3>
-        <table class="table">
-            <tr>
-                <th>动作</th>
-                <th>时间</th>
-                <th>时长</th>
-            </tr>
-            @foreach($user->user_actions as $action)
+        @if(count($user->user_actions) != 0)
+            <h3>活动历史</h3>
+            <table class="table">
                 <tr>
-                    <td class="col-sm-4">{{ $action->action }}</td>
-                    <td class="col-sm-4">{{ $action->created_at }}</td>
-                    <td class="col-sm-4">{{ $action->duration ? $action->duration : '-' }}</td>
+                    <th>动作</th>
+                    <th>时间</th>
+                    <th>时长</th>
                 </tr>
-            @endforeach
-
-        </table>
+                @foreach($user->user_actions as $action)
+                    <tr>
+                        <td class="col-sm-4">{{ $action->action }}</td>
+                        <td class="col-sm-4">{{ $action->created_at }}</td>
+                        <td class="col-sm-4">{{ $action->duration ? $action->duration : '-' }}</td>
+                    </tr>
+                @endforeach
+            </table>
+        @else
+            <div class="text-center">
+                <hr>
+                <h3>暂无活动历史</h3>
+            </div>
+        @endif
     </div>
 
 @endsection

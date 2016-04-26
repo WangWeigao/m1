@@ -156,7 +156,7 @@
                 <tr>
                     <th><input type="checkbox" id="checkAll"></th>
                     <th>编号</th>
-                    <th>用户帐号</th>
+                    <th>用户账号</th>
                     <th>手机号</th>
                     <th>电子邮箱</th>
                     <th>地区</th>
@@ -186,7 +186,7 @@
                     {{-- 编号 --}}
                     <td><a href="#">{{ $user->seq_num }}</a></td>
                     {{-- 用户帐号 --}}
-                    <td><a href="{{ url('/user/' . $user->uid) }}">{{ $user->nickname }}</a></td>
+                    <td><a href="{{ url('/user/basicinfo/' . $user->uid) }}" target="_blank">{{ $user->nickname }}</a></td>
                     {{-- 电话号码 --}}
                     <td>{{ $user->cellphone }}</td>
                     {{-- 电子邮箱 --}}
