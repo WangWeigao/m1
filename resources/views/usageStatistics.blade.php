@@ -39,7 +39,7 @@
                         {{-- </form> --}}
 				    </div>
 				    <div class="">
-				        机器人：O2O = <span style="color:red;weight:bold">由于表结构及实现细节暂未商定,此处暂未实现</span><span></span>
+				        {{-- 机器人：O2O = <span style="color:red;weight:bold">由于表结构及实现细节暂未商定,此处暂未实现</span><span></span> --}}
 				    </div>
 				</div>
 
@@ -72,11 +72,11 @@
                             <button id="month_search" class="form-control">搜索</button>
 				    </div>
 				    <div class="">
-				        机器人：O2O = <span style="color:red;weight:bold">由于表结构及实现细节暂未商定,此处暂未实现</span><span></span>
+				        {{-- 机器人：O2O = <span style="color:red;weight:bold">由于表结构及实现细节暂未商定,此处暂未实现</span><span></span> --}}
 				    </div>
                     <input type="hidden" name="monthValue" value="{{ $data['monthValue'] }}">
-                    <div id="month_highcharts" style="height: 400px; margin: 0 auto" ></div>
-                    <div class="form-inline">
+                    <div id="month_highcharts" style="height: 400px;width: 80%; margin: 0 auto 30 0" ></div>
+                    <div class="form-inline" style="margin:30px auto">
                         <input type="checkbox" name="" value="" id="practice_duration">
                         <label for="practice_duration">练习时长</label>
                         <select class="form-control" name="practice_duration">
@@ -125,7 +125,7 @@
                             <button id="quarter_search" class="form-control">搜索</button>
 				    </div>
 				    <div class="">
-				        机器人：O2O = <span style="color:red;weight:bold">由于表结构及实现细节暂未商定,此处暂未实现</span><span></span>
+				        {{-- 机器人：O2O = <span style="color:red;weight:bold">由于表结构及实现细节暂未商定,此处暂未实现</span><span></span> --}}
 				    </div>
 				</div>
                 {{-- 本年 --}}
@@ -157,7 +157,7 @@
                             <button id="year_search" class="form-control">搜索</button>
 				    </div>
 				    <div class="">
-				        机器人：O2O = <span style="color:red;weight:bold">由于表结构及实现细节暂未商定,此处暂未实现</span><span></span>
+				        {{-- 机器人：O2O = <span style="color:red;weight:bold">由于表结构及实现细节暂未商定,此处暂未实现</span><span></span> --}}
 				    </div>
 				</div>
 				<div class="tab-pane" id="quarter">month</div>

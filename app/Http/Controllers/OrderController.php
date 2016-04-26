@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Order;
+use App\RobotOrder;
 use DB;
 
 class OrderController extends Controller
@@ -156,5 +157,17 @@ class OrderController extends Controller
         }
         // return view('orderdetail')->with('orderInfo', $orderInfo);
         return $orderInfo;
+    }
+
+
+    public function statistics()
+    {
+        $nums = RobotOrder::select(DB::raw('COUNT(*) as counts'))
+                            ->get()[0];
+        $pay_nums = RobotOrder::select(DB::raw('COUNT(*) as counts'))
+                            ->where('type', 4)
+                            ->get()[0];
+        return view('orderStatistics')->with(['nums' => $nums,
+                                              'pay_nums' => $pay_nums]);
     }
 }

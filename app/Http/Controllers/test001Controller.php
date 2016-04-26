@@ -26,7 +26,8 @@ class test001Controller extends Controller
         // return $values;
         // return $user;
         // return microtime();
-        return gmstrftime('%H:%M:%S',600);
+        // return gmstrftime('%H:%M:%S',600);
+        
     }
 
     /**

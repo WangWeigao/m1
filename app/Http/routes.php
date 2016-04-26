@@ -183,6 +183,12 @@ Route::group(['middleware' => 'web'], function () {
     */
     Route::resource('/teacher', 'TeacherController');
     // --------------------------------------订单路由-------------------------------------------------
+
+    /**
+     * 订单统计
+     */
+    Route::get('/order/statistics', 'OrderController@statistics');
+
     /**
      * 使用资源路由
      */

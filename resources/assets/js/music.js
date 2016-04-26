@@ -47,6 +47,7 @@ $(document).ready(function() {
                    'press': $("#add_press").val(),
                    'organizer': $("#add_organizer").val(),
                    'category': $("#add_category").val(),
+                   'level': $("#add_level").val(),
                    'note_content': $("#add_note_content").val(),
                },
                headers : {

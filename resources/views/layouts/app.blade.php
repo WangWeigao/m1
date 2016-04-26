@@ -70,16 +70,22 @@
                                 <li><a href="/user/playRecords">弹奏记录</a></li>
                             </ul>
                         </li>
-                        <li class="disabled" id="teacher-manager"><a href="{{ url('/teacher') }}">教师管理</a></li>
-                        <li class="disabled" id="order-manager"><a href="{{ url('/order') }}">订单管理</a></li>
-                        @can('access-finance')
+                        {{-- <li class="disabled" id="teacher-manager"><a href="{{ url('/teacher') }}">教师管理</a></li> --}}
+                        <li class="" id="order-manager">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">订单管理<span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="/order/statistics">订单统计</a></li>
+                                <li><a href="/order/list">订单列表</a></li>
+                            </ul>
+                        </li>
+                        {{-- @can('access-finance')
                             <li class="disabled"><a href="#">结算系统</a></li>
-                        @endif
-                        <li class="disabled"><a href="{{ url('/lessons') }}">发布审批</a></li>
-                        <li class="disabled"><a href="#">客服</a></li>
-                        @can('access-finance')
+                        @endif --}}
+                        {{-- <li class="disabled"><a href="{{ url('/lessons') }}">发布审批</a></li>
+                        <li class="disabled"><a href="#">客服</a></li> --}}
+                        {{-- @can('access-finance')
                             <li class=""><a href="#">系统管理</a></li>
-                        @endcan
+                        @endcan --}}
                     @endif
                 </ul>
 

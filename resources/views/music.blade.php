@@ -292,11 +292,28 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label for="add_category" class="col-sm-2 control-label">乐曲类别</label>
                             <div class="col-sm-10">
                                 <select class="form-control" id="add_category" name="category">
                                     <option value="0">请选择</option>
+                                </select>
+                            </div>
+                        </div> --}}
+                        <div class="form-group">
+                            <label for="add_level" class="col-sm-2 control-label">乐曲等级</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" id="add_level" name="level">
+                                    <option value="1">一级</option>
+                                    <option value="2">二级</option>
+                                    <option value="3">三级</option>
+                                    <option value="4">四级</option>
+                                    <option value="5">五级</option>
+                                    <option value="6">六级</option>
+                                    <option value="7">七级</option>
+                                    <option value="8">八级</option>
+                                    <option value="9">九级</option>
+                                    <option value="10">十级</option>
                                 </select>
                             </div>
                         </div>

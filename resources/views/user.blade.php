@@ -184,7 +184,7 @@
                     <td><input type="checkbox" name="user_action[]"></td>
                     <input type="hidden" name="user_id" value="{{ $user->uid }}">
                     {{-- 编号 --}}
-                    <td><a href="#">{{ $user->seq_num }}</a></td>
+                    <td>{{ $user->seq_num }}</td>
                     {{-- 用户帐号 --}}
                     <td><a href="{{ url('/user/basicinfo/' . $user->uid) }}" target="_blank">{{ $user->nickname }}</a></td>
                     {{-- 电话号码 --}}
@@ -203,7 +203,7 @@
                     <td>
                         @if(!empty($user->instrument_id))
                             @foreach($user->instrument_id as $instrument)
-                                {{ $instrument['name'] }}/
+                                {{ $instrument['name'] }}&nbsp;&nbsp;
                             @endforeach
                         @endif
                     </td>

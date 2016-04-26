@@ -150,7 +150,9 @@ class MusicController extends Controller
         $organizer_id     = $request->get('organizer') or 0;
         $note_content     = $request->get('note_content') or '';
         $note_operator    = $request->user()->id;
-        $category         = $request->get('category');
+        // $category         = $request->get('category');
+        $category         = 2;
+        $level            = $request->get('level');
         $section_duration = $request->get('section_duration');
         $track            = $request->get('track');
 
@@ -177,6 +179,7 @@ class MusicController extends Controller
             $music->note_operator    = $note_operator;
             $music->section_duration = $section_duration;
             $music->track            = $track;
+            $music->level            = $level;
             $result                  = $music->save();
             /**
              * 插入乐曲分类标签
