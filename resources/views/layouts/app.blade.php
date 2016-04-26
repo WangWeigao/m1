@@ -8,12 +8,12 @@
     <title>Laravel</title>
 
     <!-- Fonts -->
-    <link href="http://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
-    <link href="http://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
+    {{-- <link href="http://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'> --}}
+    {{-- <link href="http://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'> --}}
 
     <!-- Styles -->
-    <link href="http://apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap.css" rel="stylesheet">
-    {{-- <link rel="stylesheet" href="/bootstrap-3.3.6-dist/css/bootstrap.css" media="screen" title="no title" charset="utf-8"> --}}
+    {{-- <link href="http://apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap.css" rel="stylesheet"> --}}
+    <link rel="stylesheet" href="/bootstrap-3.3.6-dist/css/bootstrap.css" media="screen" title="no title" charset="utf-8">
     {{-- <link href="{{ elixir('css/all.css') }}" rel="stylesheet"> --}}
 
     {{-- 继承此模板的页面使用的CSS --}}
@@ -115,10 +115,10 @@
     @yield('content')
 
     <!-- JavaScripts -->
-    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-    {{-- <script src="/js/jquery.min.js"></script> --}}
-    <script src="http://apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    {{-- <script src="/bootstrap-3.3.6-dist/js/bootstrap.js"></script> --}}
+    {{-- <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script> --}}
+    <script src="/js/jquery.min.js"></script>
+    {{-- <script src="http://apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js"></script> --}}
+    <script src="/bootstrap-3.3.6-dist/js/bootstrap.js"></script>
     <script src="{{ elixir('js/app.js') }}"></script>
     {{-- <script src="js/app.js"></script> --}}
 

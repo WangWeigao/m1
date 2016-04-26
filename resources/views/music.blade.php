@@ -88,7 +88,8 @@
                                 <th>版本</th>
                                 <th>出版社</th>
                                 <th>主办机构</th>
-                                <th>乐曲类别</th>
+                                {{-- <th>乐曲类别</th> --}}
+                                <th>乐曲等级</th>
                                 <th>midi地址</th>
                                 <th>添加日期</th>
                                 <th>乐曲状态</th>
@@ -114,11 +115,12 @@
                                 <td class="{{ $item->organizer_id or ''}}">
                                     {{ $item->organizer->name or ''}}
                                 </td>
-                                <td>
+                                {{-- <td>
                                     @foreach($item->tags as $tag)
                                         <span class="{{ $tag->id  or ''}}">{{ $tag->name or ''}}</span>
                                     @endforeach
-                                </td>
+                                </td> --}}
+                                <td class="{{ $item->level }}">{{ $item->level }}级</td>
                                 <td><a href="/music/downloadMusic?name={{ $item->filename }}&newname={{ $item->name }}">{{ $item->filename ? $item->name : ''}}</a></td>
                                 <td>{{ $item->created_at or ''}}</td>
                                 <td>{{ $item->onshelf == 2 ? "已上架" : "待审核" }}</td>
@@ -186,7 +188,8 @@
                           <th>版本</th>
                           <th>出版社</th>
                           <th>主办机构</th>
-                          <th>乐曲类别</th>
+                          {{-- <th>乐曲类别</th> --}}
+                          <th>乐曲等级</th>
                           <th>分段时间</th>
                           <th>轨道数</th>
                           <th>备注</th>
@@ -208,9 +211,23 @@
                               <td>
                                   <select id="edit_organizer" class="form-control"></select>
                               </td>
-                              <td>
+                              {{-- <td>
                                   <select id="edit_category" class="form-control"></select>
                                   <div type="hidden" name="category_old" id="edit_category_old" value="">
+                              </td> --}}
+                              <td>
+                                  <select class="form-control" id="edit_level" name="">
+                                      <option value="1">一级</option>
+                                      <option value="2">二级</option>
+                                      <option value="3">三级</option>
+                                      <option value="4">四级</option>
+                                      <option value="5">五级</option>
+                                      <option value="6">六级</option>
+                                      <option value="7">七级</option>
+                                      <option value="8">八级</option>
+                                      <option value="9">九级</option>
+                                      <option value="10">十级</option>
+                                  </select>
                               </td>
                               <td>
                                   <select id="edit_section_duration" class="form-control">

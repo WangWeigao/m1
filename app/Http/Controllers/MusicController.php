@@ -404,6 +404,7 @@ class MusicController extends Controller
         $track            = $request->get('track');
         $note_content     = $request->get('notes') or '';
         $note_operator    = $request->user()->id;
+        $level            = $request->get('level');
         // return $request->all();
         $music            = Music::find($id);
         if (!empty($name)) {
@@ -436,10 +437,13 @@ class MusicController extends Controller
         }
         $category             = $request->get('category');
         $category_old         = $request->get('category_old');
-        if(!empty($category_old)) {
-            $music->tags()->updateExistingPivot($category_old, ['tag_id' => $category]);
-        }else {
-            $music->tags()->attach($category);
+        // if(!empty($category_old)) {
+        //     $music->tags()->updateExistingPivot($category_old, ['tag_id' => $category]);
+        // }else {
+        //     $music->tags()->attach($category);
+        // }
+        if (!empty($level)) {
+            $music->level = $level;
         }
         $result = $music->save();
         if ($result) {

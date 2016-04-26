@@ -84,7 +84,8 @@ $(document).ready(function() {
             $("#edit_version").val($(el).closest('tr').find('td:eq(4)').text());                    // 版本
             $("#edit_press").val($(el).closest('tr').find('td:eq(5)').attr('class'));               // 出版社
             $("#edit_organizer").val($(el).closest('tr').find('td:eq(6)').attr('class'));           // 主办机构
-            $("#edit_category").val($(el).closest('tr').find('td:eq(7) span').attr('class'));       // 乐曲类别
+            // $("#edit_category").val($(el).closest('tr').find('td:eq(7) span').attr('class'));       // 乐曲类别
+            $("#edit_level").val($(el).closest('tr').find('td:eq(7)').attr('class'));          // 乐曲等级
             $("#edit_category_old").val($(el).closest('tr').find('td:eq(7) span').attr('class'))    // 改变之前的"乐曲类别"
             $("#edit_section_duration").val($.trim($(el).closest('tr').find('td:eq(13)').text()));  // 分段时间
             $("#edit_track").val($.trim($(el).closest('tr').find('td:eq(14)').text()));             // 轨道
@@ -110,8 +111,9 @@ $(document).ready(function() {
                     'version': $("#edit_version").val(),
                     'press': $("#edit_press").val(),
                     'organizer': $("#edit_organizer").val(),
-                    'category': $("#edit_category").val(),
-                    'category_old': $("#edit_category_old").val(),
+                    // 'category': $("#edit_category").val(),
+                    // 'category_old': $("#edit_category_old").val(),
+                    'level': $("#edit_level").val(),
                     'section_duration': $("#edit_section_duration").val(),
                     'track': $("#edit_track").val(),
                     'notes': $("#edit_notes").val()
@@ -120,7 +122,7 @@ $(document).ready(function() {
                     'X-CSRF-TOKEN': $('input[name="_token"]').val()
                 },
                 success : function(data) {
-                    $("#addResult").html("修改成功!");
+                    location.reload();
                 },
                 error : function(data) {
                     alert('哦，出了点小问题，再试一次吧');
