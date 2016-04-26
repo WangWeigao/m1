@@ -15,7 +15,7 @@
             <a href="/user/actionhistory/{{ $user->uid }}" class="btn btn-default">活动历史</a>
             <a href="/user/recordhistory/{{ $user->uid }}" class="btn btn-default">成绩历史</a>
             <a href="/user/orderhistory/{{ $user->uid }}" class="btn btn-default">订单历史</a>
-            <a href="/user/socialhistory/{{ $user->uid }}" class="btn btn-default">社交历史</a>
+            <a href="/user/socialhistory/{{ $user->uid }}" class="btn btn-default" disabled>社交历史</a>
         </div>
     </div>
 

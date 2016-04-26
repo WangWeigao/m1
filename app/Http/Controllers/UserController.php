@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use App\Order;
 use App\RobotDuration;
 use App\Play_record;
+use App\RobotOrder;
 class UserController extends Controller
 {
     /**
@@ -543,9 +544,26 @@ class UserController extends Controller
      * @method showOrderHistory
      * @return Response           [description]
      */
-    public function showOrderHistory()
+    public function showOrderHistory($id)
     {
-        # code...
+        $start_time  = Carbon::now()->startOfMonth();
+        $end_time    = Carbon::now()->endOfDay();
+        $orders      = RobotOrder::where('user_id', $id)->get();
+        $consume_all = RobotOrder::select(DB::raw('SUM(price) as value'))
+                            ->where('user_id', $id)
+                            ->get();
+
+        $consume_month = RobotOrder::select(DB::raw('SUM(price) as value'))
+                            ->where('user_id', $id)
+                            ->whereBetween('pay_time', [$start_time, $end_time])
+                            ->get();
+
+        return view('userorderhistory')
+                ->with(['orders' => $orders,
+                        'user_id' => $id,
+                        'consume_all' => $consume_all,
+                        'consume_month' => $consume_month
+                    ]);
     }
 
     /**

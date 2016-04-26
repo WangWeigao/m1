@@ -7,7 +7,6 @@
           <li>学生列表</li>
           <li class="active">用户详情</li>
         </ol>
-
         {{-- 标签栏 --}}
         <div class="text-center">
             <div class="btn-group btn-group-lg">
@@ -15,7 +14,7 @@
                 <a href="/user/actionhistory/{{ $user_id }}" class="btn btn-default">活动历史</a>
                 <a href="/user/recordhistory/{{ $user_id }}" class="btn btn-default active">成绩历史</a>
                 <a href="/user/orderhistory/{{ $user_id }}" class="btn btn-default">订单历史</a>
-                <a href="/user/socialhistory/{{ $user_id }}" class="btn btn-default">社交历史</a>
+                <a href="/user/socialhistory/{{ $user_id }}" class="btn btn-default" disabled>社交历史</a>
             </div>
         </div>
         @if(count($records) != 0)
