@@ -4,3 +4,6 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
+AddPlayTimesToMusicsTable	D:\wamp\www\m1\database\migrations\2016_04_27_033842_add_play_times_to_musics_table.php	/^class AddPlayTimesToMusicsTable extends Migration$/;"	class	line:6
+up	D:\wamp\www\m1\database\migrations\2016_04_27_033842_add_play_times_to_musics_table.php	/^    public function up()$/;"	function	line:13
+down	D:\wamp\www\m1\database\migrations\2016_04_27_033842_add_play_times_to_musics_table.php	/^    public function down()$/;"	function	line:25
