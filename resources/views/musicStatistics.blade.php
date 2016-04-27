@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="breadcrumb">
-        <li>曲库管理</li>
-        <li class="active">曲库统计</li>
-    </div>
 
     <div class="container" style="margin-left:20%; line-height:25px;">
+        <div class="breadcrumb">
+            <li>曲库管理</li>
+            <li class="active">曲库统计</li>
+        </div>
         <p>
             库内所有乐曲总数：{{  $data['allCount'] }}首
         </p>

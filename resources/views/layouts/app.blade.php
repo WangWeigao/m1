@@ -10,6 +10,7 @@
     <!-- Fonts -->
     {{-- <link href="http://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'> --}}
     {{-- <link href="http://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'> --}}
+    <link rel="stylesheet" href="/css/Lato.css" media="screen" title="no title" charset="utf-8">
 
     <!-- Styles -->
     {{-- <link href="http://apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap.css" rel="stylesheet"> --}}
@@ -63,7 +64,7 @@
                             </ul>
                         </li>
                         <li id="user-manager" class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">学生管理<span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">用户管理<span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="/user">学生查询</a></li>
                                 <li><a href="/user/usageStatistics">学生使用情况统计</a></li>

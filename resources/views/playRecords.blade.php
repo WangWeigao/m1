@@ -2,7 +2,10 @@
 
 @section('content')
     <div class="container">
-
+        <ol class="breadcrumb">
+          <li>用户管理</li>
+          <li>学生弹奏记录</li>
+        </ol>
     <table class="table table-bordered table-hover">
         <tr>
             <th>乐曲名</th>

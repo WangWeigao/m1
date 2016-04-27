@@ -58,7 +58,8 @@ elixir(function(mix) {
     .scripts(['userUsageStatics.js'], 'public/js/userUsageStatics.js')
     .scripts(['user.js', 'dateSelector.js', 'jquery.form.js'], 'public/js/user.js')
     .scripts(['musicadd.js'], 'public/js/musicadd.js')
-    .scripts(['userbasicinfo.js'], 'public/js/userbasicinfo.js');
+    .scripts(['userbasicinfo.js'], 'public/js/userbasicinfo.js')
+    .scripts(['orderStatistics.js'], 'public/js/orderStatistics.js');
     /**
      * 添加时间戳
      */

@@ -25,7 +25,7 @@
         </ul>
         <div class="tab-content">
             <div class="tab-pane active" id="today">
-                今日
+                <div id="today_highcharts" style="height: 400px;width: 80%; margin: 0 auto 30 0" ></div>
             </div>
             <div class="tab-pane" id="month">
                 本月
@@ -39,4 +39,8 @@
 
         </div>
     </div>
+@endsection
+
+@section('js')
+    <script src="{{ elixir('js/orderStatistics.js') }}"></script>
 @endsection
