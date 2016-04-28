@@ -140,33 +140,33 @@ $(document).ready(function() {
      */
     $(".putaway").each(function(index, el) {
         $(this).bind('click', function(event) {
-            $.getJSON('/music/putaway/' + $(el).closest('tr').attr('id'), function(json, textStatus) {
-                console.log('操作成功');
-            });
+            $result = confirm('确认通过审核?');
+            if ($result) {
+                $.getJSON('/music/putaway/' + $(el).closest('tr').attr('id'), function(json, textStatus) {
+                    location.reload();
+                });
+            }
         });
     });
-    // 点击"删除"按钮
+    // 点击"下架"按钮
     $(".delete").each(function(indel, el) {
         $(this).bind('click', function(event) {
-            $.ajax({
-                url: '/music/' + $(el).closest('tr').attr('id'),
-                type: 'DELETE',
-                dataType: 'json',
-                headers : {
-                    'X-CSRF-TOKEN': $('input[name="_token"]').val()
-                }
-            })
-            .done(function() {
-                console.log("success");
-                $(el).closest('tr').remove();
+            $result = confirm('确认要下架这首乐曲?');
+            if ($result) {
+                $.ajax({
+                    url: '/music/' + $(el).closest('tr').attr('id'),
+                    type: 'DELETE',
+                    dataType: 'json',
+                    headers : {
+                        'X-CSRF-TOKEN': $('input[name="_token"]').val()
+                    }
+                })
+                .done(function() {
+                    console.log("success");
+                    $(el).closest('tr').remove();
 
-            })
-            .fail(function() {
-                console.log("error");
-            })
-            .always(function() {
-                console.log("complete");
-            });
+                });
+            }
         });
     });
 

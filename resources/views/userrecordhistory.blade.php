@@ -19,7 +19,7 @@
         </div>
         @if(count($records) != 0)
             <h3>成绩历史</h3>
-            <table class="table">
+            <table class="table table-hover">
                 <tr>
                     <th>日期</th>
                     <th>曲目</th>
@@ -32,21 +32,28 @@
                 </tr>
                 @foreach($records as $record)
                     <tr>
-                        <td>{{ $record->start_time }}</td>
+                        <td>{{ $record->practice_date }}</td>
                         <td>{{ $record->music_id }}</td>
-                        <td>{{ $record->duration }}</td>
-                        <td>{{ $record->record_expiration }}</td>
+                        <td>{{ $record->practice_time }}</td>
+                        <td>{{ $record->expiration }}</td>
                         <td>
-                            @foreach($record->midi_path as $value)
-                                {{ $value }}<br>
-                            @endforeach
+                            @if(!empty($record->midi_path))
+                                @foreach($record->midi_path as $value)
+                                    {{ $value }}<br>
+                                @endforeach
+                            @else
+                                暂无midi文件
+                            @endif
                         </td>
                         <td>
-                            @foreach($record->errors as $err)
-                                第{{ $err['section'] }}节:
-                                {{ $err['intonation'] ? '音准' : '' }}
-                                {{ $err['rhythm'] ? '节奏' : '' }}
-                                <br>
+                            需强化的小节：
+                            @foreach($record->error_number as $v)
+                                {{ $v }}&nbsp;&nbsp;
+                            @endforeach
+                            <br>
+                            不稳定的小节：
+                            @foreach($record->error_tempo as $v)
+                                {{ $v }}&nbsp;&nbsp;
                             @endforeach
                         </td>
                         <td>
@@ -69,6 +76,9 @@
                     </tr>
                 @endforeach
             </table>
+            <div class="text-center">
+                {!! $records->render() !!}
+            </div>
         @else
             <div class="text-center">
                 <hr>

@@ -4,6 +4,3 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-AddMidiPathWavPathExpirationColumnsToPracticeTable	D:\wamp\www\m1\database\migrations\2016_04_27_035544_add_midi_path_wav_path_expiration_columns_to_practice_table.php	/^class AddMidiPathWavPathExpirationColumnsToPracticeTable extends Migration$/;"	class	line:6
-up	D:\wamp\www\m1\database\migrations\2016_04_27_035544_add_midi_path_wav_path_expiration_columns_to_practice_table.php	/^    public function up()$/;"	function	line:13
-down	D:\wamp\www\m1\database\migrations\2016_04_27_035544_add_midi_path_wav_path_expiration_columns_to_practice_table.php	/^    public function down()$/;"	function	line:27

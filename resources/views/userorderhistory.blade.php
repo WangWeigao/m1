@@ -25,7 +25,7 @@
                 <span>目前累计消费:{{ $consume_all[0]->value or 0}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span>本月累计消费:{{ $consume_month[0]->value or 0 }}</span>
             </div>
-            <table class="table table-bordered">
+            <table class="table table-bordered table-hover">
                 <tr>
                     <th>订单号</th>
                     <th>日期</th>
@@ -43,6 +43,8 @@
                                 VIP1(包年)
                             @elseif($o->type == 2)
                                 VIP2(包月)
+                            @else
+                                普通用户
                             @endif
                         </td>
                         <td>
@@ -56,17 +58,21 @@
                         </td>
                         <td>{{ $o->price }}</td>
                         <td>
-                            @if($o->status == 0)
+                            @if($o->status == 1)
                                 待付款
-                            @elseif($o->status == 1)
-                                取消订单
                             @elseif($o->status == 2)
+                                取消订单
+                            @elseif($o->status == 3)
                                 已付款
+                            @else
                             @endif
                         </td>
                     </tr>
                 @endforeach
             </table>
+            <div class="text-center">
+                {!! $orders->render() !!}
+            </div>
         @else
             <div class="text-center">
                 <hr>

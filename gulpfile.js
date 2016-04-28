@@ -29,7 +29,8 @@ elixir(function(mix) {
     // ])
     mix.styles('music.css', 'public/css/music.css')
         .styles('user.css', 'public/css/user.css')
-        .styles('userrecordhistory.css', 'public/css/userrecordhistory.css');
+        .styles('userrecordhistory.css', 'public/css/userrecordhistory.css')
+        .styles('orderStatistics.css', 'public/css/orderStatistics.css');
 
     /**
      * 合并js文件

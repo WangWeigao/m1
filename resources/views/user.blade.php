@@ -229,6 +229,7 @@
                             <button type="button" class="btn btn-info btn-xs send_msg_single" id=""
                                     data-toggle="modal" data-target=".m_notify_all">通知</button>
                         </a>
+                        <button type="button" class="btn btn-default btn-xs"><a href="/user/basicinfo/{{$user->uid}}" target="_blank">查看</a></button>
                     </td>
                 </tr>
                 @endforeach

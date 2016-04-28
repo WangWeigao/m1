@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Order;
 use App\RobotOrder;
 use DB;
+use Carbon\Carbon;
 
 class OrderController extends Controller
 {
@@ -159,7 +160,11 @@ class OrderController extends Controller
         return $orderInfo;
     }
 
-
+    /**
+     * 订单统计
+     * @method statistics
+     * @return [type]     [description]
+     */
     public function statistics()
     {
         $nums = RobotOrder::select(DB::raw('COUNT(*) as counts'))
@@ -170,4 +175,109 @@ class OrderController extends Controller
         return view('orderStatistics')->with(['nums' => $nums,
                                               'pay_nums' => $pay_nums]);
     }
+
+    /**
+     * 获取按 日/月/季度/年 的统计结果数组
+     * @method tendency
+     * @param  Request  $request [description]
+     * @return [type]            [description]
+     */
+    public function tendency(Request $request)
+    {
+        $period = $request->get('period');
+        switch ($period) {
+            case 'today':
+                $dataValue = $this->getDayTendency();
+                break;
+            case 'month':
+                $dataValue = $this->getMonthTendency();
+                break;
+            case 'quarter':
+                $dataValue = $this->getQuarterTendency();
+                break;
+            case 'year':
+                $dataValue = $this->getYearTendency();
+                break;
+
+            default:
+                # code...
+                break;
+        }
+        return $dataValue;
+
+    }
+
+    /**
+     * 获取按天的统计结果
+     * @method getDayTendency
+     * @param  Carbon         $carbon [description]
+     * @return [type]                 [description]
+     */
+    public function getDayTendency()
+    {
+        $dt = Carbon::now('Asia/ShangHai');
+        $length = $dt->hour;
+        for ($i=0; $i <= $length; $i++) {
+            $start       = $dt->hour($i)->minute(0)->second(1)->toDateTimeString();
+            $end         = $dt->hour($i)->minute(59)->second(59)->toDateTimeString();
+            $dataValue[] = RobotOrder::whereBetween('pay_time', [$start, $end])->count();
+        }
+        return $dataValue;
+    }
+
+    /**
+     * 获取按月的统计结果
+     * @method getMonthTendency
+     * @return [type]           [description]
+     */
+    public function getMonthTendency()
+    {
+        $dt = Carbon::now('Asia/ShangHai');
+        $length = $dt->day;
+        for ($i=1; $i <= $length; $i++) {
+            $start       = $dt->day($i)->startOfDay()->toDateTimeString();
+            $end         = $dt->day($i)->endOfDay()->toDateTimeString();
+            $dataValue[] = RobotOrder::whereBetween('pay_time', [$start, $end])->count();
+        }
+        return $dataValue;
+    }
+
+    /**
+     * 按季度取得统计结果
+     * @method getQuarterTendency
+     * @return [type]             [description]
+     */
+    public function getQuarterTendency()
+    {
+        $dt     = Carbon::now('Asia/ShangHai');
+        $length = ($dt->month)%3;
+        for ($i=(floor(($dt->month)/3)*3+1); $i <=$dt->month ; $i++) {
+            $start = Carbon::now('Asia/ShangHai')->month($i)->startOfMonth();
+            $end   = Carbon::now('Asia/ShangHai')->month($i)->endOfMonth();
+            $dataValue[] = RobotOrder::whereBetween('pay_time', [$start, $end])->count();
+        }
+        return $dataValue;
+    }
+
+    /**
+     * 按年取得统计结果
+     * @method getYearTendency
+     * @return [type]          [description]
+     */
+    public function getYearTendency()
+    {
+        $dt     = Carbon::now('Asia/ShangHai');
+        $length = $dt->month;
+        DB::connection()->enableQueryLog();
+        // $time = $dt->startOfYear();
+        for ($i=1; $i<=$length; $i++) {
+            $start = Carbon::now('Asia/ShangHai')->month($i)->startOfMonth()->toDateTimeString();
+            $end   = Carbon::now('Asia/ShangHai')->month($i)->endOfMonth()->toDateTimeString();
+            $dataValue[] = RobotOrder::whereBetween('pay_time', [$start, $end])->count();
+
+        }
+        // return DB::getQueryLog();
+        return $dataValue;
+    }
+
 }

@@ -3,28 +3,33 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Play_record extends Model
+class Practice extends Model
 {
-    /**
-     * 允许软删除
-     */
-    protected $dates = ['deleted_at'];
+    protected $table = 'practice';
 
-    /**
-     *
-     */
-    protected $casts = [
-        'errors' => 'array'
-    ];
+    public function getMidiPathAttribute($value)
+    {
+        return explode(',', $value);
+    }
+
+    public function getErrorNumberAttribute($value)
+    {
+        return explode(',', $value);
+    }
+
+    public function getErrorTempoAttribute($value)
+    {
+        return explode(',', $value);
+    }
 
     public function music()
     {
         return $this->belongsTo('App\Music', 'music_id', 'id');
     }
 
-    public function getDurationAttribute($value)
+
+    public function getPracticeTimeAttribute($value)
     {
         if (!empty($value)) {
             $temp = gmstrftime('%H %M %S', $value);
@@ -35,4 +40,5 @@ class Play_record extends Model
         }
         return $value;
     }
+
 }

@@ -1,0 +1,8 @@
+.tab-pane {
+    width: 100%;
+}
+
+#year_highcharts {
+    /*width: 100%;*/
+    margin-right: 20px;
+}

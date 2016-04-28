@@ -190,14 +190,19 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/order/statistics', 'OrderController@statistics');
 
     /**
+    * 锁定或解锁订单
+    */
+    Route::get('/lockorder/{id}', 'OrderController@lockOrder');
+
+    /**
+     * 订单趋势
+     */
+    Route::get('/order/tendency', 'OrderController@tendency');
+
+    /**
      * 使用资源路由
      */
     Route::resource('/order', 'OrderController');
-
-    /**
-     * 锁定或解锁订单
-     */
-    Route::get('/lockorder/{id}', 'OrderController@lockOrder');
     // --------------------------------------财务路由-------------------------------------------------
     Route::resource('/finance', 'FinanceController');
     // --------------------------------------RBAC-------------------------------------------------

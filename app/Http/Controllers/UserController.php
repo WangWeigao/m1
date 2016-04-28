@@ -14,8 +14,9 @@ use DB;
 use Carbon\Carbon;
 use App\Order;
 use App\RobotDuration;
-use App\Play_record;
+use App\Practice;
 use App\RobotOrder;
+use App\UserAction;
 class UserController extends Controller
 {
     /**
@@ -81,7 +82,10 @@ class UserController extends Controller
          * 按字段不为这的情况，进行SQL语句拼接
          * "用户名"不为空
          */
-        $users = StudentUser::where('usertype', 1);
+        $users = StudentUser::where(function ($query) {
+            $query->where('usertype', '=', 1)
+                  ->orWhere('usertype', '<>', 1);
+        });
         if (!empty($user_cellphone_email)) {
             $users->where(function  ($query) use ($user_cellphone_email) {
                 $query->where('nickname', 'like', "%{$user_cellphone_email}%")
@@ -507,18 +511,10 @@ class UserController extends Controller
      */
     public function showActionHistory($id)
     {
-        $user = StudentUser::with('user_actions')->find($id);
-        foreach ($user->user_actions as $value) {
-            if (!empty($value->duration)) {
-                $temp = gmstrftime("%H %M %S", $value->duration);
-                $temp_array = explode(' ', $temp);
-                $value->duration = $temp_array[0] . '小时'
-                                 . $temp_array[1] . '分'
-                                 . $temp_array[2] . '秒';
-            }
-        }
-        // return $user;
-        return view('useractionhistory')->with('user', $user);
+        $actions = UserAction::where('user_id', $id)->paginate(10);
+
+        return view('useractionhistory')->with(['actions' => $actions,
+                                                'user_id' => $id]);
     }
 
     /**
@@ -529,12 +525,8 @@ class UserController extends Controller
      */
     public function showRecordHistory($id)
     {
-        $records = Play_record::where('user_id', $id)->paginate();
-        foreach ($records as $record) {
-            // 将以逗号分隔的midi文件路径，合并成数组
-            $record->midi_path = explode(',', $record->midi_path);
-        }
-        // return $records;
+        $records = Practice::where('uid', $id)->paginate(10);
+
         return view('userrecordhistory')
                 ->with(['records' => $records, 'user_id' => $id]);
     }
@@ -548,7 +540,7 @@ class UserController extends Controller
     {
         $start_time  = Carbon::now()->startOfMonth();
         $end_time    = Carbon::now()->endOfDay();
-        $orders      = RobotOrder::where('user_id', $id)->get();
+        $orders      = RobotOrder::where('user_id', $id)->paginate(10);
         $consume_all = RobotOrder::select(DB::raw('SUM(price) as value'))
                             ->where('user_id', $id)
                             ->get();
@@ -616,7 +608,7 @@ class UserController extends Controller
         $data['countStudents'] = StudentUser::count();  // 用户数
         $data['todayCountAdd'] = StudentUser::whereBetween('regdate', [$today_carbon_start, $today_carbon_end])->count();   // 今日增加用户数
         $data['todayCountUsed'] = StudentUser::whereBetween('lastlogin', [$today_carbon_start, $today_carbon_end])->count(); // 今日使用用户数
-        $data['todayCountOrder'] = Order::whereBetween('submit_time', [$today_carbon_start, $today_carbon_end])->count();    // 今日订单数
+        $data['todayCountOrder'] = RobotOrder::whereBetween('pay_time', [$today_carbon_start, $today_carbon_end])->count();    // 今日订单数
 
         $today_request = new Request(['duration' => 30, 'date' => 'today']);
         $data['todayCountActive'] = self::activeUser($today_request);    // 今日活跃用户数(机器人使用时长30分钟以上)
@@ -629,7 +621,7 @@ class UserController extends Controller
         //  $data['countStudents'] = StudentUser::count();  // 用户数
          $data['monthCountAdd'] = StudentUser::whereBetween('regdate', [$month_carbon_start, $month_carbon_end])->count();   // 今日增加用户数
          $data['monthCountUsed'] = StudentUser::whereBetween('lastlogin', [$month_carbon_start, $month_carbon_end])->count(); // 今日使用用户数
-         $data['monthCountOrder'] = Order::whereBetween('submit_time', [$month_carbon_start, $month_carbon_end])->count();    // 今日订单数
+         $data['monthCountOrder'] = RobotOrder::whereBetween('pay_time', [$month_carbon_start, $month_carbon_end])->count();    // 今日订单数
 
          $month_request = new Request(['duration' => 1800, 'date' => 'month']);
          $data['monthCountActive'] = self::activeUser($month_request);    // 今日活跃用户数(机器人使用时长30小时以上)
@@ -646,7 +638,7 @@ class UserController extends Controller
         //  $data['countStudents'] = StudentUser::count();  // 用户数
          $data['quarterCountAdd'] = StudentUser::whereBetween('regdate', [$quarter_carbon_start, $quarter_carbon_end])->count();   // 今日增加用户数
          $data['quarterCountUsed'] = StudentUser::whereBetween('lastlogin', [$quarter_carbon_start, $quarter_carbon_end])->count(); // 今日使用用户数
-         $data['quarterCountOrder'] = Order::whereBetween('submit_time', [$quarter_carbon_start, $quarter_carbon_end])->count();    // 今日订单数
+         $data['quarterCountOrder'] = RobotOrder::whereBetween('pay_time', [$quarter_carbon_start, $quarter_carbon_end])->count();    // 今日订单数
 
          $quarter_request = new Request(['duration' => 1800, 'date' => 'quarter']);
          $data['quarterCountActive'] = self::activeUser($quarter_request);    // 今日活跃用户数(机器人使用时长30小时以上)
@@ -661,7 +653,7 @@ class UserController extends Controller
         //  $data['countStudents'] = StudentUser::count();  // 用户数
          $data['yearCountAdd'] = StudentUser::whereBetween('regdate', [$year_carbon_start, $year_carbon_end])->count();   // 今日增加用户数
          $data['yearCountUsed'] = StudentUser::whereBetween('lastlogin', [$year_carbon_start, $year_carbon_end])->count(); // 今日使用用户数
-         $data['yearCountOrder'] = Order::whereBetween('submit_time', [$year_carbon_start, $year_carbon_end])->count();    // 今日订单数
+         $data['yearCountOrder'] = RobotOrder::whereBetween('pay_time', [$year_carbon_start, $year_carbon_end])->count();    // 今日订单数
 
          $year_request = new Request(['duration' => 1800, 'date' => 'year']);
          $data['yearCountActive'] = self::activeUser($year_request);    // 今日活跃用户数(机器人使用时长30小时以上)
@@ -761,27 +753,10 @@ class UserController extends Controller
         /**
          * 获取所有弹奏记录
          */
-        $play_records = \App\Play_record::with(['music' => function ($query) {
+        $play_records = \App\Practice::with(['music' => function ($query) {
             $query->withTrashed();
         }])->get();
 
-        /**
-         * 将记录中的midi_path字符串, 分隔成数组
-         */
-        foreach ($play_records as $key => $value) {
-            $value->midi_path = explode(',', $value->midi_path);
-        }
-
-        // foreach ($play_records as $value) {
-        //     $temp_value = $value->midi_path;
-        //     foreach ($temp_value as $v) {
-        //         $temp = explode('public', $v);
-        //         $v = $temp[1];
-        //     }
-            // dd($temp_value);
-            // $value->midi_path = $temp_value;
-        // }
-// return $play_records;
         return view('playRecords')->with('play_records', $play_records);
     }
 

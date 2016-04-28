@@ -25,22 +25,28 @@
         </ul>
         <div class="tab-content">
             <div class="tab-pane active" id="today">
-                <div id="today_highcharts" style="height: 400px;width: 80%; margin: 0 auto 30 0" ></div>
+                <div id="today_highcharts"></div>
             </div>
             <div class="tab-pane" id="month">
-                本月
+                <div id="month_highcharts"></div>
             </div>
             <div class="tab-pane" id="quarter">
-                本季度
+                <div id="quarter_highcharts"></div>
             </div>
             <div class="tab-pane" id="year">
-                本年
+                <div id="year_highcharts"></div>
             </div>
 
         </div>
     </div>
 @endsection
 
+@section('css')
+    <link rel="stylesheet" href="{{ elixir('css/orderStatistics.css') }}" media="screen" title="no title" charset="utf-8">
+@endsection
+
 @section('js')
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="{{ elixir('js/orderStatistics.js') }}"></script>
 @endsection

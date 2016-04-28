@@ -20,10 +20,10 @@
     </div>
 
     <h3>基本信息</h3>
-    <table class="table">
+    <table class="table table-hover">
         <tr>
             <td class="col-sm-3">编号</td>
-            <td class="col-sm-9">{{ $user->seq_num }}</td>
+            <td class="col-sm-9">{{ $user->uid }}</td>
         </tr>
         <tr>
             <td>头像</td>
