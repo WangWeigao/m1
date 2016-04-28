@@ -30,7 +30,8 @@ elixir(function(mix) {
     mix.styles('music.css', 'public/css/music.css')
         .styles('user.css', 'public/css/user.css')
         .styles('userrecordhistory.css', 'public/css/userrecordhistory.css')
-        .styles('orderStatistics.css', 'public/css/orderStatistics.css');
+        .styles('orderStatistics.css', 'public/css/orderStatistics.css')
+        .styles(['bootstrap-datetimepicker.css', 'order.css'], 'public/css/order.css');
 
     /**
      * 合并js文件
@@ -60,7 +61,8 @@ elixir(function(mix) {
     .scripts(['user.js', 'dateSelector.js', 'jquery.form.js'], 'public/js/user.js')
     .scripts(['musicadd.js'], 'public/js/musicadd.js')
     .scripts(['userbasicinfo.js'], 'public/js/userbasicinfo.js')
-    .scripts(['orderStatistics.js'], 'public/js/orderStatistics.js');
+    .scripts(['orderStatistics.js'], 'public/js/orderStatistics.js')
+    .scripts(['moment.min.js', 'bootstrap-datetimepicker.min.js', 'order.js', 'getUrlParam.js'], 'public/js/order.js');
     /**
      * 添加时间戳
      */

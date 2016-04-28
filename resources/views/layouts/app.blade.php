@@ -76,7 +76,7 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">订单管理<span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="/order/statistics">订单统计</a></li>
-                                <li><a href="/order/list">订单列表</a></li>
+                                <li><a href="/order">订单列表</a></li>
                             </ul>
                         </li>
                         {{-- @can('access-finance')

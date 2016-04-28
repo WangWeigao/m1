@@ -45,17 +45,6 @@
                             <th>操作</th>
                         </tr>
                     </thead>
-                    <tfoot>
-                        <tr>
-                            <th>订单时间</th>
-                            <th>订单ID</th>
-                            <th>金额(元)</th>
-                            <th>订单评分</th>
-                            <th>订单状态</th>
-                            <th>提现</th>
-                            <th>操作</th>
-                        </tr>
-                    </tfoot>
                     <tbody>
                         @foreach($orders as $order)
                             <tr>
@@ -126,4 +115,12 @@
             {!! $orders->appends(['from_time' => $from_time, 'to_time' => $to_time])->render() !!}
         </div> --}}
 
+@endsection
+
+@section('css')
+    <link rel="stylesheet" href="/css/order.css" media="screen" title="no title" charset="utf-8">
+@endsection
+
+@section('js')
+    <script src="js/order.js"></script>
 @endsection

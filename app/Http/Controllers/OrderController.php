@@ -42,7 +42,7 @@ class OrderController extends Controller
         /**
          * 按时间跨度查询订单
          */
-        $orders = Order::whereBetween('submit_time', [$from_time, $to_time])->get();
+        $orders = RobotOrder::whereBetween('pay_time', [$from_time, $to_time])->get();
                     //    ->paginate(10);
 
         // 将 status 的值替换为可识别的内容
@@ -252,8 +252,8 @@ class OrderController extends Controller
         $dt     = Carbon::now('Asia/ShangHai');
         $length = ($dt->month)%3;
         for ($i=(floor(($dt->month)/3)*3+1); $i <=$dt->month ; $i++) {
-            $start = Carbon::now('Asia/ShangHai')->month($i)->startOfMonth();
-            $end   = Carbon::now('Asia/ShangHai')->month($i)->endOfMonth();
+            $start       = Carbon::now('Asia/ShangHai')->month($i)->startOfMonth();
+            $end         = Carbon::now('Asia/ShangHai')->month($i)->endOfMonth();
             $dataValue[] = RobotOrder::whereBetween('pay_time', [$start, $end])->count();
         }
         return $dataValue;
@@ -269,14 +269,11 @@ class OrderController extends Controller
         $dt     = Carbon::now('Asia/ShangHai');
         $length = $dt->month;
         DB::connection()->enableQueryLog();
-        // $time = $dt->startOfYear();
         for ($i=1; $i<=$length; $i++) {
-            $start = Carbon::now('Asia/ShangHai')->month($i)->startOfMonth()->toDateTimeString();
-            $end   = Carbon::now('Asia/ShangHai')->month($i)->endOfMonth()->toDateTimeString();
+            $start       = Carbon::now('Asia/ShangHai')->month($i)->startOfMonth()->toDateTimeString();
+            $end         = Carbon::now('Asia/ShangHai')->month($i)->endOfMonth()->toDateTimeString();
             $dataValue[] = RobotOrder::whereBetween('pay_time', [$start, $end])->count();
-
         }
-        // return DB::getQueryLog();
         return $dataValue;
     }
 
