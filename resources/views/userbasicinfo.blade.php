@@ -63,13 +63,14 @@
         <tr>
             <td>指定乐器</td>
             <td>
-                @if(!empty($user->instrument_id))
+                {{-- @if(!empty($user->instrument_id))
                     @foreach($user->instrument_id as $value)
                         {{ $value['name'] }}&nbsp;
                     @endforeach
                 @else
                     暂无
-                @endif
+                @endif --}}
+                {{ $user->instrument_id }}
             </td>
         </tr>
         <tr>
