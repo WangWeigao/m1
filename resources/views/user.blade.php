@@ -201,11 +201,12 @@
                     <td>{{ $user->user_grade }}</td>
                     {{-- 指定乐器 --}}
                     <td>
-                        @if(!empty($user->instrument_id))
+                        {{-- @if(!empty($user->instrument_id))
                             @foreach($user->instrument_id as $instrument)
                                 {{ $instrument['name'] }}&nbsp;&nbsp;
                             @endforeach
-                        @endif
+                        @endif --}}
+                        {{ $user->instrument_id ? '钢琴' : '' }}
                     </td>
                     {{-- 注册日期 --}}
                     <td>{{ $user->regdate }}</td>
