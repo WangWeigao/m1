@@ -33,9 +33,9 @@ class StudentUser extends Model
      * @method orders
      * @return [type] [description]
      */
-    public function orders()
+    public function robot_orders()
     {
-        return $this->hasMany('App\Order', 'student_uid', 'uid');
+        return $this->hasMany('App\RobotOrder', 'user_id', 'uid');
     }
 
 
@@ -49,9 +49,9 @@ class StudentUser extends Model
         return $this->hasMany('App\Lesson', 'teacher_uid', 'uid');
     }
 
-    public function robot_durations()
+    public function practice()
     {
-        return $this->hasMany('App\RobotDuration', 'user_id', 'uid');
+        return $this->hasMany('App\Practice', 'uid', 'uid');
     }
 
     public function user_actions()

@@ -610,7 +610,7 @@ class UserController extends Controller
         $data['todayCountUsed'] = StudentUser::whereBetween('lastlogin', [$today_carbon_start, $today_carbon_end])->count(); // 今日使用用户数
         $data['todayCountOrder'] = RobotOrder::whereBetween('pay_time', [$today_carbon_start, $today_carbon_end])->count();    // 今日订单数
 
-        $today_request = new Request(['duration' => 30, 'date' => 'today']);
+        $today_request = new Request(['practice_time' => 30*60, 'date' => 'today']);
         $data['todayCountActive'] = self::activeUser($today_request);    // 今日活跃用户数(机器人使用时长30分钟以上)
 
         /**
@@ -623,7 +623,7 @@ class UserController extends Controller
          $data['monthCountUsed'] = StudentUser::whereBetween('lastlogin', [$month_carbon_start, $month_carbon_end])->count(); // 今日使用用户数
          $data['monthCountOrder'] = RobotOrder::whereBetween('pay_time', [$month_carbon_start, $month_carbon_end])->count();    // 今日订单数
 
-         $month_request = new Request(['duration' => 1800, 'date' => 'month']);
+         $month_request = new Request(['practice_time' => 30*60*60, 'date' => 'month']);
          $data['monthCountActive'] = self::activeUser($month_request);    // 今日活跃用户数(机器人使用时长30小时以上)
         //  $data['monthDayth'] = Carbon::now()->day;
         $data['monthValue'] = Carbon::now()->day;
@@ -640,7 +640,7 @@ class UserController extends Controller
          $data['quarterCountUsed'] = StudentUser::whereBetween('lastlogin', [$quarter_carbon_start, $quarter_carbon_end])->count(); // 今日使用用户数
          $data['quarterCountOrder'] = RobotOrder::whereBetween('pay_time', [$quarter_carbon_start, $quarter_carbon_end])->count();    // 今日订单数
 
-         $quarter_request = new Request(['duration' => 1800, 'date' => 'quarter']);
+         $quarter_request = new Request(['practice_time' => 30*60*60, 'date' => 'quarter']);
          $data['quarterCountActive'] = self::activeUser($quarter_request);    // 今日活跃用户数(机器人使用时长30小时以上)
         //  $data['QuarterMonth'] = Carbon::now()->nthOfQuarter();
 
@@ -655,7 +655,7 @@ class UserController extends Controller
          $data['yearCountUsed'] = StudentUser::whereBetween('lastlogin', [$year_carbon_start, $year_carbon_end])->count(); // 今日使用用户数
          $data['yearCountOrder'] = RobotOrder::whereBetween('pay_time', [$year_carbon_start, $year_carbon_end])->count();    // 今日订单数
 
-         $year_request = new Request(['duration' => 1800, 'date' => 'year']);
+         $year_request = new Request(['practice_time' => 30*60*60, 'date' => 'year']);
          $data['yearCountActive'] = self::activeUser($year_request);    // 今日活跃用户数(机器人使用时长30小时以上)
         return view('usageStatistics')->with('data', $data);
     }
@@ -689,13 +689,15 @@ class UserController extends Controller
                 # code...
                 break;
         }
-        $duration = $request->get('duration');
+        $practice = $request->get('practice_time');
         $order  = $request->get('order');
-        $countTodayActive = StudentUser::whereHas('robot_durations', function ($query) use ($duration, $date_start, $date_end)  {
-            $query->whereBetween('created_at', [$date_start, $date_end])->groupby('user_id')->havingRaw("SUM(duration) > $duration");
+        $countTodayActive = StudentUser::whereHas('practice', function ($query) use ($practice, $date_start, $date_end)  {
+            $query->whereBetween('practice_date', [$date_start, $date_end])
+                    ->groupby('practice.uid')
+                    ->havingRaw("SUM(practice_time) > $practice");
         });
             if ($order) {
-                $countTodayActive = $countTodayActive->has('orders');
+                $countTodayActive = $countTodayActive->has('robot_orders');
             }
                 $countTodayActive = $countTodayActive->count();    // 机器人使用时长30分钟以上
         return $countTodayActive;
@@ -721,7 +723,7 @@ class UserController extends Controller
      */
     public function getActiveUserOfMonth()
     {
-        $practice_duration = Request::get('practice_duration');
+        $practice_time = Request::get('practice_time');
         $account_type      = Request::get('account_type');
         // $data = StudentUser::where('')
     }
