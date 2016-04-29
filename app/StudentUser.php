@@ -61,7 +61,10 @@ class StudentUser extends Model
 
     public function getSexAttribute($value)
     {
-        $arr = ['男', '女'];
-        return $arr[$value-1];
+        if (in_array($value, [1,2])) {
+            $arr = ['男', '女'];
+            $value = $arr[$value-1];
+        }
+        return $value;
     }
 }
