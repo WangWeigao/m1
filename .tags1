@@ -4,3 +4,7 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
+ajaxSubmitForm	D:\wamp\www\m1\resources\assets\js\user.js	/^    \/\/     function ajaxSubmitForm() {$/;"	function	line:217
+getUrlParam	D:\wamp\www\m1\resources\assets\js\user.js	/^         $.getUrlParam = function (name) {$/;"	function	line:245
+setUrlParam	D:\wamp\www\m1\resources\assets\js\user.js	/^     function setUrlParam(para_name, para_value) {$/;"	function	line:354
+getUrlParam	D:\wamp\www\m1\resources\assets\js\user.js	/^      function getUrlParam(name) {$/;"	function	line:391

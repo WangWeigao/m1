@@ -497,9 +497,11 @@ $(document).ready(function() {
                   if (data) {
                       $(el).attr('class', 'lockuser btn btn-success btn-xs');
                       $(el).text('锁定');
+                      $(el).parent().prev().text('正常');
                   } else {
                       $(el).attr('class', 'lockuser btn btn-danger btn-xs');
                       $(el).text('解锁');
+                      $(el).parent().prev().text('锁定');
                   }
               })
               .fail(function() {
