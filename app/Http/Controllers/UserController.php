@@ -882,9 +882,13 @@ class UserController extends Controller
         /**
          * 今日累计练习曲目数量
          */
-         $count_today =  Practice::whereBetween('practice_date', [$start_time, $end_time])
+         $count_today =  Practice::select('music_id')
+                            ->whereBetween('practice_date', [$start_time, $end_time])
                             ->where('uid', $id)
-                            ->count();
+                            ->groupBy('music_id')
+                            ->distinct()
+                            ->get();
+        $count_today = count($count_today);
 
         /**
          * 日期字符串
@@ -931,7 +935,7 @@ class UserController extends Controller
             $temp1['color'] = $colors1[$v->rating];
             $chart_rating[] = $temp1;
         }
-        // return $chart_rating;
+        // return $count_today;
         return view('recordReport')->with(['duration_today' => $duration_today,
                                             'count_today' => $count_today,
                                             'date_string' => $date_string,
