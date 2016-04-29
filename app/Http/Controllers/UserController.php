@@ -860,4 +860,125 @@ class UserController extends Controller
             return $data;
         }
     }
+    public function recordReport($id)
+    {
+        /**
+         * 今日累计练习时长
+         */
+        $start_time = Carbon::now('Asia/ShangHai')->startOfDay()->toDateTimeString();
+        $end_time   = Carbon::now('Asia/ShangHai')->endOfDay()->toDateTimeString();
+        $duration_today =  Practice::select(DB::raw('SUM(practice_time) as value'))
+                            ->whereBetween('practice_date', [$start_time, $end_time])
+                            ->where('uid', $id)
+                            ->groupBy('uid')
+                            ->first();
+        // 格式化成 HH:MM:SS
+        if (!empty($duration_today)) {
+            $duration_today = gmstrftime('%H:%M:%S', $duration_today->value);
+        }else {
+            $duration_today = 0;
+        }
+
+        /**
+         * 今日累计练习曲目数量
+         */
+         $count_today =  Practice::whereBetween('practice_date', [$start_time, $end_time])
+                            ->where('uid', $id)
+                            ->count();
+
+        /**
+         * 日期字符串
+         */
+        $date_string = Carbon::now()->toDateString();
+
+        /**
+         * 弹奏记录列表
+         */
+         $records = Practice::with('music')
+                            ->whereBetween('practice_date', [$start_time, $end_time])
+                            ->where('uid', $id)
+                            ->get();
+
+        /**
+         * 绘制图表所需数据
+         */
+        $text_data = Practice::with('music')
+                            ->select('music_id', DB::raw('SUM(practice_time) as one_music_duration'))
+                            ->whereBetween('practice_date', [$start_time, $end_time])
+                            ->where('uid', $id)
+                            ->groupBy('music_id')
+                            ->get();
+
+        $colors = ['#E76543', '#4A8EB6', '#8B3A8B', '#53B657', '#FDBD1A', '#FD341C'];
+        foreach ($text_data as $v) {
+            $temp['value'] = $v->one_music_duration;
+            $temp['color'] = array_shift($colors);
+            $v->hex = $temp['color'];
+            $char_data[] = $temp;
+        }
+
+        $rating_data = Practice::select('rating', DB::raw('COUNT(*) as count'))
+                                ->whereBetween('practice_date', [$start_time, $end_time])
+                                ->where('uid', $id)
+                                ->whereNotNull('rating')
+                                ->groupBy('rating')
+                                ->orderBy('rating')
+                                ->get();
+        $colors1 = ['#E76543', '#4A8EB6', '#8B3A8B', '#53B657', '#FDBD1A', '#FD341C'];
+        $chart_rating = [];
+        foreach ($rating_data as $v) {
+            $temp1['value'] = $v->rating;
+            $temp1['color'] = $colors1[$v->rating];
+            $chart_rating[] = $temp1;
+        }
+        // return $chart_rating;
+        return view('recordReport')->with(['duration_today' => $duration_today,
+                                            'count_today' => $count_today,
+                                            'date_string' => $date_string,
+                                            'records' => $records,
+                                            'text_data' => $text_data,
+                                            'id' => $id,
+                                            'chart_rating' => $chart_rating]);
+    }
+
+
+    public function recordReportChart($id)
+    {
+        /**
+         * 绘制图表所需数据
+         */
+         $start_time = Carbon::now('Asia/ShangHai')->startOfDay()->toDateTimeString();
+         $end_time   = Carbon::now('Asia/ShangHai')->endOfDay()->toDateTimeString();
+         $text_data = Practice::with('music')
+                            ->select('music_id', 'rating', DB::raw('SUM(practice_time) as one_music_duration'))
+                            ->whereBetween('practice_date', [$start_time, $end_time])
+                            ->where('uid', $id)
+                            ->groupBy('music_id')
+                            ->get();
+
+        $rating_data = Practice::select('rating', DB::raw('COUNT(*) as count'))
+                                ->whereBetween('practice_date', [$start_time, $end_time])
+                                ->where('uid', $id)
+                                ->whereNotNull('rating')
+                                ->groupBy('rating')
+                                ->orderBy('rating')
+                                ->get();
+
+         $colors = ['#E76543', '#4A8EB6', '#8B3A8B', '#53B657', '#FDBD1A'];
+         foreach ($text_data as $k => $v) {
+            $temp['value'] = $v->one_music_duration;
+            $temp['color'] = $colors[$k];
+            $data[] = $temp;
+         }
+
+         $colors1 = ['#E76543', '#4A8EB6', '#8B3A8B', '#53B657', '#FDBD1A', '#FD341C'];
+         foreach ($rating_data as $v) {
+             $temp1['value'] = $v->count;
+             $temp1['color'] = $colors1[$v->rating];
+             $data1[] = $temp1;
+         }
+         $all_data['data'] = $data;
+         $all_data['data1'] = $data1;
+         return $all_data;
+    }
 }

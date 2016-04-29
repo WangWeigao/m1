@@ -58,7 +58,7 @@ elixir(function(mix) {
     .scripts(['music.js', 'dateSelector.js', 'jquery.form.js', 'getUrlParam.js'], 'public/js/music.js')
     .scripts(['musicStatistics.js'], 'public/js/musicStatistics.js')
     .scripts(['userUsageStatics.js'], 'public/js/userUsageStatics.js')
-    .scripts(['user.js', 'dateSelector.js', 'jquery.form.js'], 'public/js/user.js')
+    .scripts(['user.js', 'dateSelector.js', 'jquery.form.js', 'getUrlParam.js'], 'public/js/user.js')
     .scripts(['musicadd.js'], 'public/js/musicadd.js')
     .scripts(['userbasicinfo.js'], 'public/js/userbasicinfo.js')
     .scripts(['orderStatistics.js'], 'public/js/orderStatistics.js')

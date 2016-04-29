@@ -165,6 +165,15 @@ Route::group(['middleware' => 'web'], function () {
      */
     Route::get('/user/socialhistory/{id}', 'UserController@showSocialHistory');
 
+    /**
+     * 成绩报告
+     */
+    Route::get('/user/recordReport/{id}', 'UserController@recordReport');
+
+    /**
+     * 获取绘图所用的数据
+     */
+     Route::get('/user/recordReportChart/{id}', 'UserController@recordReportChart');
 
     /**
      * 使用资源路由

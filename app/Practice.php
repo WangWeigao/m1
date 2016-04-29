@@ -13,12 +13,17 @@ class Practice extends Model
         return explode(',', $value);
     }
 
-    public function getErrorNumberAttribute($value)
+    public function getErrorMeasuresAttribute($value)
     {
         return explode(',', $value);
     }
 
-    public function getErrorTempoAttribute($value)
+    public function getFastMeasuresAttribute($value)
+    {
+        return explode(',', $value);
+    }
+
+    public function getSlowMeasuresAttribute($value)
     {
         return explode(',', $value);
     }
@@ -32,11 +37,10 @@ class Practice extends Model
     public function getPracticeTimeAttribute($value)
     {
         if (!empty($value)) {
-            $temp = gmstrftime('%H %M %S', $value);
+            $temp = gmstrftime('%M %S', $value);
             $temp = explode(' ', $temp);
-            $value = $temp[0] .'小时'
-                    . $temp[1] .'分'
-                    . $temp[2] .'秒';
+            $value = $temp[0] .':'
+                    . $temp[1];
         }
         return $value;
     }

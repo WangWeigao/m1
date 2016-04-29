@@ -15,8 +15,8 @@
             <div class="form-group form-inline">
                 {{-- <label for="">用户搜索</label> --}}
                 <div>精确搜索</div>
-                <input type="text" class="form-control" id="searchName" name="user_cellphone_email" placeholder="请输入用户名/手机号/电子邮件">
-                <button type="submit" name="button" class="btn btn-success" id="search">搜索</button>
+                <input type="text" class="form-control" id="user_cellphone_email" placeholder="请输入用户名/手机号/电子邮件">
+                <button type="button" name="button" class="btn btn-success" id="search">搜索</button>
             </div>
             <div class="form-group form-inline">
                 <div>筛选待件</div>
@@ -231,6 +231,7 @@
                                     data-toggle="modal" data-target=".m_notify_all">通知</button>
                         </a>
                         <button type="button" class="btn btn-default btn-xs"><a href="/user/basicinfo/{{$user->uid}}" target="_blank">查看</a></button>
+                        <button type="button" class="btn btn-default btn-xs"><a href="/user/recordReport/{{$user->uid}}" target="_blank">成绩报告</a></button>
                     </td>
                 </tr>
                 @endforeach

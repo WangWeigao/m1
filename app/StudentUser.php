@@ -58,4 +58,10 @@ class StudentUser extends Model
     {
         return $this->hasMany('App\UserAction', 'user_id', 'uid');
     }
+
+    public function getSexAttribute($value)
+    {
+        $arr = ['男', '女'];
+        return $arr[$value-1];
+    }
 }

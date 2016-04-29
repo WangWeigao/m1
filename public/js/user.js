@@ -2,6 +2,17 @@ $(document).ready(function() {
 
 
     /**
+     * 点击搜索按钮，只搜索输入的关键字，不匹配下面的筛选条件
+     */
+    $("#search").click(function(event) {
+        window.location.href='/user?_token=' + $("input[name=_token]").val()
+                                             +'&user_cellphone_email='
+                                             + $("#user_cellphone_email").val()
+                                             + '&field=uid&order=asc';
+    });
+    $("#user_cellphone_email").val($.getUrlParam('user_cellphone_email'));
+
+    /**
      * select下拉式日期选择器(注册时间段的开始时间)
      */
      var myDate = new Date();
@@ -625,7 +636,7 @@ $(document).ready(function() {
              console.log('printing checkbox log...');
          });
      });
-     // 如果输入框为空，则不允许点击“发送通知”
+
 });
 
 /*
@@ -1998,5 +2009,16 @@ function log() {
 }
 
 }));
+
+/**
+ * 获取 url 中的参数
+ */
+ (function ($) {
+     $.getUrlParam = function (name) {
+         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+         var r = window.location.search.substr(1).match(reg);
+         if (r != null) return unescape(r[2]); return null;
+     }
+ })(jQuery);
 
 //# sourceMappingURL=user.js.map

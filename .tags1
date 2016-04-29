@@ -4,7 +4,20 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-ajaxSubmitForm	D:\wamp\www\m1\resources\assets\js\user.js	/^    \/\/     function ajaxSubmitForm() {$/;"	function	line:217
-getUrlParam	D:\wamp\www\m1\resources\assets\js\user.js	/^         $.getUrlParam = function (name) {$/;"	function	line:245
-setUrlParam	D:\wamp\www\m1\resources\assets\js\user.js	/^     function setUrlParam(para_name, para_value) {$/;"	function	line:354
-getUrlParam	D:\wamp\www\m1\resources\assets\js\user.js	/^      function getUrlParam(name) {$/;"	function	line:391
+StudentUser	D:\wamp\www\m1\app\StudentUser.php	/^class StudentUser extends Model$/;"	class	line:7
+guarded	D:\wamp\www\m1\app\StudentUser.php	/^    protected $guarded = [];$/;"	variable	line:13
+guarded	D:\wamp\www\m1\app\StudentUser.php	/^    protected $guarded = [];$/;"	variable	line:13
+table	D:\wamp\www\m1\app\StudentUser.php	/^    protected $table = 'users';$/;"	variable	line:16
+table	D:\wamp\www\m1\app\StudentUser.php	/^    protected $table = 'users';$/;"	variable	line:16
+primaryKey	D:\wamp\www\m1\app\StudentUser.php	/^    protected $primaryKey = 'uid';$/;"	variable	line:19
+primaryKey	D:\wamp\www\m1\app\StudentUser.php	/^    protected $primaryKey = 'uid';$/;"	variable	line:19
+timestamps	D:\wamp\www\m1\app\StudentUser.php	/^    public $timestamps = false;$/;"	variable	line:22
+timestamps	D:\wamp\www\m1\app\StudentUser.php	/^    public $timestamps = false;$/;"	variable	line:22
+casts	D:\wamp\www\m1\app\StudentUser.php	/^    protected $casts = [$/;"	variable	line:27
+casts	D:\wamp\www\m1\app\StudentUser.php	/^    protected $casts = [$/;"	variable	line:27
+robot_orders	D:\wamp\www\m1\app\StudentUser.php	/^    public function robot_orders()$/;"	function	line:36
+lessons	D:\wamp\www\m1\app\StudentUser.php	/^    public function lessons()$/;"	function	line:47
+practice	D:\wamp\www\m1\app\StudentUser.php	/^    public function practice()$/;"	function	line:52
+user_actions	D:\wamp\www\m1\app\StudentUser.php	/^    public function user_actions()$/;"	function	line:57
+getSexAttribute	D:\wamp\www\m1\app\StudentUser.php	/^    public function getSexAttribute($value)$/;"	function	line:62
+arr	D:\wamp\www\m1\app\StudentUser.php	/^        $arr = ['男', '女'];$/;"	variable	line:64
