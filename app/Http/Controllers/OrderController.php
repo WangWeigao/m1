@@ -28,29 +28,106 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         /**
-         * 查询从这个时间开始查询订单
-         * 以订单提交时间为准(submit_time字段)
+         * 视图中用于分页链接的参数数组
+         * @var [type]
          */
-        $from_time = $request->get('from_time');
+        $query_string = [];
+        $order_num_or_username = $request->get('order_num_or_username');
+        // $order_type            = $request->get('order_type');
+        // $vendor                = $request->get('vendor');
+        // $order_status          = $request->get('order_status');
+        /**
+         * 按 订单号/用户名 进行查询
+         */
+         if (isset($order_num_or_username)) {
+             if (empty($order_num_or_username)) {
+                 return view('order')->with('orders', []);
+             }
+            $orders =  DB::table('robot_orders')
+                        ->join('users', 'robot_orders.user_id', '=', 'users.uid')
+                        ->where('robot_orders.id', '=', $order_num_or_username)
+                        ->orWhere('users.nickname', 'like', "%$order_num_or_username%")
+                        ->get();
+            return view('order')->with(['orders' => $orders,
+                                        'order_num_or_username' => $order_num_or_username]);
+        }
+
+        /**
+         * 订单类型
+         * @var int
+         */
+        $order_type = $request->get('order_type', '');
+
+        /**
+         * 发货商
+         * @var int
+         */
+        $vendor = $request->get('vendor', '');
+
+        /**
+         * 订单状态
+         * @var int
+         */
+        $order_status = $request->get('order_status', '');
+
+        /**
+         * 查询从这个时间开始查询订单
+         * 以订单提交时间为准(pay_time字段)
+         */
+        $from_time = $request->get('from_time', '');
 
         /**
          * 查询到这个时间截止的订单
-         * 以订单提交时间为止(submit_time字段)
+         * 以订单提交时间为止(pay_time字段)
          */
-        $to_time = $request->get('to_time');
+        $to_time = $request->get('to_time', '');
+        $orders = DB::table('robot_orders')
+                    ->join('users', 'robot_orders.user_id', '=', 'users.uid')
+                    ->select('robot_orders.*', 'users.nickname');
 
         /**
          * 按时间跨度查询订单
          */
-        $orders = RobotOrder::with('user')->whereBetween('pay_time', [$from_time, $to_time])->paginate();
-                    //    ->paginate(10);
+        if (!empty($from_time) && !empty($to_time)) {
+            $orders->whereBetween('robot_orders.pay_time', [$from_time, $to_time]);
+            $query_string = array_merge($query_string, ['from_time' => $from_time],
+                                                        ['to_time' => $to_time]);
+        }
 
-// return $orders;
+        /**
+         * 按订单类型查询
+         * 存储变量作为view中分页链接的参数
+         */
+        if (!empty($order_type)) {
+            $query_string = array_merge(['order_type' => $order_type]);
+            $orders->where('users.account_grade', $order_type);
+        }
+
+        /**
+         * 按供货商查询
+         * 存储变量作为view中分页链接的参数
+         */
+        if (!empty($vendor)) {
+            $query_string = array_merge(['vendor' => $vendor]);
+            $orders->where('robot_orders.channel', $vendor);
+        }
+
+        /**
+         * 按订单状态查询
+         * 存储变量作为view中分页链接的参数
+         */
+        if (!empty($order_status)) {
+            $query_string = array_merge(['order_status' => $order_status]);
+            $orders->where('robot_orders.status', $order_status);
+        }
+
+        $orders = $orders->paginate(10);
+
         /**
          * 携带 from_time 和 to_time 以便进行分页, 点击其它页娄时将数据带到跳转的页面
          */
-        return view('order')->with(['orders' => $orders, 'from_time' => $from_time, 'to_time' => $to_time]);
-        // return view('order')->withInput();
+        return view('order')->with(['orders' => $orders,
+                                    'query_string' => $query_string]);
     }
 
 

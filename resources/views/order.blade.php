@@ -3,11 +3,47 @@
 @section('content')
     <div class="container">
         <form class="" action="/order" method="get">
+            <div class="form-group form-inline">
+                <label for="">精确搜索</label>&nbsp;&nbsp;&nbsp;
+                <input type="text" name="order_num_or_username" value="" class="form-control" placeholder="请输入订单号/用户名">
+                <button type="submit" class="form-control btn-info">搜索</button>
+            </div>
+        </form>
+        <hr>
+
+        <form class="" action="/order" method="get">
             {!! csrf_field() !!}
+            <div class="form-group form-inline">
+                <div class="col-md-1">筛选条件</div>
+                <input type="checkbox" name="order_type" value="" class="" id="order_type">
+                <label for="order_type">订单类型</label>
+                <select class="form-control" name="" id="s_order_type">
+                    <option value="1">VIP1</option>
+                    <option value="2">VIP2</option>
+                </select>
+                <input type="checkbox" name="vendor" value="" class="" id="vendor">
+                <label for="vendor">发货商</label>
+                <select class="form-control" name="" id="s_vendor">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                </select>
+                <input type="checkbox" name="order_status" value="" class="" id="order_status">
+                <label for="order_status">订单状态</label>
+                <select class="form-control" name="" id="s_order_status">
+                    <option value="1">未付款</option>
+                    <option value="2">取消订单</option>
+                    <option value="3">已付款</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <input type="checkbox" name="data_str" value="" id="data_str">
+                <label for="data_str">订单生成日期</label>
+            </div>
             <div class='col-md-3'>
                 <div class="form-group">
                     <div class='input-group date' id='datetimepicker6'>
-                        <input type='text' class="form-control" name="from_time" id="from_time"/>
+                        <input type='text' class="form-control" name="" id="from_time"/>
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
@@ -17,7 +53,7 @@
             <div class='col-md-3'>
                 <div class="form-group">
                     <div class='input-group date' id='datetimepicker7'>
-                        <input type='text' class="form-control" name="to_time" id="to_time"/>
+                        <input type='text' class="form-control" name="" id="to_time"/>
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
@@ -31,7 +67,7 @@
             </div>
         </form>
     </div>
-        @if(!empty($from_time))
+        {{-- @if(!empty($from_time)) --}}
             @if(count($orders))
                 <div class="container">
                     <table class="table table-hover">
@@ -52,14 +88,34 @@
                         <tbody>
                             @foreach($orders as $order)
                                 <tr>
-                                    <td>{{ $order->user->nick_name or '-' }}</td>
+                                    @if(!empty($order->user))
+                                        <td>{{ $order->user->nickname or '-' }}</td>
+                                    @else
+                                        <td>{{ $order->nickname or '-' }}</td>
+                                    @endif
                                     <td>{{ $order->id }}</td>
                                     <td>{{ $order->channel }}</td>
-                                    <td>{{ $order->type }}</td>
+                                    <td>
+                                        @if($order->type == 1)
+                                            VIP1
+                                        @elseif($order->type == 2)
+                                            VIP2
+                                        @endif
+                                    </td>
                                     <td>{{ $order->price or '-' }}</td>
                                     <td>{{ $order->pay_time }}</td>
                                     <td>截止时间</td>
-                                    <td>{{ $order->status }}</td>
+                                    <td>
+                                        @if($order->status == 1)
+                                            待付款
+                                        @elseif($order->status == 2)
+                                            取消订单
+                                        @elseif($order->status == 3)
+                                            已付款
+                                        @else
+                                            '-'
+                                        @endif
+                                    </td>
                                     <td>操作</td>
                                     <td>
                                         @if(!empty($order->operator))
@@ -124,16 +180,15 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="text-center">
+                    {!! $orders->appends($query_string)->render() !!}
+                </div>
             @else
                 <div class="text-center">
                     <br>
                     <h4>暂无数据，调整查询条件再试试吧</h4>
                 </div>
             @endif
-        @endif
-        {{-- <div class="text-center">
-            {!! $orders->appends(['from_time' => $from_time, 'to_time' => $to_time])->render() !!}
-        </div> --}}
 
 @endsection
 

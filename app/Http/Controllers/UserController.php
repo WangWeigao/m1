@@ -860,11 +860,19 @@ class UserController extends Controller
             return $data;
         }
     }
+
+    /**
+     * 成绩报告
+     * @method recordReport
+     * @param  integer       $id [description]
+     * @return [type]           [description]
+     */
     public function recordReport($id)
     {
         /**
          * 今日累计练习时长
          */
+        //  DB::connection()->enableQueryLog();
         $start_time = Carbon::now('Asia/ShangHai')->startOfDay()->toDateTimeString();
         $end_time   = Carbon::now('Asia/ShangHai')->endOfDay()->toDateTimeString();
         $duration_today =  Practice::select(DB::raw('SUM(practice_time) as value'))
@@ -872,6 +880,7 @@ class UserController extends Controller
                             ->where('uid', $id)
                             ->groupBy('uid')
                             ->first();
+        // var_dump(DB::getQueryLog());
         // 格式化成 HH:MM:SS
         if (!empty($duration_today)) {
             $duration_today = gmstrftime('%H:%M:%S', $duration_today->value);
@@ -935,7 +944,7 @@ class UserController extends Controller
             $temp1['color'] = $colors1[$v->rating];
             $chart_rating[] = $temp1;
         }
-        // return $count_today;
+        // return $duration_today;
         return view('recordReport')->with(['duration_today' => $duration_today,
                                             'count_today' => $count_today,
                                             'date_string' => $date_string,
