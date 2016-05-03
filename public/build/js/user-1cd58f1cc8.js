@@ -1,410 +1,642 @@
 $(document).ready(function() {
+
+
     /**
-     * 点击"创建"按钮(相当于点击"新建"之后的保存)
+     * 点击搜索按钮，只搜索输入的关键字，不匹配下面的筛选条件
      */
-    $("#createMusic").click(function() {
-        ajaxSubmitForm();
-        function ajaxSubmitForm() {
-           var value = $("#add_midi_file").val();
-        //    验证上传文件是否为空
-           if (isEmpty(value)) {
-               alert('请先添加文件');
-               return false;
-           }else if (isEmpty($("#add_name").val())) {
-               alert('乐曲名不能为空');
-               return false;
-           }else if (isEmpty($("#add_composer").val())) {
-               alert('作曲人不能为空');
-               return false;
-           }
-           /**
-            * 验证变量是否为空
-            * @method isEmpty
-            * @param  {[type]}  inputStr [传入变量]
-            * @return {Boolean}          [返回的boolean值]
-            */
-           function isEmpty( inputStr ) {
-               if ( null == inputStr || "" == inputStr ) {
-                   return true;
-               }
-               return false;
-            }
-           if (!value.match(/.mid/i)) {
-               alert("文件格式错误");
-               return false;
-           }
-
-
-           var option = {
-               url : 'music',
-               type : 'POST',
-               dataType : 'json',
-               data: {
-                   'instrument': $("#add_instrument").val(),
-                   'name': $("#add_name").val(),
-                   'composer': $("#add_composer").val(),
-                   'version': $("#add_version").val(),
-                   'press': $("#add_press").val(),
-                   'organizer': $("#add_organizer").val(),
-                   'category': $("#add_category").val(),
-                   'note_content': $("#add_note_content").val(),
-               },
-               headers : {
-                //    "ClientCallMode" : "ajax"
-                   'X-CSRF-TOKEN': $('input[name="_token"]').val()
-               }, //添加请求头部
-               success : function(data) {
-                //    $("#addResult").html("添加成功");
-                //    $("#addResult").hide('slow', function() {
-                   //
-                //    });
-
-                    alert('添加成功!');
-                    $("#newPopup").modal('hide');
-
-               },
-               error : function(data) {
-                //    console.log(JSON.stringify(data) + "--上传失败,请刷新后重试");
-                alert('上传失败,请刷新后重试!');
-               }
-           };
-           $("#add_music").ajaxSubmit(option);
-           return false; // 最好返回false，因为如果按钮类型是submit,则表单自己又会提交一次;返回false阻止表单再次提交
-        }
+    $("#search").click(function(event) {
+        window.location.href='/user?_token=' + $("input[name=_token]").val()
+                                             +'&user_cellphone_email='
+                                             + $("#user_cellphone_email").val()
+                                             + '&field=uid&order=asc';
     });
+    $("#user_cellphone_email").val($.getUrlParam('user_cellphone_email'));
 
-    // 点击"编辑"按钮
-    $(".edit").each(function(index, el) {
-        $(this).click(function() {
-            $("#edit_id").val($(el).closest('tr').attr('id'));                                      // 乐曲id
-            $("#edit_instrument").val($(el).closest('tr').find('td:eq(1)').attr('class'));          // 乐器
-            $("#edit_name").val($(el).closest('tr').find('td:eq(2)').text());                       // 乐曲名
-            $("#edit_composer").val($(el).closest('tr').find('td:eq(3)').text());                   // 作曲人
-            $("#edit_version").val($(el).closest('tr').find('td:eq(4)').text());                    // 版本
-            $("#edit_press").val($(el).closest('tr').find('td:eq(5)').attr('class'));               // 出版社
-            $("#edit_organizer").val($(el).closest('tr').find('td:eq(6)').attr('class'));           // 主办机构
-            $("#edit_category").val($(el).closest('tr').find('td:eq(7) span').attr('class'));       // 乐曲类别
-            $("#edit_category_old").val($(el).closest('tr').find('td:eq(7) span').attr('class'))    // 改变之前的"乐曲类别"
-            $("#edit_section_duration").val($.trim($(el).closest('tr').find('td:eq(13)').text()));  // 分段时间
-            $("#edit_track").val($.trim($(el).closest('tr').find('td:eq(14)').text()));             // 轨道
-            $("#edit_notes").val($(el).closest('tr').find('.note_content').text());                 // 备注
-        });
-    });
-
-
-    // 点击"保存修改"按钮
-    $("#save").bind('click', function(event) {
-        ajaxSubmitForm();
-        function ajaxSubmitForm() {
-            var $id_value = $("#edit_id").val();
-            var option = {
-                url : 'music/' + $id_value,
-                type : 'put',
-                dataType : 'json',
-                data : {
-                    'id': $("#edit_id").val(),
-                    'instrument': $("#edit_instrument").val(),
-                    'name': $("#edit_name").val(),
-                    'composer': $("#edit_composer").val(),
-                    'version': $("#edit_version").val(),
-                    'press': $("#edit_press").val(),
-                    'organizer': $("#edit_organizer").val(),
-                    'category': $("#edit_category").val(),
-                    'category_old': $("#edit_category_old").val(),
-                    'section_duration': $("#edit_section_duration").val(),
-                    'track': $("#edit_track").val(),
-                    'notes': $("#edit_notes").val()
-                },
-                headers : {
-                    'X-CSRF-TOKEN': $('input[name="_token"]').val()
-                },
-                success : function(data) {
-                    $("#addResult").html("修改成功!");
-                },
-                error : function(data) {
-                    alert('哦，出了点小问题，再试一次吧');
-                }
-                // error : function(data) {
-                //     alert(JSON.stringify(data) + "--添加失败, 请重试");
-                // }
-            }
-            $("#save_detail").ajaxSubmit(option);
-            return false;
-        }
-    });
     /**
-     * 点击"审核通过"按钮
+     * select下拉式日期选择器(注册时间段的开始时间)
      */
-    $(".putaway").each(function(index, el) {
-        $(this).bind('click', function(event) {
-            $.getJSON('/music/putaway/' + $(el).closest('tr').attr('id'), function(json, textStatus) {
-                console.log('操作成功');
-            });
-        });
-    });
-    // 点击"删除"按钮
-    $(".delete").each(function(indel, el) {
-        $(this).bind('click', function(event) {
-            $.ajax({
-                url: '/music/' + $(el).closest('tr').attr('id'),
-                type: 'DELETE',
-                dataType: 'json',
-                headers : {
-                    'X-CSRF-TOKEN': $('input[name="_token"]').val()
-                }
-            })
-            .done(function() {
-                console.log("success");
-                $(el).closest('tr').remove();
+     var myDate = new Date();
+     $("#date_start").DateSelector({
+         ctlYearId: 'idYear',
+         ctlMonthId: 'idMonth',
+         ctlDayId: 'idDay',
+         defYear: myDate.getFullYear(),
+         defMonth: (myDate.getMonth() + 1),
+         defDay: myDate.getDate(),
+         minYear: 2015,
+         maxYear: (myDate.getFullYear() + 1)
+     });
 
-            })
-            .fail(function() {
-                console.log("error");
-            })
-            .always(function() {
-                console.log("complete");
-            });
-        });
-    });
+     /**
+      * select下拉式日期选择器(注册时间段的结束时间)
+      */
+     var myDate2 = new Date();
+     $("#date_end").DateSelector({
+         ctlYearId: 'idYear2',
+         ctlMonthId: 'idMonth2',
+         ctlDayId: 'idDay2',
+         defYear: myDate2.getFullYear(),
+         defMonth: (myDate2.getMonth() + 1),
+         defDay: myDate2.getDate(),
+         minYear: 2015,
+         maxYear: (myDate2.getFullYear() + 1)
+     });
 
     /**
-     * 自动拉取筛选条件列表
+     * "地域"中的省份显示
      */
     $.ajax({
-        url: '/music/condations',
+        url: '/user/provinces',
         type: 'GET',
         dataType: 'json',
-        headers : {
-            'X-CSRF-TOKEN': $('input[name="_token"]').val()
+        headers: {
+            'X-CSRF-TOKEN': $("input[name='_token']").val()
         }
     })
     .done(function(data) {
-        /**
-         * 拉取“乐器”列表
-         */
-        $.each(data.instrument, function(n, value) {
-            var $str = "";
-            $str = "<option value=" + value.id + ">" + value.name + "</option>";
-            $("#instrument").append($str);
-            $("#instrument").val("1");
-            $("#edit_instrument").append($str);
-            $("#add_instrument").append($str);
-            // 保持搜索条件
-            if (instrument != '' && instrument != null) {
-                $("#instrument").val(instrument);
-                $("input[name=instrument]").val(instrument);
-                $("input[name=instrument]").prop('checked', true);
-            }
-        });
 
-        /**
-         * 拉取“出版社”列表
-         */
-        $.each(data.press, function(n, value) {
-            var $str = "";
-            $str = "<option value=" + value.id + ">" + value.name + "</option>";
-            $("#press").append($str);
-            $("#edit_press").append($str);
-            $("#add_press").append($str);
-            // 保持搜索条件
-            if (press != '' && press != null) {
-                $("#press").val(press);
-                $("input[name=press]").val(press);
-                $("input[name=press]").prop('checked', true);
-            }
+        // 填充省份的下拉菜单
+        $.each(data, function(index, el) {
+            var str = '<option value=' + el.pid + '>' + el.name + '</option>';
+            $("#province").append(str);
         });
+        // 设置默认省份
+        $("#province").val(data[2].pid);
+        // 设置默认城市
+        $("#city option:eq(0)").text('上海');
+        $("#city option:eq(0)").val(6);
+        $("#city").val(6);
+        // 设置相应的 input 的 value
+        $("input[name='area']").val(6);
+    });
 
-        /**
-         * 拉取"乐曲类别"列表
-         */
-        $.each(data.tag, function(n, value) {
-            var $str = "";
-            $str = "<option value=" + value.id + ">" + value.name + "</option>";
-            $("#category").append($str);
-            $("#edit_category").append($str);
-            $("#add_category").append($str);
-            // 保持搜索条件
-            if (category != '' && category != null) {
-                $("#category").val(category);
-                $("input[name=category]").val(category);
-                $("input[name=category]").prop('checked', true);
+    /**
+     * 根据省份取得"城市列表"
+     */
+    $("#province").bind('change', function(event) {
+        $.ajax({
+            url: '/user/cities/' + $("#province").val(),
+            type: 'GET',
+            dataType: 'json',
+            headers: {
+                'X-CSRF-Token': $("input[name='_token']").val()
             }
+        })
+        .done(function(data) {
+            // 清空下拉菜单
+            $("#city").children('option').remove();
+            // 填充下拉菜单中的城市列表
+            $.each(data, function(index, el) {
+                var str = '<option value=' + el.cid + '>' + el.name + '</option>';
+                $("#city").append(str);
+            });
+            // 设置默认值
+            $("#city").val(data[0].cid);
+            // 设置对应的 input 的 value
+            $("input[name='area']").val(data[0].cid);
         });
+    });
 
-        /**
-         * 拉取"主办机构"列表
-         */
-        $.each(data.organizer, function(n, value) {
-            var $str = "";
-            $str = "<option value=" + value.id + ">" + value.name + "</option>";
-            $("#organizer").append($str);
-            $("#edit_organizer").append($str);
-            $("#add_organizer").append($str);
-            // 保持搜索条件
-            if (organizer != '' && organizer != null) {
-                $("#organizer").val(organizer);
-                $("input[name=organizer]").val(organizer);
-                $("input[name=organizer]").prop('checked', true);
-            }
-        });
+    /**
+     * 地域(城市)改变时修改「地域」值
+     */
+    $("#city").bind('change', function () {
+        // 把select的值赋给对应的input
+        $("input[name='area']").val($("#city").val());
+    });
+    // $("input[name='area']").bind('click', function () {
+    //     if ($("input[name='area']").prop('checked')) {
+    //         $("input[name='province']").prop('checked', true);
+    //     } else {
+    //         $("input[name='province']").prop('checked', false);
+    //     }
+    // });
+    /**
+     * "水平等级"改变时修改 input 的 value
+     */
+    $("#user_grade").val(1);                // 设置 select 的默认值
+    $("input[name='user_grade']").val(1);   // 设置 input 的默认值
+    $("#user_grade").bind('change', function () {
+        $("input[name='user_grade']").val($("#user_grade").val());
+    });
 
-        /**
-         * 拉取"操作人"列表
-         */
-        $.each(data.operator, function(n, value) {
-            var $str = "";
-            $str = "<option value=" + value.id + ">" + value.name + "</option>";
-            $("#operator").append($str);
-            // 保持搜索条件
-            if (operator != '' && operator != null) {
-                $("#operator").val(operator);
-                $("input[name=operator]").val(operator);
-                $("input[name=operator]").prop('checked', true);
-            }
-        });
+    /**
+     * "注册时间"改变时修改 input 的 value
+     */
+    $("#reg_time").val("day");   // 设置 select 的默认值
+    $("input[name='reg_time']").val("day");
+    $("#reg_time").bind('change', function () {
+        $("input[name='reg_time']").val($("#reg_time").val());  // 给input赋值
+    });
+
+    /**
+     * "帐号级别"改变时修改 input 的 value
+     */
+    $("#account_grade").val("vip1");    // 设置 select 的默认值
+    $("input[name='account_grade']").val("vip1");   // 给 input 赋值
+    $("#account_grade").bind('change', function () {
+        $("input[name='account_grade']").val($("#account_grade").val());
     })
-    .fail(function(data) {
-        console.log(data);
+
+    /**
+     * "帐号截止日期"改变时修改 input 的 value
+     */
+     $("#account_end_at").val("week");    // 设置 select 的默认值
+     $("input[name='account_end_at']").val("week");   // 给 input 赋值
+     $("#account_end_at").bind('change', function () {
+         $("input[name='account_end_at']").val($("#account_end_at").val());
+     })
+
+    /**
+     * "本月使用时长"改变时修改 input 的 value
+     */
+     $("#month_duration").val("1h");    // 设置 select 的默认值
+     $("input[name='month_duration']").val("1h");   // 给 input 赋值
+     $("#month_duration").bind('change', function () {
+         $("input[name='month_duration']").val($("#month_duration").val());
+     })
+
+    /**
+     * "帐号状态"改变时修改 input 的 value
+     */
+     $("#account_status").val("near_expire");    // 设置 select 的默认值
+     $("input[name='account_status']").val("near_expire");   // 给 input 赋值
+     $("#account_status").bind('change', function () {
+         $("input[name='account_status']").val($("#account_status").val());
+     })
+
+    /**
+     * "本月用户大幅变化"改变时修改 input 的 value
+     */
+     $("#change_duration").val("up20h");    // 设置 select 的默认值
+     $("input[name='change_duration']").val("up20h");   // 给 input 赋值
+     $("#change_duration").bind('change', function () {
+         $("input[name='change_duration']").val($("#change_duration").val());
+     })
+
+    /**
+     * "活跃度"改变时修改 input 的 value
+     */
+     $("#liveness").val("active_user");    // 设置 select 的默认值
+     $("input[name='liveness']").val("active_user");   // 给 input 赋值
+     $("#liveness").bind('change', function () {
+         $("input[name='liveness']").val($("#liveness").val());
+     })
+
+    /**
+     * "注册时间段"被修改时(开始时间)
+     */
+    $str = $("#idYear").val() + '-'
+            + $("#idMonth").val() + '-'
+            + $("#idDay").val();
+    $("input[name='reg_start_time']").val($str);
+    $("#idYear,#idMonth,#idDay").bind('change', function(event) {
+        $str = $("#idYear").val() + '-'
+                + $("#idMonth").val() + '-'
+                + $("#idDay").val();
+        $("input[name='reg_start_time']").val($str);
+    });
+    /**
+     * "注册时间段"被修改时(截止时间)
+     */
+    $str = $("#idYear2").val() + '-'
+            + $("#idMonth2").val() + '-'
+            + $("#idDay2").val();
+    $("input[name='reg_end_time']").val($str);
+    $("#idYear2,#idMonth2,#idDay2").bind('change', function(event) {
+        $str = $("#idYear2").val() + '-'
+                + $("#idMonth2").val() + '-'
+                + $("#idDay2").val();
+    $("input[name='reg_end_time']").val($str);
     });
 
     /**
-     * select下拉式日期选择器
+     * 若"注册时间段"被选中,则同时选中"截止时间", 取消时也一样
      */
-     var myDate = new Date();
-     $("#dateSelector").DateSelector({
-     ctlYearId: 'idYear',
-     ctlMonthId: 'idMonth',
-     ctlDayId: 'idDay',
-     defYear: myDate.getFullYear(),
-     defMonth: (myDate.getMonth() + 1),
-     defDay: myDate.getDate(),
-     minYear: 2015,
-     maxYear: (myDate.getFullYear() + 1)
-     });
-
-    $("#date").val($("#idYear").val() + '-' + $("#idMonth").val() + '-' + $("#idDay").val());
-    $(".date_select").each(function(index, el) {
-        $(el).bind('change', function() {
-            // $(el).closest('input').val($(el).val());
-            // $(el).siblings('input').val($(el).val());
-            if ($(el).attr('id') === 'idYear' || $(el).attr('id') === 'idMonth' || $(el).attr('id') === 'idDay') {
-                $("#date").val($("#idYear").val() + '-' + $("#idMonth").val() + '-' + $("#idDay").val());
-            }
-        });
-    });
-    // 保持搜索条件
-    var date = $.getUrlParam('date');
-    if (date != '' && date != null) {
-        $("#idYear").val(date.split('-')[0]);
-        $("#idMonth").val(date.split('-')[1]);
-        $("#idDay").val(date.split('-')[2]);
-        $("input[name=date]").val(date);
-        $("input[name=date]").prop('checked', true);
-    }
-
-    /**
-     * select中选择值改变的时候，同步给select的value赋值
-     */
-    $("select").each(function(index, el) {
-        $(el).bind('change', function(event) {
-            $(el).siblings('input').val($(el).val());
-            console.log($(el).val());
-        });
-    });
-
-    /**
-     * 点击“添加多个乐曲”跳转到指定页面
-     */
-    $("#add_multi_musics").bind('click', function(event) {
-        window.location.href = "/music/create";
-    });
-
-    /**
-     * 全部选中，全部取消
-     */
-    $("#checkAll").bind('click', function(event) {
-        if (this.checked) {
-            $("input[name='music_action[]']").prop("checked", true);
-        }else {
-            $("input[name='music_action[]']").prop("checked", false);
+    $("input[name='reg_start_time']").bind('click', function () {
+        if ($("input[name='reg_start_time']").prop('checked')) {
+            $("input[name='reg_end_time']").prop('checked', true);
+        } else {
+            $("input[name='reg_end_time']").prop('checked', false);
         }
     });
+    /**
+     * 搜索『按筛选条件』
+     */
+    // $("#search_condition").bind('click', function(event) {
+    //     ajaxSubmitForm();
+    //     function ajaxSubmitForm() {
+    //         var option = {
+    //             url: '/user',
+    //             type: 'GET',
+    //             dataType: 'json',
+    //             data:{
+    //                 'reg_end_time':$("input[name='reg_timezone']").prop('checked') ? $("input[name='reg_timezone']").attr('data-endtime') : ''
+    //             },
+    //             headers: {
+    //                 'X-CSRF-TOKEN': $("input[name='_token']").val()
+    //             },
+    //             success: function(data) {
+    //                 console.log('搜索成功');
+    //             },
+    //             error: function(data) {
+    //                 console.log('啊哦，搜索引擎开小差了');
+    //             }
+    //         };
+    //         $("#search_user").ajaxSubmit(option);
+    //         return false;
+    //     }
+    // });
 
     /**
-     * 批量审核通过
+     * 保持url中含有内容的 input 为选中状态
      */
-    $("#allow_all").bind('click', function() {
-        var ids = [];
-        $("input[name='music_action[]']:checked").each(function(index, el) {
-            ids.push($(el).closest('tr').attr('id'));
-        });
+     // 获取 url 中的参数
+     (function ($) {
+         $.getUrlParam = function (name) {
+             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+             var r = window.location.search.substr(1).match(reg);
+             if (r != null) return unescape(r[2]); return null;
+         }
+     })(jQuery);
 
-        $.ajax({
-            url: '/music/putawayMany',
-            type: 'PUT',
-            dataType: 'json',
-            data: {'ids': ids},
-            headers: {
-                'X-CSRF-TOKEN': $("input[name='_token']").val()
-            }
-        })
-        .done(function() {
-            console.log("success");
-        })
-        .fail(function() {
-            console.log("error");
-        })
-        .always(function() {
-            console.log("complete");
-        });
-    });
+     // 调用 getUrlParam 方法
+     var user_cellphone_email = $.getUrlParam('user_cellphone_email');
+     var area                 = $.getUrlParam('area');
+     var user_grade           = $.getUrlParam('user_grade');
+     var reg_time             = $.getUrlParam('reg_time');
+     var account_grade        = $.getUrlParam('account_grade');
+     var account_end_at       = $.getUrlParam('account_end_at');
+     var month_duration       = $.getUrlParam('month_duration');
+     var account_status       = $.getUrlParam('account_status');
+     var change_duration      = $.getUrlParam('change_duration');
+     var liveness             = $.getUrlParam('liveness');
+     var reg_start_time       = $.getUrlParam('reg_start_time');
+     var reg_end_time         = $.getUrlParam('reg_end_time');
+     var field                = $.getUrlParam('field');
+     var order                = $.getUrlParam('order');
 
-    /**
-     * 批量下架
-     */
-    $("#off_shelf").bind('click', function () {
-        var ids = [];
-        $("input[name='music_action[]']:checked").each(function(index, el) {
-            ids.push($(el).closest('tr').attr('id'));
-        });
-        $.ajax({
-            url: '/music/offshelfMany',
-            type: 'DELETE',
-            dataType: 'json',
-            data: {'ids': ids},
-            headers: {
-                'X-CSRF-TOKEN': $("input[name='_token']").val()
-            }
-        })
-        .done(function() {
-            console.log("success");
-        })
-        .fail(function() {
-            console.log("error");
-        })
-        .always(function() {
-            console.log("complete");
-        });
+     if (user_cellphone_email != '' && user_grade != null) {
+        $("input[name=user_cellphone_email]").val(user_cellphone_email);
+     }
 
-    });
+     if (area != '' && area != null) {
+        // $("input[name=area]").val(area);
+        // $("#province").val(province);
+        // $("#area").val(area);
+     }
 
-    // 获取 URL 中的参数
-    var name       = $.getUrlParam('name');
-    var instrument = $.getUrlParam('instrument');
-    var press      = $.getUrlParam('press');
-    var category   = $.getUrlParam('category');
-    var onshelf    = $.getUrlParam('onshelf');
-    var organizer  = $.getUrlParam('organizer');
-    var operator   = $.getUrlParam('operator');
-    if (name != '' && name != null) {
-        $("input[name=name]").val(name);
+     if (user_grade != '' && user_grade != null) {
+         $("#user_grade").val(user_grade);
+         $("input[name=user_grade]").val(user_grade);
+         $("input[name=user_grade]").prop('checked', true);
+     }
+
+     if (reg_time != '' && reg_time != null) {
+         $("#reg_time").val(reg_time);
+         $("input[name=reg_time]").val(reg_time);
+         $("input[name=reg_time]").prop('checked', true);
+     }
+
+    if (account_grade != '' && account_grade != null) {
+         $("#account_grade").val(account_grade);
+         $("input[name=account_grade]").val(account_grade);
+         $("input[name=account_grade]").prop('checked', true);
     }
 
-    if (onshelf != '' && onshelf != null) {
-        $("#onshelf").val(onshelf);
-        $("input[name=onshelf]").val(onshelf);
-        $("input[name=onshelf]").prop('checked', true);
-    }
+     if (account_end_at != '' && account_end_at != null) {
+         $("#account_end_at").val(account_end_at);
+         $("input[name=account_end_at]").val(account_end_at);
+         $("input[name=account_end_at]").prop('checked', true);
+     }
+
+     if (month_duration != '' && month_duration != null) {
+         $("#month_duration").val(month_duration);
+         $("input[name=month_duration]").val(month_duration);
+         $("input[name=month_duration]").prop('checked', true);
+     }
+
+     if (account_status != '' && account_status != null) {
+         $("#account_status").val(account_status);
+         $("input[name=account_status]").val(account_status);
+         $("input[name=account_status]").prop('checked', true);
+     }
+
+     if (change_duration != '' && change_duration != null) {
+         $("#change_duration").val(change_duration);
+         $("input[name=change_duration]").val(change_duration);
+         $("input[name=change_duration]").prop('checked', true);
+     }
+
+     if (liveness != '' && liveness != null) {
+         $("#liveness").val(liveness);
+         $("input[name=liveness]").val(liveness);
+         $("input[name=liveness]").prop('checked', true);
+     }
+
+     if (reg_start_time != '' && reg_start_time != null) {
+         $("#idYear").val(reg_start_time.split('-')[0]);
+         $("#idMonth").val(reg_start_time.split('-')[1]);
+         $("#idDay").val(reg_start_time.split('-')[2]);
+         $("input[name=reg_start_time]").val(reg_start_time);
+         $("input[name=reg_start_time]").prop('checked', true);
+     }
+
+     if (reg_end_time != '' && reg_end_time != null) {
+         $("#idYear2").val(reg_end_time.split('-')[0]);
+         $("#idMonth2").val(reg_end_time.split('-')[1]);
+         $("#idDay2").val(reg_end_time.split('-')[2]);
+         $("input[name=reg_end_time]").val(reg_end_time);
+         $("input[name=reg_end_time]").prop('checked', true);
+     }
+
+     if (field != '' && field != null) {
+        $("input[name=field]").val(field);
+     }
+
+     if (order != '' && order != null) {
+        $("input[name=order]").val(order);
+     }
+
+     /**
+      * 修改 URL 中的参数值
+      */
+     //para_name 参数名称 para_value 参数值 url所要更改参数的网址
+     function setUrlParam(para_name, para_value) {
+         var strNewUrl = new String();
+         var strUrl = new String();
+         var url = new String();
+         url= window.location.href;
+         strUrl = window.location.href;
+         //alert(strUrl);
+         if (strUrl.indexOf("?") != -1) {
+             strUrl = strUrl.substr(strUrl.indexOf("?") + 1);
+             //alert(strUrl);
+             if (strUrl.toLowerCase().indexOf(para_name.toLowerCase()) == -1) {
+                 strNewUrl = url + "&" + para_name + "=" + para_value;
+                 window.location = strNewUrl;
+                 //return strNewUrl;
+             } else {
+                 var aParam = strUrl.split("&");
+                 //alert(aParam.length);
+                 for (var i = 0; i < aParam.length; i++) {
+                     if (aParam[i].substr(0, aParam[i].indexOf("=")).toLowerCase() == para_name.toLowerCase()) {
+                         aParam[i] = aParam[i].substr(0, aParam[i].indexOf("=")) + "=" + para_value;
+                     }
+                 }
+                 strNewUrl = url.substr(0, url.indexOf("?") + 1) + aParam.join("&");
+                 //alert(strNewUrl);
+                 window.location = strNewUrl;
+                 //return strNewUrl;
+             }
+         } else {
+             strUrl += "?" + para_name + "=" + para_value;
+             //alert(strUrl);
+             window.location=strUrl;
+         }
+     }
+
+     /**
+      * 获取 URL 中的参数
+      */
+      function getUrlParam(name) {
+         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+         var r = window.location.search.substr(1).match(reg);
+         if (r != null) return unescape(r[2]); return null;
+     }
+
+     // “水平等级”排序
+     $("a:contains('水平等级')").click(function(event) {
+         console.log(getUrlParam('order'));
+         if (getUrlParam('order') == 'desc') {
+             setUrlParam('field', 'user_grade');
+             setUrlParam('order', 'asc');
+         } else {
+             setUrlParam('field', 'user_grade');
+             setUrlParam('order', 'desc');
+         }
+     });
+
+     // “注册日期”排序
+     $("a:contains('注册日期')").click(function(event) {
+         console.log(getUrlParam('order'));
+         if (getUrlParam('order') == 'desc') {
+             setUrlParam('field', 'regdate');
+             setUrlParam('order', 'asc');
+         } else {
+             setUrlParam('field', 'regdate');
+             setUrlParam('order', 'desc');
+         }
+     });
+
+     // “账号截止日期”排序
+     $("a:contains('账号截止日期')").click(function(event) {
+         console.log(getUrlParam('order'));
+         if (getUrlParam('order') == 'desc') {
+             setUrlParam('field', 'account_end_at');
+             setUrlParam('order', 'asc');
+         } else {
+             setUrlParam('field', 'account_end_at');
+             setUrlParam('order', 'desc');
+         }
+     });
+
+     // “上月使用时长”排序
+     $("a:contains('上月使用时长')").click(function(event) {
+         console.log(getUrlParam('order'));
+         if (getUrlParam('order') == 'desc') {
+             setUrlParam('field', 'account_end_at');
+             setUrlParam('order', 'asc');
+         } else {
+             setUrlParam('field', 'account_end_at');
+             setUrlParam('order', 'desc');
+         }
+     });
+
+     /**
+      * 全部选中，全部取消
+      */
+     $("#checkAll").bind('click', function(event) {
+         if (this.checked) {
+             $("input[name='user_action[]']").prop("checked", true);
+         }else {
+             $("input[name='user_action[]']").prop("checked", false);
+         }
+     });
+
+     /**
+      * 锁定选中的用户
+      */
+     $("#lock_all").bind('click', function(event) {
+         var ids = [];
+         $("input[name='user_action[]']:checked").each(function(index, el) {
+             ids.push($(el).closest('tr').attr('id'));
+         });
+         // 如果没有选择用户，中断退出
+         if (ids.length == 0) {
+             return alert('请先选择用户');
+         }
+        $confirm = confirm('确定要锁定所选用户?');
+        if ($confirm) {
+            $.ajax({
+                url: '/user/lockUsers',
+                type: 'PUT',
+                dataType: 'json',
+                data: {'ids': ids},
+                headers: {
+                    'X-CSRF-TOKEN': $("input[name=_token]").val()
+                }
+            })
+            .done(function() {
+                location.reload();
+            })
+        }
+     });
+
+     /**
+      * 锁定单个用户
+      */
+      $(".lockuser").each(function(index, el) {
+          $(el).click(function(event) {
+              var id = $(el).attr('id');
+              $.ajax({
+                  url: '/user/lockuser/' + id,
+                  type: 'GET',
+                  dataType: 'json'
+              })
+              .done(function(data) {
+                  if (data) {
+                      $(el).attr('class', 'lockuser btn btn-success btn-xs');
+                      $(el).text('锁定');
+                      $(el).parent().prev().text('正常');
+                  } else {
+                      $(el).attr('class', 'lockuser btn btn-danger btn-xs');
+                      $(el).text('解锁');
+                      $(el).parent().prev().text('锁定');
+                  }
+              })
+              .fail(function() {
+                  console.log("error");
+              })
+              .always(function() {
+                  console.log("complete");
+              });
+
+          });
+      });
+
+     /**
+      * 解锁选中的用户
+      */
+     $("#unlock_all").bind('click', function(event) {
+         var ids = [];
+         $("input[name='user_action[]']:checked").each(function(index, el) {
+             ids.push($(el).closest('tr').attr('id'));
+         });
+         if (ids.length == 0) {
+             return alert('请先选择用户');
+         }
+         $confirm = confirm('确定要解锁所选用户?');
+         if ($confirm) {
+             $.ajax({
+                 url: '/user/unlockUsers',
+                 type: 'PUT',
+                 dataType: 'json',
+                 data: {'ids': ids},
+                 headers: {
+                     'X-CSRF-TOKEN': $("input[name=_token]").val()
+                 }
+             })
+             .done(function() {
+                 console.log("success");
+                 location.reload();
+             })
+         }
+     });
+
+     /**
+      * 通知选中的用户
+      */
+     // 判断是否已选择用户
+     $("#notify_all").click(function() {
+         // 由于之后会弹出模态框，暂时没有找到解决方法
+     });
+     $("#send_message").bind('click', function(event) {
+         var ids = [];
+         $("input[name='user_action[]']:checked").each(function(index, el) {
+             ids.push($(el).closest('tr').attr('id'));
+         });
+         if (ids.length == 0) {
+             return alert('请先选择用户');
+         }
+         $confirm = confirm('确定要通知用户?');
+         if ($confirm) {
+             switch ($("#select_multi").val()) {
+                 case '1':
+                    var message = '账号到期';
+                     break;
+                 case '2':
+                    var message = '资料到期';
+                     break;
+                 case '3':
+                    var message = '违规与禁言';
+                     break;
+                 case '4':
+                    var message = '重新提交资料:' + $("input[name='message']").val();
+                     break;
+                 default:
+             }
+             $.ajax({
+                 url: '/user/notifyUsers',
+                 type: 'POST',
+                 dataType: 'json',
+                 data: {
+                     'user_id': ids,
+                     'message': message
+                 },
+                 headers: {
+                     'X-CSRF-TOKEN': $("input[name=_token]").val()
+                 }
+             })
+             .done(function() {
+                 alert("通知成功！");
+                 // 关闭模态框
+                 $(".m_notify_all").modal('hide');
+                 // 取消所有的选中项
+                 $("input[name='user_action[]']:checked").each(function(index, el) {
+                     $(el).prop('checked', false);
+                 });
+             })
+             .fail(function() {
+                 alert('通知失败！');
+                 // 关闭模态框
+                 $(".m_notify_all").modal('hide');
+                 // 取消所有的选中项
+                 $("input[name='user_action[]']:checked").each(function(index, el) {
+                     $(el).prop('checked', false);
+                 });
+             })
+         }
+     });
+     // 如果选中第四项，则出现输入框
+     $("#select_multi").click(function(event) {
+        if ($("#select_multi").val() == 4) {
+            $("input[name='message']").attr('type', 'text');
+        } else {
+            $("input[name='message']").attr('type', 'hidden');
+        }
+     });
+
+     /**
+      * 通知单个用户
+      */
+     $(".send_msg_single").each(function(index, el) {
+         $(el).click(function(event) {
+             $(el).closest('tr').find('input').prop('checked', true);
+             console.log('printing checkbox log...');
+         });
+     });
+
 });
 
 /*
@@ -1789,4 +2021,4 @@ function log() {
      }
  })(jQuery);
 
-//# sourceMappingURL=music.js.map
+//# sourceMappingURL=user.js.map

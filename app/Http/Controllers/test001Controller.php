@@ -17,20 +17,17 @@ class test001Controller extends Controller
      */
     public function index()
     {
-        // 测试Carbon
-        // $now = Carbon::now();
-        // $compare = Carbon::now()->addWeek();
-        // return $now . '<br>' . $compare;
+        // $id = 1;
+        // $user = \Redis::get('user:profile:'.$id);
+        // return view('user.profile', ['user' => $user]);
+        // \Redis::set('names1', 'Taylor');
 
-        // 测试 Convert string To array
-        $users = \App\StudentUser::find(268);
-        $instruments = $users->instrument_id;
-        return $users;
-        // if (in_array([1,2], $instruments)) {
-        //     echo '1 在 $instrument 中';
-        // } else {
-        //     echo '1 不在 $instrument 中';
-        // }
+        // $values = \Redis::lrange('names1', 2, 5);
+        // return $values;
+        // return $user;
+        // return microtime();
+        // return gmstrftime('%H:%M:%S',600);
+        
     }
 
     /**

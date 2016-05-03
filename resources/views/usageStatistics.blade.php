@@ -2,6 +2,10 @@
 
 @section('content')
     <div class="container">
+        <ol class="breadcrumb">
+          <li>用户管理</li>
+          <li>学生使用情况统计</li>
+        </ol>
         <ul	class="nav nav-tabs nav-justified">
     		<li class="active"><a href="#today" data-toggle="tab">今日</a></li>
     		<li><a href="#month" data-toggle="tab">本月</a></li>
@@ -26,7 +30,7 @@
 				    <div class="today_active_user form-inline">
 				        今日活跃用户数：<span id="today_active_user">{{ $data['todayCountActive'] }}</span>个
                         {{-- <form class="form-group"> --}}
-                            <input type="checkbox" name="today_input_duration" value="" id="today_input_duration">
+                            <input type="checkbox" name="today_input_duration" value="" id="today_input_duration" checked="checked">
                             <label for="today_input_duration">机器人使用时长</label>
                             <select name="" class="form-control" id="today_duration">
                                 <option value="30">30分钟以上</option>
@@ -39,7 +43,7 @@
                         {{-- </form> --}}
 				    </div>
 				    <div class="">
-				        机器人：O2O = <span style="color:red;weight:bold">由于表结构及实现细节暂未商定,此处暂未实现</span><span></span>
+				        {{-- 机器人：O2O = <span style="color:red;weight:bold">由于表结构及实现细节暂未商定,此处暂未实现</span><span></span> --}}
 				    </div>
 				</div>
 
@@ -59,7 +63,7 @@
 				    </div>
 				    <div class="month_active_user form-inline">
 				        本月活跃用户数：<span id="month_active_user">{{ $data['monthCountActive'] }}</span>个
-                            <input type="checkbox" name="month_input_duration" value="" id="month_input_duration">
+                            <input type="checkbox" name="month_input_duration" value="" id="month_input_duration" checked="checked">
                             <label for="month_input_duration">机器人使用时长</label>
                             <select name="" class="form-control" id="month_duration">
                                 <option value="1800">30小时以上的</option>
@@ -72,11 +76,11 @@
                             <button id="month_search" class="form-control">搜索</button>
 				    </div>
 				    <div class="">
-				        机器人：O2O = <span style="color:red;weight:bold">由于表结构及实现细节暂未商定,此处暂未实现</span><span></span>
+				        {{-- 机器人：O2O = <span style="color:red;weight:bold">由于表结构及实现细节暂未商定,此处暂未实现</span><span></span> --}}
 				    </div>
                     <input type="hidden" name="monthValue" value="{{ $data['monthValue'] }}">
-                    <div id="month_highcharts" style="height: 400px; margin: 0 auto" ></div>
-                    <div class="form-inline">
+                    <div id="month_highcharts" style="height: 400px;width: 60%; margin: 0 auto 30 0" ></div>
+                    <div class="form-inline" style="margin:30px auto">
                         <input type="checkbox" name="" value="" id="practice_duration">
                         <label for="practice_duration">练习时长</label>
                         <select class="form-control" name="practice_duration">
@@ -112,7 +116,7 @@
 				    </div>
 				    <div class="quarter_active_user form-inline">
 				        本季度活跃用户数：<span id="quarter_active_user">{{ $data['quarterCountActive'] }}</span>个
-                            <input type="checkbox" name="quarter_input_duration" value="" id="quarter_input_duration">
+                            <input type="checkbox" name="quarter_input_duration" value="" id="quarter_input_duration" checked="checked">
                             <label for="quarter_input_duration">机器人使用时长</label>
                             <select name="" class="form-control" id="quarter_duration">
                                 <option value="1800">30小时以上的</option>
@@ -125,7 +129,7 @@
                             <button id="quarter_search" class="form-control">搜索</button>
 				    </div>
 				    <div class="">
-				        机器人：O2O = <span style="color:red;weight:bold">由于表结构及实现细节暂未商定,此处暂未实现</span><span></span>
+				        {{-- 机器人：O2O = <span style="color:red;weight:bold">由于表结构及实现细节暂未商定,此处暂未实现</span><span></span> --}}
 				    </div>
 				</div>
                 {{-- 本年 --}}
@@ -144,7 +148,7 @@
 				    </div>
 				    <div class="year_active_user form-inline">
 				        本年活跃用户数：<span id="year_active_user">{{ $data['yearCountActive'] }}</span>个
-                            <input type="checkbox" name="year_input_duration" value="" id="year_input_duration">
+                            <input type="checkbox" name="year_input_duration" value="" id="year_input_duration" checked="checked">
                             <label for="year_input_duration">机器人使用时长</label>
                             <select name="" class="form-control" id="year_duration">
                                 <option value="1800">30小时以上的</option>
@@ -157,7 +161,7 @@
                             <button id="year_search" class="form-control">搜索</button>
 				    </div>
 				    <div class="">
-				        机器人：O2O = <span style="color:red;weight:bold">由于表结构及实现细节暂未商定,此处暂未实现</span><span></span>
+				        {{-- 机器人：O2O = <span style="color:red;weight:bold">由于表结构及实现细节暂未商定,此处暂未实现</span><span></span> --}}
 				    </div>
 				</div>
 				<div class="tab-pane" id="quarter">month</div>

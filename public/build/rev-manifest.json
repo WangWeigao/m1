@@ -1,11 +1,21 @@
 {
+  "css/Lato.css": "css/Lato-e5cd78187e.css",
   "css/all.css": "css/all-613b2a1e9f.css",
+  "css/music.css": "css/music-3e2f5a1ce7.css",
+  "css/order.css": "css/order-696d1c7374.css",
+  "css/orderStatistics.css": "css/orderStatistics-0f54a8d316.css",
+  "css/user.css": "css/user-304a0cec96.css",
+  "css/userrecordhistory.css": "css/userrecordhistory-dfc8b1f0bb.css",
   "js/all.js": "js/all-0eb4b7c053.js",
-  "js/app.js": "js/app-1f56b13a08.js",
-  "js/music.js": "js/music-7892cab69a.js",
+  "js/app.js": "js/app-bfdfd8404e.js",
+  "js/jquery.min.js": "js/jquery.min-6326c600df.js",
+  "js/music.js": "js/music-d3e1a1a97c.js",
   "js/musicStatistics.js": "js/musicStatistics-d0a639b7ee.js",
   "js/musicadd.js": "js/musicadd-49e9cacecc.js",
   "js/new_music.js": "js/new_music-3502b33950.js",
-  "js/user.js": "js/user-c4df27812d.js",
-  "js/userUsageStatics.js": "js/userUsageStatics-ace575a20b.js"
+  "js/order.js": "js/order-a2e4fc6edf.js",
+  "js/orderStatistics.js": "js/orderStatistics-60f79e09cd.js",
+  "js/user.js": "js/user-1cd58f1cc8.js",
+  "js/userUsageStatics.js": "js/userUsageStatics-e47f0739a5.js",
+  "js/userbasicinfo.js": "js/userbasicinfo-fca080bdde.js"
 }

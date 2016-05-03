@@ -150,7 +150,9 @@ class MusicController extends Controller
         $organizer_id     = $request->get('organizer') or 0;
         $note_content     = $request->get('note_content') or '';
         $note_operator    = $request->user()->id;
-        $category         = $request->get('category');
+        // $category         = $request->get('category');
+        $category         = 2;
+        $level            = $request->get('level');
         $section_duration = $request->get('section_duration');
         $track            = $request->get('track');
 
@@ -177,6 +179,7 @@ class MusicController extends Controller
             $music->note_operator    = $note_operator;
             $music->section_duration = $section_duration;
             $music->track            = $track;
+            $music->level            = $level;
             $result                  = $music->save();
             /**
              * 插入乐曲分类标签
@@ -401,6 +404,7 @@ class MusicController extends Controller
         $track            = $request->get('track');
         $note_content     = $request->get('notes') or '';
         $note_operator    = $request->user()->id;
+        $level            = $request->get('level');
         // return $request->all();
         $music            = Music::find($id);
         if (!empty($name)) {
@@ -433,10 +437,13 @@ class MusicController extends Controller
         }
         $category             = $request->get('category');
         $category_old         = $request->get('category_old');
-        if(!empty($category_old)) {
-            $music->tags()->updateExistingPivot($category_old, ['tag_id' => $category]);
-        }else {
-            $music->tags()->attach($category);
+        // if(!empty($category_old)) {
+        //     $music->tags()->updateExistingPivot($category_old, ['tag_id' => $category]);
+        // }else {
+        //     $music->tags()->attach($category);
+        // }
+        if (!empty($level)) {
+            $music->level = $level;
         }
         $result = $music->save();
         if ($result) {
@@ -475,7 +482,7 @@ class MusicController extends Controller
     {
         // 删除模型
         $music = Music::find($id);
-        $result = $music->forceDelete();
+        $result = $music->delete();
         if ($result) {
             $data['status'] = true;
         }else {

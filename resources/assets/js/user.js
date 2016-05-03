@@ -2,6 +2,17 @@ $(document).ready(function() {
 
 
     /**
+     * 点击搜索按钮，只搜索输入的关键字，不匹配下面的筛选条件
+     */
+    $("#search").click(function(event) {
+        window.location.href='/user?_token=' + $("input[name=_token]").val()
+                                             +'&user_cellphone_email='
+                                             + $("#user_cellphone_email").val()
+                                             + '&field=uid&order=asc';
+    });
+    $("#user_cellphone_email").val($.getUrlParam('user_cellphone_email'));
+
+    /**
      * select下拉式日期选择器(注册时间段的开始时间)
      */
      var myDate = new Date();
@@ -161,6 +172,15 @@ $(document).ready(function() {
      $("input[name='change_duration']").val("up20h");   // 给 input 赋值
      $("#change_duration").bind('change', function () {
          $("input[name='change_duration']").val($("#change_duration").val());
+     })
+
+    /**
+     * "活跃度"改变时修改 input 的 value
+     */
+     $("#liveness").val("active_user");    // 设置 select 的默认值
+     $("input[name='liveness']").val("active_user");   // 给 input 赋值
+     $("#liveness").bind('change', function () {
+         $("input[name='liveness']").val($("#liveness").val());
      })
 
     /**
@@ -337,5 +357,284 @@ $(document).ready(function() {
      if (order != '' && order != null) {
         $("input[name=order]").val(order);
      }
+
+     /**
+      * 修改 URL 中的参数值
+      */
+     //para_name 参数名称 para_value 参数值 url所要更改参数的网址
+     function setUrlParam(para_name, para_value) {
+         var strNewUrl = new String();
+         var strUrl = new String();
+         var url = new String();
+         url= window.location.href;
+         strUrl = window.location.href;
+         //alert(strUrl);
+         if (strUrl.indexOf("?") != -1) {
+             strUrl = strUrl.substr(strUrl.indexOf("?") + 1);
+             //alert(strUrl);
+             if (strUrl.toLowerCase().indexOf(para_name.toLowerCase()) == -1) {
+                 strNewUrl = url + "&" + para_name + "=" + para_value;
+                 window.location = strNewUrl;
+                 //return strNewUrl;
+             } else {
+                 var aParam = strUrl.split("&");
+                 //alert(aParam.length);
+                 for (var i = 0; i < aParam.length; i++) {
+                     if (aParam[i].substr(0, aParam[i].indexOf("=")).toLowerCase() == para_name.toLowerCase()) {
+                         aParam[i] = aParam[i].substr(0, aParam[i].indexOf("=")) + "=" + para_value;
+                     }
+                 }
+                 strNewUrl = url.substr(0, url.indexOf("?") + 1) + aParam.join("&");
+                 //alert(strNewUrl);
+                 window.location = strNewUrl;
+                 //return strNewUrl;
+             }
+         } else {
+             strUrl += "?" + para_name + "=" + para_value;
+             //alert(strUrl);
+             window.location=strUrl;
+         }
+     }
+
+     /**
+      * 获取 URL 中的参数
+      */
+      function getUrlParam(name) {
+         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+         var r = window.location.search.substr(1).match(reg);
+         if (r != null) return unescape(r[2]); return null;
+     }
+
+     // “水平等级”排序
+     $("a:contains('水平等级')").click(function(event) {
+         console.log(getUrlParam('order'));
+         if (getUrlParam('order') == 'desc') {
+             setUrlParam('field', 'user_grade');
+             setUrlParam('order', 'asc');
+         } else {
+             setUrlParam('field', 'user_grade');
+             setUrlParam('order', 'desc');
+         }
+     });
+
+     // “注册日期”排序
+     $("a:contains('注册日期')").click(function(event) {
+         console.log(getUrlParam('order'));
+         if (getUrlParam('order') == 'desc') {
+             setUrlParam('field', 'regdate');
+             setUrlParam('order', 'asc');
+         } else {
+             setUrlParam('field', 'regdate');
+             setUrlParam('order', 'desc');
+         }
+     });
+
+     // “账号截止日期”排序
+     $("a:contains('账号截止日期')").click(function(event) {
+         console.log(getUrlParam('order'));
+         if (getUrlParam('order') == 'desc') {
+             setUrlParam('field', 'account_end_at');
+             setUrlParam('order', 'asc');
+         } else {
+             setUrlParam('field', 'account_end_at');
+             setUrlParam('order', 'desc');
+         }
+     });
+
+     // “上月使用时长”排序
+     $("a:contains('上月使用时长')").click(function(event) {
+         console.log(getUrlParam('order'));
+         if (getUrlParam('order') == 'desc') {
+             setUrlParam('field', 'account_end_at');
+             setUrlParam('order', 'asc');
+         } else {
+             setUrlParam('field', 'account_end_at');
+             setUrlParam('order', 'desc');
+         }
+     });
+
+     /**
+      * 全部选中，全部取消
+      */
+     $("#checkAll").bind('click', function(event) {
+         if (this.checked) {
+             $("input[name='user_action[]']").prop("checked", true);
+         }else {
+             $("input[name='user_action[]']").prop("checked", false);
+         }
+     });
+
+     /**
+      * 锁定选中的用户
+      */
+     $("#lock_all").bind('click', function(event) {
+         var ids = [];
+         $("input[name='user_action[]']:checked").each(function(index, el) {
+             ids.push($(el).closest('tr').attr('id'));
+         });
+         // 如果没有选择用户，中断退出
+         if (ids.length == 0) {
+             return alert('请先选择用户');
+         }
+        $confirm = confirm('确定要锁定所选用户?');
+        if ($confirm) {
+            $.ajax({
+                url: '/user/lockUsers',
+                type: 'PUT',
+                dataType: 'json',
+                data: {'ids': ids},
+                headers: {
+                    'X-CSRF-TOKEN': $("input[name=_token]").val()
+                }
+            })
+            .done(function() {
+                location.reload();
+            })
+        }
+     });
+
+     /**
+      * 锁定单个用户
+      */
+      $(".lockuser").each(function(index, el) {
+          $(el).click(function(event) {
+              var id = $(el).attr('id');
+              $.ajax({
+                  url: '/user/lockuser/' + id,
+                  type: 'GET',
+                  dataType: 'json'
+              })
+              .done(function(data) {
+                  if (data) {
+                      $(el).attr('class', 'lockuser btn btn-success btn-xs');
+                      $(el).text('锁定');
+                      $(el).parent().prev().text('正常');
+                  } else {
+                      $(el).attr('class', 'lockuser btn btn-danger btn-xs');
+                      $(el).text('解锁');
+                      $(el).parent().prev().text('锁定');
+                  }
+              })
+              .fail(function() {
+                  console.log("error");
+              })
+              .always(function() {
+                  console.log("complete");
+              });
+
+          });
+      });
+
+     /**
+      * 解锁选中的用户
+      */
+     $("#unlock_all").bind('click', function(event) {
+         var ids = [];
+         $("input[name='user_action[]']:checked").each(function(index, el) {
+             ids.push($(el).closest('tr').attr('id'));
+         });
+         if (ids.length == 0) {
+             return alert('请先选择用户');
+         }
+         $confirm = confirm('确定要解锁所选用户?');
+         if ($confirm) {
+             $.ajax({
+                 url: '/user/unlockUsers',
+                 type: 'PUT',
+                 dataType: 'json',
+                 data: {'ids': ids},
+                 headers: {
+                     'X-CSRF-TOKEN': $("input[name=_token]").val()
+                 }
+             })
+             .done(function() {
+                 console.log("success");
+                 location.reload();
+             })
+         }
+     });
+
+     /**
+      * 通知选中的用户
+      */
+     // 判断是否已选择用户
+     $("#notify_all").click(function() {
+         // 由于之后会弹出模态框，暂时没有找到解决方法
+     });
+     $("#send_message").bind('click', function(event) {
+         var ids = [];
+         $("input[name='user_action[]']:checked").each(function(index, el) {
+             ids.push($(el).closest('tr').attr('id'));
+         });
+         if (ids.length == 0) {
+             return alert('请先选择用户');
+         }
+         $confirm = confirm('确定要通知用户?');
+         if ($confirm) {
+             switch ($("#select_multi").val()) {
+                 case '1':
+                    var message = '账号到期';
+                     break;
+                 case '2':
+                    var message = '资料到期';
+                     break;
+                 case '3':
+                    var message = '违规与禁言';
+                     break;
+                 case '4':
+                    var message = '重新提交资料:' + $("input[name='message']").val();
+                     break;
+                 default:
+             }
+             $.ajax({
+                 url: '/user/notifyUsers',
+                 type: 'POST',
+                 dataType: 'json',
+                 data: {
+                     'user_id': ids,
+                     'message': message
+                 },
+                 headers: {
+                     'X-CSRF-TOKEN': $("input[name=_token]").val()
+                 }
+             })
+             .done(function() {
+                 alert("通知成功！");
+                 // 关闭模态框
+                 $(".m_notify_all").modal('hide');
+                 // 取消所有的选中项
+                 $("input[name='user_action[]']:checked").each(function(index, el) {
+                     $(el).prop('checked', false);
+                 });
+             })
+             .fail(function() {
+                 alert('通知失败！');
+                 // 关闭模态框
+                 $(".m_notify_all").modal('hide');
+                 // 取消所有的选中项
+                 $("input[name='user_action[]']:checked").each(function(index, el) {
+                     $(el).prop('checked', false);
+                 });
+             })
+         }
+     });
+     // 如果选中第四项，则出现输入框
+     $("#select_multi").click(function(event) {
+        if ($("#select_multi").val() == 4) {
+            $("input[name='message']").attr('type', 'text');
+        } else {
+            $("input[name='message']").attr('type', 'hidden');
+        }
+     });
+
+     /**
+      * 通知单个用户
+      */
+     $(".send_msg_single").each(function(index, el) {
+         $(el).click(function(event) {
+             $(el).closest('tr').find('input').prop('checked', true);
+             console.log('printing checkbox log...');
+         });
+     });
 
 });

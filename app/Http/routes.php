@@ -108,7 +108,7 @@ Route::group(['middleware' => 'web'], function () {
     /**
      * 锁定或者解锁用户
      */
-    Route::get('/lockuser/{id}', 'UserController@lockUser');
+    Route::get('/user/lockuser/{id}', 'UserController@lockUser');
 
     /**
      * 获取所有省份
@@ -119,7 +119,61 @@ Route::group(['middleware' => 'web'], function () {
      * 根据省份获取城市列表
      */
     Route::get('/user/cities/{id}', 'UserController@getCities');
+
+    /**
+     * 播放记录
+     */
     Route::get('/user/playRecords', 'UserController@playRecords');
+
+    /**
+     * 锁定选中的用户
+     */
+    Route::put('/user/lockUsers', 'UserController@lockUsers');
+
+    /**
+     * 解锁选中的用户
+     */
+    Route::put('/user/unlockUsers', 'UserController@unlockUsers');
+
+    /**
+     * 通知选中的用户
+     */
+    Route::post('/user/notifyUsers', 'UserController@notifyUsers');
+
+    /**
+     * 单个用户的“基本信息”
+     */
+    Route::get('/user/basicinfo/{id}', 'UserController@showBasicInfo');
+
+    /**
+     * 单个用户的“活动历史”
+     */
+    Route::get('/user/actionhistory/{id}', 'UserController@showActionHistory');
+
+    /**
+     * 单个用户的“成绩历史”
+     */
+    Route::get('/user/recordhistory/{id}', 'UserController@showRecordHistory');
+
+    /**
+     * 单个用户的“订单历史”
+     */
+    Route::get('/user/orderhistory/{id}', 'UserController@showOrderHistory');
+
+    /**
+     * 单个用户的“社交历史”
+     */
+    Route::get('/user/socialhistory/{id}', 'UserController@showSocialHistory');
+
+    /**
+     * 成绩报告
+     */
+    Route::get('/user/recordReport/{id}', 'UserController@recordReport');
+
+    /**
+     * 获取绘图所用的数据
+     */
+     Route::get('/user/recordReportChart/{id}', 'UserController@recordReportChart');
 
     /**
      * 使用资源路由
@@ -138,15 +192,26 @@ Route::group(['middleware' => 'web'], function () {
     */
     Route::resource('/teacher', 'TeacherController');
     // --------------------------------------订单路由-------------------------------------------------
+
+    /**
+     * 订单统计
+     */
+    Route::get('/order/statistics', 'OrderController@statistics');
+
+    /**
+    * 锁定或解锁订单
+    */
+    Route::get('/lockorder/{id}', 'OrderController@lockOrder');
+
+    /**
+     * 订单趋势
+     */
+    Route::get('/order/tendency', 'OrderController@tendency');
+
     /**
      * 使用资源路由
      */
     Route::resource('/order', 'OrderController');
-
-    /**
-     * 锁定或解锁订单
-     */
-    Route::get('/lockorder/{id}', 'OrderController@lockOrder');
     // --------------------------------------财务路由-------------------------------------------------
     Route::resource('/finance', 'FinanceController');
     // --------------------------------------RBAC-------------------------------------------------

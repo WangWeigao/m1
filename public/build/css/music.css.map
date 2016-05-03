@@ -1,0 +1,1 @@
+{"version":3,"sources":["music.css"],"names":[],"mappings":"AAAA;AACA;AACA;AACA","file":"music.css","sourcesContent":["th, tr, td {\r\n    white-space:nowrap;\r\n}\r\n"],"sourceRoot":"/source/"}

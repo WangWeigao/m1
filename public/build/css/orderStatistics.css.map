@@ -1,0 +1,1 @@
+{"version":3,"sources":["orderStatistics.css"],"names":[],"mappings":"AAAA;AACA;AACA;AACA;AACA","file":"orderStatistics.css","sourcesContent":["#year_highcharts {\r\n    /*width: 100%;*/\r\n    margin-right: 20px;\r\n}\r\n"],"sourceRoot":"/source/"}

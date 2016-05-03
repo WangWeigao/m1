@@ -33,9 +33,9 @@ class StudentUser extends Model
      * @method orders
      * @return [type] [description]
      */
-    public function orders()
+    public function robot_orders()
     {
-        return $this->hasMany('App\Order', 'student_uid', 'uid');
+        return $this->hasMany('App\RobotOrder', 'user_id', 'uid');
     }
 
 
@@ -49,8 +49,22 @@ class StudentUser extends Model
         return $this->hasMany('App\Lesson', 'teacher_uid', 'uid');
     }
 
-    public function robot_durations()
+    public function practice()
     {
-        return $this->hasMany('App\RobotDuration', 'user_id', 'uid');
+        return $this->hasMany('App\Practice', 'uid', 'uid');
+    }
+
+    public function user_actions()
+    {
+        return $this->hasMany('App\UserAction', 'user_id', 'uid');
+    }
+
+    public function getSexAttribute($value)
+    {
+        if (in_array($value, [1,2])) {
+            $arr = ['男', '女'];
+            $value = $arr[$value-1];
+        }
+        return $value;
     }
 }

@@ -15,8 +15,8 @@
             <div class="form-group form-inline">
                 {{-- <label for="">用户搜索</label> --}}
                 <div>精确搜索</div>
-                <input type="text" class="form-control" id="searchName" name="user_cellphone_email" placeholder="请输入用户名/手机号/电子邮件">
-                <button type="submit" name="button" class="btn btn-success" id="search">搜索</button>
+                <input type="text" class="form-control" id="user_cellphone_email" placeholder="请输入用户名/手机号/电子邮件">
+                <button type="button" name="button" class="btn btn-success" id="search">搜索</button>
             </div>
             <div class="form-group form-inline">
                 <div>筛选待件</div>
@@ -110,7 +110,7 @@
                     <option value="expire">未续费</option>
                 </select>
                 {{-- 本月用时大幅变化 --}}
-                <input type="checkbox" name="change_duration" value="" id="l_change_duration">
+                <input type="checkbox" name="change_duration" value="" id="l_change_duration" disabled="disabled">
                 <label for="l_change_duration">本月用户大幅变化</label>
                 <select class="" name="" id="change_duration">
                     <option value="up20h">上升20小时以上</option>
@@ -121,7 +121,7 @@
                     <option value="down50h">下降50小时以上</option>
                 </select>
                 {{-- 活跃度 --}}
-                <input type="checkbox" name="liveness" value="" id="l_liveness">
+                <input type="checkbox" name="liveness" value="" id="l_liveness" disabled="disabled">
                 <label for="l_liveness">活跃度</label>
                 <select class="" name="" id="liveness">
                     <option value="active_user">活跃用户</option>
@@ -150,88 +150,126 @@
         {{-- </fieldset> --}}
     </form>
 @if(!empty($users))
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th><a href="#">全选</a></th>
-            <th>编号</th>
-            <th>用户帐号</th>
-            <th>手机号</th>
-            <th>电子邮箱</th>
-            <th>地区</th>
-            <th>性别</th>
-            <th>学龄</th>
-            <th>水平等级</th>
-            <th>指定乐器</th>
-            <th>注册日期</th>
-            <th>账号级别</th>
-            <th>账号截止日期</th>
-            <th>上月使用时长</th>
-            <th>本月使用时长</th>
-            <th>账户状态</th>
-            <th>操作</th>
-        </tr>
-    </thead>
-        <tbody>
-            @foreach($users as $user)
-            <tr>
-                <td><input type="checkbox"></td>
-                <input type="hidden" name="user_id" value="{{ url('/user/' . $user->uid) }}">
-                {{-- 编号 --}}
-                <td><a href="#">{{ $user->seq_num }}</a></td>
-                {{-- 用户帐号 --}}
-                <td><a href="{{ url('/user/' . $user->uid) }}">{{ $user->nickname }}</a></td>
-                {{-- 电话号码 --}}
-                <td>{{ $user->cellphone }}</td>
-                {{-- 电子邮箱 --}}
-                <td>{{ $user->email }}</td>
-                {{-- 地区 --}}
-                <td>{{ $user->city_id }}</td>
-                {{-- 性别 --}}
-                <td>{{ $user->sex }}</td>
-                {{-- 学龄 --}}
-                <td>{{ $user->study_age }}</td>
-                {{-- 水平等级 --}}
-                <td>{{ $user->user_grade }}</td>
-                {{-- 指定乐器 --}}
-                <td>
-                    @if(!empty($user->instrument_id))
-                        @foreach($user->instrument_id as $instrument)
-                            {{ $instrument['name'] }}/
-                        @endforeach
-                    @endif
-                </td>
-                {{-- 注册日期 --}}
-                <td>{{ $user->regdate }}</td>
-                {{-- 账号级别 --}}
-                <td>{{ $user->account_grade }}</td>
-                {{-- 账号截止日期 --}}
-                <td>{{ $user->account_end_at }}</td>
-                {{-- 上月使用时长 --}}
-                <td>{{ $user->duration_preMonth }}</td>
-                {{-- 本月使用时长 --}}
-                <td>{{ $user->duration_Month }}</td>
-                {{-- 账户状态 --}}
-                <td>
-                    {{ $user->status }}
-                </td>
-                <td>
-                    <button type="button" id="{{ $user->uid }}" class="{{ $user->isactive ? 'lockuser btn btn-success btn-xs' : 'lockuser btn btn-danger' }}">
-                        {{ $user->isactive ? '锁定' : '解锁'  }}
-                    </button>
-                    <a href="{{ url('/user/' . $user->uid) }}">
-                        <button type="button" class="btn btn-info btn-xs">查看</button>
-                    </a>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-</table>
-<div class="text-center">
-    {!! $users->render() !!}
-</div>
+    <table class="table table-hover">
+        <thead>
+            @if(count($users) > 0)
+                <tr>
+                    <th><input type="checkbox" id="checkAll"></th>
+                    <th>编号</th>
+                    <th>用户账号</th>
+                    <th>手机号</th>
+                    <th>电子邮箱</th>
+                    <th>地区</th>
+                    <th>性别</th>
+                    <th>学龄</th>
+                    <th><a style="cursor:pointer">水平等级</a></th>
+                    <th>指定乐器</th>
+                    <th><a style="cursor:pointer">注册日期</a></th>
+                    <th>账号级别</th>
+                    <th><a style="cursor:pointer">账号截止日期</a></th>
+                    <th><a style="cursor:pointer">上月使用时长</a></th>
+                    <th><a style="cursor:pointer">本月使用时长</a></th>
+                    <th>账户状态</th>
+                    <th>操作</th>
+                </tr>
+            @else
+                <div class="text-center">
+                    没有查询到相关数据，更换查询条件再试试吧
+                </div>
+            @endif
+        </thead>
+            <tbody>
+                @foreach($users as $user)
+                <tr id="{{ $user->uid }}">
+                    <td><input type="checkbox" name="user_action[]"></td>
+                    <input type="hidden" name="user_id" value="{{ $user->uid }}">
+                    {{-- 编号 --}}
+                    <td>{{ $user->seq_num }}</td>
+                    {{-- 用户帐号 --}}
+                    <td><a href="{{ url('/user/basicinfo/' . $user->uid) }}" target="_blank">{{ $user->nickname }}</a></td>
+                    {{-- 电话号码 --}}
+                    <td>{{ $user->cellphone }}</td>
+                    {{-- 电子邮箱 --}}
+                    <td>{{ $user->email }}</td>
+                    {{-- 地区 --}}
+                    <td>{{ $user->city_id }}</td>
+                    {{-- 性别 --}}
+                    <td>{{ $user->sex }}</td>
+                    {{-- 学龄 --}}
+                    <td>{{ $user->study_age }}</td>
+                    {{-- 水平等级 --}}
+                    <td>{{ $user->user_grade }}</td>
+                    {{-- 指定乐器 --}}
+                    <td>
+                        {{-- @if(!empty($user->instrument_id))
+                            @foreach($user->instrument_id as $instrument)
+                                {{ $instrument['name'] }}&nbsp;&nbsp;
+                            @endforeach
+                        @endif --}}
+                        {{ $user->instrument_id ? '钢琴' : '' }}
+                    </td>
+                    {{-- 注册日期 --}}
+                    <td>{{ $user->regdate }}</td>
+                    {{-- 账号级别 --}}
+                    <td>{{ $user->account_grade }}</td>
+                    {{-- 账号截止日期 --}}
+                    <td>{{ $user->account_end_at }}</td>
+                    {{-- 上月使用时长 --}}
+                    <td>{{ $user->duration_preMonth }}</td>
+                    {{-- 本月使用时长 --}}
+                    <td>{{ $user->duration_Month }}</td>
+                    {{-- 账户状态 --}}
+                    <td>
+                        {{ $user->status }}
+                    </td>
+                    <td>
+                        <button type="button" id="{{ $user->uid }}" class="{{ $user->isactive ? 'lockuser btn btn-success btn-xs' : 'lockuser btn btn-danger btn-xs' }}">
+                            {{ $user->isactive ? '锁定' : '解锁'  }}
+                        </button>
+                        <a style="cursor:pointer">
+                            <button type="button" class="btn btn-info btn-xs send_msg_single" id=""
+                                    data-toggle="modal" data-target=".m_notify_all">通知</button>
+                        </a>
+                        <button type="button" class="btn btn-default btn-xs"><a href="/user/basicinfo/{{$user->uid}}" target="_blank">查看</a></button>
+                        <button type="button" class="btn btn-default btn-xs"><a href="/user/recordReport/{{$user->uid}}" target="_blank">成绩报告</a></button>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+    </table>
+    <div class="btn btn-danger" id="lock_all">锁定</div>
+    <div class="btn btn-success" id="unlock_all">解锁</div>
+    <div class="btn btn-info" id="notify_all" data-toggle="modal" data-target=".m_notify_all">通知</div>
+    <div class="text-center">
+        {!! $users->render() !!}
+    </div>
+    {{-- 通知选中用户，模态框 --}}
+    <div class="modal fade m_notify_all" id="" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="">通知内容</h4>
+          </div>
+          <div class="modal-body">
+              <div class="form-group">
+                  <select class="form-control" name="" id="select_multi">
+                      <option value="1">通知账号到期</option>
+                      <option value="2">通知资料到期</option>
+                      <option value="3">通知违规与禁言</option>
+                      <option value="4">通知重新提交资料，并输入理由</option>
+                  </select>
+                  <input type="hidden" class="form-control" name="message" value="" placeholder="请输入理由">
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="send_message">发送通知</button>
+          </div>
+        </div>
+      </div>
+    </div>
 @endif
-
 @endsection
 
 @section('css')

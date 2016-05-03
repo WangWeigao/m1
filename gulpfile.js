@@ -28,7 +28,10 @@ elixir(function(mix) {
     //     // 'jquery.dataTables_themeroller.css',    //表格排序
     // ])
     mix.styles('music.css', 'public/css/music.css')
-        .styles('user.css', 'public/css/user.css');
+        .styles('user.css', 'public/css/user.css')
+        .styles('userrecordhistory.css', 'public/css/userrecordhistory.css')
+        .styles('orderStatistics.css', 'public/css/orderStatistics.css')
+        .styles(['bootstrap-datetimepicker.css', 'order.css'], 'public/css/order.css');
 
     /**
      * 合并js文件
@@ -55,8 +58,11 @@ elixir(function(mix) {
     .scripts(['music.js', 'dateSelector.js', 'jquery.form.js', 'getUrlParam.js'], 'public/js/music.js')
     .scripts(['musicStatistics.js'], 'public/js/musicStatistics.js')
     .scripts(['userUsageStatics.js'], 'public/js/userUsageStatics.js')
-    .scripts(['user.js', 'dateSelector.js', 'jquery.form.js'], 'public/js/user.js')
-    .scripts(['musicadd.js'], 'public/js/musicadd.js');
+    .scripts(['user.js', 'dateSelector.js', 'jquery.form.js', 'getUrlParam.js'], 'public/js/user.js')
+    .scripts(['musicadd.js'], 'public/js/musicadd.js')
+    .scripts(['userbasicinfo.js'], 'public/js/userbasicinfo.js')
+    .scripts(['orderStatistics.js'], 'public/js/orderStatistics.js')
+    .scripts(['moment.min.js', 'bootstrap-datetimepicker.min.js', 'order.js', 'getUrlParam.js'], 'public/js/order.js');
     /**
      * 添加时间戳
      */
@@ -64,5 +70,6 @@ elixir(function(mix) {
         'css/all.css',
         'js/all.js',
         'js/*.js',
+        'css/*.css'
     ]);
 });

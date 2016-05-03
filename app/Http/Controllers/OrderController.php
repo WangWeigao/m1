@@ -8,7 +8,9 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Order;
+use App\RobotOrder;
 use DB;
+use Carbon\Carbon;
 
 class OrderController extends Controller
 {
@@ -26,60 +28,106 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         /**
-         * 查询从这个时间开始查询订单
-         * 以订单提交时间为准(submit_time字段)
+         * 视图中用于分页链接的参数数组
+         * @var [type]
          */
-        $from_time = $request->get('from_time');
+        $query_string = [];
+        $order_num_or_username = $request->get('order_num_or_username');
+        // $order_type            = $request->get('order_type');
+        // $vendor                = $request->get('vendor');
+        // $order_status          = $request->get('order_status');
+        /**
+         * 按 订单号/用户名 进行查询
+         */
+         if (isset($order_num_or_username)) {
+             if (empty($order_num_or_username)) {
+                 return view('order')->with('orders', []);
+             }
+            $orders =  DB::table('robot_orders')
+                        ->join('users', 'robot_orders.user_id', '=', 'users.uid')
+                        ->where('robot_orders.id', '=', $order_num_or_username)
+                        ->orWhere('users.nickname', 'like', "%$order_num_or_username%")
+                        ->get();
+            return view('order')->with(['orders' => $orders,
+                                        'order_num_or_username' => $order_num_or_username]);
+        }
+
+        /**
+         * 订单类型
+         * @var int
+         */
+        $order_type = $request->get('order_type', '');
+
+        /**
+         * 发货商
+         * @var int
+         */
+        $vendor = $request->get('vendor', '');
+
+        /**
+         * 订单状态
+         * @var int
+         */
+        $order_status = $request->get('order_status', '');
+
+        /**
+         * 查询从这个时间开始查询订单
+         * 以订单提交时间为准(pay_time字段)
+         */
+        $from_time = $request->get('from_time', '');
 
         /**
          * 查询到这个时间截止的订单
-         * 以订单提交时间为止(submit_time字段)
+         * 以订单提交时间为止(pay_time字段)
          */
-        $to_time = $request->get('to_time');
+        $to_time = $request->get('to_time', '');
+        $orders = DB::table('robot_orders')
+                    ->join('users', 'robot_orders.user_id', '=', 'users.uid')
+                    ->select('robot_orders.*', 'users.nickname');
 
         /**
          * 按时间跨度查询订单
          */
-        $orders = Order::whereBetween('submit_time', [$from_time, $to_time])->get();
-                    //    ->paginate(10);
-
-        // 将 status 的值替换为可识别的内容
-        foreach ($orders as $order) {
-            switch ($order->status) {
-                case '0':
-                    $order->status = '未付款';
-                    break;
-                case '1':
-                    $order->status = '待上课';
-                    break;
-                case '2':
-                    $order->status = '已完成';
-                    break;
-                case '3':
-                    $order->status = '已评价';
-                    break;
-                default:
-                    $order->status = '数据错误';
-                    break;
-            }
-
-            if (empty($order->rating)) {
-                $order->rating = '暂无评分';
-            }
-
-            if ($order->encashment) {
-                $order->encashment = '已提现';
-            } else {
-                $order->encashment = '暂未提现';
-            }
-
+        if (!empty($from_time) && !empty($to_time)) {
+            $orders->whereBetween('robot_orders.pay_time', [$from_time, $to_time]);
+            $query_string = array_merge($query_string, ['from_time' => $from_time],
+                                                        ['to_time' => $to_time]);
         }
+
+        /**
+         * 按订单类型查询
+         * 存储变量作为view中分页链接的参数
+         */
+        if (!empty($order_type)) {
+            $query_string = array_merge(['order_type' => $order_type]);
+            $orders->where('users.account_grade', $order_type);
+        }
+
+        /**
+         * 按供货商查询
+         * 存储变量作为view中分页链接的参数
+         */
+        if (!empty($vendor)) {
+            $query_string = array_merge(['vendor' => $vendor]);
+            $orders->where('robot_orders.channel', $vendor);
+        }
+
+        /**
+         * 按订单状态查询
+         * 存储变量作为view中分页链接的参数
+         */
+        if (!empty($order_status)) {
+            $query_string = array_merge(['order_status' => $order_status]);
+            $orders->where('robot_orders.status', $order_status);
+        }
+
+        $orders = $orders->paginate(10);
 
         /**
          * 携带 from_time 和 to_time 以便进行分页, 点击其它页娄时将数据带到跳转的页面
          */
-        return view('order')->with(['orders' => $orders, 'from_time' => $from_time, 'to_time' => $to_time]);
-        // return view('order')->withInput();
+        return view('order')->with(['orders' => $orders,
+                                    'query_string' => $query_string]);
     }
 
 
@@ -157,4 +205,122 @@ class OrderController extends Controller
         // return view('orderdetail')->with('orderInfo', $orderInfo);
         return $orderInfo;
     }
+
+    /**
+     * 订单统计
+     * @method statistics
+     * @return [type]     [description]
+     */
+    public function statistics()
+    {
+        $nums = RobotOrder::select(DB::raw('COUNT(*) as counts'))
+                            ->get()[0];
+        $pay_nums = RobotOrder::select(DB::raw('COUNT(*) as counts'))
+                            ->where('type', 4)
+                            ->get()[0];
+        return view('orderStatistics')->with(['nums' => $nums,
+                                              'pay_nums' => $pay_nums]);
+    }
+
+    /**
+     * 获取按 日/月/季度/年 的统计结果数组
+     * @method tendency
+     * @param  Request  $request [description]
+     * @return [type]            [description]
+     */
+    public function tendency(Request $request)
+    {
+        $period = $request->get('period');
+        switch ($period) {
+            case 'today':
+                $dataValue = $this->getDayTendency();
+                break;
+            case 'month':
+                $dataValue = $this->getMonthTendency();
+                break;
+            case 'quarter':
+                $dataValue = $this->getQuarterTendency();
+                break;
+            case 'year':
+                $dataValue = $this->getYearTendency();
+                break;
+
+            default:
+                # code...
+                break;
+        }
+        return $dataValue;
+
+    }
+
+    /**
+     * 获取按天的统计结果
+     * @method getDayTendency
+     * @param  Carbon         $carbon [description]
+     * @return [type]                 [description]
+     */
+    public function getDayTendency()
+    {
+        $dt = Carbon::now('Asia/ShangHai');
+        $length = $dt->hour;
+        for ($i=0; $i <= $length; $i++) {
+            $start       = $dt->hour($i)->minute(0)->second(1)->toDateTimeString();
+            $end         = $dt->hour($i)->minute(59)->second(59)->toDateTimeString();
+            $dataValue[] = RobotOrder::whereBetween('pay_time', [$start, $end])->count();
+        }
+        return $dataValue;
+    }
+
+    /**
+     * 获取按月的统计结果
+     * @method getMonthTendency
+     * @return [type]           [description]
+     */
+    public function getMonthTendency()
+    {
+        $dt = Carbon::now('Asia/ShangHai');
+        $length = $dt->day;
+        for ($i=1; $i <= $length; $i++) {
+            $start       = $dt->day($i)->startOfDay()->toDateTimeString();
+            $end         = $dt->day($i)->endOfDay()->toDateTimeString();
+            $dataValue[] = RobotOrder::whereBetween('pay_time', [$start, $end])->count();
+        }
+        return $dataValue;
+    }
+
+    /**
+     * 按季度取得统计结果
+     * @method getQuarterTendency
+     * @return [type]             [description]
+     */
+    public function getQuarterTendency()
+    {
+        $dt     = Carbon::now('Asia/ShangHai');
+        $length = ($dt->month)%3;
+        for ($i=(floor(($dt->month)/3)*3+1); $i <=$dt->month ; $i++) {
+            $start       = Carbon::now('Asia/ShangHai')->month($i)->startOfMonth();
+            $end         = Carbon::now('Asia/ShangHai')->month($i)->endOfMonth();
+            $dataValue[] = RobotOrder::whereBetween('pay_time', [$start, $end])->count();
+        }
+        return $dataValue;
+    }
+
+    /**
+     * 按年取得统计结果
+     * @method getYearTendency
+     * @return [type]          [description]
+     */
+    public function getYearTendency()
+    {
+        $dt     = Carbon::now('Asia/ShangHai');
+        $length = $dt->month;
+        DB::connection()->enableQueryLog();
+        for ($i=1; $i<=$length; $i++) {
+            $start       = Carbon::now('Asia/ShangHai')->month($i)->startOfMonth()->toDateTimeString();
+            $end         = Carbon::now('Asia/ShangHai')->month($i)->endOfMonth()->toDateTimeString();
+            $dataValue[] = RobotOrder::whereBetween('pay_time', [$start, $end])->count();
+        }
+        return $dataValue;
+    }
+
 }

@@ -6,11 +6,12 @@ $(document).ready(function() {
             $("#home").addClass('active');
             break;
         case '/music':
-        case '/music/create':
+        case '/music/musicStatistics':
             $("#music").addClass('active');
             break;
         case '/user':
-        case '/getusers':
+        case '/user/usageStatistics':
+        case '/user/playRecords':
             $("#user-manager").addClass('active');
             break;
         case '/teacher':
@@ -18,8 +19,7 @@ $(document).ready(function() {
             $("#teacher-manager").addClass('active');
             break;
         case '/order':
-        case '/getorders':
-        case '/orderdetail/':
+        case '/order/statistics':
             $("#order-manager").addClass('active');
             break;
         case '/lesson':

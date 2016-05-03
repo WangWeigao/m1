@@ -9,9 +9,14 @@ use App\Http\Controllers\Controller;
 
 use App\StudentUser;
 use App\Lesson;
+use App\Notification;
 use DB;
 use Carbon\Carbon;
 use App\Order;
+use App\RobotDuration;
+use App\Practice;
+use App\RobotOrder;
+use App\UserAction;
 class UserController extends Controller
 {
     /**
@@ -46,6 +51,8 @@ class UserController extends Controller
         $liveness             = $request->get('liveness', '');              // 活跃度
         $reg_start_time       = $request->get('reg_start_time', '');        // 注册时间段 > 开始时间
         $reg_end_time         = $request->get('reg_end_time', '');          // 注册时间段 > 结束时间
+        $field                = $request->get('field');                     // 排序字段
+        $order                = $request->get('order');                     // 排序方式
 
         /**
          * 用来排序的字段
@@ -75,7 +82,10 @@ class UserController extends Controller
          * 按字段不为这的情况，进行SQL语句拼接
          * "用户名"不为空
          */
-        $users = StudentUser::where('usertype', 1);
+        $users = StudentUser::where(function ($query) {
+            $query->where('usertype', '=', 1)
+                  ->orWhere('usertype', '<>', 1);
+        });
         if (!empty($user_cellphone_email)) {
             $users->where(function  ($query) use ($user_cellphone_email) {
                 $query->where('nickname', 'like', "%{$user_cellphone_email}%")
@@ -277,12 +287,12 @@ class UserController extends Controller
         if (!empty($change_duration)) {
             switch ($change_duration) {
                 case 'up20h':
-                $start_time = Carbon::now()->subMonth();
-                $end_time   = Carbon::now()->endOfDay();
-                    $users->whereHas('robot_durations', function ($query) {
-                        $query->groupBy('robot_durations.user_id')
-                              ->havingRaw("select SUM(robot_durations.duration) as duration_sum_now where ");
-                    });
+                // $start_time = Carbon::now()->subMonth();
+                // $end_time   = Carbon::now()->endOfDay();
+                //     $users->whereHas('robot_durations', function ($query) {
+                //         $query->groupBy('robot_durations.user_id')
+                //               ->havingRaw("select SUM(robot_durations.duration) as duration_sum_now where ");
+                //     });
                     break;
                 case 'up30h':
                     break;
@@ -345,7 +355,7 @@ class UserController extends Controller
             $preMonth_end_time   = Carbon::now()->subMonth()->endOfDay();
 
             // $users->select('*');
-            $users->orderBy('regdate');
+            $users->orderBy($field, $order);
             $users = $users->paginate(10)->appends([
             'user_cellphone_email' => $user_cellphone_email,
             'city_id'              => $city_id,
@@ -446,29 +456,142 @@ class UserController extends Controller
     }
 
     /**
+     * 单个用户的“基本信息”
+     * @method showBasicInfo
+     * @return [type]        [description]
+     */
+    public function showBasicInfo($id)
+    {
+        $user       = StudentUser::find($id);
+        // 本月使用时长
+        $start_time = Carbon::now()->startOfMonth();
+        $end_time   = Carbon::now()->endOfDay();
+        $user['duration_month'] = RobotDuration::select(DB::raw('SUM(duration) as sum_duration'))
+                                                ->where('user_id', $id)
+                                                ->whereBetween('created_at', [$start_time, $end_time])
+                                                ->groupBy('user_id')
+                                                ->get();
+        if (!$user->isactive) {
+            $user->status = '锁定';
+        } else {
+            if ($user->account_grade == 0) {
+                $user->status = '正常';
+            } elseif ($user->account_grade == 1) {     // 如果为vip1用户
+                if (Carbon::now() < Carbon::parse($user->account_end_at)                  // 还在有效期
+                    && Carbon::now()->addMonth() > Carbon::parse($user->account_end_at)   // 有效期不足一个月
+                    ) {
+                    $user->status = '未续费';
+                } elseif (Carbon::now() > Carbon::parse($user->account_end_at)) {
+                    $user->status = 'vip已过期';
+                } else {
+                    $user->status = '正常';
+                }
+            } elseif ($user->account_grade == 2) {
+                if (Carbon::now() < Carbon::parse($user->account_end_at)                  // 还在有效期
+                    && Carbon::now()->addWeek() > Carbon::parse($user->account_end_at)   // 有效期不足一个周
+                    ) {
+                    $user->status = '未续费';
+                } elseif (Carbon::now() > Carbon::parse($user->account_end_at)) {
+                    $user->status = 'vip已过期';
+                } else {
+                    $user->status = '正常';
+                }
+            } else {
+                $user->status = '正常';
+            }
+        }
+        // return $user;
+        return view('userbasicinfo')->with('user', $user);
+    }
+
+    /**
+     * 单个用户的“活动历史”
+     * @method showActionHistory
+     * @return Response            [description]
+     */
+    public function showActionHistory($id)
+    {
+        $actions = UserAction::where('user_id', $id)->paginate(10);
+
+        return view('useractionhistory')->with(['actions' => $actions,
+                                                'user_id' => $id]);
+    }
+
+    /**
+     * 单个用户的“成绩历史”
+     * @method showRecordHistory
+     * @param  string            $value [description]
+     * @return Response                   [description]
+     */
+    public function showRecordHistory($id)
+    {
+        $records = Practice::where('uid', $id)->paginate(10);
+
+        return view('userrecordhistory')
+                ->with(['records' => $records, 'user_id' => $id]);
+    }
+
+    /**
+     * 单个用户的“订单历史”
+     * @method showOrderHistory
+     * @return Response           [description]
+     */
+    public function showOrderHistory($id)
+    {
+        $start_time  = Carbon::now()->startOfMonth();
+        $end_time    = Carbon::now()->endOfDay();
+        $orders      = RobotOrder::where('user_id', $id)->paginate(10);
+        $consume_all = RobotOrder::select(DB::raw('SUM(price) as value'))
+                            ->where('user_id', $id)
+                            ->get();
+
+        $consume_month = RobotOrder::select(DB::raw('SUM(price) as value'))
+                            ->where('user_id', $id)
+                            ->whereBetween('pay_time', [$start_time, $end_time])
+                            ->get();
+
+        return view('userorderhistory')
+                ->with(['orders' => $orders,
+                        'user_id' => $id,
+                        'consume_all' => $consume_all,
+                        'consume_month' => $consume_month
+                    ]);
+    }
+
+    /**
+     * 单个用户的社交历史
+     * @method showSocialHistory
+     * @return [type]            [description]
+     */
+    public function showSocialHistory()
+    {
+        # code...
+    }
+
+    /**
      * 锁定或解锁用户
      * @method lockUser
      * @param  integer   $id 用户ID
      * @return Json          操作是否成功
      */
-    // public function lockUser($id)
-    // {
-    //     //获取用户激活状态
-    //     $active = StudentUser::where('uid', $id)->first()->isactive;
-    //
-    //     /**
-    //      * 判断用户是否锁定, 以执行相反操作
-    //      */
-    //     if ($active) {
-    //         //取消激活状态(锁定)
-    //         $result = StudentUser::where('uid', $id)->update(['isactive'=>0]);
-    //     }else {
-    //         //激活(解锁)
-    //         $result = StudentUser::where('uid', $id)->update(['isactive'=>1]);
-    //     }
-    //
-    //     return $active;
-    // }
+    public function lockUser($id)
+    {
+        //获取用户激活状态
+        $active = StudentUser::where('uid', $id)->first()->isactive;
+
+        /**
+         * 判断用户是否锁定, 以执行相反操作
+         */
+        if ($active) {
+            //取消激活状态(锁定)
+            $result = StudentUser::where('uid', $id)->update(['isactive'=>0]);
+        }else {
+            //激活(解锁)
+            $result = StudentUser::where('uid', $id)->update(['isactive'=>1]);
+        }
+
+        return $active ? 0 : 1;
+    }
 
     /**
      * 学生使用情况统计
@@ -485,9 +608,9 @@ class UserController extends Controller
         $data['countStudents'] = StudentUser::count();  // 用户数
         $data['todayCountAdd'] = StudentUser::whereBetween('regdate', [$today_carbon_start, $today_carbon_end])->count();   // 今日增加用户数
         $data['todayCountUsed'] = StudentUser::whereBetween('lastlogin', [$today_carbon_start, $today_carbon_end])->count(); // 今日使用用户数
-        $data['todayCountOrder'] = Order::whereBetween('submit_time', [$today_carbon_start, $today_carbon_end])->count();    // 今日订单数
+        $data['todayCountOrder'] = RobotOrder::whereBetween('pay_time', [$today_carbon_start, $today_carbon_end])->count();    // 今日订单数
 
-        $today_request = new Request(['duration' => 30, 'date' => 'today']);
+        $today_request = new Request(['practice_time' => 30*60, 'date' => 'today']);
         $data['todayCountActive'] = self::activeUser($today_request);    // 今日活跃用户数(机器人使用时长30分钟以上)
 
         /**
@@ -498,9 +621,9 @@ class UserController extends Controller
         //  $data['countStudents'] = StudentUser::count();  // 用户数
          $data['monthCountAdd'] = StudentUser::whereBetween('regdate', [$month_carbon_start, $month_carbon_end])->count();   // 今日增加用户数
          $data['monthCountUsed'] = StudentUser::whereBetween('lastlogin', [$month_carbon_start, $month_carbon_end])->count(); // 今日使用用户数
-         $data['monthCountOrder'] = Order::whereBetween('submit_time', [$month_carbon_start, $month_carbon_end])->count();    // 今日订单数
+         $data['monthCountOrder'] = RobotOrder::whereBetween('pay_time', [$month_carbon_start, $month_carbon_end])->count();    // 今日订单数
 
-         $month_request = new Request(['duration' => 1800, 'date' => 'month']);
+         $month_request = new Request(['practice_time' => 30*60*60, 'date' => 'month']);
          $data['monthCountActive'] = self::activeUser($month_request);    // 今日活跃用户数(机器人使用时长30小时以上)
         //  $data['monthDayth'] = Carbon::now()->day;
         $data['monthValue'] = Carbon::now()->day;
@@ -515,9 +638,9 @@ class UserController extends Controller
         //  $data['countStudents'] = StudentUser::count();  // 用户数
          $data['quarterCountAdd'] = StudentUser::whereBetween('regdate', [$quarter_carbon_start, $quarter_carbon_end])->count();   // 今日增加用户数
          $data['quarterCountUsed'] = StudentUser::whereBetween('lastlogin', [$quarter_carbon_start, $quarter_carbon_end])->count(); // 今日使用用户数
-         $data['quarterCountOrder'] = Order::whereBetween('submit_time', [$quarter_carbon_start, $quarter_carbon_end])->count();    // 今日订单数
+         $data['quarterCountOrder'] = RobotOrder::whereBetween('pay_time', [$quarter_carbon_start, $quarter_carbon_end])->count();    // 今日订单数
 
-         $quarter_request = new Request(['duration' => 1800, 'date' => 'quarter']);
+         $quarter_request = new Request(['practice_time' => 30*60*60, 'date' => 'quarter']);
          $data['quarterCountActive'] = self::activeUser($quarter_request);    // 今日活跃用户数(机器人使用时长30小时以上)
         //  $data['QuarterMonth'] = Carbon::now()->nthOfQuarter();
 
@@ -530,9 +653,9 @@ class UserController extends Controller
         //  $data['countStudents'] = StudentUser::count();  // 用户数
          $data['yearCountAdd'] = StudentUser::whereBetween('regdate', [$year_carbon_start, $year_carbon_end])->count();   // 今日增加用户数
          $data['yearCountUsed'] = StudentUser::whereBetween('lastlogin', [$year_carbon_start, $year_carbon_end])->count(); // 今日使用用户数
-         $data['yearCountOrder'] = Order::whereBetween('submit_time', [$year_carbon_start, $year_carbon_end])->count();    // 今日订单数
+         $data['yearCountOrder'] = RobotOrder::whereBetween('pay_time', [$year_carbon_start, $year_carbon_end])->count();    // 今日订单数
 
-         $year_request = new Request(['duration' => 1800, 'date' => 'year']);
+         $year_request = new Request(['practice_time' => 30*60*60, 'date' => 'year']);
          $data['yearCountActive'] = self::activeUser($year_request);    // 今日活跃用户数(机器人使用时长30小时以上)
         return view('usageStatistics')->with('data', $data);
     }
@@ -566,13 +689,15 @@ class UserController extends Controller
                 # code...
                 break;
         }
-        $duration = $request->get('duration');
+        $practice = $request->get('practice_time');
         $order  = $request->get('order');
-        $countTodayActive = StudentUser::whereHas('robot_durations', function ($query) use ($duration, $date_start, $date_end)  {
-            $query->whereBetween('created_at', [$date_start, $date_end])->groupby('user_id')->havingRaw("SUM(duration) > $duration");
+        $countTodayActive = StudentUser::whereHas('practice', function ($query) use ($practice, $date_start, $date_end)  {
+            $query->whereBetween('practice_date', [$date_start, $date_end])
+                    ->groupby('practice.uid')
+                    ->havingRaw("SUM(practice_time) > $practice");
         });
             if ($order) {
-                $countTodayActive = $countTodayActive->has('orders');
+                $countTodayActive = $countTodayActive->has('robot_orders');
             }
                 $countTodayActive = $countTodayActive->count();    // 机器人使用时长30分钟以上
         return $countTodayActive;
@@ -598,7 +723,7 @@ class UserController extends Controller
      */
     public function getActiveUserOfMonth()
     {
-        $practice_duration = Request::get('practice_duration');
+        $practice_time = Request::get('practice_time');
         $account_type      = Request::get('account_type');
         // $data = StudentUser::where('')
     }
@@ -630,27 +755,10 @@ class UserController extends Controller
         /**
          * 获取所有弹奏记录
          */
-        $play_records = \App\Play_record::with(['music' => function ($query) {
+        $play_records = \App\Practice::with(['music' => function ($query) {
             $query->withTrashed();
         }])->get();
 
-        /**
-         * 将记录中的midi_path字符串, 分隔成数组
-         */
-        foreach ($play_records as $key => $value) {
-            $value->midi_path = explode(',', $value->midi_path);
-        }
-
-        foreach ($play_records as $value) {
-            $temp_value = $value->midi_path;
-            foreach ($temp_value as $v) {
-                $temp = explode('public', $v);
-                $v = $temp[1];
-            }
-            // dd($temp_value);
-            $value->midi_path = $temp_value;
-        }
-// return $play_records;
         return view('playRecords')->with('play_records', $play_records);
     }
 
@@ -675,4 +783,215 @@ class UserController extends Controller
     //
     //     return Response::download($filename, $newfilename, $headers);
     // }
+
+    /**
+     * 锁定选中的用户
+     * @method lockUsers
+     * @param  Request   $request [description]
+     * @return [type]             [description]
+     */
+    public function lockUsers(Request $request)
+    {
+        $ids =  $request->get('ids');
+        foreach ($ids as $id) {
+            $user = StudentUser::find($id);
+            $user->isactive = 0;
+            $result[] = $user->save();
+        }
+        // 合并数组中的重复值
+        $unique_result = array_unique($result);
+
+        // 如果数组中有且只有true,则操作全部成功
+        if (in_array('true', $unique_result) && count($unique_result) == 1) {
+            $data['status'] = true;
+        } else {
+            $data['status'] = false;
+        }
+        return $data;
+    }
+
+    /**
+     * 解锁选中的用户
+     * @method unlockUsers
+     * @param  Request   $request [description]
+     * @return [type]             [description]
+     */
+    public function unlockUsers(Request $request)
+    {
+        $ids =  $request->get('ids');
+        foreach ($ids as $id) {
+            $user = StudentUser::find($id);
+            $user->isactive = 1;
+            $result[] = $user->save();
+        }
+        // 合并数组中的重复值
+        $unique_result = array_unique($result);
+
+        // 如果数组中有且只有true,则操作全部成功
+        if (in_array('true', $unique_result) && count($unique_result) == 1) {
+            $data['status'] = true;
+        } else {
+            $data['status'] = false;
+        }
+        return $data;
+    }
+
+    /**
+     * 通知选中的用户
+     * @method notifyUsers
+     * @param  Request     $request [description]
+     * @return Json                 [description]
+     */
+    public function notifyUsers(Request $request)
+    {
+        $message = $request->get('message');
+        $ids = $request->get('user_id');
+        foreach ($ids as $id) {
+            $notification = new Notification;
+            $notification->user_id = $id;
+            $notification->message = $message;
+            $result = $notification->save();
+            if ($result) {
+                $data['status'] = true;
+            } else {
+                $data['status'] = false;
+                $data['errMsg'] = '通知失败';
+            }
+            return $data;
+        }
+    }
+
+    /**
+     * 成绩报告
+     * @method recordReport
+     * @param  integer       $id [description]
+     * @return [type]           [description]
+     */
+    public function recordReport($id)
+    {
+        /**
+         * 今日累计练习时长
+         */
+        //  DB::connection()->enableQueryLog();
+        $start_time = Carbon::now('Asia/ShangHai')->startOfDay()->toDateTimeString();
+        $end_time   = Carbon::now('Asia/ShangHai')->endOfDay()->toDateTimeString();
+        $duration_today =  Practice::select(DB::raw('SUM(practice_time) as value'))
+                            ->whereBetween('practice_date', [$start_time, $end_time])
+                            ->where('uid', $id)
+                            ->groupBy('uid')
+                            ->first();
+        // var_dump(DB::getQueryLog());
+        // 格式化成 HH:MM:SS
+        if (!empty($duration_today)) {
+            $duration_today = gmstrftime('%H:%M:%S', $duration_today->value);
+        }else {
+            $duration_today = 0;
+        }
+
+        /**
+         * 今日累计练习曲目数量
+         */
+         $count_today =  Practice::select('music_id')
+                            ->whereBetween('practice_date', [$start_time, $end_time])
+                            ->where('uid', $id)
+                            ->groupBy('music_id')
+                            ->distinct()
+                            ->get();
+        $count_today = count($count_today);
+
+        /**
+         * 日期字符串
+         */
+        $date_string = Carbon::now()->toDateString();
+
+        /**
+         * 弹奏记录列表
+         */
+         $records = Practice::with('music')
+                            ->whereBetween('practice_date', [$start_time, $end_time])
+                            ->where('uid', $id)
+                            ->get();
+
+        /**
+         * 绘制图表所需数据
+         */
+        $text_data = Practice::with('music')
+                            ->select('music_id', DB::raw('SUM(practice_time) as one_music_duration'))
+                            ->whereBetween('practice_date', [$start_time, $end_time])
+                            ->where('uid', $id)
+                            ->groupBy('music_id')
+                            ->get();
+
+        $colors = ['#E76543', '#4A8EB6', '#8B3A8B', '#53B657', '#FDBD1A', '#FD341C'];
+        foreach ($text_data as $v) {
+            $temp['value'] = $v->one_music_duration;
+            $temp['color'] = array_shift($colors);
+            $v->hex = $temp['color'];
+            $char_data[] = $temp;
+        }
+
+        $rating_data = Practice::select('rating', DB::raw('COUNT(*) as count'))
+                                ->whereBetween('practice_date', [$start_time, $end_time])
+                                ->where('uid', $id)
+                                ->whereNotNull('rating')
+                                ->groupBy('rating')
+                                ->orderBy('rating')
+                                ->get();
+        $colors1 = ['#E76543', '#4A8EB6', '#8B3A8B', '#53B657', '#FDBD1A', '#FD341C'];
+        $chart_rating = [];
+        foreach ($rating_data as $v) {
+            $temp1['value'] = $v->rating;
+            $temp1['color'] = $colors1[$v->rating];
+            $chart_rating[] = $temp1;
+        }
+        // return $duration_today;
+        return view('recordReport')->with(['duration_today' => $duration_today,
+                                            'count_today' => $count_today,
+                                            'date_string' => $date_string,
+                                            'records' => $records,
+                                            'text_data' => $text_data,
+                                            'id' => $id,
+                                            'chart_rating' => $chart_rating]);
+    }
+
+
+    public function recordReportChart($id)
+    {
+        /**
+         * 绘制图表所需数据
+         */
+         $start_time = Carbon::now('Asia/ShangHai')->startOfDay()->toDateTimeString();
+         $end_time   = Carbon::now('Asia/ShangHai')->endOfDay()->toDateTimeString();
+         $text_data = Practice::with('music')
+                            ->select('music_id', 'rating', DB::raw('SUM(practice_time) as one_music_duration'))
+                            ->whereBetween('practice_date', [$start_time, $end_time])
+                            ->where('uid', $id)
+                            ->groupBy('music_id')
+                            ->get();
+
+        $rating_data = Practice::select('rating', DB::raw('COUNT(*) as count'))
+                                ->whereBetween('practice_date', [$start_time, $end_time])
+                                ->where('uid', $id)
+                                ->whereNotNull('rating')
+                                ->groupBy('rating')
+                                ->orderBy('rating')
+                                ->get();
+
+         $colors = ['#E76543', '#4A8EB6', '#8B3A8B', '#53B657', '#FDBD1A'];
+         foreach ($text_data as $k => $v) {
+            $temp['value'] = $v->one_music_duration;
+            $temp['color'] = $colors[$k];
+            $data[] = $temp;
+         }
+
+         $colors1 = ['#E76543', '#4A8EB6', '#8B3A8B', '#53B657', '#FDBD1A', '#FD341C'];
+         foreach ($rating_data as $v) {
+             $temp1['value'] = $v->count;
+             $temp1['color'] = $colors1[$v->rating];
+             $data1[] = $temp1;
+         }
+         $all_data['data'] = $data;
+         $all_data['data1'] = $data1;
+         return $all_data;
+    }
 }

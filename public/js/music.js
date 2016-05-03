@@ -47,6 +47,7 @@ $(document).ready(function() {
                    'press': $("#add_press").val(),
                    'organizer': $("#add_organizer").val(),
                    'category': $("#add_category").val(),
+                   'level': $("#add_level").val(),
                    'note_content': $("#add_note_content").val(),
                },
                headers : {
@@ -83,7 +84,8 @@ $(document).ready(function() {
             $("#edit_version").val($(el).closest('tr').find('td:eq(4)').text());                    // 版本
             $("#edit_press").val($(el).closest('tr').find('td:eq(5)').attr('class'));               // 出版社
             $("#edit_organizer").val($(el).closest('tr').find('td:eq(6)').attr('class'));           // 主办机构
-            $("#edit_category").val($(el).closest('tr').find('td:eq(7) span').attr('class'));       // 乐曲类别
+            // $("#edit_category").val($(el).closest('tr').find('td:eq(7) span').attr('class'));       // 乐曲类别
+            $("#edit_level").val($(el).closest('tr').find('td:eq(7)').attr('class'));          // 乐曲等级
             $("#edit_category_old").val($(el).closest('tr').find('td:eq(7) span').attr('class'))    // 改变之前的"乐曲类别"
             $("#edit_section_duration").val($.trim($(el).closest('tr').find('td:eq(13)').text()));  // 分段时间
             $("#edit_track").val($.trim($(el).closest('tr').find('td:eq(14)').text()));             // 轨道
@@ -109,8 +111,9 @@ $(document).ready(function() {
                     'version': $("#edit_version").val(),
                     'press': $("#edit_press").val(),
                     'organizer': $("#edit_organizer").val(),
-                    'category': $("#edit_category").val(),
-                    'category_old': $("#edit_category_old").val(),
+                    // 'category': $("#edit_category").val(),
+                    // 'category_old': $("#edit_category_old").val(),
+                    'level': $("#edit_level").val(),
                     'section_duration': $("#edit_section_duration").val(),
                     'track': $("#edit_track").val(),
                     'notes': $("#edit_notes").val()
@@ -119,7 +122,7 @@ $(document).ready(function() {
                     'X-CSRF-TOKEN': $('input[name="_token"]').val()
                 },
                 success : function(data) {
-                    $("#addResult").html("修改成功!");
+                    location.reload();
                 },
                 error : function(data) {
                     alert('哦，出了点小问题，再试一次吧');
@@ -137,33 +140,33 @@ $(document).ready(function() {
      */
     $(".putaway").each(function(index, el) {
         $(this).bind('click', function(event) {
-            $.getJSON('/music/putaway/' + $(el).closest('tr').attr('id'), function(json, textStatus) {
-                console.log('操作成功');
-            });
+            $result = confirm('确认通过审核?');
+            if ($result) {
+                $.getJSON('/music/putaway/' + $(el).closest('tr').attr('id'), function(json, textStatus) {
+                    location.reload();
+                });
+            }
         });
     });
-    // 点击"删除"按钮
+    // 点击"下架"按钮
     $(".delete").each(function(indel, el) {
         $(this).bind('click', function(event) {
-            $.ajax({
-                url: '/music/' + $(el).closest('tr').attr('id'),
-                type: 'DELETE',
-                dataType: 'json',
-                headers : {
-                    'X-CSRF-TOKEN': $('input[name="_token"]').val()
-                }
-            })
-            .done(function() {
-                console.log("success");
-                $(el).closest('tr').remove();
+            $result = confirm('确认要下架这首乐曲?');
+            if ($result) {
+                $.ajax({
+                    url: '/music/' + $(el).closest('tr').attr('id'),
+                    type: 'DELETE',
+                    dataType: 'json',
+                    headers : {
+                        'X-CSRF-TOKEN': $('input[name="_token"]').val()
+                    }
+                })
+                .done(function() {
+                    console.log("success");
+                    $(el).closest('tr').remove();
 
-            })
-            .fail(function() {
-                console.log("error");
-            })
-            .always(function() {
-                console.log("complete");
-            });
+                });
+            }
         });
     });
 
@@ -338,25 +341,21 @@ $(document).ready(function() {
         $("input[name='music_action[]']:checked").each(function(index, el) {
             ids.push($(el).closest('tr').attr('id'));
         });
-
-        $.ajax({
-            url: '/music/putawayMany',
-            type: 'PUT',
-            dataType: 'json',
-            data: {'ids': ids},
-            headers: {
-                'X-CSRF-TOKEN': $("input[name='_token']").val()
-            }
-        })
-        .done(function() {
-            console.log("success");
-        })
-        .fail(function() {
-            console.log("error");
-        })
-        .always(function() {
-            console.log("complete");
-        });
+        $confirm = confirm('确认要批量审核通过所选乐曲?');
+        if ($confirm) {
+            $.ajax({
+                url: '/music/putawayMany',
+                type: 'PUT',
+                dataType: 'json',
+                data: {'ids': ids},
+                headers: {
+                    'X-CSRF-TOKEN': $("input[name='_token']").val()
+                }
+            })
+            .done(function() {
+                location.reload();
+            })
+        }
     });
 
     /**
@@ -367,24 +366,21 @@ $(document).ready(function() {
         $("input[name='music_action[]']:checked").each(function(index, el) {
             ids.push($(el).closest('tr').attr('id'));
         });
-        $.ajax({
-            url: '/music/offshelfMany',
-            type: 'DELETE',
-            dataType: 'json',
-            data: {'ids': ids},
-            headers: {
-                'X-CSRF-TOKEN': $("input[name='_token']").val()
-            }
-        })
-        .done(function() {
-            console.log("success");
-        })
-        .fail(function() {
-            console.log("error");
-        })
-        .always(function() {
-            console.log("complete");
-        });
+        $confirm = confirm('确认要批量下回所选乐曲?');
+        if ($confirm) {
+            $.ajax({
+                url: '/music/offshelfMany',
+                type: 'DELETE',
+                dataType: 'json',
+                data: {'ids': ids},
+                headers: {
+                    'X-CSRF-TOKEN': $("input[name='_token']").val()
+                }
+            })
+            .done(function() {
+                location.reload();
+            })
+        }
 
     });
 

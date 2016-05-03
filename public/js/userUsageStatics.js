@@ -27,7 +27,7 @@ $(document).ready(function() {
             dataType: '',
             data: {
                 date: 'today',
-                duration: $duration,
+                practice_time: $duration,
                 order: $order
             }
         })
@@ -67,7 +67,7 @@ $(document).ready(function() {
             dataType: '',
             data: {
                 date: 'month',
-                duration: $duration,
+                practice_time: $duration,
                 order: $order
             }
         })
@@ -121,7 +121,7 @@ $(document).ready(function() {
             dataType: '',
             data: {
                 date: 'quarter',
-                duration: $duration,
+                practice_time: $duration,
                 order: $order
             }
         })
@@ -160,7 +160,7 @@ $(document).ready(function() {
             dataType: '',
             data: {
                 date: 'year',
-                duration: $duration,
+                practice_time: $duration,
                 order: $order
             }
         })
@@ -217,7 +217,8 @@ $(document).ready(function() {
                     min: 0,
                     title: {
                         text: '人数'
-                    }
+                    },
+                    allowDecimals: false,
                 },
                 legend: {
                     enabled: false
