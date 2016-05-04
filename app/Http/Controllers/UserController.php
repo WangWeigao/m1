@@ -847,18 +847,19 @@ class UserController extends Controller
         $message = $request->get('message');
         $ids = $request->get('user_id');
         foreach ($ids as $id) {
-            $notification = new Notification;
+            $notification = new Notification();
             $notification->user_id = $id;
             $notification->message = $message;
-            $result = $notification->save();
-            if ($result) {
-                $data['status'] = true;
-            } else {
-                $data['status'] = false;
-                $data['errMsg'] = '通知失败';
-            }
-            return $data;
+            $result[] = $notification->save();
         }
+        $unique_result = array_unique($result);
+        if (in_array('false', $unique_result)) {
+            $data['status'] = false;
+            $data['errMsg'] = '通知失败';
+        } else {
+            $data['status'] = true;
+        }
+        return $data;
     }
 
     /**

@@ -472,6 +472,7 @@ $(document).ready(function() {
          $("input[name='user_action[]']:checked").each(function(index, el) {
              ids.push($(el).closest('tr').attr('id'));
          });
+         console.log(ids);
          // 如果没有选择用户，中断退出
          if (ids.length == 0) {
              return alert('请先选择用户');
