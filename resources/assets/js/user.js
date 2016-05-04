@@ -386,19 +386,21 @@ $(document).ready(function() {
                  }
                  strNewUrl = url.substr(0, url.indexOf("?") + 1) + aParam.join("&");
                  //alert(strNewUrl);
-                 window.location = strNewUrl;
-                 //return strNewUrl;
+                //  window.location = strNewUrl;
+                 return strNewUrl;
              }
          } else {
              strUrl += "?" + para_name + "=" + para_value;
              //alert(strUrl);
-             window.location=strUrl;
+            //  window.location=strUrl;
+             return strUrl;
          }
      }
 
      /**
       * 获取 URL 中的参数
       */
+      var url_str = "";
       function getUrlParam(name) {
          var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
          var r = window.location.search.substr(1).match(reg);
@@ -407,49 +409,69 @@ $(document).ready(function() {
 
      // “水平等级”排序
      $("a:contains('水平等级')").click(function(event) {
-         console.log(getUrlParam('order'));
          if (getUrlParam('order') == 'desc') {
-             setUrlParam('field', 'user_grade');
-             setUrlParam('order', 'asc');
+             url_str = setUrlParam('order', 'asc');
+             window.history.pushState(null, null, url_str);
+             url_str = setUrlParam('field', 'user_grade');
+             window.history.pushState(null, null, url_str);
+             window.location = url_str;
          } else {
-             setUrlParam('field', 'user_grade');
-             setUrlParam('order', 'desc');
+             url_str = setUrlParam('order', 'desc');
+             window.history.pushState(null, null, url_str);
+             url_str = setUrlParam('field', 'user_grade');
+             window.history.pushState(null, null, url_str);
+             window.location = url_str;
          }
      });
 
      // “注册日期”排序
      $("a:contains('注册日期')").click(function(event) {
-         console.log(getUrlParam('order'));
          if (getUrlParam('order') == 'desc') {
-             setUrlParam('field', 'regdate');
-             setUrlParam('order', 'asc');
+             url_str = setUrlParam('order', 'asc');
+             window.history.pushState(null, null, url_str);
+             url_str = setUrlParam('field', 'regdate');
+             window.history.pushState(null, null, url_str);
+             window.location = url_str;
          } else {
-             setUrlParam('field', 'regdate');
-             setUrlParam('order', 'desc');
+             url_str = setUrlParam('order', 'desc');
+             window.history.pushState(null, null, url_str);
+             url_str = setUrlParam('field', 'regdate');
+             window.history.pushState(null, null, url_str);
+             window.location = url_str;
          }
      });
 
      // “账号截止日期”排序
      $("a:contains('账号截止日期')").click(function(event) {
-         console.log(getUrlParam('order'));
          if (getUrlParam('order') == 'desc') {
-             setUrlParam('field', 'account_end_at');
-             setUrlParam('order', 'asc');
+             url_str = setUrlParam('order', 'asc');
+             window.history.pushState(null, null, url_str);
+             url_str = setUrlParam('field', 'account_end_at');
+             window.history.pushState(null, null, url_str);
+             window.location = url_str;
          } else {
-             setUrlParam('field', 'account_end_at');
-             setUrlParam('order', 'desc');
+             url_str = setUrlParam('order', 'desc');
+             window.history.pushState(null, null, url_str);
+             url_str = setUrlParam('field', 'account_end_at');
+             window.history.pushState(null, null, url_str);
+             window.location = url_str;
          }
      });
 
      // “上月使用时长”排序
      $("a:contains('上月使用时长')").click(function(event) {
-         console.log(getUrlParam('order'));
          if (getUrlParam('order') == 'desc') {
-             setUrlParam('field', 'account_end_at');
-             setUrlParam('order', 'asc');
+             url_str = setUrlParam('order', 'asc');
+             window.history.pushState(null, null, url_str);
+             url_str = setUrlParam('field', '');
+             window.history.pushState(null, null, url_str);
+             window.location = url_str;
          } else {
-             setUrlParam('field', 'account_end_at');
-             setUrlParam('order', 'desc');
+             url_str = setUrlParam('order', 'desc');
+             window.history.pushState(null, null, url_str);
+             url_str = setUrlParam('field', '');
+             window.history.pushState(null, null, url_str);
+             window.location = url_str;
          }
      });
 

@@ -38,7 +38,6 @@ class UserController extends Controller
     public function index(Request $request)
     {
         // DB::connection()->enableQueryLog();
-
         $user_cellphone_email = $request->get('user_cellphone_email', '');  // 用户名|手机号|邮箱
         $city_id              = $request->get('area', '');                  // 地域(城市ID)
         $user_grade           = $request->get('user_grade', '');            // 水平等级
@@ -51,9 +50,10 @@ class UserController extends Controller
         $liveness             = $request->get('liveness', '');              // 活跃度
         $reg_start_time       = $request->get('reg_start_time', '');        // 注册时间段 > 开始时间
         $reg_end_time         = $request->get('reg_end_time', '');          // 注册时间段 > 结束时间
-        $field                = $request->get('field');                     // 排序字段
-        $order                = $request->get('order');                     // 排序方式
+        $field                = $request->get('field', 'uid');                     // 排序字段
+        $order                = $request->get('order', 'asc');                     // 排序方式
 
+        $appends_arr = ['field' => $field, 'order' => $order];
         /**
          * 用来排序的字段
          */
@@ -87,6 +87,7 @@ class UserController extends Controller
                   ->orWhere('usertype', '<>', 1);
         });
         if (!empty($user_cellphone_email)) {
+            $appends_arr = array_merge($appends_arr, ['user_cellphone_email' => $user_cellphone_email]);
             $users->where(function  ($query) use ($user_cellphone_email) {
                 $query->where('nickname', 'like', "%{$user_cellphone_email}%")
                         ->orWhere('cellphone', 'like', "%{$user_cellphone_email}%")
@@ -98,6 +99,7 @@ class UserController extends Controller
          * "地域"不为空
          */
         if (!empty($city_id)) {
+            $appends_arr = array_merge($appends_arr, ['city_id' => $city_id]);
             $users->where('city_id', $city_id);
         }
 
@@ -105,6 +107,7 @@ class UserController extends Controller
          * "水平等级"不为空
          */
         if (!empty($user_grade)) {
+            $appends_arr = array_merge($appends_arr, ['user_grade' => $user_grade]);
             $users->where('user_grade', $user_grade);
         }
 
@@ -112,6 +115,7 @@ class UserController extends Controller
          * "注册时间"不为空
          */
         if (!empty($reg_time)) {
+            $appends_arr = array_merge($appends_arr, ['reg_time' => $reg_time]);
             switch ($reg_time) {
                 case 'day':
                     $start_time = Carbon::now()->startOfDay();
@@ -150,6 +154,7 @@ class UserController extends Controller
          * "帐号级别"不为空
          */
         if (!empty($account_grade)) {
+            $appends_arr = array_merge($appends_arr, ['account_grade' => $account_grade]);
             switch ($account_grade) {
                 case 'free':
                     $account_grade = 0;
@@ -159,6 +164,8 @@ class UserController extends Controller
                     break;
                 case 'vip2':
                     $account_grade = 2;
+                    break;
+                case 'all':
                     break;
                 default:
                     $account_grade = 0;
@@ -175,6 +182,7 @@ class UserController extends Controller
          * "帐号截止日期"不为空
          */
         if (!empty($account_end_at)) {
+            $appends_arr = array_merge($appends_arr, ['account_end_at' => $account_end_at]);
             switch ($account_end_at) {
                 case 'week':
                     $start_time = Carbon::now()->subWeek();
@@ -200,6 +208,7 @@ class UserController extends Controller
          * "本月使用时长"不为空
          */
         if (!empty($month_duration)) {
+            $appends_arr = array_merge($appends_arr, ['month_duration' => $month_duration]);
             switch ($month_duration) {
                 case '1h':
                     $duration = 1*60;   // 1小时以内
@@ -227,23 +236,23 @@ class UserController extends Controller
                     break;
             }
             if ($duration > 0 && $duration < 10*60+1) {     // 60小时以内的所有
-                $users->whereHas('robot_durations', function ($query) use ($duration) {
-                    $query->havingRaw("SUM(robot_durations.duration) <= $duration")
-                            ->groupBy('robot_durations.user_id');
+                $users->whereHas('practice', function ($query) use ($duration) {
+                    $query->havingRaw("SUM(practice.practice_time) <= $duration")
+                            ->groupBy('practice.uid');
                 });
             } elseif ($duration == 0) {     // 未使用
                 $users->whereNotExists(function ($query) use ($duration) {
                     $query->select(DB::raw(1))
-                          ->from('robot_durations')
-                          ->whereRaw('robot_durations.user_id = users.uid');
+                          ->from('practice')
+                          ->whereRaw('practice.uid = users.uid');
                 });
             } elseif ($duration == 60*60+1) {   // 60小时以上
-                $users->whereHas('robot_durations', function ($query) use ($duration) {
-                    $query->groupBy('robot_durations.user_id')
-                          ->havingRaw("SUM(robot_durations.duration) > $duration");
+                $users->whereHas('practice', function ($query) use ($duration) {
+                    $query->groupBy('practice.uid')
+                          ->havingRaw("SUM(practice.practice_time) > $duration");
                 });
             } else {
-                $users->has('robot_durations'); // 如果出现其它情况，则显示所有"使用过的用户"
+                $users->has('practice'); // 如果出现其它情况，则显示所有"使用过的用户"
             }
         }
 
@@ -251,6 +260,7 @@ class UserController extends Controller
          * "帐号状态"不为空
          */
         if (!empty($account_status)) {
+            $appends_arr = array_merge($appends_arr, ['account_status' => $account_status]);
             switch ($account_status) {
                 case 'near_expire': // 到期
                     $start_time = Carbon::now()->SubWeek();
@@ -273,7 +283,7 @@ class UserController extends Controller
                     break;
                 case 'expire':  // 未续费
                     $users->whereIn('account_grade', [1,2])
-                          ->whereBetween('account_end_at', '<', Carbon::now());
+                          ->where('account_end_at', '<=', Carbon::now());
                       break;
                 default:
                     # code...
@@ -285,13 +295,14 @@ class UserController extends Controller
          * "本月用户大幅变化"不为空
          */
         if (!empty($change_duration)) {
+            $appends_arr = array_merge($appends_arr, ['change_duration' => $change_duration]);
             switch ($change_duration) {
                 case 'up20h':
                 // $start_time = Carbon::now()->subMonth();
                 // $end_time   = Carbon::now()->endOfDay();
-                //     $users->whereHas('robot_durations', function ($query) {
-                //         $query->groupBy('robot_durations.user_id')
-                //               ->havingRaw("select SUM(robot_durations.duration) as duration_sum_now where ");
+                //     $users->whereHas('practice', function ($query) {
+                //         $query->groupBy('practice.user_id')
+                //               ->havingRaw("select SUM(practice.duration) as duration_sum_now where ");
                 //     });
                     break;
                 case 'up30h':
@@ -313,6 +324,7 @@ class UserController extends Controller
          * "活跃度"不为空
          */
         if (!empty($liveness)) {
+            $appends_arr = array_merge($appends_arr, ['liveness' => $liveness]);
             # 具体细节待研究
         }
 
@@ -320,6 +332,8 @@ class UserController extends Controller
          * "注册时间段"不为空
          */
         if (!empty($reg_start_time)) {
+            $appends_arr = array_merge($appends_arr, ['reg_start_time' => $reg_start_time,
+                                                    'reg_end_time' => $reg_end_time]);
             $start_time = Carbon::parse($reg_start_time)->startOfDay();
             $end_time   = Carbon::parse($reg_end_time)->endOfDay();
             $users->whereBetween('regdate', [$start_time, $end_time]);
@@ -356,20 +370,7 @@ class UserController extends Controller
 
             // $users->select('*');
             $users->orderBy($field, $order);
-            $users = $users->paginate(10)->appends([
-            'user_cellphone_email' => $user_cellphone_email,
-            'city_id'              => $city_id,
-            'user_grade'           => $user_grade,
-            'reg_time'             => $reg_time,
-            'account_grade'        => $account_grade,
-            'account_end_at'       => $account_end_at,
-            'month_duration'      => $month_duration,
-            'account_status'      => $account_status,
-            'change_duration'     => $change_duration,
-            'liveness'            => $liveness,
-            'reg_start_time'      => $reg_start_time,
-            'reg_end_time'        => $reg_end_time
-        ]);
+            $users = $users->paginate(10)->appends($appends_arr);
         // return $users;
         foreach ($users as $key => $v) {
             if (!$v->isactive) {
