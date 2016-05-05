@@ -14,9 +14,11 @@ $(document).ready(function() {
                  if (data) {
                      $(el).attr('class', 'lockuser btn btn-danger');
                      $(el).text('锁定');
+                     $("td:contains('状态')").next().text('正常');
                  } else {
                      $(el).attr('class', 'lockuser btn btn-info');
                      $(el).text('解锁');
+                     $("td:contains('状态')").next().text('锁定');
                  }
              })
              .fail(function() {
@@ -29,7 +31,7 @@ $(document).ready(function() {
          });
      });
 
-     
+
 });
 
 //# sourceMappingURL=userbasicinfo.js.map

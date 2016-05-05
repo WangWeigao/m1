@@ -42,10 +42,10 @@ class UserController extends Controller
         $city_id              = $request->get('area', '');                  // 地域(城市ID)
         $user_grade           = $request->get('user_grade', '');            // 水平等级
         $reg_time             = $request->get('reg_time', '');              // 注册时间
-        $account_grade        = $request->get('account_grade', '');         // 帐号级别
-        $account_end_at       = $request->get('account_end_at', '');        // 帐号截止日期
+        $account_grade        = $request->get('account_grade', '');         // 账号级别
+        $account_end_at       = $request->get('account_end_at', '');        // 账号截止日期
         $month_duration       = $request->get('month_duration', '');        // 本月使用时长
-        $account_status       = $request->get('account_status', '');        // 帐号状态
+        $account_status       = $request->get('account_status', '');        // 账号状态
         $change_duration      = $request->get('change_duration', '');       // 本月用时大幅变化
         $liveness             = $request->get('liveness', '');              // 活跃度
         $reg_start_time       = $request->get('reg_start_time', '');        // 注册时间段 > 开始时间
@@ -151,7 +151,7 @@ class UserController extends Controller
         }
 
         /**
-         * "帐号级别"不为空
+         * "账号级别"不为空
          */
         if (!empty($account_grade)) {
             $appends_arr = array_merge($appends_arr, ['account_grade' => $account_grade]);
@@ -179,22 +179,22 @@ class UserController extends Controller
         }
 
         /**
-         * "帐号截止日期"不为空
+         * "账号截止日期"不为空
          */
         if (!empty($account_end_at)) {
             $appends_arr = array_merge($appends_arr, ['account_end_at' => $account_end_at]);
             switch ($account_end_at) {
                 case 'week':
-                    $start_time = Carbon::now()->subWeek();
-                    $end_time   = Carbon::now()->endOfDay();
+                    $start_time = Carbon::now();
+                    $end_time   = Carbon::now()->addWeek();
                     break;
                 case 'month':
-                    $start_time = Carbon::now()->subMonth();
-                    $end_time   = Carbon::now()->endOfDay();
+                    $start_time = Carbon::now();
+                    $end_time   = Carbon::now()->addMonth();
                     break;
                 case 'two_months':
-                    $start_time = Carbon::now()->subMonths(2);
-                    $end_time   = Carbon::now()->endOfDay();
+                    $start_time = Carbon::now();
+                    $end_time   = Carbon::now()->addMonths(2);
                     break;
 
                 default:
@@ -257,7 +257,7 @@ class UserController extends Controller
         }
 
         /**
-         * "帐号状态"不为空
+         * "账号状态"不为空
          */
         if (!empty($account_status)) {
             $appends_arr = array_merge($appends_arr, ['account_status' => $account_status]);
@@ -954,7 +954,7 @@ class UserController extends Controller
         $chart_rating = [];
         foreach ($rating_data as $v) {
             $temp1['value'] = $v->rating;
-            $temp1['color'] = $colors1[$v->rating];
+            $temp1['color'] = $colors1[(ceil($v->rating)/2)];
             $chart_rating[] = $temp1;
         }
         // return $duration_today;
@@ -1000,11 +1000,16 @@ class UserController extends Controller
          $colors1 = ['#E76543', '#4A8EB6', '#8B3A8B', '#53B657', '#FDBD1A', '#FD341C'];
          foreach ($rating_data as $v) {
              $temp1['value'] = $v->count;
-             $temp1['color'] = $colors1[$v->rating];
+             $temp1['color'] = $colors1[(ceil($v->rating)/2)];
              $data1[] = $temp1;
          }
-         $all_data['data'] = $data;
-         $all_data['data1'] = $data1;
+         $all_data = [];
+         if (isset($data)) {
+             $all_data['data'] = $data;
+         }
+         if (isset($data1)) {
+             $all_data['data1'] = $data1;
+         }
          return $all_data;
     }
 }

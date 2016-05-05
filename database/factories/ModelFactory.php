@@ -104,10 +104,10 @@ $factory->define(App\UserAction::class, function (Faker\Generator $faker) {
  */
 $factory->define(App\Practice::class, function (Faker\Generator $faker) {
     return [
-        'uid'            => mt_rand(465, 769),
+        'uid'            => 465,
         'music_id'       => mt_rand(431, 1424),
         'practice_time'  => mt_rand(60, 3600),
-        'practice_date'  => $faker->dateTimeBetween('-1 year', 'now', 'Asia/ShangHai'),
+        'practice_date'  => $faker->dateTimeBetween('2016-5-5 00:00:00', 'now', 'Asia/ShangHai'),
         'midi_path'      => '/users/' . $faker->name . '.mid,'
                          . '/users/' . $faker->name . '.mid',
         'wav_path'       => '/users/' . $faker->name . '.wav',

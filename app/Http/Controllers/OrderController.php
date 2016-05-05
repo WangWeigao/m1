@@ -57,7 +57,8 @@ class OrderController extends Controller
                                     ['order_num_or_username' => $order_num_or_username]);
 
                  return view('order')->with(['orders' => $orders,
-                 'query_string' => $query_string]);
+                                             'query_string' => $query_string,
+                                             'order_num_or_username' => $order_num_or_username]);
              }
         }
 
