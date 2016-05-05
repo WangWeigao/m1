@@ -262,7 +262,7 @@ class UserController extends Controller
         if (!empty($account_status)) {
             $appends_arr = array_merge($appends_arr, ['account_status' => $account_status]);
             switch ($account_status) {
-                case 'near_expire': // 到期
+                case 'near_expire': // 到期[过期]
                     $start_time = Carbon::now()->SubWeek();
                     $end_time   = Carbon::now()->endOfDay();
                     $users->whereIn('account_grade', [1,2])
@@ -275,16 +275,27 @@ class UserController extends Controller
                     $users->where('isactive', 1)                                    // 用户未锁定
                           ->where(function ($query) {
                               $query->where('account_grade', 0)                     // 免费用户
-                                    ->orwhere(function ($query_1) {
-                                        $query_1->whereIn('account_grade', [1,2])   // 到期时间大于一周的收费用户
-                                                ->where('account_end_at', '>', Carbon::now()->addWeek());
+                                    ->orwhere(function ($query_1) {             // 到期时间还剩大于一个月的vip1用户
+                                        $query_1->where(function($query_2) {
+                                            $query_2->where('account_grade', 1)
+                                                    ->where('account_end_at', '>', Carbon::now()->addMonth());
+                                        })
+                                        ->orWhere(function ($query_3) {         // 或者到期时间还剩大于一个周的vip2用户
+                                            $query_3->where('account_grade', 2)
+                                                    ->where('account_end_at', '>', Carbon::now()->addWeek());
+                                        });
                                     });
                           });
                     break;
-                case 'expire':  // 未续费
-                    $users->whereIn('account_grade', [1,2])
-                          ->where('account_end_at', '<=', Carbon::now());
-                      break;
+                case 'expire':  // 未续费[马上就要过期拉]
+                    $users->where(function ($vip1) {    // 到期时间在一个月以内的vip1用户
+                        $vip1->where('account_grade', 1)
+                             ->whereBetween('account_end_at', [Carbon::now(), Carbon::now()->addMonth()]);
+                    })->orWhere(function ($vip2) {
+                        $vip2->where('account_grade', 2)    // 到期时间在一个周以内的vip2用户
+                             ->whereBetween('account_end_at', [Carbon::now(), Carbon::now()->addWeek()]);
+                    });
+                    break;
                 default:
                     # code...
                     break;
