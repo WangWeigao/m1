@@ -2,6 +2,10 @@
 
 @section('content')
     <div class="container">
+        <div class="breadcrumb">
+            <li>订单管理</li>
+            <li class="active">订单查询</li>
+        </div>
         <form class="" action="/order" method="get">
             <div class="form-group form-inline">
                 <label for="">精确搜索</label>&nbsp;&nbsp;&nbsp;

@@ -10,6 +10,11 @@ class Practice extends Model
     protected $primaryKey = 'pid';
     public $timestamps = false;
 
+    public function user()
+    {
+        return $this->belongsTo('App\StudentUser', 'uid', 'uid');
+    }
+
     public function getMidiPathAttribute($value)
     {
         return explode(',', $value);

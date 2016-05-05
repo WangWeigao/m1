@@ -60,8 +60,8 @@
                             {{-- <a href="{{ url('/music') }}">曲库管理</a> --}}
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">曲库管理<span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
+                                <li><a href="/music">曲库查询</a></li>
                                 <li><a href="/music/musicStatistics">曲库统计</a></li>
-                                <li><a href="/music">曲库列表</a></li>
                             </ul>
                         </li>
                         <li id="user-manager" class="dropdown">
@@ -76,8 +76,8 @@
                         <li class="" id="order-manager">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">订单管理<span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
+                                <li><a href="/order">订单查询</a></li>
                                 <li><a href="/order/statistics">订单统计</a></li>
-                                <li><a href="/order">订单列表</a></li>
                             </ul>
                         </li>
                         {{-- @can('access-finance')
