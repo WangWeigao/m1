@@ -36,20 +36,29 @@ class OrderController extends Controller
         // $order_type            = $request->get('order_type');
         // $vendor                = $request->get('vendor');
         // $order_status          = $request->get('order_status');
+
+
         /**
          * 按 订单号/用户名 进行查询
          */
          if (isset($order_num_or_username)) {
              if (empty($order_num_or_username)) {
-                 return view('order')->with('orders', []);
+
+                 return view('order')->with(['orders' => [],
+                                             'order_num_or_username' => '']);
+             }else {
+                 $orders =  DB::table('robot_orders')
+                 ->join('users', 'robot_orders.user_id', '=', 'users.uid')
+                 ->where('robot_orders.id', '=', $order_num_or_username)
+                 ->orWhere('users.nickname', 'like', "%$order_num_or_username%")
+                 ->paginate();
+                 // 分页参数
+                 $query_string = array_merge($query_string,
+                                    ['order_num_or_username' => $order_num_or_username]);
+
+                 return view('order')->with(['orders' => $orders,
+                 'query_string' => $query_string]);
              }
-            $orders =  DB::table('robot_orders')
-                        ->join('users', 'robot_orders.user_id', '=', 'users.uid')
-                        ->where('robot_orders.id', '=', $order_num_or_username)
-                        ->orWhere('users.nickname', 'like', "%$order_num_or_username%")
-                        ->get();
-            return view('order')->with(['orders' => $orders,
-                                        'order_num_or_username' => $order_num_or_username]);
         }
 
         /**
@@ -81,9 +90,22 @@ class OrderController extends Controller
          * 以订单提交时间为止(pay_time字段)
          */
         $to_time = $request->get('to_time', '');
+
+        /**
+         * 如果没有查询条件，返回空array
+         */
+        if (empty($order_num_or_username) && empty($order_type)
+            && empty($vendor) && empty($order_status)
+            && empty($from_time)) {
+            return view('order')->with(['orders' => array(),
+                                        'is_start' => true]);
+        }
+
+
         $orders = DB::table('robot_orders')
                     ->join('users', 'robot_orders.user_id', '=', 'users.uid')
-                    ->select('robot_orders.*', 'users.nickname');
+                    ->select('robot_orders.*', 'users.nickname',
+                             'users.account_grade', 'account_end_at');
 
         /**
          * 按时间跨度查询订单
@@ -122,7 +144,7 @@ class OrderController extends Controller
         }
 
         $orders = $orders->paginate(10);
-
+// return $orders;
         /**
          * 携带 from_time 和 to_time 以便进行分页, 点击其它页娄时将数据带到跳转的页面
          */
@@ -216,7 +238,7 @@ class OrderController extends Controller
         $nums = RobotOrder::select(DB::raw('COUNT(*) as counts'))
                             ->get()[0];
         $pay_nums = RobotOrder::select(DB::raw('COUNT(*) as counts'))
-                            ->where('type', 4)
+                            ->where('status', 3)
                             ->get()[0];
         return view('orderStatistics')->with(['nums' => $nums,
                                               'pay_nums' => $pay_nums]);

@@ -372,4 +372,8 @@
   border: 0;
 }
 
+th, tr, td {
+    white-space: nowrap;
+}
+
 /*# sourceMappingURL=order.css.map */

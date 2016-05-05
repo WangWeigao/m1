@@ -46,13 +46,23 @@
                             @endif
                         </td>
                         <td>
-                            需强化的小节：
-                            @foreach($record->error_number as $v)
+                            匹配的小节:&emsp;&emsp;&emsp;
+                            @foreach($record->match_measures as $v)
                                 {{ $v }}&nbsp;&nbsp;
                             @endforeach
                             <br>
-                            不稳定的小节：
-                            @foreach($record->error_tempo as $v)
+                            错误的小节:&emsp;&emsp;&emsp;
+                            @foreach($record->error_measures as $v)
+                                {{ $v }}&nbsp;&nbsp;
+                            @endforeach
+                            <br>
+                            节奏过快的小节:&emsp;
+                            @foreach($record->fast_measures as $v)
+                                {{ $v }}&nbsp;&nbsp;
+                            @endforeach
+                            <br>
+                            节奏过慢的小节:&emsp;
+                            @foreach($record->slow_measures as $v)
                                 {{ $v }}&nbsp;&nbsp;
                             @endforeach
                         </td>

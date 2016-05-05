@@ -7,8 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Practice extends Model
 {
     protected $table = 'practice';
+    protected $primaryKey = 'pid';
+    public $timestamps = false;
 
     public function getMidiPathAttribute($value)
+    {
+        return explode(',', $value);
+    }
+
+    public function getMatchMeasuresAttribute($value)
     {
         return explode(',', $value);
     }

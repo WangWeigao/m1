@@ -298,12 +298,12 @@ class UserController extends Controller
             $appends_arr = array_merge($appends_arr, ['change_duration' => $change_duration]);
             switch ($change_duration) {
                 case 'up20h':
-                // $start_time = Carbon::now()->subMonth();
-                // $end_time   = Carbon::now()->endOfDay();
-                //     $users->whereHas('practice', function ($query) {
-                //         $query->groupBy('practice.user_id')
-                //               ->havingRaw("select SUM(practice.duration) as duration_sum_now where ");
-                //     });
+                    $start_time = Carbon::now()->subMonth();
+                    $end_time   = Carbon::now()->endOfDay();
+                    $users->whereHas('practice', function ($query) {
+                        $query->groupBy('practice.uid')
+                              ->havingRaw("select SUM(practice.practice_time) as duration_sum_now where ");
+                    });
                     break;
                 case 'up30h':
                     break;
@@ -550,7 +550,7 @@ class UserController extends Controller
                             ->where('user_id', $id)
                             ->whereBetween('pay_time', [$start_time, $end_time])
                             ->get();
-
+// return $orders;
         return view('userorderhistory')
                 ->with(['orders' => $orders,
                         'user_id' => $id,
