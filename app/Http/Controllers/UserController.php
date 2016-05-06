@@ -865,7 +865,7 @@ class UserController extends Controller
             $result[] = $notification->save();
         }
         $unique_result = array_unique($result);
-        if (in_array('false', $unique_result)) {
+        if (in_array(false, $unique_result)) {
             $data['status'] = false;
             $data['errMsg'] = '通知失败';
         } else {

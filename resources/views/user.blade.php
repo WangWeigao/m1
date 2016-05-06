@@ -239,7 +239,7 @@
     </table>
     <div class="btn btn-danger" id="lock_all">锁定</div>
     <div class="btn btn-success" id="unlock_all">解锁</div>
-    <div class="btn btn-info" id="notify_all" data-toggle="modal" data-target=".m_notify_all">通知</div>
+    <div class="btn btn-info send_msg_single" id="notify_all" data-toggle="modal" data-target=".m_notify_all">通知</div>
     <div class="text-center">
         {!! $users->render() !!}
     </div>
