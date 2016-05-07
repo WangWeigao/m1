@@ -336,9 +336,37 @@ class UserController extends Controller
          */
         if (!empty($liveness)) {
             $appends_arr = array_merge($appends_arr, ['liveness' => $liveness]);
-            # 具体细节待研究
+            switch ($liveness) {
+                case 'active_user':
+                    $users->whereHas('practice', function ($query) {
+                        $start_time = Carbon::now()->startOfMonth()->subMonths(2);
+                        $end_time = Carbon::now();
+                        $query->whereBetween('practice_date', [$start_time, $end_time]) // 最近三个月的月平均练习数大于30小时
+                              ->groupBy('uid')
+                              ->havingRaw('SUM(practice_time) > 30*60*60*3');
+                    });
+                    break;
+                case 'sleep_user':
+                    $users->where('app_exist', 1)
+                          ->whereHas('practice', function($query) {     // app存在且超过一周未使用
+                              $str = 'MAX(practice_date)<' . '\'' . Carbon::now()->subWeek() . '\'';
+                              $query->havingRaw(DB::raw($str));
+                    });
+                    break;
+                case 'death_user':
+                    $users->where('app_exist', 0)
+                          ->orWhere(function($query) {                  // app不存在，或超过一周未使用
+                             $query->whereHas('practice', function($query_1) {
+                                 $str = 'MAX(practice_date)<' . '\'' . Carbon::now()->subMonth() . '\'';
+                                $query_1->havingRaw($str);
+                             });
+                          });
+                    break;
+                default:
+                    # code...
+                    break;
+            }
         }
-
         /**
          * "注册时间段"不为空
          */
@@ -414,6 +442,8 @@ class UserController extends Controller
                 }
             }
         }
+        // var_dump(DB::getQueryLog());
+
         return view('user')->with('users', $users);
     }
 

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
+use Redis;
+use DB;
 
 class test001Controller extends Controller
 {
@@ -15,9 +17,23 @@ class test001Controller extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Redis $redis)
     {
-        $user = factory(\App\StudentUser::class)->create();
+        // Redis::set('name', 'w-g-w');
+        // $name = Redis::get('name');
+        // return $name;
+        /**
+         * 将practice表中需要的数据写入Redis
+         */
+        // 取出数据
+        $play_records = DB::table('practice')
+                            ->select('uid', 'practice_time', 'practice_date')
+                            ->get();
+        // 格式化数据
+        foreach ($play_records as $value ) {
+            $value->practice_date;
+        }
+
     }
 
     /**
