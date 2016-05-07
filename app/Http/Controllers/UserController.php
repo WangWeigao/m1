@@ -17,6 +17,7 @@ use App\RobotDuration;
 use App\Practice;
 use App\RobotOrder;
 use App\UserAction;
+use Redis;
 class UserController extends Controller
 {
     /**
@@ -307,30 +308,76 @@ class UserController extends Controller
          */
         if (!empty($change_duration)) {
             $appends_arr = array_merge($appends_arr, ['change_duration' => $change_duration]);
-            switch ($change_duration) {
-                case 'up20h':
-                    $start_time = Carbon::now()->subMonth();
-                    $end_time   = Carbon::now()->endOfDay();
-                    $users->whereHas('practice', function ($query) {
-                        $query->groupBy('practice.uid')
-                              ->havingRaw("select SUM(practice.practice_time) as duration_sum_now where ");
-                    });
-                    break;
-                case 'up30h':
-                    break;
-                case 'up50h':
-                    break;
-                case 'down20h':
-                    break;
-                case 'down30h':
-                    break;
-                case 'down50h':
-                    break;
-                default:
-                    # code...
-                    break;
+
+            /**
+             * 取得当前年月，便于设置redis的key
+             */
+            $year  = Carbon::now()->year;
+            $month = Carbon::now()->month;
+
+            /**
+             * 取出所有当前月份的key
+             */
+            $month_arr = Redis::keys("*.$year.$month");
+            foreach ($month_arr as $v) {
+                $month_arr_id[] = explode('.', $v)[0];
             }
+
+            /**
+             * 取出前一个月份的key
+             */
+            $str = "*.$year." . $month-1;
+            $month_pre_arr = Redis::keys($str);
+            foreach ($month_pre_arr as $v) {
+                $month_pre_arr_id[] = explode('.', $v)[0] or [];
+            }
+
+            /**
+             * 1. 合并前后2个月的key，确保涵盖2个月中所有的key
+             * 2.
+             */
+            $month_all = array_unique(array_merge($month_arr_id, $month_pre_arr_id));
+            foreach ($month_all as $v) {
+                switch ($change_duration) {
+                    case 'up20h':   // 这个月比上个月增加20个练习小时的用户的id
+                        if (Redis::get("$v.$year.$month") - 20*60*60 > Redis::get("$v.$year." . $month-1)) {
+                            $result[] = $v;
+                        }
+                        break;
+                    case 'up30h':   // 这个月比上个月增加30个练习小时的用户的id
+                        if (Redis::get("$v.$year.$month") - 30*60*60 > Redis::get("$v.$year." . $month-1)) {
+                            $result[] = $v;
+                        }
+                        break;
+                        case 'up50h':   // 这个月比上个月增加50个练习小时的用户的id
+                            if (Redis::get("$v.$year.$month") - 50*60*60 > Redis::get("$v.$year." . $month-1)) {
+                                $result[] = $v;
+                            }
+                        break;
+                        case 'down20h':   // 这个月比上个月减少20个练习小时的用户的id
+                            if (Redis::get("$v.$year.$month") + 20*60*60 < Redis::get("$v.$year." . $month-1) + 20*60*60) {
+                                $result[] = $v;
+                            }
+                        break;
+                        case 'down30h':   // 这个月比上个月减少30个练习小时的用户的id
+                            if (Redis::get("$v.$year.$month") + 30*60*60 < Redis::get("$v.$year." . $month-1) + 30*60*60) {
+                                $result[] = $v;
+                            }
+                        break;
+                        case 'down50h':   // 这个月比上个月减少50个练习小时的用户的id
+                            if (Redis::get("$v.$year.$month") + 50*60*60 < Redis::get("$v.$year." . $month-1) + 50*60*60) {
+                                $result[] = $v;
+                            }
+                        break;
+                    default:
+                        # code...
+                        break;
+                }
+            }
+
+            $users->whereIn('uid', $result);
         }
+
         /**
          * "活跃度"不为空
          */
@@ -446,6 +493,31 @@ class UserController extends Controller
 
         return view('user')->with('users', $users);
     }
+
+
+    // /**
+    //  * [compareMonthAndPreMonth description]
+    //  * @method compareMonthAndPreMonth
+    //  * @param  [type]                  $id         [description]
+    //  * @param  [type]                  $year       [description]
+    //  * @param  [type]                  $month      [description]
+    //  * @param  [type]                  $up_or_down [description]
+    //  * @param  [type]                  $value      [description]
+    //  * @return [type]                              [description]
+    //  */
+    // public function compareMonthAndPreMonth($id, $year, $month, $up_or_down, $value)
+    // {
+    //     $operator = $operator == '+' ? '+' : '-';
+    //     // 解决跨年问题
+    //     if ($month == 1) {
+    //         $month = 12;
+    //         $year = $year-1;
+    //     }
+    //     if (Redis::get("$id.$year.$month")."$up_or_down"."$value"> Redis::get("$id.$year." . $month-1) + 50*60*60) {
+    //         $result[] = $v;
+    //     }
+    // }
+
 
     /**
      * 查询用户详细信息

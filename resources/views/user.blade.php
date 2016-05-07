@@ -110,7 +110,7 @@
                     <option value="expire">未续费</option>
                 </select>
                 {{-- 本月用时大幅变化 --}}
-                <input type="checkbox" name="change_duration" value="" id="l_change_duration" disabled="disabled">
+                <input type="checkbox" name="change_duration" value="" id="l_change_duration">
                 <label for="l_change_duration">本月用户大幅变化</label>
                 <select class="" name="" id="change_duration">
                     <option value="up20h">上升20小时以上</option>
