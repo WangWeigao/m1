@@ -19,45 +19,20 @@ class test001Controller extends Controller
      */
     public function index()
     {
-        // /**
-        //  * 将practice表中需要的数据写入Redis
-        //  */
-        // // 取出数据
-        // $play_records = DB::table('practice')
-        //                     ->select('uid', 'practice_time', 'practice_date')
-        //                     ->get();
-        // // 格式化数据
-        // foreach ($play_records as $v ) {
-        //     Redis::incrby(
-        //         $v->uid . '.' . Carbon::parse($v->practice_date)->year . '.' . Carbon::parse($v->practice_date)->month,
-        //         $v->practice_time
-        //     );
-        // }
-        // 取得当前年月，便于设置redis的key
-        $year  = Carbon::now()->year;
-        $month = Carbon::now()->month;
-
         /**
-         * 取出所有当前月份的key
+         * 将practice表中需要的数据写入Redis
          */
-        $month_arr = Redis::keys("*.$year.$month");
-        foreach ($month_arr as $v) {
-            $month_arr_id[] = explode('.', $v)[0];
+        // 取出数据
+        $play_records = DB::table('practice')
+                            ->select('uid', 'practice_time', 'practice_date')
+                            ->get();
+        // 格式化数据
+        foreach ($play_records as $v ) {
+            Redis::incrby(
+                $v->uid . '.' . Carbon::parse($v->practice_date)->year . '.' . Carbon::parse($v->practice_date)->month,
+                $v->practice_time
+            );
         }
-
-
-        $month_pre_arr = Redis::keys("*.$year." . $month-1);
-        foreach ($month_pre_arr as $v) {
-            $month_pre_arr_id[] = explode('.', $v)[0];
-        }
-
-        $month_all = array_unique(array_merge($month_arr_id, $month_pre_arr_id));
-        foreach ($month_all as $v) {
-            if (Redis::get("$v.$year.$month") > Redis::get("$v.$year." . $month-1)) {
-                $result[] = $v;
-            }
-        }
-        return $result;
     }
 
     /**

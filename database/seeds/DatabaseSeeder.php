@@ -16,6 +16,6 @@ class DatabaseSeeder extends Seeder
         // factory('App\Music', 1000)->create();
         // factory('App\RobotOrder', 100)->create();
         // factory('App\UserAction', 1000)->create();
-        factory('App\Practice', 20)->create();
+        // factory('App\Practice', 20)->create();
     }
 }

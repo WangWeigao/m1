@@ -326,46 +326,49 @@ class UserController extends Controller
             /**
              * 取出前一个月份的key
              */
-            $str = "*.$year." . $month-1;
-            $month_pre_arr = Redis::keys($str);
+            $month_sub = $month-1;
+            $month_pre_arr = Redis::keys("*.$year.$month_sub");
             foreach ($month_pre_arr as $v) {
                 $month_pre_arr_id[] = explode('.', $v)[0] or [];
             }
-
             /**
              * 1. 合并前后2个月的key，确保涵盖2个月中所有的key
              * 2.
              */
             $month_all = array_unique(array_merge($month_arr_id, $month_pre_arr_id));
+            $result = [];
             foreach ($month_all as $v) {
+                $month_value     = Redis::get("$v.$year.$month") == null ? 0 : Redis::get("$v.$year.$month");
+                $month_pre_value = Redis::get("$v.$year.$month_sub") == null ? 0 : Redis::get("$v.$year.$month_sub");
                 switch ($change_duration) {
                     case 'up20h':   // 这个月比上个月增加20个练习小时的用户的id
-                        if (Redis::get("$v.$year.$month") - 20*60*60 > Redis::get("$v.$year." . $month-1)) {
+                        if ($month_value - 20*60*60 > $month_pre_value) {
                             $result[] = $v;
                         }
                         break;
                     case 'up30h':   // 这个月比上个月增加30个练习小时的用户的id
-                        if (Redis::get("$v.$year.$month") - 30*60*60 > Redis::get("$v.$year." . $month-1)) {
+                        if ($month_value - 30*60*60 > $month_pre_value) {
                             $result[] = $v;
                         }
                         break;
                         case 'up50h':   // 这个月比上个月增加50个练习小时的用户的id
-                            if (Redis::get("$v.$year.$month") - 50*60*60 > Redis::get("$v.$year." . $month-1)) {
+                            if ($month_value - 50*60*60 > $month_pre_value) {
                                 $result[] = $v;
                             }
                         break;
                         case 'down20h':   // 这个月比上个月减少20个练习小时的用户的id
-                            if (Redis::get("$v.$year.$month") + 20*60*60 < Redis::get("$v.$year." . $month-1) + 20*60*60) {
+                            if ($month_value + 20*60*60 < $month_pre_value) {
+                                // dd($month_pre_value + 20*60*60);
                                 $result[] = $v;
                             }
                         break;
                         case 'down30h':   // 这个月比上个月减少30个练习小时的用户的id
-                            if (Redis::get("$v.$year.$month") + 30*60*60 < Redis::get("$v.$year." . $month-1) + 30*60*60) {
+                            if ($month_value + 30*60*60 < $month_pre_value) {
                                 $result[] = $v;
                             }
                         break;
                         case 'down50h':   // 这个月比上个月减少50个练习小时的用户的id
-                            if (Redis::get("$v.$year.$month") + 50*60*60 < Redis::get("$v.$year." . $month-1) + 50*60*60) {
+                            if ($month_value + 50*60*60 < $month_pre_value) {
                                 $result[] = $v;
                             }
                         break;
@@ -374,7 +377,7 @@ class UserController extends Controller
                         break;
                 }
             }
-
+// return $result;
             $users->whereIn('uid', $result);
         }
 
