@@ -768,8 +768,8 @@ class UserController extends Controller
         /**
          * 本年的统计结果
          */
-         $year_carbon_start = Carbon::now('Asia/ShangHai')->firstOfQuarter();
-         $year_carbon_end =  Carbon::now('Asia/ShangHai')->lastOfQuarter();
+         $year_carbon_start = Carbon::now('Asia/ShangHai')->firstOfYear();
+         $year_carbon_end =  Carbon::now('Asia/ShangHai');
         //  return $year_carbon_start . '/' . $year_carbon_end;
         //  $data['countStudents'] = StudentUser::count();  // 用户数
          $data['yearCountAdd'] = StudentUser::whereBetween('regdate', [$year_carbon_start, $year_carbon_end])->count();   // 今日增加用户数
