@@ -45,6 +45,8 @@
 				    <div class="">
 				        {{-- 机器人：O2O = <span style="color:red;weight:bold">由于表结构及实现细节暂未商定,此处暂未实现</span><span></span> --}}
 				    </div>
+                    <input type="hidden" name="todayValue" value="{{ $data['todayValue'] }}">
+                    <div id="today_highcharts" style="height: 400px;width: 60%; margin: 0 auto 30 0" ></div>
 				</div>
 
                 {{-- 本月 --}}
@@ -80,7 +82,7 @@
 				    </div>
                     <input type="hidden" name="monthValue" value="{{ $data['monthValue'] }}">
                     <div id="month_highcharts" style="height: 400px;width: 60%; margin: 0 auto 30 0" ></div>
-                    <div class="form-inline" style="margin:30px auto">
+                    {{-- <div class="form-inline" style="margin:30px auto">
                         <input type="checkbox" name="" value="" id="practice_duration">
                         <label for="practice_duration">练习时长</label>
                         <select class="form-control" name="practice_duration">
@@ -97,7 +99,7 @@
                             <option value="1">普通</option>
                         </select>
                         <button type="button" class="form-control" id="activeUserSearch">搜索</button>
-                    </div>
+                    </div> --}}
 				</div>
 
                 {{-- 本季度 --}}
@@ -131,6 +133,8 @@
 				    <div class="">
 				        {{-- 机器人：O2O = <span style="color:red;weight:bold">由于表结构及实现细节暂未商定,此处暂未实现</span><span></span> --}}
 				    </div>
+                    <input type="hidden" name="quarterValue" value="{{ $data['quarterValue'] }}">
+                    <div id="quarter_highcharts" style="height: 400px;width: 60%; margin: 0 auto 30 0" ></div>
 				</div>
                 {{-- 本年 --}}
 				<div class="tab-pane" id="year">
@@ -163,6 +167,8 @@
 				    <div class="">
 				        {{-- 机器人：O2O = <span style="color:red;weight:bold">由于表结构及实现细节暂未商定,此处暂未实现</span><span></span> --}}
 				    </div>
+                    <input type="hidden" name="yearValue" value="{{ $data['yearValue'] }}">
+                    <div id="year_highcharts" style="height: 400px;width: 60%; margin: 0 auto 30 0" ></div>
 				</div>
 				<div class="tab-pane" id="quarter">month</div>
 				<div class="tab-pane" id="quarter">quarter</div>

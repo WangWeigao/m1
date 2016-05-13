@@ -119,28 +119,28 @@ class UserController extends Controller
             $appends_arr = array_merge($appends_arr, ['reg_time' => $reg_time]);
             switch ($reg_time) {
                 case 'day':
-                    $start_time = Carbon::now()->startOfDay();
-                    $end_time   = Carbon::now()->endOfDay();
+                    $start_time = Carbon::now('Asia/ShangHai')->startOfDay();
+                    $end_time   = Carbon::now('Asia/ShangHai')->endOfDay();
                     break;
                 case 'week':
-                    $start_time = Carbon::now()->subWeek();
-                    $end_time   = Carbon::now()->endOfDay();
+                    $start_time = Carbon::now('Asia/ShangHai')->subWeek();
+                    $end_time   = Carbon::now('Asia/ShangHai')->endOfDay();
                     break;
                 case 'month':
-                    $start_time = Carbon::now()->subMonth();
-                    $end_time   = Carbon::now()->endOfDay();
+                    $start_time = Carbon::now('Asia/ShangHai')->subMonth();
+                    $end_time   = Carbon::now('Asia/ShangHai')->endOfDay();
                     break;
                 case 'half_year':
-                    $start_time = Carbon::now()->subMonths(6);
-                    $end_time   = Carbon::now()->endOfDay();
+                    $start_time = Carbon::now('Asia/ShangHai')->subMonths(6);
+                    $end_time   = Carbon::now('Asia/ShangHai')->endOfDay();
                     break;
                 case 'year':
-                    $start_time = Carbon::now()->subyear();
-                    $end_time   = Carbon::now()->endOfDay();
+                    $start_time = Carbon::now('Asia/ShangHai')->subyear();
+                    $end_time   = Carbon::now('Asia/ShangHai')->endOfDay();
                     break;
                 case 'one_more_year':
                     $start_time = Carbon::minValue();
-                    $end_time   = Carbon::now()->endOfDay();
+                    $end_time   = Carbon::now('Asia/ShangHai')->endOfDay();
                     break;
                 default:
                     $start_time = Carbon::minValue();
@@ -186,16 +186,16 @@ class UserController extends Controller
             $appends_arr = array_merge($appends_arr, ['account_end_at' => $account_end_at]);
             switch ($account_end_at) {
                 case 'week':
-                    $start_time = Carbon::now();
-                    $end_time   = Carbon::now()->addWeek();
+                    $start_time = Carbon::now('Asia/ShangHai');
+                    $end_time   = Carbon::now('Asia/ShangHai')->addWeek();
                     break;
                 case 'month':
-                    $start_time = Carbon::now();
-                    $end_time   = Carbon::now()->addMonth();
+                    $start_time = Carbon::now('Asia/ShangHai');
+                    $end_time   = Carbon::now('Asia/ShangHai')->addMonth();
                     break;
                 case 'two_months':
-                    $start_time = Carbon::now();
-                    $end_time   = Carbon::now()->addMonths(2);
+                    $start_time = Carbon::now('Asia/ShangHai');
+                    $end_time   = Carbon::now('Asia/ShangHai')->addMonths(2);
                     break;
 
                 default:
@@ -264,8 +264,8 @@ class UserController extends Controller
             $appends_arr = array_merge($appends_arr, ['account_status' => $account_status]);
             switch ($account_status) {
                 case 'near_expire': // 到期[过期]
-                    $start_time = Carbon::now()->SubWeek();
-                    $end_time   = Carbon::now()->endOfDay();
+                    $start_time = Carbon::now('Asia/ShangHai')->SubWeek();
+                    $end_time   = Carbon::now('Asia/ShangHai')->endOfDay();
                     $users->whereIn('account_grade', [1,2])
                           ->whereBetween('account_end_at', [$start_time, $end_time]);
                     break;
@@ -279,11 +279,11 @@ class UserController extends Controller
                                     ->orwhere(function ($query_1) {             // 到期时间还剩大于一个月的vip1用户
                                         $query_1->where(function($query_2) {
                                             $query_2->where('account_grade', 1)
-                                                    ->where('account_end_at', '>', Carbon::now()->addMonth());
+                                                    ->where('account_end_at', '>', Carbon::now('Asia/ShangHai')->addMonth());
                                         })
                                         ->orWhere(function ($query_3) {         // 或者到期时间还剩大于一个周的vip2用户
                                             $query_3->where('account_grade', 2)
-                                                    ->where('account_end_at', '>', Carbon::now()->addWeek());
+                                                    ->where('account_end_at', '>', Carbon::now('Asia/ShangHai')->addWeek());
                                         });
                                     });
                           });
@@ -291,10 +291,10 @@ class UserController extends Controller
                 case 'expire':  // 未续费[马上就要过期拉]
                     $users->where(function ($vip1) {    // 到期时间在一个月以内的vip1用户
                         $vip1->where('account_grade', 1)
-                             ->whereBetween('account_end_at', [Carbon::now(), Carbon::now()->addMonth()]);
+                             ->whereBetween('account_end_at', [Carbon::now('Asia/ShangHai'), Carbon::now('Asia/ShangHai')->addMonth()]);
                     })->orWhere(function ($vip2) {
                         $vip2->where('account_grade', 2)    // 到期时间在一个周以内的vip2用户
-                             ->whereBetween('account_end_at', [Carbon::now(), Carbon::now()->addWeek()]);
+                             ->whereBetween('account_end_at', [Carbon::now('Asia/ShangHai'), Carbon::now('Asia/ShangHai')->addWeek()]);
                     });
                     break;
                 default:
@@ -312,8 +312,8 @@ class UserController extends Controller
             /**
              * 取得当前年月，便于设置redis的key
              */
-            $year  = Carbon::now()->year;
-            $month = Carbon::now()->month;
+            $year  = Carbon::now('Asia/ShangHai')->year;
+            $month = Carbon::now('Asia/ShangHai')->month;
 
             /**
              * 取出所有当前月份的key
@@ -389,8 +389,8 @@ class UserController extends Controller
             switch ($liveness) {
                 case 'active_user':
                     $users->whereHas('practice', function ($query) {
-                        $start_time = Carbon::now()->startOfMonth()->subMonths(2);
-                        $end_time = Carbon::now();
+                        $start_time = Carbon::now('Asia/ShangHai')->startOfMonth()->subMonths(2);
+                        $end_time = Carbon::now('Asia/ShangHai');
                         $query->whereBetween('practice_date', [$start_time, $end_time]) // 最近三个月的月平均练习数大于30小时
                               ->groupBy('uid')
                               ->havingRaw('SUM(practice_time) > 30*60*60*3');
@@ -399,7 +399,7 @@ class UserController extends Controller
                 case 'sleep_user':
                     $users->where('app_exist', 1)
                           ->whereHas('practice', function($query) {     // app存在且超过一周未使用
-                              $str = 'MAX(practice_date)<' . '\'' . Carbon::now()->subWeek() . '\'';
+                              $str = 'MAX(practice_date)<' . '\'' . Carbon::now('Asia/ShangHai')->subWeek() . '\'';
                               $query->havingRaw(DB::raw($str));
                     });
                     break;
@@ -407,7 +407,7 @@ class UserController extends Controller
                     $users->where('app_exist', 0)
                           ->orWhere(function($query) {                  // app不存在，或超过一周未使用
                              $query->whereHas('practice', function($query_1) {
-                                 $str = 'MAX(practice_date)<' . '\'' . Carbon::now()->subMonth() . '\'';
+                                 $str = 'MAX(practice_date)<' . '\'' . Carbon::now('Asia/ShangHai')->subMonth() . '\'';
                                 $query_1->havingRaw($str);
                              });
                           });
@@ -452,10 +452,10 @@ class UserController extends Controller
         //         // ->get();
         //             //  由前端分页, 此处暂时用不到
         //         ->paginate(15);
-            $start_time = Carbon::now()->subMonth();
-            $end_time   = Carbon::now()->endOfDay();
-            $preMonth_start_time = Carbon::now()->subMonth(2);
-            $preMonth_end_time   = Carbon::now()->subMonth()->endOfDay();
+            $start_time = Carbon::now('Asia/ShangHai')->subMonth();
+            $end_time   = Carbon::now('Asia/ShangHai')->endOfDay();
+            $preMonth_start_time = Carbon::now('Asia/ShangHai')->subMonth(2);
+            $preMonth_end_time   = Carbon::now('Asia/ShangHai')->subMonth()->endOfDay();
 
             // $users->select('*');
             $users->orderBy($field, $order);
@@ -468,21 +468,21 @@ class UserController extends Controller
                 if ($v->account_grade == 0) {
                     $v->status = '正常';
                 } elseif ($v->account_grade == 1) {     // 如果为vip1用户
-                    if (Carbon::now() < Carbon::parse($v->account_end_at)                  // 还在有效期
-                        && Carbon::now()->addMonth() > Carbon::parse($v->account_end_at)   // 有效期不足一个月
+                    if (Carbon::now('Asia/ShangHai') < Carbon::parse($v->account_end_at)                  // 还在有效期
+                        && Carbon::now('Asia/ShangHai')->addMonth() > Carbon::parse($v->account_end_at)   // 有效期不足一个月
                         ) {
                         $v->status = '未续费';
-                    } elseif (Carbon::now() > Carbon::parse($v->account_end_at)) {
+                    } elseif (Carbon::now('Asia/ShangHai') > Carbon::parse($v->account_end_at)) {
                         $v->status = 'vip已过期';
                     } else {
                         $v->status = '正常';
                     }
                 } elseif ($v->account_grade == 2) {
-                    if (Carbon::now() < Carbon::parse($v->account_end_at)                  // 还在有效期
-                        && Carbon::now()->addWeek() > Carbon::parse($v->account_end_at)   // 有效期不足一个周
+                    if (Carbon::now('Asia/ShangHai') < Carbon::parse($v->account_end_at)                  // 还在有效期
+                        && Carbon::now('Asia/ShangHai')->addWeek() > Carbon::parse($v->account_end_at)   // 有效期不足一个周
                         ) {
                         $v->status = '未续费';
-                    } elseif (Carbon::now() > Carbon::parse($v->account_end_at)) {
+                    } elseif (Carbon::now('Asia/ShangHai') > Carbon::parse($v->account_end_at)) {
                         $v->status = 'vip已过期';
                     } else {
                         $v->status = '正常';
@@ -581,8 +581,8 @@ class UserController extends Controller
     {
         $user       = StudentUser::find($id);
         // 本月使用时长
-        $start_time = Carbon::now()->startOfMonth();
-        $end_time   = Carbon::now()->endOfDay();
+        $start_time = Carbon::now('Asia/ShangHai')->startOfMonth();
+        $end_time   = Carbon::now('Asia/ShangHai')->endOfDay();
         $user['duration_month'] = RobotDuration::select(DB::raw('SUM(duration) as sum_duration'))
                                                 ->where('user_id', $id)
                                                 ->whereBetween('created_at', [$start_time, $end_time])
@@ -594,21 +594,21 @@ class UserController extends Controller
             if ($user->account_grade == 0) {
                 $user->status = '正常';
             } elseif ($user->account_grade == 1) {     // 如果为vip1用户
-                if (Carbon::now() < Carbon::parse($user->account_end_at)                  // 还在有效期
-                    && Carbon::now()->addMonth() > Carbon::parse($user->account_end_at)   // 有效期不足一个月
+                if (Carbon::now('Asia/ShangHai') < Carbon::parse($user->account_end_at)                  // 还在有效期
+                    && Carbon::now('Asia/ShangHai')->addMonth() > Carbon::parse($user->account_end_at)   // 有效期不足一个月
                     ) {
                     $user->status = '未续费';
-                } elseif (Carbon::now() > Carbon::parse($user->account_end_at)) {
+                } elseif (Carbon::now('Asia/ShangHai') > Carbon::parse($user->account_end_at)) {
                     $user->status = 'vip已过期';
                 } else {
                     $user->status = '正常';
                 }
             } elseif ($user->account_grade == 2) {
-                if (Carbon::now() < Carbon::parse($user->account_end_at)                  // 还在有效期
-                    && Carbon::now()->addWeek() > Carbon::parse($user->account_end_at)   // 有效期不足一个周
+                if (Carbon::now('Asia/ShangHai') < Carbon::parse($user->account_end_at)                  // 还在有效期
+                    && Carbon::now('Asia/ShangHai')->addWeek() > Carbon::parse($user->account_end_at)   // 有效期不足一个周
                     ) {
                     $user->status = '未续费';
-                } elseif (Carbon::now() > Carbon::parse($user->account_end_at)) {
+                } elseif (Carbon::now('Asia/ShangHai') > Carbon::parse($user->account_end_at)) {
                     $user->status = 'vip已过期';
                 } else {
                     $user->status = '正常';
@@ -655,8 +655,8 @@ class UserController extends Controller
      */
     public function showOrderHistory($id)
     {
-        $start_time  = Carbon::now()->startOfMonth();
-        $end_time    = Carbon::now()->endOfDay();
+        $start_time  = Carbon::now('Asia/ShangHai')->startOfMonth();
+        $end_time    = Carbon::now('Asia/ShangHai')->endOfDay();
         $orders      = RobotOrder::where('user_id', $id)->paginate(10);
         $consume_all = RobotOrder::select(DB::raw('SUM(price) as value'))
                             ->where('user_id', $id)
@@ -720,8 +720,8 @@ class UserController extends Controller
         /**
          * 今日的统计结果
          */
-        $today_carbon_start = Carbon::now()->startOfDay();
-        $today_carbon_end =  Carbon::now()->endOfDay();
+        $today_carbon_start = Carbon::now('Asia/ShangHai')->startOfDay();
+        $today_carbon_end =  Carbon::now('Asia/ShangHai')->endOfDay();
         $data['countStudents'] = StudentUser::count();  // 用户数
         $data['todayCountAdd'] = StudentUser::whereBetween('regdate', [$today_carbon_start, $today_carbon_end])->count();   // 今日增加用户数
         $data['todayCountUsed'] = StudentUser::whereBetween('lastlogin', [$today_carbon_start, $today_carbon_end])->count(); // 今日使用用户数
@@ -729,12 +729,12 @@ class UserController extends Controller
 
         $today_request = new Request(['practice_time' => 30*60, 'date' => 'today']);
         $data['todayCountActive'] = self::activeUser($today_request);    // 今日活跃用户数(机器人使用时长30分钟以上)
-
+        $data['todayValue'] = Carbon::now('Asia/ShangHai')->hour;
         /**
          * 本月的统计结果
          */
-         $month_carbon_start = Carbon::now()->startOfMonth();
-         $month_carbon_end =  Carbon::now()->endOfMonth();
+         $month_carbon_start = Carbon::now('Asia/ShangHai')->startOfMonth();
+         $month_carbon_end =  Carbon::now('Asia/ShangHai')->endOfMonth();
         //  $data['countStudents'] = StudentUser::count();  // 用户数
          $data['monthCountAdd'] = StudentUser::whereBetween('regdate', [$month_carbon_start, $month_carbon_end])->count();   // 今日增加用户数
          $data['monthCountUsed'] = StudentUser::whereBetween('lastlogin', [$month_carbon_start, $month_carbon_end])->count(); // 今日使用用户数
@@ -742,15 +742,15 @@ class UserController extends Controller
 
          $month_request = new Request(['practice_time' => 30*60*60, 'date' => 'month']);
          $data['monthCountActive'] = self::activeUser($month_request);    // 今日活跃用户数(机器人使用时长30小时以上)
-        //  $data['monthDayth'] = Carbon::now()->day;
-        $data['monthValue'] = Carbon::now()->day;
-        //  $data['monthArray'] = self::calEveryPeriodAddUsers('month', Carbon::now()->day);
+        //  $data['monthDayth'] = Carbon::now('Asia/ShangHai')->day;
+        $data['monthValue'] = Carbon::now('Asia/ShangHai')->day;                         // 本月从开始到今天一共经过了多少天
+        //  $data['monthArray'] = self::calEveryPeriodAddUsers('month', Carbon::now('Asia/ShangHai')->day);
 
         /**
          * 本季度的统计结果
          */
-         $quarter_carbon_start = Carbon::now()->firstOfQuarter();
-         $quarter_carbon_end =  Carbon::now()->lastOfQuarter();
+         $quarter_carbon_start = Carbon::now('Asia/ShangHai')->firstOfQuarter();
+         $quarter_carbon_end =  Carbon::now('Asia/ShangHai')->lastOfQuarter();
         //  return $quarter_carbon_start . '/' . $quarter_carbon_end;
         //  $data['countStudents'] = StudentUser::count();  // 用户数
          $data['quarterCountAdd'] = StudentUser::whereBetween('regdate', [$quarter_carbon_start, $quarter_carbon_end])->count();   // 今日增加用户数
@@ -759,13 +759,17 @@ class UserController extends Controller
 
          $quarter_request = new Request(['practice_time' => 30*60*60, 'date' => 'quarter']);
          $data['quarterCountActive'] = self::activeUser($quarter_request);    // 今日活跃用户数(机器人使用时长30小时以上)
-        //  $data['QuarterMonth'] = Carbon::now()->nthOfQuarter();
+        //  $data['QuarterMonth'] = Carbon::now('Asia/ShangHai')->nthOfQuarter();
+        $firstOfQuarter_month = Carbon::now('Asia/ShangHai')->firstOfQuarter()->month;
+        $now_month = Carbon::now('Asia/ShangHai')->month;
+
+        $data['quarterValue'] = $now_month - $firstOfQuarter_month + 1;
 
         /**
          * 本年的统计结果
          */
-         $year_carbon_start = Carbon::now()->firstOfQuarter();
-         $year_carbon_end =  Carbon::now()->lastOfQuarter();
+         $year_carbon_start = Carbon::now('Asia/ShangHai')->firstOfQuarter();
+         $year_carbon_end =  Carbon::now('Asia/ShangHai')->lastOfQuarter();
         //  return $year_carbon_start . '/' . $year_carbon_end;
         //  $data['countStudents'] = StudentUser::count();  // 用户数
          $data['yearCountAdd'] = StudentUser::whereBetween('regdate', [$year_carbon_start, $year_carbon_end])->count();   // 今日增加用户数
@@ -774,6 +778,7 @@ class UserController extends Controller
 
          $year_request = new Request(['practice_time' => 30*60*60, 'date' => 'year']);
          $data['yearCountActive'] = self::activeUser($year_request);    // 今日活跃用户数(机器人使用时长30小时以上)
+         $data['yearValue'] = Carbon::now('Asia/ShangHai')->month;
         return view('usageStatistics')->with('data', $data);
     }
 
@@ -787,20 +792,20 @@ class UserController extends Controller
     {
         switch ($request->date) {
             case 'today':
-                $date_start = Carbon::now()->startOfDay();
-                $date_end = Carbon::now()->endOfDay();
+                $date_start = Carbon::now('Asia/ShangHai')->startOfDay();
+                $date_end = Carbon::now('Asia/ShangHai')->endOfDay();
                 break;
             case 'month':
-                $date_start = Carbon::now()->startOfMonth();
-                $date_end = Carbon::now()->endOfMonth();
+                $date_start = Carbon::now('Asia/ShangHai')->startOfMonth();
+                $date_end = Carbon::now('Asia/ShangHai')->endOfMonth();
                 break;
             case 'quarter':
-                $date_start = Carbon::now()->firstOfQuarter();
-                $date_end = Carbon::now()->lastOfQuarter();
+                $date_start = Carbon::now('Asia/ShangHai')->firstOfQuarter();
+                $date_end = Carbon::now('Asia/ShangHai')->lastOfQuarter();
                 break;
             case 'year':
-                $date_start = Carbon::now()->startOfYear();
-                $date_end = Carbon::now()->endOfYear();
+                $date_start = Carbon::now('Asia/ShangHai')->startOfYear();
+                $date_end = Carbon::now('Asia/ShangHai')->endOfYear();
                 break;
             default:
                 # code...
@@ -820,15 +825,50 @@ class UserController extends Controller
         return $countTodayActive;
     }
 
+    /**
+     * 今天/本月/本季度/本年 增加的用户数
+     * @method calEveryPeriodAddUsers
+     * @param  Request                $request [description]
+     * @return [type]                          [description]
+     */
     public function calEveryPeriodAddUsers(Request $request)
     {
         $period = $request->get('period');
         $length = $request->get('length');
+        switch ($period) {
+            case 'today':
+                for ($i=0; $i <= $length; $i++) {
+                    $today_carbon_start = Carbon::now('Asia/ShangHai')->hour($i)->minute(0)->second(0);
+                    $today_carbon_end =  Carbon::now('Asia/ShangHai')->hour($i)->minute(59)->second(59);
+                    $data[] = StudentUser::whereBetween('regdate', [$today_carbon_start, $today_carbon_end])->count();   // 今日增加用户数
+                }
+                break;
+            case 'month':
+                for ($i=1; $i <= $length; $i++) {
+                    $today_carbon_start = Carbon::now('Asia/ShangHai')->day($i)->startOfDay();
+                    $today_carbon_end =  Carbon::now('Asia/ShangHai')->day($i)->endOfDay();
+                    $data[] = StudentUser::whereBetween('regdate', [$today_carbon_start, $today_carbon_end])->count();   // 今日增加用户数
+                }
+                break;
+            case 'quarter':
+                for ($i=1; $i <= $length; $i++) {
+                    $quarter = Carbon::now('Asia/ShangHai')->quarter;
+                    $today_carbon_start = Carbon::now('Asia/ShangHai')->month(($quarter-1)*3+$i)->startOfMonth();
+                    $today_carbon_end =  Carbon::now('Asia/ShangHai')->month(($quarter-1)*3+$i)->endOfMonth();
+                    $data[] = StudentUser::whereBetween('regdate', [$today_carbon_start, $today_carbon_end])->count();   // 今日增加用户数
+                }
+                break;
+            case 'year':
+                for ($i=1; $i <= $length; $i++) {
+                    $today_carbon_start = Carbon::now('Asia/ShangHai')->month($i)->startOfDay();
+                    $today_carbon_end =  Carbon::now('Asia/ShangHai')->month($i)->endOfDay();
+                    $data[] = StudentUser::whereBetween('regdate', [$today_carbon_start, $today_carbon_end])->count();   // 今日增加用户数
+                }
+                break;
 
-        for ($i=1; $i <= $length; $i++) {
-            $today_carbon_start = Carbon::now()->day($i)->startOfDay();
-            $today_carbon_end =  Carbon::now()->day($i)->endOfDay();
-            $data[] = StudentUser::whereBetween('regdate', [$today_carbon_start, $today_carbon_end])->count();   // 今日增加用户数
+            default:
+                # code...
+                break;
         }
         return $data;
     }
@@ -1020,7 +1060,7 @@ class UserController extends Controller
         /**
          * 日期字符串
          */
-        $date_string = Carbon::now()->toDateString();
+        $date_string = Carbon::now('Asia/ShangHai')->toDateString();
 
         /**
          * 弹奏记录列表

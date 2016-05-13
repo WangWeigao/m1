@@ -12,6 +12,12 @@ use DB;
 
 class test001Controller extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -23,16 +29,18 @@ class test001Controller extends Controller
          * 将practice表中需要的数据写入Redis
          */
         // 取出数据
-        $play_records = DB::table('practice')
-                            ->select('uid', 'practice_time', 'practice_date')
-                            ->get();
-        // 格式化数据
-        foreach ($play_records as $v ) {
-            Redis::incrby(
-                $v->uid . '.' . Carbon::parse($v->practice_date)->year . '.' . Carbon::parse($v->practice_date)->month,
-                $v->practice_time
-            );
-        }
+        // $play_records = DB::table('practice')
+        //                     ->select('uid', 'practice_time', 'practice_date')
+        //                     ->get();
+        // // 格式化数据
+        // foreach ($play_records as $v ) {
+        //     Redis::incrby(
+        //         $v->uid . '.' . Carbon::parse($v->practice_date)->year . '.' . Carbon::parse($v->practice_date)->month,
+        //         $v->practice_time
+        //     );
+        // }
+        $dt = Carbon::now('Asia/ShangHai');
+        return $dt->firstOfQuarter();
     }
 
     /**

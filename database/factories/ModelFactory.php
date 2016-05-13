@@ -24,6 +24,7 @@ $factory->define(App\StudentUser::class, function (Faker\Generator $faker) {
         // 'remember_token' => str_random(10),
         'lastlogin'      => $faker->dateTimeBetween('-1 year', 'now', 'Asia/ShangHai'),
         'regdate'        => $faker->dateTimeBetween('-1 year', 'now', 'Asia/ShangHai'),
+        // 'regdate'        => $faker->dateTimeBetween('2016-05-13 00:00:00', 'now', 'Asia/ShangHai'),
         'isactive'       => mt_rand(0, 1),
         'channel'        => mt_rand(0, 1),
         'lastpractice'   => $faker->dateTimeBetween('-1 year', 'now', 'Asia/ShangHai'),
