@@ -860,8 +860,8 @@ class UserController extends Controller
                 break;
             case 'year':
                 for ($i=1; $i <= $length; $i++) {
-                    $today_carbon_start = Carbon::now('Asia/ShangHai')->month($i)->startOfDay();
-                    $today_carbon_end =  Carbon::now('Asia/ShangHai')->month($i)->endOfDay();
+                    $today_carbon_start = Carbon::now('Asia/ShangHai')->month($i)->startOfMonth();
+                    $today_carbon_end =  Carbon::now('Asia/ShangHai')->month($i)->endOfMonth();
                     $data[] = StudentUser::whereBetween('regdate', [$today_carbon_start, $today_carbon_end])->count();   // 今日增加用户数
                 }
                 break;
