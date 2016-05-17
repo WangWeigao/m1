@@ -558,7 +558,10 @@ class MusicController extends Controller
         $data['instrument'] = Instrument::select('id', 'name')->get();
         $data['press'] = \App\Press::select('id', 'name')->get();
         $data['tag'] = \App\Tag::select('id', 'name')->get();
-        $data['operator'] = \App\User::select('id', 'name')->with('musics')->whereHas('musics', function ($query) {
+        // $data['operator'] = \App\User::select('id', 'name')->with('musics')->whereHas('musics', function ($query) {
+        //                                                         $query->groupby('operator');
+        //                                                     })->groupby('id')->get();
+        $data['operator'] = \App\User::select('id', 'name')->whereHas('musics', function ($query) {
                                                                 $query->groupby('operator');
                                                             })->groupby('id')->get();
         $data['organizer'] = \App\Organizer::select('id', 'name')->get();
