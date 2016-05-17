@@ -40,7 +40,7 @@ class test001Controller extends Controller
         //     );
         // }
         $dt = Carbon::now('Asia/ShangHai');
-        return $dt->firstOfQuarter();
+        return $dt->micro;
     }
 
     /**

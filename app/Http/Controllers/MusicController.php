@@ -445,6 +445,7 @@ class MusicController extends Controller
         if (!empty($level)) {
             $music->level = $level;
         }
+        $music->onshelf = 1;
         $result = $music->save();
         if ($result) {
             $data['status'] = true;
