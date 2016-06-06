@@ -11,7 +11,8 @@
             <th>乐曲名</th>
             <th>用户姓名</th>
             <th>WAV文件路径</th>
-            <th>MIDI文件路径</th>
+            <th>源MIDI文件路径</th>
+            <th>匹配后的MIDI文件路径</th>
             <th>弹奏时间</th>
         </tr>
         @forelse($play_records as $item)
@@ -20,7 +21,13 @@
                 <td><a href="basicinfo/{{ $item->user->uid or '#' }}">{{ $item->user->nickname or '-' }}</a></td>
                 <td><a href="{{ $item->wav_path }}">{{ $item->wav_path }}</a></td>
                 <td>
+                    @forelse($item->origin_midi_path as $item_midi)
+                        <a href="{{ $item_midi }}">{{ $item_midi }}</a><br>
+                    @empty
 
+                    @endforelse
+                </td>
+                <td>
                     @forelse($item->midi_path as $item_midi)
                         <a href="{{ $item_midi }}">{{ $item_midi }}</a><br>
                     @empty

@@ -20,6 +20,11 @@ class Practice extends Model
         return explode(',', $value);
     }
 
+    public function getOriginMidiPathAttribute($value)
+    {
+        return explode(',', $value);
+    }
+
     public function getMatchMeasuresAttribute($value)
     {
         return explode(',', $value);

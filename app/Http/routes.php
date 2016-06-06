@@ -219,4 +219,6 @@ Route::group(['middleware' => 'web'], function () {
 
     // 测试路由
     Route::get('/test', 'test001Controller@index');
+    // Email发送成绩报告
+    Route::get('/report', 'ReportListController@sendReport');
 });
