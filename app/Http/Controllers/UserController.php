@@ -583,10 +583,10 @@ class UserController extends Controller
         // 本月使用时长
         $start_time = Carbon::now('Asia/ShangHai')->startOfMonth();
         $end_time   = Carbon::now('Asia/ShangHai')->endOfDay();
-        $user['duration_month'] = RobotDuration::select(DB::raw('SUM(duration) as sum_duration'))
-                                                ->where('user_id', $id)
-                                                ->whereBetween('created_at', [$start_time, $end_time])
-                                                ->groupBy('user_id')
+        $user['duration_month'] = Practice::select(DB::raw('SUM(practice_time) as sum_duration'))
+                                                ->where('uid', $id)
+                                                ->whereBetween('practice_date', [$start_time, $end_time])
+                                                ->groupBy('uid')
                                                 ->get();
         if (!$user->isactive) {
             $user->status = '锁定';
