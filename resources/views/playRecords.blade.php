@@ -19,17 +19,17 @@
             <tr>
                 <td>{{ $item->music->name or '-' }}</td>
                 <td><a href="basicinfo/{{ $item->user->uid or '#' }}">{{ $item->user->nickname or '-' }}</a></td>
-                <td><a href="{{ $item->wav_path }}">{{ $item->wav_path }}</a></td>
+                <td><a href="http://120.26.243.208{{ $item->wav_path }}">{{ $item->wav_path }}</a></td>
                 <td>
                     @forelse($item->origin_midi_path as $item_midi)
-                        <a href="{{ $item_midi }}">{{ $item_midi }}</a><br>
+                        <a href="http://120.26.243.208{{ $item_midi }}">{{ $item_midi }}</a><br>
                     @empty
 
                     @endforelse
                 </td>
                 <td>
                     @forelse($item->midi_path as $item_midi)
-                        <a href="{{ $item_midi }}">{{ $item_midi }}</a><br>
+                        <a href="http://120.26.243.208{{ $item_midi }}">{{ $item_midi }}</a><br>
                     @empty
 
                     @endforelse
