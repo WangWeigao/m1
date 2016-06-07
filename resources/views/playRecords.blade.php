@@ -14,6 +14,7 @@
             <th>源MIDI文件路径</th>
             <th>匹配后的MIDI文件路径</th>
             <th>弹奏时间</th>
+            <th>日期</th>
         </tr>
         @forelse($play_records as $item)
             <tr>
@@ -35,6 +36,9 @@
                     @endforelse
                 </td>
                 <td>{{ $item->practice_time }}</td>
+                <td>
+                    {{ $item->practice_date }}
+                </td>
             </tr>
         @empty
 

@@ -914,7 +914,9 @@ class UserController extends Controller
          */
         $play_records = \App\Practice::with(['music' => function ($query) {
             $query->withTrashed();
-        }])->with('user')->paginate(10);
+        }])->with('user')
+           ->orderBy('practice_date', 'desc')
+           ->paginate(10);
 // return $play_records;
         return view('playRecords')->with('play_records', $play_records);
     }
