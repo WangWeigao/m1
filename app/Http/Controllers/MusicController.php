@@ -14,6 +14,8 @@ use App\Press;
 use App\Organizer;
 use Carbon\Carbon;
 use Response;
+
+use \App\Http\Models\Midi\MidiDuration;
 class MusicController extends Controller
 {
     /**
@@ -192,12 +194,16 @@ class MusicController extends Controller
             $id = $music->id;
             // $source_name = $request->get('midi_file');
             // return $source_name;
-            $path = public_path() . '/midis';
+            $path = public_path() . DIRECTORY_SEPARATOR . 'midis' . DIRECTORY_SEPARATOR;
             $name = $id . '.mid';
-            // 将文件名保存到DB
             $music->filename = $name;
-            $music->save();
             $request->file('midi_file')->move($path, $name);
+            // 将文件名保存到DB
+            $file = $path . $name;
+            $midi = new MidiDuration();
+            $midi->importMid($file);
+            $music->duration = (int)ceil($midi->getDuration());
+            $music->save();
             if ($result) {
                 $data['status'] = true;
                 return $data;

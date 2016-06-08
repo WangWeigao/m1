@@ -98,6 +98,7 @@
                                 <th>分段时间</th>
                                 <th>轨道</th>
                                 <th>备注</th>
+                                <th>时长(秒)</th>
                             </tr>
                         </thead>
                     @endif
@@ -146,6 +147,7 @@
                                 @else
                                     <td></td>
                                 @endif
+                                <td>{{ $item->duration }}</td>
                             </tr>
                         @empty
                             {{-- @if(Input::get()) --}}
