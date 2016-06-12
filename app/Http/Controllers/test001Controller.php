@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Redis;
 use DB;
-
+use App\Music;
 use App\Http\Models\Midi\MidiDuration;
 
 class test001Controller extends Controller
@@ -54,11 +54,13 @@ class test001Controller extends Controller
         $midis = range(199, 245);
         foreach ($midis as $v) {
             $file = public_path() . DIRECTORY_SEPARATOR . 'midis' . DIRECTORY_SEPARATOR . $v . '.mid';
-            $music = Music::find($v);
-            $midi = new MidiDuration();
-            $midi->importMid($file);
-            $music->duration = $midi->getDuration();
-            $music->save();
+            if (file_exists($file)) {
+                $music = Music::find($v);
+                $midi = new MidiDuration();
+                $midi->importMid($file);
+                $music->duration = $midi->getDuration();
+                $music->save();
+            }
         }
     }
 }
