@@ -59,7 +59,7 @@ class test001Controller extends Controller
                 if (!is_null($music)) {
                     $midi = new MidiDuration();
                     $midi->importMid($file);
-                    $music->duration = $midi->getDuration();
+                    $music->duration = (int)ceil($midi->getDuration());
                     $music->save();
                 }
             }
