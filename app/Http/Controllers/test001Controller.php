@@ -10,6 +10,8 @@ use Carbon\Carbon;
 use Redis;
 use DB;
 
+use App\Http\Models\Midi\MidiDuration;
+
 class test001Controller extends Controller
 {
 
@@ -43,69 +45,20 @@ class test001Controller extends Controller
         // return $dt->micro;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * 给已经添加的midi文件添加播放时长(duration字段)
      */
-    public function store(Request $request)
+    public function addDuration()
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $midis = range(199, 245);
+        foreach ($midis as $v) {
+            $file = public_path() . DIRECTORY_SEPARATOR . 'midis' . DIRECTORY_SEPARATOR . $v . '.mid';
+            $music = Music::find($v);
+            $midi = new MidiDuration();
+            $midi->importMid($file);
+            $music->duration = $midi->getDuration();
+            $music->save();
+        }
     }
 }

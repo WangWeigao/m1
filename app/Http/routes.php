@@ -221,4 +221,6 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/test', 'test001Controller@index');
     // Email发送成绩报告
     Route::get('/report', 'ReportListController@sendReport');
+    // 添加midi文件播放时长
+    Route::get('/addMidiDuration', 'test001Controller@addDuration');
 });
