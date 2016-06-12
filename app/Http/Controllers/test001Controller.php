@@ -56,10 +56,12 @@ class test001Controller extends Controller
             $file = public_path() . DIRECTORY_SEPARATOR . 'midis' . DIRECTORY_SEPARATOR . $v . '.mid';
             if (file_exists($file)) {
                 $music = Music::find($v);
-                $midi = new MidiDuration();
-                $midi->importMid($file);
-                $music->duration = $midi->getDuration();
-                $music->save();
+                if (!is_null($music)) {
+                    $midi = new MidiDuration();
+                    $midi->importMid($file);
+                    $music->duration = $midi->getDuration();
+                    $music->save();
+                }
             }
         }
     }
