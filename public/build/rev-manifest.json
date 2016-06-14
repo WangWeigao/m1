@@ -9,13 +9,13 @@
   "js/all.js": "js/all-0eb4b7c053.js",
   "js/app.js": "js/app-bfdfd8404e.js",
   "js/jquery.min.js": "js/jquery.min-6326c600df.js",
-  "js/music.js": "js/music-d3e1a1a97c.js",
+  "js/music.js": "js/music-f4142644a5.js",
   "js/musicStatistics.js": "js/musicStatistics-d0a639b7ee.js",
   "js/musicadd.js": "js/musicadd-49e9cacecc.js",
   "js/new_music.js": "js/new_music-3502b33950.js",
-  "js/order.js": "js/order-a2e4fc6edf.js",
+  "js/order.js": "js/order-80ed2d24fe.js",
   "js/orderStatistics.js": "js/orderStatistics-60f79e09cd.js",
-  "js/user.js": "js/user-f95d221dc0.js",
+  "js/user.js": "js/user-0b90a2ccf6.js",
   "js/userUsageStatics.js": "js/userUsageStatics-625a54611d.js",
   "js/userbasicinfo.js": "js/userbasicinfo-1650094ab4.js"
 }

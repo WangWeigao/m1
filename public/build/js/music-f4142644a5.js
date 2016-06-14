@@ -201,7 +201,7 @@ $(document).ready(function() {
         });
 
         /**
-         * 拉取“出版社”列表
+         * 拉取"出版社"列表
          */
         $.each(data.press, function(n, value) {
             var $str = "";
@@ -392,6 +392,7 @@ $(document).ready(function() {
     var onshelf    = $.getUrlParam('onshelf');
     var organizer  = $.getUrlParam('organizer');
     var operator   = $.getUrlParam('operator');
+    console.log(name);
     if (name != '' && name != null) {
         $("input[name=name]").val(name);
     }
@@ -1781,7 +1782,7 @@ function log() {
      $.getUrlParam = function (name) {
          var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
          var r = window.location.search.substr(1).match(reg);
-         if (r != null) return unescape(r[2]); return null;
+          if (r != null) return decodeURI(r[2]); return null;
      }
  })(jQuery);
 
