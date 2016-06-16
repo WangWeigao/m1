@@ -41,8 +41,7 @@ class test001Controller extends Controller
                 $v->practice_time
             );
         }
-        // $dt = Carbon::now('Asia/ShangHai');
-        // return $dt->micro;
+
     }
 
 
@@ -64,5 +63,10 @@ class test001Controller extends Controller
                 }
             }
         }
+    }
+
+    public function test()
+    {
+        return bcrypt('fwhkggyn');
     }
 }

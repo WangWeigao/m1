@@ -319,8 +319,10 @@ class OrderController extends Controller
     public function getQuarterTendency()
     {
         $dt     = Carbon::now('Asia/ShangHai');
-        $length = ($dt->month)%3;
-        for ($i=(floor(($dt->month)/3)*3+1); $i <=$dt->month ; $i++) {
+        $length = ($dt->month)%3 ? ($dt->month)%3 : 3;
+        // return $length;
+        $dataValue = [];
+        for ($i=$dt->quarter + 1; $i <=$dt->month ; $i++) {
             $start       = Carbon::now('Asia/ShangHai')->month($i)->startOfMonth();
             $end         = Carbon::now('Asia/ShangHai')->month($i)->endOfMonth();
             $dataValue[] = RobotOrder::whereBetween('pay_time', [$start, $end])->count();

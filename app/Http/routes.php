@@ -218,7 +218,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::resource('rbac', 'RbacController');
 
     // 测试路由
-    Route::get('/test', 'test001Controller@index');
+    Route::get('/test', 'test001Controller@test');
     // Email发送成绩报告
     Route::get('/report', 'ReportListController@sendReport');
     // 添加midi文件播放时长
