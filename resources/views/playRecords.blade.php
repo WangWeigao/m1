@@ -6,6 +6,42 @@
           <li>用户管理</li>
           <li>学生弹奏记录</li>
         </ol>
+        <form class="" action="playRecords" method="get">
+            <div class="form-group form-inline">
+                <div class="">精确搜索: </div>
+                <select class="form-control col-md-1" name="search_condition">
+                    <option value="music_name">乐曲名</option>
+                    <option value="origin_midi_path">源MIDI路径</option>
+                    <option value="match_midi_path">匹配后MIDI路径</option>
+                </select>
+                &nbsp;<input type="text" class="form-control col-md-1" id="searchName" name="name" placeholder="请输入曲目名">
+                <input type="hidden" name="field" value="uid">
+                <input type="hidden" name="order" value="asc">
+            <!-- <div class="container"> -->
+                <div class="col-md-3 col-md-offset-1 date_left">
+                    <div class="form-group">
+                        <div class='input-group date' id='datetimepicker6'>
+                            <input type='text' class="form-control" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class='col-md-3 date_right'>
+                    <div class="form-group">
+                        <div class='input-group date' id='datetimepicker7'>
+                            <input type='text' class="form-control" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" name="button" class= "btn btn-success" id="search">搜索</button>
+            </div>
+            <!-- </div> -->
+        </form>
     <table class="table table-bordered table-hover">
         <tr>
             <th>乐曲名</th>
@@ -51,10 +87,20 @@
 </div>
 @endsection
 
+@section('js')
+    <script src="{{ elixir('js/playRecords.js') }}"></script>
+@endsection
+
 @section('css')
+    <link rel="stylesheet" href="{{ elixir('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ elixir('css/bootstrap-datetimepicker.css') }}">
     <style media="screen">
-        th, tr, td {
+        /*th, tr, td {
             white-space: nowrap;
-        }
+        }*/
+    .date_left, .date_right {
+        padding-left: 0;
+        padding-right: 0;
+    }
     </style>
 @endsection

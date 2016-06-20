@@ -67,6 +67,6 @@ class test001Controller extends Controller
 
     public function test()
     {
-        return bcrypt('fwhkggyn');
+        return view('test');
     }
 }

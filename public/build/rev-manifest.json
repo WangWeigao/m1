@@ -2,7 +2,7 @@
   "css/Lato.css": "css/Lato-e5cd78187e.css",
   "css/all.css": "css/all-613b2a1e9f.css",
   "css/music.css": "css/music-3e2f5a1ce7.css",
-  "css/order.css": "css/order-35b3a7d0d8.css",
+  "css/order.css": "css/order-1edd51fa35.css",
   "css/orderStatistics.css": "css/orderStatistics-34cf03785c.css",
   "css/user.css": "css/user-304a0cec96.css",
   "css/userrecordhistory.css": "css/userrecordhistory-dfc8b1f0bb.css",
@@ -14,7 +14,8 @@
   "js/musicadd.js": "js/musicadd-49e9cacecc.js",
   "js/new_music.js": "js/new_music-3502b33950.js",
   "js/order.js": "js/order-80ed2d24fe.js",
-  "js/orderStatistics.js": "js/orderStatistics-60f79e09cd.js",
+  "js/orderStatistics.js": "js/orderStatistics-cd275931da.js",
+  "js/playRecords.js": "js/playRecords-0a879bfbf7.js",
   "js/user.js": "js/user-0b90a2ccf6.js",
   "js/userUsageStatics.js": "js/userUsageStatics-625a54611d.js",
   "js/userbasicinfo.js": "js/userbasicinfo-1650094ab4.js"

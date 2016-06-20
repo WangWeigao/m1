@@ -377,7 +377,6 @@ class UserController extends Controller
                         break;
                 }
             }
-// return $result;
             $users->whereIn('uid', $result);
         }
 
@@ -666,7 +665,6 @@ class UserController extends Controller
                             ->where('user_id', $id)
                             ->whereBetween('pay_time', [$start_time, $end_time])
                             ->get();
-// return $orders;
         return view('userorderhistory')
                 ->with(['orders' => $orders,
                         'user_id' => $id,
@@ -907,17 +905,43 @@ class UserController extends Controller
      * @method playRecords
      * @return [type]      [description]
      */
-    public function playRecords()
+    public function playRecords(Request $request)
     {
+        $name             = $request->get('name', '');
+        $search_condition = $request->get('search_condition', '');
+        $from_time        = $request->get('from_time', null);
+        $to_time          = $request->get('to_time', null);
+        // dd($from_time);
         /**
          * 获取所有弹奏记录
          */
-        $play_records = \App\Practice::with(['music' => function ($query) {
+        $play_records     = \App\Practice::with(['music' => function ($query) {
             $query->withTrashed();
-        }])->with('user')
-           ->orderBy('practice_date', 'desc')
-           ->paginate(10);
-// return $play_records;
+        }])->with('user');
+
+        switch ($search_condition) {
+            case 'music_name':
+                $play_records->whereHas('music', function($query) use ($name) {
+                    $query->where('name', 'like', "%$name%");
+                });
+                break;
+            case 'origin_midi_path':
+                $play_records->where('origin_midi_path', 'like', "%$name%");
+                break;
+            case 'match_midi_path':
+                $play_records->where('midi_path', 'like', "%$name%");
+                break;
+            default:
+                # code...
+                break;
+        }
+
+        if (!is_null($from_time) && !is_null($to_time)) {
+            $play_records->whereBetween('practice_date', [$from_time, $to_time]);
+        }
+
+           $play_records = $play_records->orderBy('practice_date', 'desc')
+                                        ->paginate(10);
         return view('playRecords')->with('play_records', $play_records);
     }
 
@@ -1067,7 +1091,9 @@ class UserController extends Controller
         /**
          * 弹奏记录列表
          */
-         $records = Practice::with('music')
+         $records = Practice::with(['music' => function($query) {
+             $query->withTrashed();
+         }])
                             ->whereBetween('practice_date', [$start_time, $end_time])
                             ->where('uid', $id)
                             ->get();
@@ -1075,7 +1101,9 @@ class UserController extends Controller
         /**
          * 绘制图表所需数据
          */
-        $text_data = Practice::with('music')
+        $text_data = Practice::with(['music' => function($query) {
+            $query->withTrashed();
+        }])
                             ->select('music_id', DB::raw('SUM(practice_time) as one_music_duration'))
                             ->whereBetween('practice_date', [$start_time, $end_time])
                             ->where('uid', $id)
@@ -1101,7 +1129,7 @@ class UserController extends Controller
         $chart_rating = [];
         foreach ($rating_data as $v) {
             $temp1['value'] = $v->rating;
-            $temp1['color'] = $colors1[(ceil($v->rating)/2)];
+            $temp1['color'] = $colors1[ceil(($v->rating)/2)];
             $chart_rating[] = $temp1;
         }
         // return $duration_today;
@@ -1122,7 +1150,9 @@ class UserController extends Controller
          */
          $start_time = Carbon::now('Asia/ShangHai')->startOfDay()->toDateTimeString();
          $end_time   = Carbon::now('Asia/ShangHai')->endOfDay()->toDateTimeString();
-         $text_data = Practice::with('music')
+         $text_data = Practice::with(['music' => function($query) {
+             $query->withTrashed();
+         }])
                             ->select('music_id', 'rating', DB::raw('SUM(practice_time) as one_music_duration'))
                             ->whereBetween('practice_date', [$start_time, $end_time])
                             ->where('uid', $id)

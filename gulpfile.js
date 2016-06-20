@@ -62,7 +62,8 @@ elixir(function(mix) {
     .scripts(['musicadd.js'], 'public/js/musicadd.js')
     .scripts(['userbasicinfo.js'], 'public/js/userbasicinfo.js')
     .scripts(['orderStatistics.js'], 'public/js/orderStatistics.js')
-    .scripts(['moment.min.js', 'bootstrap-datetimepicker.min.js', 'order.js', 'getUrlParam.js'], 'public/js/order.js');
+    .scripts(['moment.min.js', 'bootstrap-datetimepicker.min.js', 'order.js', 'getUrlParam.js'], 'public/js/order.js')
+    .scripts(['moment.min.js', 'bootstrap-datetimepicker.min.js', 'getUrlParam.js', 'playRecords.js'], 'public/js/playRecords.js');
     /**
      * 添加时间戳
      */
