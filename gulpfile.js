@@ -31,7 +31,8 @@ elixir(function(mix) {
         .styles('user.css', 'public/css/user.css')
         .styles('userrecordhistory.css', 'public/css/userrecordhistory.css')
         .styles('orderStatistics.css', 'public/css/orderStatistics.css')
-        .styles(['bootstrap-datetimepicker.css', 'order.css'], 'public/css/order.css');
+        .styles(['bootstrap-datetimepicker.css', 'order.css'], 'public/css/order.css')
+        .styles(['bootstrap-datetimepicker.css', 'bootstrap.min.css'], 'public/css/playRecords.css');
 
     /**
      * 合并js文件

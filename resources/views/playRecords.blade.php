@@ -92,15 +92,14 @@
 @endsection
 
 @section('css')
-    <link rel="stylesheet" href="{{ elixir('css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ elixir('css/bootstrap-datetimepicker.css') }}">
+    <link rel="stylesheet" href="{{ elixir('css/playRecords.css') }}">
     <style media="screen">
         /*th, tr, td {
             white-space: nowrap;
         }*/
-    .date_left, .date_right {
+    /*.date_left, .date_right {
         padding-left: 0;
         padding-right: 0;
-    }
+    }*/
     </style>
 @endsection
