@@ -922,7 +922,7 @@ class UserController extends Controller
         switch ($search_condition) {
             case 'music_name':
                 $play_records->whereHas('music', function($query) use ($name) {
-                    $query->where('name', 'like', "%$name%");
+                    $query->where('name', 'like', "%$name%")->withTrashed();
                 });
                 break;
             case 'origin_midi_path':
@@ -941,7 +941,11 @@ class UserController extends Controller
         }
 
            $play_records = $play_records->orderBy('practice_date', 'desc')
-                                        ->paginate(10);
+                                        ->paginate(10)
+                                        ->appends(['name' => $name,
+                                                    'search_condition' => $search_condition,
+                                                    'from_time' => $from_time,
+                                                    'to_time' => $to_time]);
         return view('playRecords')->with('play_records', $play_records);
     }
 

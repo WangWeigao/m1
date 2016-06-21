@@ -21,7 +21,7 @@
                 <div class="col-md-3 col-md-offset-1 date_left">
                     <div class="form-group">
                         <div class='input-group date' id='datetimepicker6'>
-                            <input type='text' class="form-control" />
+                            <input type='text' class="form-control" name="from_time" />
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -31,7 +31,7 @@
                 <div class='col-md-3 date_right'>
                     <div class="form-group">
                         <div class='input-group date' id='datetimepicker7'>
-                            <input type='text' class="form-control" />
+                            <input type='text' class="form-control" name="to_time"/>
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
