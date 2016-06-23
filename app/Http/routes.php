@@ -219,8 +219,15 @@ Route::group(['middleware' => 'web'], function () {
 
     // 测试路由
     Route::get('/test', 'test001Controller@test');
+    // 测试路由
+    Route::get('/getPic', 'test001Controller@getPic');
     // Email发送成绩报告
     Route::get('/report', 'ReportListController@sendReport');
     // 添加midi文件播放时长
     Route::get('/addMidiDuration', 'test001Controller@addDuration');
+
+    // 苗鹏测试通过URL生成图片
+    Route::get('/getchart', function() {
+        return view('index');
+    });
 });

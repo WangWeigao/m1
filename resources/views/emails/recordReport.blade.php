@@ -160,22 +160,24 @@
     </footer>
 
     <script>
-    $.ajax({
-        url: '/user/recordReportChart/'+{{ $id }},
-        type: 'GET',
-        dataType: 'Json',
-    })
-    .done(function(data) {
-        var chart = new Chart(document.getElementById("canvas").getContext("2d")).Doughnut(data.data);
-        var chart1 = new Chart(document.getElementById("canvas1").getContext("2d")).Doughnut(data.data1);
-    })
-    .fail(function() {
-        console.log("error");
-    })
-    .always(function() {
-        console.log("complete");
-    });
+    // $.ajax({
+    //     url: '/user/recordReportChart/'+{{ $id }},
+    //     type: 'GET',
+    //     dataType: 'Json',
+    // })
+    // .done(function(data) {
+    //     var chart = new Chart(document.getElementById("canvas").getContext("2d")).Doughnut(data.data);
+    //     var chart1 = new Chart(document.getElementById("canvas1").getContext("2d")).Doughnut(data.data1);
+    // })
+    // .fail(function() {
+    //     console.log("error");
+    // })
+    // .always(function() {
+    //     console.log("complete");
+    // });
 
+    var chart = new Chart(document.getElementById("canvas").getContext("2d")).Doughnut(data);
+    var chart1 = new Chart(document.getElementById("canvas1").getContext("2d")).Doughnut(data);
     //   var data = [
     //       {
     //         value: 30,

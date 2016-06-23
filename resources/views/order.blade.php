@@ -45,25 +45,28 @@
                 <input type="checkbox" name="data_str" value="" id="data_str">
                 <label for="data_str">订单生成日期</label>
             </div>
-            <div class='col-md-3'>
-                <div class="form-group">
-                    <div class='input-group date' id='datetimepicker6'>
-                        <input type='text' class="form-control" name="" id="from_time"/>
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
+            <div class="form-group form-inline">
+                <div class='col-md-3'>
+                    <div class="form-group">
+                        <div class='input-group date' id='datetimepicker6'>
+                            <input type='text' class="form-control" name="" id="from_time"/>
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class='col-md-3'>
-                <div class="form-group">
-                    <div class='input-group date' id='datetimepicker7'>
-                        <input type='text' class="form-control" name="" id="to_time"/>
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
+                <div class='col-md-3'>
+                    <div class="form-group">
+                        <div class='input-group date' id='datetimepicker7'>
+                            <input type='text' class="form-control" name="" id="to_time"/>
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
                     </div>
                 </div>
+
             </div>
             <div class="col-md-2">
                 <div class="form-group">
@@ -199,13 +202,13 @@
                     {!! $orders->appends($query_string)->render() !!}
                 </div>
             @else
-                @if(!empty($is_start) || $order_num_or_username == '')
-                @else
+                {{-- @if(!empty($is_start) || $order_num_or_username == '') --}}
+                {{-- @else --}}
                     <div class="text-center">
                         <br>
                         <h4>暂无数据，调整查询条件再试试吧</h4>
                     </div>
-                @endif
+                {{-- @endif --}}
             @endif
 
 @endsection

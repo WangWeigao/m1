@@ -47,10 +47,12 @@ $(function () {
     var from_time = $.getUrlParam('from_time');
     if (from_time != null) {
         from_time = from_time.replace("+", " ");
+        from_time = from_time.replace(/%3A/g, ":");
     }
     var to_time   = $.getUrlParam('to_time');
     if (to_time != null) {
         to_time = to_time.replace("+", " ");
+        to_time = to_time.replace(/%3A/g, ":");
     }
     if (from_time != null && from_time != '') {
         $("#from_time").val(from_time);

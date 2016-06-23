@@ -27,17 +27,17 @@ class ReportListController extends Controller
      * @method sendReport
      * @return [type]     [description]
      */
-    public function sendReport()
+    public function sendReport(Request $request)
     {
         $id = 468;
-        $user = \App\StudentUser::findOrFail($id);
-        $job = (new \App\Jobs\SendReminderEmail($user));
-        $this->dispatch($job);
-        //
-        // /**
-        //  * 今日累计练习时长
-        //  */
-        // //  DB::connection()->enableQueryLog();
+        $user = \App\StudentUser::findOrFail($id);  // 获取用户
+        $job = new \App\Jobs\SendReminderEmail($user);    // 创建任务
+        $this->dispatch($job);  // 将任务推送到队列
+
+        /**
+         * 今日累计练习时长
+         */
+        //  DB::connection()->enableQueryLog();
         // $start_time = Carbon::now('Asia/ShangHai')->startOfDay()->toDateTimeString();
         // $end_time   = Carbon::now('Asia/ShangHai')->endOfDay()->toDateTimeString();
         // $duration_today =  Practice::select(DB::raw('SUM(practice_time) as value'))
@@ -117,12 +117,12 @@ class ReportListController extends Controller
         // $result['id'] = $id;
         // $result['chart_rating'] = $chart_rating;
         //
-        //
+        // $url = $request->url();
         // $tm_email = new TMEmail;
         // $tm_email->from = 'emailuser001@163.com';
         // $tm_email->to = 'emailuser001@163.com';
         // $tm_email->subject = '测试邮件' . mt_rand();
-        // Mail::send('emails.recordReport', $result, function ($m) use ($tm_email) {
+        // Mail::send('emails.test', ['url' => $url], function ($m) use ($tm_email) {
         //     $m->from($tm_email->from, '音熊');
         //     $m->to($tm_email->to);
         //     $m->subject($tm_email->subject);
