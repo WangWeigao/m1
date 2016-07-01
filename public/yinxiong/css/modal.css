@@ -1,0 +1,386 @@
+.modal-dialog {
+	text-align: center;
+	margin-top: 7em;
+	width:33em;
+}
+
+.modal-content {
+	background-color: #FFFFFF;
+	width:100%;
+	max-width: 475px;
+	border-radius: 20px;
+	height:100%;
+	max-height: 600px;
+}
+
+.modal-header {
+	border:transparent;
+	max-height: 40px;
+}
+
+.modal-header img {
+	width:32px;
+}
+
+.form-group {
+	text-align: center;
+	position:relative;
+	float:left;
+	left: -11em;
+	padding:5px;
+}
+.input-group {
+	width: 15em;
+}
+
+.input-group-addon {
+	background-color: #F0F0F0;
+	border:transparent;
+	border-radius:30px;
+	color:#696969;
+}
+
+.input-group input.form-control {
+    height:4rem;
+    border:transparent;
+    border-radius:30px;
+    background-color: #F0F0F0;
+    color:#696969;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+}
+
+.input-group input[type="submit"] {
+	display:inline-block;
+	position:relative;
+	left:-4.5em;
+	background-color:#00ccff;
+	color:#FFFFFF;
+	font-size: 1.5rem;
+	font-weight: bold;
+	width:16.6rem;
+	height:4rem;
+	border-radius: 30px;
+	padding:0px;
+}
+
+.input-group input[type="submit"]:hover {
+	background-color: #0099cc;
+}
+
+#code {
+    width:12em;
+}
+
+#signup-code-require {
+	left:12em;
+	width:8em;
+	font-size: 1.3rem;
+}
+.form-group button {
+	color:#00ccff;
+	position:relative;
+	border-width: 3px;
+	border-radius: 30px;
+	border-color: #00ccff;
+    background-color: #FFFFFF;
+    font-size: 1.5rem;
+    font-weight: bold;
+    width:10.25rem;
+    height:4rem;
+    top:-4rem;
+    left: 9rem;
+}
+.form-group button:hover {
+	color: #0099cc;
+	border-color: #0099cc;
+}
+#login, #sign-up {
+	font-size: 2.5rem;
+	color:#00ccff;
+	margin-bottom: 20px;
+	font-weight:bolder;
+}
+
+.form-group p {
+	font-size: 1.5rem;
+	text-align: right;
+	position:relative;
+	color:#636363;
+}
+
+.form-group ul {
+	text-align: center;
+	position:relative;
+	list-style: none;
+	top: 2em;
+	left:3rem;
+}
+.form-group h3 {
+    font-size: 2rem;
+}
+.form-group li {
+	padding: 10px;
+}
+
+#signup-code {
+  width:2em;
+}
+/*#signup-password-form {
+	position:relative;
+	top:0em;
+}*/
+#login-form, #signup-form {
+	-moz-transition: all 550ms ease-in-out;
+    -o-transition: all 550ms ease-in-out;
+    -webkit-transition: all 550ms ease-in-out;
+    transition: all 550ms ease-in-out;
+}
+
+#login-form.invisible, #signup-form.invisible {
+	display:none;
+}
+
+#login-form.visible, #signup-form.visible{
+	display:block;
+}
+
+
+@media screen and (max-width: 1700px){
+  .form-group {
+	text-align: center;
+	position:relative;
+	float:left;
+	left: -17em;
+	padding:5px; 
+  }
+  .form-group ul {
+	text-align: center;
+	position:relative;
+	list-style: none;
+	top: -1em;
+	left:2rem;
+  }
+  .social-icon {
+  	width:32px;
+  	margin: 16px;
+  }
+}
+@media screen and (max-width: 1380px){
+  .form-group {
+	text-align: center;
+	position:relative;
+	float:left;
+	left: -11em;
+	padding:5px; 
+  }
+
+  .form-group ul {
+	text-align: center;
+	position:relative;
+	list-style: none;
+	top: 0em;
+	left:2rem;
+  }
+  .social-icon {
+  	width:32px;
+  	margin: 16px;
+  }
+}
+
+@media screen and (max-width: 1120px){
+  .form-group {
+	text-align: center;
+	position:relative;
+	float:left;
+	left: -12em;
+	padding:5px; 
+  }
+
+  .form-group ul {
+	text-align: center;
+	position:relative;
+	list-style: none;
+	top: 0em;
+	left:2rem;
+  }
+  .social-icon {
+  	width:32px;
+  	margin: 16px;
+  }
+}
+@media screen and (max-width: 930px){
+  .form-group {
+	text-align: center;
+	position:relative;
+	float:left;
+	left: -8em;
+	padding:5px; 
+  }
+  .form-group ul {
+	text-align: center;
+	position:relative;
+	list-style: none;
+	top: 0em;
+	left:2rem;
+  }
+  .social-icon {
+  	width:32px;
+  	margin: 16px;
+  }
+}
+/**ipad**/
+@media screen and (max-width: 768px){
+  .form-group {
+	text-align: center;
+	position:relative;
+	float:left;
+	left: -7em;
+	padding:5px; 
+  }
+  .form-group ul {
+	text-align: center;
+	position:relative;
+	list-style: none;
+	top: 0em;
+	left:2rem;
+  }
+  .social-icon {
+  	width:32px;
+  	margin: 16px;
+  }
+}
+
+/**Nexus 6P iphone 6plus**/
+@media screen and (max-width: 435px){
+.modal-dialog {
+	text-align: center;
+	margin-top: 5em;
+	max-width:375px;
+}
+
+  .form-group {
+	text-align: center;
+	position:relative;
+	float:left;
+	left: -4em;
+	padding:5px; 
+  }
+  .form-group ul {
+	text-align: center;
+	position:relative;
+	list-style: none;
+	top: 0em;
+	left:4rem;
+  }
+  .social-icon {
+  	width:14px;
+  	margin:19px;
+  }
+  .form-group li {
+	padding: 0px;
+  }
+}
+
+/**iphone 6**/
+@media screen and (max-width: 375px){
+.modal-dialog {
+	text-align: center;
+	margin-top: 3em;
+	max-width:375px;
+}
+
+  .form-group {
+	text-align: center;
+	position:relative;
+	float:left;
+	left: -3em;
+	padding:5px; 
+  }
+  .form-group ul {
+	text-align: center;
+	position:relative;
+	list-style: none;
+	top: 0em;
+	left:4rem;
+  }
+  .social-icon {
+  	width:14px;
+  	margin:19px;
+  }
+  .form-group li {
+	padding: 0px;
+  }
+}
+
+/**iphone5**/
+@media screen and (max-width: 320px){
+.modal-dialog {
+	text-align: center;
+	margin-top: 0em;
+	max-width:315px;
+}
+
+  .form-group {
+	text-align: center;
+	position:relative;
+	float:left;
+	left: -3em;
+	padding:0px; 
+  }
+  .form-group ul {
+	text-align: center;
+	position:relative;
+	list-style: none;
+	top: 0em;
+	left:4rem;
+  }
+  .social-icon {
+  	width:4px;
+  	margin:22px;
+  }
+  .form-group li {
+	padding: 0px;
+  }
+
+  .input-group {
+	width: 12em;
+  }
+
+  .modal-content {
+	background-color: #FFFFFF;
+	width:100%;
+	max-width: 475px;
+	border-radius: 20px;
+	height:100%;
+	max-height: 560px;
+  }
+
+  .input-group input[type="submit"] {
+	display:inline-block;
+	position:relative;
+	left:-4.5em;
+	background-color:#00ccff;
+	color:#FFFFFF;
+	font-size: 1.5rem;
+	font-weight: bold;
+	width:11rem;
+	height:4rem;
+	border-radius: 30px;
+	padding:0px;
+  }
+  .form-group button {
+	color:#00ccff;
+	position:relative;
+	border-width: 3px;
+	border-radius: 30px;
+	border-color: #00ccff;
+    background-color: #FFFFFF;
+    font-size: 1.5rem;
+    font-weight: bold;
+    width:8rem;
+    height:4rem;
+    top:-4rem;
+    left: 8rem;
+  }
+}

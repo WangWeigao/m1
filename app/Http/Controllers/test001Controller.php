@@ -64,6 +64,28 @@ class test001Controller extends Controller
             }
         }
     }
+    /**
+     * 给已经添加的midi文件添加播放时长(duration字段)
+     */
+    public function getTrackCount()
+    {
+        $midis = range(199, 245);
+        foreach ($midis as $v) {
+            $file = public_path() . DIRECTORY_SEPARATOR . 'midis' . DIRECTORY_SEPARATOR . $v . '.mid';
+            if (file_exists($file)) {
+                $music = Music::find($v);
+                if (!is_null($music)) {
+                    $midi = new MidiDuration();
+                    $midi->importMid($file);
+                    $music->getNoteList[] = $midi->getNoteList();
+                    echo $music->id . '-' . count($music->getNoteList);
+                    // echo $music->id . '-' . $music->track;
+                    echo "\n";
+                    // $music->save();
+                }
+            }
+        }
+    }
 
     public function test()
     {

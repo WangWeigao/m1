@@ -23,7 +23,7 @@
 
     <style>
         body {
-            font-family: 'Lato';
+            font-family: 'Microsoft YaHei', sans-serif;
         }
 
         .fa-btn {
@@ -78,6 +78,13 @@
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="/order">订单查询</a></li>
                                 <li><a href="/order/statistics">订单统计</a></li>
+                            </ul>
+                        </li>
+                        <li class="" id="Invitation-manager">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">邀请管理<span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="/org_invite_codes">邀请码管理</a></li>
+                                <li><a href="/invite_new_users">邀请用户列表</a></li>
                             </ul>
                         </li>
                         {{-- @can('access-finance')

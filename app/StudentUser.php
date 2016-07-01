@@ -79,4 +79,9 @@ class StudentUser extends Model
         }
         return $value;
     }
+
+    public function orders()
+    {
+        return $this->hasMany('App\RobotOrder', 'id', 'uid');
+    }
 }

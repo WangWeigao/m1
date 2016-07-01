@@ -1132,8 +1132,8 @@ class UserController extends Controller
         $colors1 = ['#E76543', '#4A8EB6', '#8B3A8B', '#53B657', '#FDBD1A', '#FD341C'];
         $chart_rating = [];
         foreach ($rating_data as $v) {
-            $temp1['value'] = $v->rating;
-            $temp1['color'] = $colors1[ceil(($v->rating)/2)];
+            $temp1['value'] = (int)(floor(($v->rating)/20));
+            $temp1['color'] = $colors1[(int)(floor(($v->rating)/20))];
             $chart_rating[] = $temp1;
         }
         // return $duration_today;
