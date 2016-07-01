@@ -59,6 +59,7 @@ class OrgInvitationController extends Controller
     private static function getInstitutionsName()
     {
         $names = TrainingInstitution::select('name')->distinct()->get();
+        $data_arr = array();
         foreach ($names as $v) {
             $data_arr[] = $v->name;
         }
