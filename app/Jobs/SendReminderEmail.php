@@ -9,6 +9,8 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\StudentUser;
 use App\Http\Models\TMEmail;
+use Illuminate\Http\Request;
+
 
 class SendReminderEmail extends Job implements ShouldQueue
 {
@@ -30,7 +32,7 @@ class SendReminderEmail extends Job implements ShouldQueue
      *
      * @return void
      */
-    public function handle(Mailer $mailer)
+    public function handle(Mailer $mailer, Request $request)
     {
         $tm_email = new TMEmail;
         $tm_email->from = 'emailuser001@163.com';
@@ -38,7 +40,7 @@ class SendReminderEmail extends Job implements ShouldQueue
         $tm_email->to = 'emailuser001@163.com';
         $tm_email->subject = '测试邮件' . '-' . mt_rand() . '-' . $this->user->email;
         // $mailer->send('emails.test', ['user' => $this->user], function ($m) use ($tm_email) {
-        $mailer->send('emails.loggedIn', ['user' => $this->user], function ($m) use ($tm_email) {
+        $mailer->send('emails.loggedIn', ['root' => $request->root()], function ($m) use ($tm_email) {
             $m->from($tm_email->from, '音熊');
             $m->to($tm_email->to);
             $m->subject($tm_email->subject);

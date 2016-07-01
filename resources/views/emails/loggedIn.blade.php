@@ -7,7 +7,7 @@
     <meta name = "description" content = "您随时随地的音乐私教">
     <!--title-->
     <title>Welcom to YinXiong</title>
-    <link rel='icon' href='yinxiong//yinxiong/images/tuti.ico ' type=‘image/x-ico’ />
+    <link rel='icon' href='{{ $root }}/yinxiong/images/tuti.ico' type='image/x-ico' />
     <!--bootstrap core css-->
     <link type="text/css" href="yinxiong/css/bootstrap.min.css" rel="stylesheet"/>
     <link type="text/css" href="yinxiong/css/font-awesome.min.css" rel="stylesheet"/>
@@ -36,7 +36,7 @@
                             <li role="separator" class="divider"> | </li>
                             <li><p>练习曲目总数： 1</p></li> <!--曲目总数1替换-->
                             <li role="separator" class="divider"> | </li>
-                            <li><p>平均得分：<img class="stars" src="/yinxiong/images/4stars_greybg.png"></p></li>
+                            <li><p>平均得分：<img class="stars" src="{{ $root }}/yinxiong/images/4stars_greybg.png"></p></li>
                         </ul>
                     </div>
                     <table border="1" class="table table-bordered" id="history-table"><tr>
@@ -52,55 +52,55 @@
                         <td>07:02</td>
                         <td>七级：A大调音阶</td>
                         <td>2min 13s</td>
-                        <td><img class="stars" src="/yinxiong/images/4stars.png"></td>
+                        <td><img class="stars" src="{{ $root }}/yinxiong/images/4stars.png"></td>
                         <td>1</td>
                         <td>1</td>
-                        <td><button type="button" name="play"><img src="/yinxiong/images/play.png"></button></td></tr>
+                        <td><button type="button" name="play"><img src="{{ $root }}/yinxiong/images/play.png"></button></td></tr>
 
                         <tr>
                         <td>07:02</td>
                         <td>七级：A大调音阶</td>
                         <td>2min 13s</td>
-                        <td><img class="stars" src="/yinxiong/images/5stars.png"></td>
+                        <td><img class="stars" src="{{ $root }}/yinxiong/images/5stars.png"></td>
                         <td>0</td>
                         <td>0</td>
-                        <td><button type="button" name="play"><img src="/yinxiong/images/play.png"></button></td></tr>
+                        <td><button type="button" name="play"><img src="{{ $root }}/yinxiong/images/play.png"></button></td></tr>
 
                         <tr>
                         <td>07:02</td>
                         <td>七级：A大调音阶</td>
                         <td>2min 13s</td>
-                        <td><img class="stars" src="/yinxiong/images/4stars.png"></td>
+                        <td><img class="stars" src="{{ $root }}/yinxiong/images/4stars.png"></td>
                         <td>2</td>
                         <td>2</td>
-                        <td><button type="button" name="play"><img src="/yinxiong/images/play.png"></button></td></tr>
+                        <td><button type="button" name="play"><img src="{{ $root }}/yinxiong/images/play.png"></button></td></tr>
 
                         <tr>
                         <td>07:02</td>
                         <td>七级：A大调音阶</td>
                         <td>2min 13s</td>
-                        <td><img class="stars" src="/yinxiong/images/2stars.png"></td>
+                        <td><img class="stars" src="{{ $root }}/yinxiong/images/2stars.png"></td>
                         <td>9</td>
                         <td>18</td>
-                        <td><button type="button" name="play"><img src="/yinxiong/images/play.png"></button></td></tr>
+                        <td><button type="button" name="play"><img src="{{ $root }}/yinxiong/images/play.png"></button></td></tr>
 
                         <tr>
                         <td>07:02</td>
                         <td>七级：A大调音阶</td>
                         <td>2min 13s</td>
-                        <td><img class="stars" src="/yinxiong/images/3stars.png"></td>
+                        <td><img class="stars" src="{{ $root }}/yinxiong/images/3stars.png"></td>
                         <td>6</td>
                         <td>13</td>
-                        <td><button type="button" name="play"><img src="/yinxiong/images/play.png"></button></td></tr>
+                        <td><button type="button" name="play"><img src="{{ $root }}/yinxiong/images/play.png"></button></td></tr>
 
                         <tr>
                         <td>07:02</td>
                         <td>七级：A大调音阶</td>
                         <td>2min 13s</td>
-                        <td><img class="stars" src="/yinxiong/images/4stars.png"></td>
+                        <td><img class="stars" src="{{ $root }}/yinxiong/images/4stars.png"></td>
                         <td>3</td>
                         <td>3</td>
-                        <td><button type="button" name="play"><img src="/yinxiong/images/play.png"></button></td></tr>
+                        <td><button type="button" name="play"><img src="{{ $root }}/yinxiong/images/play.png"></button></td></tr>
                     </table><br>
                     <!-- <a href="#">点击，加载更多...</a> -->
                 </div><!--history-form-group-->
@@ -113,7 +113,7 @@
                                 <h1>努力值</h1>
                                 <h6>练习时长统计</h6>
                             </div> -->
-                            <img src="/yinxiong/images/timelength.png">
+                            <img src="{{ $root }}/yinxiong/images/timelength.png">
                         </li>
                         <li style="float: right;">
                             <!-- <div class="chart-banner" id="chengzhangcurve">
@@ -124,7 +124,7 @@
                                     <option value="致爱丽丝">致爱丽丝</option>
                                 </select>
                             </div> -->
-                        <img src="/yinxiong/images/score.png">
+                        <img src="{{ $root }}/yinxiong/images/score.png">
                         </li>
                         </ul>
                         <div class="hard">
