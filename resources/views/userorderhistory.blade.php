@@ -48,24 +48,11 @@
                             @endif
                         </td>
                         <td>
-                            @if($o->channel == 1)
-                                App Store
-                            @elseif($o->channel == 2)
-                                Android
-                            @elseif($o->channel == 3)
-                                Card
-                            @endif
+                            {{ $o->channel }}
                         </td>
                         <td>{{ $o->price }}</td>
                         <td>
-                            @if($o->status == 1)
-                                待付款
-                            @elseif($o->status == 2)
-                                取消订单
-                            @elseif($o->status == 3)
-                                已付款
-                            @else
-                            @endif
+                            {{ $o->status }}
                         </td>
                     </tr>
                 @endforeach

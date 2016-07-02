@@ -16,7 +16,6 @@ $(document).ready(function() {
             $.each(data, function(index, el) {
                 dateArray.push([index, el]);
             });
-            console.log(dateArray);
             // 绘制本日柱状图
             $('#today_highcharts').highcharts({
                 chart: {
@@ -88,7 +87,6 @@ $(document).ready(function() {
             $.each(data, function(index, el) {
                 dateArray.push([index+1, el]);
             });
-            console.log(dateArray);
             // 绘制本月柱状图
             $('#month_highcharts').highcharts({
                 chart: {
@@ -159,7 +157,6 @@ $(document).ready(function() {
             $.each(data, function(index, el) {
                 dateArray.push([index+1, el]);
             });
-            console.log(dateArray);
             // 绘制本季度柱状图
             $('#quarter_highcharts').highcharts({
                 chart: {
@@ -230,7 +227,6 @@ $(document).ready(function() {
             $.each(data, function(index, el) {
                 dateArray.push([index+1, el]);
             });
-            console.log(dateArray);
             // 绘制本年柱状图
             $('#year_highcharts').highcharts({
                 chart: {

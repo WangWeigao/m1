@@ -70,4 +70,9 @@ class RobotOrder extends Model
     {
         return $this->belongsTo('App\StudentUser', 'user_id', 'uid');
     }
+
+    public function practice()
+    {
+        return $this->hasMany('App\Practice', 'uid', 'user_id');
+    }
 }

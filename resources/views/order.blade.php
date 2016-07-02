@@ -2,6 +2,10 @@
 
 @section('content')
     <div class="container">
+        <div class="breadcrumb">
+            <li>订单管理</li>
+            <li class="active">订单查询</li>
+        </div>
         <form class="" action="/order" method="get">
             <div class="form-group form-inline">
                 <label for="">精确搜索</label>&nbsp;&nbsp;&nbsp;
@@ -24,8 +28,9 @@
                 <input type="checkbox" name="vendor" value="" class="" id="vendor">
                 <label for="vendor">发货商</label>
                 <select class="form-control" name="" id="s_vendor">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
+                    <option value="1">App Store</option>
+                    <option value="2">Android</option>
+                    <option value="3">Card</option>
                 </select>
                 <input type="checkbox" name="order_status" value="" class="" id="order_status">
                 <label for="order_status">订单状态</label>
@@ -40,25 +45,28 @@
                 <input type="checkbox" name="data_str" value="" id="data_str">
                 <label for="data_str">订单生成日期</label>
             </div>
-            <div class='col-md-3'>
-                <div class="form-group">
-                    <div class='input-group date' id='datetimepicker6'>
-                        <input type='text' class="form-control" name="" id="from_time"/>
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
+            <div class="form-group form-inline">
+                <div class='col-md-3'>
+                    <div class="form-group">
+                        <div class='input-group date' id='datetimepicker6'>
+                            <input type='text' class="form-control" name="" id="from_time"/>
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class='col-md-3'>
-                <div class="form-group">
-                    <div class='input-group date' id='datetimepicker7'>
-                        <input type='text' class="form-control" name="" id="to_time"/>
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
+                <div class='col-md-3'>
+                    <div class="form-group">
+                        <div class='input-group date' id='datetimepicker7'>
+                            <input type='text' class="form-control" name="" id="to_time"/>
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
                     </div>
                 </div>
+
             </div>
             <div class="col-md-2">
                 <div class="form-group">
@@ -94,17 +102,27 @@
                                         <td>{{ $order->nickname or '-' }}</td>
                                     @endif
                                     <td>{{ $order->id }}</td>
-                                    <td>{{ $order->channel }}</td>
                                     <td>
-                                        @if($order->type == 1)
+                                        @if($order->channel == 1)
+                                            APP Store
+                                        @elseif($order->channel == 2)
+                                            Android
+                                        @elseif($order->channel == 3)
+                                            Card
+                                        @else
+                                            -
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($order->account_grade == 1)
                                             VIP1
-                                        @elseif($order->type == 2)
+                                        @elseif($order->account_grade == 2)
                                             VIP2
                                         @endif
                                     </td>
                                     <td>{{ $order->price or '-' }}</td>
                                     <td>{{ $order->pay_time }}</td>
-                                    <td>截止时间</td>
+                                    <td>{{ $order->account_end_at }}</td>
                                     <td>
                                         @if($order->status == 1)
                                             待付款
@@ -113,7 +131,7 @@
                                         @elseif($order->status == 3)
                                             已付款
                                         @else
-                                            '-'
+                                            -
                                         @endif
                                     </td>
                                     <td>操作</td>
@@ -184,10 +202,13 @@
                     {!! $orders->appends($query_string)->render() !!}
                 </div>
             @else
-                <div class="text-center">
-                    <br>
-                    <h4>暂无数据，调整查询条件再试试吧</h4>
-                </div>
+                {{-- @if(!empty($is_start) || $order_num_or_username == '') --}}
+                {{-- @else --}}
+                    <div class="text-center">
+                        <br>
+                        <h4>暂无数据，调整查询条件再试试吧</h4>
+                    </div>
+                {{-- @endif --}}
             @endif
 
 @endsection

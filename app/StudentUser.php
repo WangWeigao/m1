@@ -67,4 +67,21 @@ class StudentUser extends Model
         }
         return $value;
     }
+
+    public function getAccountGradeAttribute($value)
+    {
+        if ($value == 1) {
+            $value = 'VIP1';
+        }elseif ($value == 2) {
+            $value = 'VIP2';
+        }else {
+            $value = '免费用户';
+        }
+        return $value;
+    }
+
+    public function orders()
+    {
+        return $this->hasMany('App\RobotOrder', 'user_id', 'uid');
+    }
 }

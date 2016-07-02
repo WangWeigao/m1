@@ -182,15 +182,15 @@ Route::group(['middleware' => 'web'], function () {
 
     // --------------------------------------教师路由----------------------------------------------
 
-    /**
-     * 锁定或解锁教师
-     */
-     Route::get('/lockteacher/{id}', 'TeacherController@lockTeacher');
-
-    /**
-    * 使用资源路由
-    */
-    Route::resource('/teacher', 'TeacherController');
+    // /**
+    //  * 锁定或解锁教师
+    //  */
+    //  Route::get('/lockteacher/{id}', 'TeacherController@lockTeacher');
+    //
+    // /**
+    // * 使用资源路由
+    // */
+    // Route::resource('/teacher', 'TeacherController');
     // --------------------------------------订单路由-------------------------------------------------
 
     /**
@@ -217,6 +217,68 @@ Route::group(['middleware' => 'web'], function () {
     // --------------------------------------RBAC-------------------------------------------------
     Route::resource('rbac', 'RbacController');
 
+    // --------------------------------------机构邀请码路由--------------------------------------
+    // 查询结果界面
+    Route::get('/org_invite_codes', 'OrgInvitationController@getRsearchResult');
+    // 取得所有机构的名称
+    Route::get('/institutions/name', 'OrgInvitationController@getInstitutionsName');
+    // 获取邀请码
+    Route::get('/getInviteCode', 'OrgInvitationController@getInviteCode');
+    // 添加机构
+    Route::post('/institution', 'OrgInvitationController@postInstitution');
+    // 批量更新邀请码状态
+    Route::put('/institutions/invite_code', 'OrgInvitationController@updateInvitecodeStatus');
+    // 更新单个邀请码状态
+    Route::put('/institution/{id}/invite_code', 'OrgInvitationController@updateOneInviteCodeStatus');
+    // 获取单个机构信息
+    Route::get('/institution/{id}', 'OrgInvitationController@getInsInfo');
+    // 更新单个机构信息
+    Route::put('/institution/{id}', 'OrgInvitationController@updateInsInfo');
+    // --------------------------------------教师邀请码路由--------------------------------------
+    // 查询结果界面
+    Route::get('/teach_invite_codes', 'TeacherInvitationController@getRsearchResult');
+    // 取得所有教师的名称
+    Route::get('/teachers/name', 'TeacherInvitationController@getTeachersName');
+    // 添加机构
+    Route::post('/teacher', 'TeacherInvitationController@postTeacher');
+    // 批量更新邀请码状态
+    Route::put('/teachers/invite_code', 'TeacherInvitationController@updateInvitecodeStatus');
+    // 更新单个邀请码状态
+    Route::put('/teacher/{id}/invite_code', 'TeacherInvitationController@updateOneInviteCodeStatus');
+    // 获取单个机构信息
+    Route::get('/teacher/{id}', 'TeacherInvitationController@getInsInfo');
+    // 更新单个机构信息
+    Route::put('/teacher/{id}', 'TeacherInvitationController@updateInsInfo');
+    // --------------------------------------邀请新用户--------------------------------------
+    // 查询结果界面
+    Route::get('/invite_new_users', 'InviteNewUserController@getUserList');
+    // 更新用户标识为已经结算
+    Route::put('/invite_new_user/{id}', 'InviteNewUserController@updateNewUserPaid');
+    // 批量更新用户标识为已经结算
+    Route::put('/invite_new_users', 'InviteNewUserController@updateMultiNewUserPaid');
+
+    // --------------------------------------邀请充值用户--------------------------------------
+    Route::get('/invite_recharge_users', 'InvitRechargeUserController@getUserList');
+    // 更新用户标识为已经结算
+    Route::put('/invite_recharge_user/{id}', 'InvitRechargeUserController@updateUserPaid');
+    // 批量更新用户标识为已经结算
+    Route::put('/invite_recharge_users', 'InvitRechargeUserController@updateMultiUserPaid');
+
+
     // 测试路由
-    Route::get('/test', 'test001Controller@index');
+    Route::get('/test', 'test001Controller@test');
+    // 测试路由
+    Route::get('/getPic', 'test001Controller@getPic');
+    // Email发送成绩报告
+    Route::get('/report', 'ReportListController@sendReport');
+    Route::get('/reportView', function() {return view('emails.test');});
+    // 添加midi文件播放时长
+    Route::get('/addMidiDuration', 'test001Controller@addDuration');
+    // 获得midi文件的轨道数
+    Route::get('/getTrackCount', 'test001Controller@getTrackCount');
+
+    // 苗鹏测试通过URL生成图片
+    Route::get('/getchart', function() {
+        return view('index');
+    });
 });

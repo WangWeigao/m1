@@ -18,7 +18,7 @@
             <a href="/user/socialhistory/{{ $user->uid }}" class="btn btn-default" disabled>社交历史</a>
         </div>
     </div>
-
+{!! csrf_field() !!}
     <h3>基本信息</h3>
     <table class="table table-hover">
         <tr>
@@ -103,10 +103,38 @@
             <td>操作</td>
             <td>
                 <button type="button" class="btn lockuser {{ $user->isactive ?  'btn-danger' : 'btn-info' }}" id="{{ $user->uid }}">{{ $user->isactive ? '锁定' : '解锁' }}</button>
-                <button type="button" class="btn btn-default" id="notifyuser">通知</button>
+                <button type="button" class="btn btn-default" id="notifyuser"  data-toggle="modal" data-target=".m_notify_all" data-value="{{ $user->uid }}">通知</button>
             </td>
         </tr>
     </table>
+
+    {{-- 通知选中用户，模态框 --}}
+    <div class="modal fade m_notify_all" id="" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="">通知内容</h4>
+          </div>
+          <div class="modal-body">
+              <div class="form-group">
+                  <select class="form-control" name="" id="select_multi">
+                      <option value="1">通知账号到期</option>
+                      <option value="2">通知资料到期</option>
+                      <option value="3">通知违规与禁言</option>
+                      <option value="4">通知重新提交资料，并输入理由</option>
+                  </select>
+                  <input type="hidden" class="form-control" name="message" value="" placeholder="请输入理由">
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="send_message">发送通知</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
 </div>
 @endsection
 

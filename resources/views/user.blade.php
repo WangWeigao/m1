@@ -110,7 +110,7 @@
                     <option value="expire">未续费</option>
                 </select>
                 {{-- 本月用时大幅变化 --}}
-                <input type="checkbox" name="change_duration" value="" id="l_change_duration" disabled="disabled">
+                <input type="checkbox" name="change_duration" value="" id="l_change_duration">
                 <label for="l_change_duration">本月用户大幅变化</label>
                 <select class="" name="" id="change_duration">
                     <option value="up20h">上升20小时以上</option>
@@ -121,7 +121,7 @@
                     <option value="down50h">下降50小时以上</option>
                 </select>
                 {{-- 活跃度 --}}
-                <input type="checkbox" name="liveness" value="" id="l_liveness" disabled="disabled">
+                <input type="checkbox" name="liveness" value="" id="l_liveness">
                 <label for="l_liveness">活跃度</label>
                 <select class="" name="" id="liveness">
                     <option value="active_user">活跃用户</option>
@@ -239,7 +239,7 @@
     </table>
     <div class="btn btn-danger" id="lock_all">锁定</div>
     <div class="btn btn-success" id="unlock_all">解锁</div>
-    <div class="btn btn-info" id="notify_all" data-toggle="modal" data-target=".m_notify_all">通知</div>
+    <div class="btn btn-info send_msg_single" id="notify_all" data-toggle="modal" data-target=".m_notify_all">通知</div>
     <div class="text-center">
         {!! $users->render() !!}
     </div>

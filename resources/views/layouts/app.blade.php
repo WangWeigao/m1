@@ -23,7 +23,7 @@
 
     <style>
         body {
-            font-family: 'Lato';
+            font-family: 'Microsoft YaHei', sans-serif;
         }
 
         .fa-btn {
@@ -60,8 +60,8 @@
                             {{-- <a href="{{ url('/music') }}">曲库管理</a> --}}
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">曲库管理<span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
+                                <li><a href="/music">曲库查询</a></li>
                                 <li><a href="/music/musicStatistics">曲库统计</a></li>
-                                <li><a href="/music">曲库列表</a></li>
                             </ul>
                         </li>
                         <li id="user-manager" class="dropdown">
@@ -76,8 +76,15 @@
                         <li class="" id="order-manager">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">订单管理<span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
+                                <li><a href="/order">订单查询</a></li>
                                 <li><a href="/order/statistics">订单统计</a></li>
-                                <li><a href="/order">订单列表</a></li>
+                            </ul>
+                        </li>
+                        <li class="" id="Invitation-manager">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">邀请管理<span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="/org_invite_codes">邀请码管理</a></li>
+                                <li><a href="/invite_new_users">邀请用户列表</a></li>
                             </ul>
                         </li>
                         {{-- @can('access-finance')
@@ -95,7 +102,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
                     @if (Auth::guest())
-                        <li><a href="{{ url('/login') }}">登录</a></li>
+                        {{-- <li><a href="{{ url('/login') }}">登录</a></li> --}}
                         {{-- <li><a href="{{ url('/register') }}">Register</a></li> --}}
                     @else
                         <li class="dropdown">

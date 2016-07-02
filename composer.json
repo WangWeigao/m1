@@ -8,7 +8,12 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
         "doctrine/dbal": "^2.5",
-        "predis/predis": "~1.0"
+        "predis/predis": "~1.0",
+        "fzaninotto/faker": "~1.6",
+        "squizlabs/php_codesniffer": "~1.5",
+        "aws/aws-sdk-php": "~3.0",
+        "pda/pheanstalk": "~3.0"
+
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

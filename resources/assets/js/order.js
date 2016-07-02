@@ -31,10 +31,12 @@ $(function () {
     var from_time = $.getUrlParam('from_time');
     if (from_time != null) {
         from_time = from_time.replace("+", " ");
+        from_time = from_time.replace(/%3A/g, ":");
     }
     var to_time   = $.getUrlParam('to_time');
     if (to_time != null) {
         to_time = to_time.replace("+", " ");
+        to_time = to_time.replace(/%3A/g, ":");
     }
     if (from_time != null && from_time != '') {
         $("#from_time").val(from_time);
@@ -62,10 +64,14 @@ $(function () {
     });
 
     // 固定选中的筛选条件
+    var order_num_or_username   = $.getUrlParam('order_num_or_username');
     var order_type   = $.getUrlParam('order_type');
     var vendor       = $.getUrlParam('vendor');
     var order_status = $.getUrlParam('order_status');
     var data_str     = $.getUrlParam('data_str');
+    if (order_num_or_username != null) {
+        $("input[name=order_num_or_username]").val(order_num_or_username);
+    }
     if (order_type != null) {
         $("input[name=order_type]").prop('checked', true)
         $("#s_order_type").val(order_type);
@@ -82,7 +88,7 @@ $(function () {
         $("input[name=data_str]").prop('checked', true)
         $("#s_data_str").val(data_str);
     }
-    
+
     if ($("#data_str").prop('checked')) {
         $("#from_time").attr('name', 'from_time');
         $("#to_time").attr('name', 'to_time');

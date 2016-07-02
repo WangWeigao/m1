@@ -1,0 +1,165 @@
+.report-btn-group button {
+  width:20rem;
+  text-align: center;
+  position:relative;
+  font-size: 2.5rem;
+  font-weight:bold;
+  margin:-2px;
+  left:0rem;
+}
+.report-btn-group {
+  margin-top: 30px;
+  padding-bottom: 3em;
+}
+
+/**history-form-group**/
+#history,#week {
+  border-radius: 10px 0px 0px 10px;
+}
+
+#stats,#year {
+  border-radius: 0px 10px 10px 0px;
+}
+
+.history-data-group {
+  text-align: left;
+  position:relative;
+  /*left:-8rem;*/
+}
+
+#date-picker {
+  border: transparent;
+  border-radius:10px;
+  width:10em;
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  position:relative;
+  /*left:-14em;*/
+  top:1.8em;
+}
+
+#history-total {
+  position:relative;
+  /*left:30rem;*/
+  /*left:15rem;*/
+  text-align: right;
+  font-size: 2.0rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color:#666666;
+  padding:10px;
+  white-space: nowrap;
+}
+
+.report-btn-group button:focus {
+  border: 0px;
+  background-color: #545454;
+  color: #F0F0F0;
+}
+
+.history-form-group table{
+  background-color: #FFFFFF;
+  position:relative;
+  text-align: center;
+  color:#666666;
+  font-size: 2.5rem;
+  font-weight:bold;
+  /*left:-43rem;*/
+  /*width:1480px;*/
+}
+
+#history-table button img{
+  width:64px;
+}
+
+#history-table button {
+  background: transparent;
+  border: transparent;
+}
+
+.stars {
+  width:128px;
+  height:24px;
+}
+
+/****stats-form-group****/
+#time-btn-group {
+  text-align: center;
+  position:relative;
+  /*left:-20em;*/
+  /*width:1480px;*/
+  height:5em;
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  box-shadow:5px 5px 2.5px #cccccc;
+}
+
+#time-btn-group button {
+  border:transparent;
+  /*width:10rem;*/
+  text-align: center;
+  position:relative;
+  font-size: 2.5rem;
+  font-weight:bold;
+  /*margin:-8px;*/
+  top:1.45em;
+  /*left:-17em;*/
+}
+
+#time-btn-group button:focus {
+  border: 0px;
+  background-color: #545454;
+  color: #F0F0F0;
+}
+
+#time-btn-group p{
+  position:relative;
+  font-size: 2rem;
+  font-weight:bold;
+  top:1.45em;
+  /*left:10em;*/
+}
+
+#chart-group {
+  /*width:1480px;*/
+  text-align:left;
+  position:relative;
+  /*left:-20em;*/
+}
+
+.chart-banner {
+  background-color:#FFFFFF;
+  border-bottom:3px;
+  border-color:#cccccc;
+  border-radius:10px;
+  margin:5px;
+}
+
+#nulivalue {
+  width:700px;
+}
+
+#chengzhangcurve {
+  width:700px;
+}
+
+#nandiansummary {
+
+}
+
+/***visibility of both form***/
+.history-form-group .stats-form-group.is_visible {
+  width:100%;
+  display:block;
+}
+
+.history-form-group .stats-form-group .is_invisible{
+  display:none;
+}
+
+.hard table {
+    text-align: center;
+    margin-top: 30px;
+    float: left;
+}

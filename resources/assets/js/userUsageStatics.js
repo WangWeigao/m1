@@ -172,8 +172,84 @@ $(document).ready(function() {
         });
     });
 
-    // 绘制柱状图
-    $(function (data) {
+    // 绘制今日柱状图
+    // $(function (data) {
+        $.ajax({
+            url: '/user/calEveryPeriodAddUsers',
+            type: 'get',
+            dataType: 'json',
+            data: {
+                'period':'today',
+                'length':$("input[name=todayValue]").val()
+            },
+            header: {
+                'X-CSRF-Token': $("input[name=_token]").val()
+            }
+        })
+        .done(function(data) {
+            var todayArray = [];
+            $.each(data, function(index, el) {
+                todayArray.push([index, el]);
+            });
+            console.log(todayArray);
+            // 绘制柱状图
+            $('#today_highcharts').highcharts({
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: '今天每小时增长人数统计图表'
+                },
+                subtitle: {
+                    text: ''
+                },
+                xAxis: {
+                    type: 'category',
+                    labels: {
+                        rotation: -45,
+                        style: {
+                            fontSize: '13px',
+                            fontFamily: 'Verdana, sans-serif'
+                        }
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: '人数'
+                    },
+                    allowDecimals: false,
+                },
+                legend: {
+                    enabled: false
+                },
+                tooltip: {
+                    pointFormat: '新增用户数: <b>{point.y:.f} 个人</b>'
+                },
+                series: [{
+                    name: 'Population',
+                    data: todayArray,
+                    dataLabels: {
+                        enabled: true,
+                        rotation: -90,
+                        color: '#FFFFFF',
+                        align: 'right',
+                        format: '{point.y:.f}', // one decimal
+                        y: 10, // 10 pixels down from the top
+                        style: {
+                            fontSize: '13px',
+                            fontFamily: 'Verdana, sans-serif'
+                        }
+                    }
+                }]
+            });
+        })
+        .fail(function() {
+            console.log("error");
+        });
+
+    // 绘制本月柱状图
+    // $(function (data) {
         $.ajax({
             url: '/user/calEveryPeriodAddUsers',
             type: 'get',
@@ -246,10 +322,159 @@ $(document).ready(function() {
         })
         .fail(function() {
             console.log("error");
-        })
-        .always(function() {
-            console.log("complete");
         });
+    // });
 
-    });
+    // 绘制本季度柱状图
+    // $(function (data) {
+        $.ajax({
+            url: '/user/calEveryPeriodAddUsers',
+            type: 'get',
+            dataType: 'json',
+            data: {
+                'period':'quarter',
+                'length':$("input[name=quarterValue]").val()
+            },
+            header: {
+                'X-CSRF-Token': $("input[name=_token]").val()
+            }
+        })
+        .done(function(data) {
+            var quarterArray = [];
+            $.each(data, function(index, el) {
+                quarterArray.push([index+1, el]);
+            });
+            console.log(quarterArray);
+            // 绘制柱状图
+            $('#quarter_highcharts').highcharts({
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: '本季度每月增长人数统计图表'
+                },
+                subtitle: {
+                    text: ''
+                },
+                xAxis: {
+                    type: 'category',
+                    labels: {
+                        rotation: -45,
+                        style: {
+                            fontSize: '13px',
+                            fontFamily: 'Verdana, sans-serif'
+                        }
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: '人数'
+                    },
+                    allowDecimals: false,
+                },
+                legend: {
+                    enabled: false
+                },
+                tooltip: {
+                    pointFormat: '新增用户数: <b>{point.y:.f} 个人</b>'
+                },
+                series: [{
+                    name: 'Population',
+                    data: quarterArray,
+                    dataLabels: {
+                        enabled: true,
+                        rotation: -90,
+                        color: '#FFFFFF',
+                        align: 'right',
+                        format: '{point.y:.f}', // one decimal
+                        y: 10, // 10 pixels down from the top
+                        style: {
+                            fontSize: '13px',
+                            fontFamily: 'Verdana, sans-serif'
+                        }
+                    }
+                }]
+            });
+        })
+        .fail(function() {
+            console.log("error");
+        });
+    // });
+    // 绘制本年柱状图
+    // $(function (data) {
+        $.ajax({
+            url: '/user/calEveryPeriodAddUsers',
+            type: 'get',
+            dataType: 'json',
+            data: {
+                'period':'year',
+                'length':$("input[name=yearValue]").val()
+            },
+            header: {
+                'X-CSRF-Token': $("input[name=_token]").val()
+            }
+        })
+        .done(function(data) {
+            var yearArray = [];
+            $.each(data, function(index, el) {
+                yearArray.push([index+1, el]);
+            });
+            console.log(yearArray);
+            // 绘制柱状图
+            $('#year_highcharts').highcharts({
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: '本年每月增长人数统计图表'
+                },
+                subtitle: {
+                    text: ''
+                },
+                xAxis: {
+                    type: 'category',
+                    labels: {
+                        rotation: -45,
+                        style: {
+                            fontSize: '13px',
+                            fontFamily: 'Verdana, sans-serif'
+                        }
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: '人数'
+                    },
+                    allowDecimals: false,
+                },
+                legend: {
+                    enabled: false
+                },
+                tooltip: {
+                    pointFormat: '新增用户数: <b>{point.y:.f} 个人</b>'
+                },
+                series: [{
+                    name: 'Population',
+                    data: yearArray,
+                    dataLabels: {
+                        enabled: true,
+                        rotation: -90,
+                        color: '#FFFFFF',
+                        align: 'right',
+                        format: '{point.y:.f}', // one decimal
+                        y: 10, // 10 pixels down from the top
+                        style: {
+                            fontSize: '13px',
+                            fontFamily: 'Verdana, sans-serif'
+                        }
+                    }
+                }]
+            });
+        })
+        .fail(function() {
+            console.log("error");
+        });
+    // });
 });

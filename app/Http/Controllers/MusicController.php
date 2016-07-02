@@ -14,6 +14,8 @@ use App\Press;
 use App\Organizer;
 use Carbon\Carbon;
 use Response;
+
+use \App\Http\Models\Midi\MidiDuration;
 class MusicController extends Controller
 {
     /**
@@ -192,12 +194,16 @@ class MusicController extends Controller
             $id = $music->id;
             // $source_name = $request->get('midi_file');
             // return $source_name;
-            $path = public_path() . '/midis';
+            $path = public_path() . DIRECTORY_SEPARATOR . 'midis' . DIRECTORY_SEPARATOR;
             $name = $id . '.mid';
-            // 将文件名保存到DB
             $music->filename = $name;
-            $music->save();
             $request->file('midi_file')->move($path, $name);
+            // 将文件名保存到DB
+            $file = $path . $name;
+            $midi = new MidiDuration();
+            $midi->importMid($file);
+            $music->duration = (int)ceil($midi->getDuration());
+            $music->save();
             if ($result) {
                 $data['status'] = true;
                 return $data;
@@ -445,6 +451,7 @@ class MusicController extends Controller
         if (!empty($level)) {
             $music->level = $level;
         }
+        $music->onshelf = 1;
         $result = $music->save();
         if ($result) {
             $data['status'] = true;
@@ -557,7 +564,10 @@ class MusicController extends Controller
         $data['instrument'] = Instrument::select('id', 'name')->get();
         $data['press'] = \App\Press::select('id', 'name')->get();
         $data['tag'] = \App\Tag::select('id', 'name')->get();
-        $data['operator'] = \App\User::select('id', 'name')->with('musics')->whereHas('musics', function ($query) {
+        // $data['operator'] = \App\User::select('id', 'name')->with('musics')->whereHas('musics', function ($query) {
+        //                                                         $query->groupby('operator');
+        //                                                     })->groupby('id')->get();
+        $data['operator'] = \App\User::select('id', 'name')->whereHas('musics', function ($query) {
                                                                 $query->groupby('operator');
                                                             })->groupby('id')->get();
         $data['organizer'] = \App\Organizer::select('id', 'name')->get();

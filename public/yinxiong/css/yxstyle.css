@@ -1,0 +1,1733 @@
+/**********************
+ ****overall layout****
+ ****/
+body {
+	min-height: 300em;
+	background-color: #F0F0F0;
+}
+
+section {
+  position: relative;
+}
+
+/****************
+ **** nav bar****
+ ****/
+#tuti {
+  height: 32px;
+  width: 32px;
+  position: relative;
+}
+
+nav {
+  background-color:#F0F0F0;
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+.navbar-collapse {
+  background-color: #F0F0F0;
+}
+.navbar-collapse li:hover{
+  background-color: #D9D9D9;
+}
+
+/***************
+ **** Banner****
+ ****/
+.container-fluid {
+  clear: both;
+  float: none;
+  width: 100%;
+  background-image: url("../images/bg.png");
+  background-size: cover;
+  display:block;
+}
+
+#tuti_sticker {
+  height:30em;
+}
+
+#planet {
+  width: 100%;
+	position:relative;
+  top:520px;
+}
+
+.banner-main {
+  height: 100%;
+  position: relative;
+}
+
+.banner-main .ban-text-middle {
+  bottom: 0;
+  color: #FFFFFF;
+  font-weight: bold;
+  height: 233px;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.37);
+  top: -10em;
+}
+
+.ban-text-middle p{
+  font-size: 2rem;
+}
+
+.ban-text-middle img {
+  position:relative;
+  top:3em;
+}
+
+/**********************
+ **** Product intro****
+ ****/
+
+#intro {
+  transition: all 0.5s ease-in 0.5s;
+  z-index: 11;
+  top:5em;
+}
+
+#skill {
+  position:relative;
+  text-align: center;
+  top:1em;
+}
+
+#skill button {
+  display:none;
+}
+
+.fp {
+  position:relative;
+  top:2em;
+}
+
+#fp1 {
+  bottom:50px;
+  left: 50px;
+}
+
+#fp2 {
+  left:-250px;
+}
+
+#fp3 {
+  left:300px;
+  top:20px;
+}
+
+#fp4 {
+  left:-75rem;
+  top:-5rem;
+}
+
+#fp5 {
+	left:50rem;
+	top:10rem;
+}
+
+.phone {
+  width:20%;
+	position:relative;
+}
+
+#phone1 {
+	left:-40em;
+  top:3em;
+}
+
+#phone2 {
+  top:40em;
+  left:-32.5em;
+}
+
+.intro-list {
+  position: relative;
+  list-style: none;
+}
+
+.intro-list-item {
+  float:left;
+  text-align:left;
+  position:relative;
+  width:16em;
+}
+
+#intro-text-center {
+  left:80rem;
+  top:5rem;
+}
+
+#intro-text-right {
+  left:105rem;
+  top:70rem;
+}
+
+#intro-text-left {
+  top:110rem;
+  left:5rem;
+}
+
+.intro-list .num{
+  position:relative;
+  width:6rem;
+  height:6rem;
+}
+
+/*******************
+ ****report form****
+ ****/
+
+#report {
+  transition: all 0.5s ease-in 0.5s;
+  top:90em;
+  position:relative;
+}
+
+#history {
+  border-radius: 10px 0px 0px 10px;
+}
+
+#stats {
+  border-radius: 0px 10px 10px 0px;
+}
+
+/********************
+ ****contact form****
+ ****/
+.icons ul>li{
+  position:relative;
+  margin: 60px;
+  padding:50px;
+  font-size:30px;
+  left:8rem;
+}
+
+.icons i{
+    height:100px;
+    font-size: 7rem;
+}
+
+/***************
+ ****contact****
+ ****/
+#contact {
+  transition: all 0.5s ease-in 0.5s;
+  top:100em;
+  text-align:center;
+}
+
+form {
+  position:relative;
+  width:75%;
+  font-size: 20px;
+  left: 28rem;
+}
+
+@media screen and (max-width: 1800px) {
+
+#intro-text-center {
+  left:65rem;
+  top:5rem;
+}
+
+#intro-text-right {
+  left:90rem;
+  top:70rem;
+}
+
+#intro-text-left {
+  top:110rem;
+  left:-8rem;
+}
+
+
+
+}
+
+@media only screen and (max-width : 1645px) {  
+
+#intro {
+  top:20rem;
+}
+#fp5 {
+  left:55rem;
+  top:0rem;
+}
+#intro-text-center {
+  left:60rem;
+  top:8rem;
+}
+
+#intro-text-right {
+  left:80rem;
+  top:70rem;
+}
+
+#intro-text-left {
+  top:110rem;
+  left:-20rem;
+}
+
+.icons ul>li{
+  position:relative;
+  margin:20px;
+  left:3rem;
+}
+
+.icons i{
+    height:55px;
+    font-size:5rem;
+}
+
+#contact {
+  top:90em;
+  text-align:center;
+  width:100%;
+}
+
+form {
+  position:relative;
+  width:50%;
+  font-size: 20px;
+  left: 40rem;
+}
+
+}
+@media only screen and (max-width : 1480px) {  
+#intro {
+  top:20rem;
+}
+#fp5 {
+  left:45rem;
+  top:-3rem;
+}
+#intro-text-center {
+  left:50rem;
+  top:5rem;
+}
+
+#intro-text-right {
+  left:70rem;
+  top:65rem;
+}
+
+#intro-text-left {
+  top:100rem;
+  left:-30rem;
+}
+
+.icons ul>li{
+  position:relative;
+  margin:0.75rem;
+  font-size: 2rem;
+}
+
+.icons i{
+  height:55px;
+  font-size:3rem;
+}
+
+#report {
+  top:90em;
+}
+
+#contact {
+  top:90em;
+  text-align:center;
+  width:100%;
+}
+
+form {
+  position:relative;
+  width:50%;
+  font-size: 20px;
+  left: 37rem;
+}
+
+.report-btn-group button {
+  width:15rem;
+  text-align: center;
+  position:relative;
+  font-size: 2.5rem;
+  font-weight:bold;
+  margin:-2px;
+  left:-7rem;
+}
+}
+
+@media only screen and (max-width:1350px) {
+  #report {
+    top:90em;
+  }
+
+  .report-btn-group button {
+  width:15rem;
+  text-align: center;
+  position:relative;
+  font-size: 2.5rem;
+  font-weight:bold;
+  margin:-2px;
+  left:-7rem;
+}
+}
+@media only screen and (max-width : 1245px) {  
+.banner-main .ban-text-middle {
+  bottom: 0;
+  color: #FFFFFF;
+  font-weight: bold;
+  height: 233px;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.37);
+  top: 0em;
+}
+
+#intro {
+  top:20rem;
+}
+#fp2 {
+  left:-200px;
+}
+#fp3 {
+  left:250px;
+}
+#fp4{
+  left:-550px;
+}
+#fp5 {
+  left:40rem;
+  top:-3rem;
+}
+
+#intro-text-center {
+  left:40rem;
+  top:5rem;
+}
+
+#intro-text-right {
+  left:55rem;
+  top:63rem;
+}
+
+#intro-text-left {
+  top:100rem;
+  left:-25rem;
+}
+
+.icons ul>li{
+  position:relative;
+  font-size: 1.75rem;
+  left:0rem;
+}
+
+.icons i{
+    height:40px;
+    font-size:2rem;
+}
+#contact {
+  top:90em;
+  text-align:center;
+  width:100%;
+}
+form {
+  position:relative;
+  width:50%;
+  font-size: 20px;
+  left: 30rem;
+}
+#report {
+  top:55em;
+}
+}
+
+@media only screen and (max-width : 1210px) {  
+.banner-main .ban-text-middle {
+  bottom: 0;
+  color: #FFFFFF;
+  font-weight: bold;
+  height: 233px;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.37);
+  top: 5em;
+}
+#planet {
+  top:530px;
+}
+#intro {
+  top:30rem;
+}
+
+#fp2 {
+  left:-20em;
+}
+#fp3 {
+  top:-5em;
+  left:250px;
+}
+#fp4{
+  top:-15em;
+  left:-600px;
+}
+#fp5 {
+  left:40rem;
+  top:-3rem;
+}
+
+#phone1 {
+  left:-45em;
+}
+#phone2 {
+  top:30em;
+  left:-33em;
+}
+#intro-text-center {
+  left:40rem;
+  top:5rem;
+}
+
+#intro-text-right {
+  left:55rem;
+  top:60rem;
+}
+
+#intro-text-left {
+  top:85rem;
+  left:-30rem;
+}
+
+.icons ul>li{
+  position:relative;
+  font-size: 1.75rem;
+  left:0rem;
+}
+
+.icons i{
+    height:40px;
+    font-size:2rem;
+}
+
+#contact {
+  top:80em;
+  text-align:center;
+  width:100%;
+}
+
+form {
+  position:relative;
+  width:50%;
+  font-size: 20px;
+  left: 30rem;
+}
+
+}
+
+@media only screen and (max-width : 1190px) {  
+#intro {
+  top:40rem;
+}
+#planet {
+  position:relative;
+  top:53em;
+}
+#fp2 {
+  left:-15em;
+}
+#fp3 {
+  top:-5em;
+  left:250px;
+}
+#fp4{
+  top:-15em;
+  left:-40em;
+}
+#fp5 {
+  left:40rem;
+  top:-3rem;
+}
+
+#phone1 {
+  left:-50em;
+}
+#phone2 {
+  top:-5em;
+  left:-25em;
+}
+#intro-text-center {
+  left:40rem;
+  top:5rem;
+}
+
+#intro-text-right {
+  left:45rem;
+  top:55rem;
+}
+
+#intro-text-left {
+  top:75rem;
+  left:-38rem;
+}
+
+.icons ul>li{
+  position:relative;
+  font-size: 1.75rem;
+  left:0rem;
+}
+
+.icons i{
+    height:40px;
+    font-size:2rem;
+}
+
+#contact {
+  top:60em;
+  text-align:center;
+  width:100%;
+}
+
+form {
+  position:relative;
+  width:50%;
+  font-size: 20px;
+  left: 30rem;
+}
+
+}
+@media only screen and (max-width : 900px) {  
+#intro {
+  top:35rem;
+}
+#tuti_sticker {
+  height:23em;
+}
+#planet {
+  width: 100%;
+  position:relative;
+  top:55em;
+}
+#fp2 {
+  left:-10em;
+}
+#fp3 {
+  top:-5em;
+  left:250px;
+  width:200px;
+}
+#fp4{
+  top:-15em;
+  left:-40em;
+  width:175px;
+}
+#fp5 {
+  left:35rem;
+  top:-8rem;
+}
+
+#phone1 {
+  top:5em;
+  left:-30em;
+}
+#phone2 {
+  top:20em;
+  left:-20em;
+}
+#intro-text-center {
+  left:28rem;
+  top:5rem;
+}
+
+#intro-text-right {
+  left:40rem;
+  top:50rem;
+}
+
+#intro-text-left {
+  top:30rem;
+  left:-15rem;
+}
+
+.icons ul>li{
+  position:relative;
+  font-size: 1.75rem;
+  left:-20rem;
+}
+
+.icons i{
+    height:40px;
+    font-size:2rem;
+}
+
+#contact {
+  top:75em;
+  text-align:center;
+  width:100%;
+}
+
+form {
+  position:relative;
+  width:50%;
+  font-size: 20px;
+  left: 26rem;
+}
+
+}
+
+@media only screen and (max-width : 845px) {  
+.banner-main .ban-text-middle {
+  bottom: 0;
+  color: #FFFFFF;
+  font-weight: bold;
+  height: 233px;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.37);
+  top: 40em;
+}
+#intro {
+  top:50rem;
+}
+
+#planet {
+  width: 100%;
+  position:relative;
+  top:55em;
+}
+
+#tuti_sticker {
+  height:20em;
+}
+#fp1 {
+  width:5em;
+}
+#fp2 {
+  left:-10em;
+  width:10em;
+}
+#fp3 {
+  top:-5em;
+  left:15em;
+  width:10em;
+}
+#fp4{
+  top:-15em;
+  left:-33em;
+  width:10em;
+}
+#fp5 {
+  left:30rem;
+  top:-10rem;
+  width:5em;
+}
+
+#phone1 {
+  top:5em;
+  left:-40em;
+}
+#phone2 {
+  top:0em;
+  left:-20em;
+}
+.intro-list-item {
+  float:left;
+  text-align:left;
+  position:relative;
+  width:13em;
+}
+#intro-text-center {
+  left:25rem;
+  top:5rem;
+}
+
+#intro-text-right {
+  left:35rem;
+  top:40rem;
+}
+
+#intro-text-left {
+  top:55rem;
+  left:-30rem;
+}
+
+.icons ul>li{
+  position:relative;
+  font-size: 1.75rem;
+  left:0rem;
+}
+
+.icons i{
+  height:40px;
+  font-size:2rem;
+}
+
+#contact {
+  top:60em;
+  text-align:center;
+  width:100%;
+}
+
+form {
+  position:relative;
+  width:50%;
+  font-size: 20px;
+  left: 20rem;
+}
+.report-btn-group button {
+  width:15rem;
+  text-align: center;
+  position:relative;
+  font-size: 2.5rem;
+  font-weight:bold;
+  margin:-2px;
+  left:2rem;
+}
+}
+
+@media only screen and (max-width : 750px) {  
+.banner-main .ban-text-middle {
+  bottom: 0;
+  color: #FFFFFF;
+  font-weight: bold;
+  height: 233px;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.37);
+  top: 40em;
+}
+#intro {
+  top:50rem;
+}
+
+#planet {
+  width: 100%;
+  position:relative;
+  top:50em;
+}
+
+#tuti_sticker {
+  height:20em;
+}
+#fp1 {
+  width:5em;
+}
+#fp2 {
+  left:-10em;
+  width:10em;
+}
+#fp3 {
+  top:-5em;
+  left:15em;
+  width:10em;
+}
+#fp4{
+  top:-15em;
+  left:-33em;
+  width:10em;
+}
+#fp5 {
+  left:30rem;
+  top:-10rem;
+  width:5em;
+}
+
+#phone1 {
+  top:5em;
+  left:-35em;
+}
+#phone2 {
+  top:0em;
+  left:-17em;
+}
+.intro-list-item {
+  float:left;
+  text-align:left;
+  position:relative;
+  font-size: 1.5rem;
+  width:10em;
+}
+.intro-list .num{
+  position:relative;
+  width:4rem;
+  height:4rem;
+}
+
+#intro-text-center {
+  left:25rem;
+  top:5rem;
+}
+
+#intro-text-right {
+  left:35rem;
+  top:40rem;
+}
+
+#intro-text-left {
+  top:55rem;
+  left:-30rem;
+}
+
+.icons ul>li{
+  position:relative;
+  font-size: 1.75rem;
+  left:0rem;
+}
+
+.icons i{
+  height:40px;
+  font-size:2rem;
+}
+
+#contact {
+  top:60em;
+  text-align:center;
+  width:100%;
+}
+
+form {
+  position:relative;
+  width:50%;
+  font-size: 20px;
+  left: 18rem;
+}
+
+}
+
+@media only screen and (max-width : 650px) {  
+.banner-main .ban-text-middle {
+  bottom: 0;
+  color: #FFFFFF;
+  font-weight: bold;
+  height: 233px;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.37);
+  top: 40em;
+}
+#intro {
+  top:50rem;
+}
+
+#planet {
+  width: 100%;
+  position:relative;
+  top:50em;
+}
+
+#tuti_sticker {
+  height:20em;
+}
+#fp1 {
+  width:5em;
+}
+#fp2 {
+  left:-10em;
+  width:10em;
+}
+#fp3 {
+  top:-5em;
+  left:10em;
+  width:10em;
+}
+#fp4{
+  top:-18em;
+  left:-26em;
+  width:10em;
+}
+#fp5 {
+  left:25rem;
+  top:-13rem;
+  width:5em;
+}
+
+#phone1 {
+  top:5em;
+  left:-25em;
+}
+#phone2 {
+  top:10em;
+  left:-10em;
+}
+.intro-list-item {
+  float:left;
+  text-align:left;
+  position:relative;
+  font-size: 1.5rem;
+  width:8em;
+}
+.intro-list .num{
+  position:relative;
+  width:4rem;
+  height:4rem;
+}
+
+#intro-text-center {
+  left:20rem;
+  top:5rem;
+}
+
+#intro-text-right {
+  left:30rem;
+  top:45rem;
+}
+
+#intro-text-left {
+  top:55rem;
+  left:-24rem;
+}
+
+.icons ul>li{
+  position:relative;
+  font-size: 1.75rem;
+  left:0rem;
+}
+
+.icons i{
+  height:40px;
+  font-size:2rem;
+}
+
+#report {
+  top:70em;
+}
+.report-btn-group button {
+  width:10rem;
+  text-align: center;
+  position:relative;
+  font-size: 1.5rem;
+  font-weight:bold;
+  margin:-2px;
+  left:-10rem;
+}
+#contact {
+  top:70em;
+  text-align:center;
+  width:100%;
+}
+
+form {
+  position:relative;
+  width:50%;
+  font-size: 20px;
+  left: 15rem;
+}
+
+}
+
+@media screen and (max-width: 520px){
+
+.banner-main .ban-text-middle {
+  bottom: 0;
+  color: #FFFFFF;
+  font-weight: bold;
+  height: 233px;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.37);
+  top: 50em;
+}
+#intro {
+  top:50rem;
+}
+
+#planet {
+  width: 100%;
+  position:relative;
+  top:50em;
+}
+
+#tuti_sticker {
+  height:15em;
+}
+#fp1 {
+  width:5em;
+}
+#fp2 {
+  left:-10em;
+  width:10em;
+}
+#fp3 {
+  top:-5em;
+  left:10em;
+  width:8em;
+}
+#fp4{
+  top:-20em;
+  left:-20em;
+  width:8em;
+}
+#fp5 {
+  left:20rem;
+  top:-10rem;
+  width:5em;
+}
+
+#phone1 {
+  top:3em;
+  left:-25em;
+}
+#phone2 {
+  top:7em;
+  left:-15em;
+}
+.intro-list-item {
+  float:left;
+  text-align:left;
+  position:relative;
+  font-size: 1.5rem;
+  width:8em;
+}
+.intro-list .num{
+  position:relative;
+  width:4rem;
+  height:4rem;
+}
+
+#intro-text-center {
+  left:13rem;
+  top:3rem;
+}
+
+#intro-text-right {
+  left:18rem;
+  top:40rem;
+}
+
+#intro-text-left {
+  top:40rem;
+  left:-23rem;
+}
+
+.icons ul>li{
+  position:relative;
+  font-size: 1.75rem;
+  left:0rem;
+}
+
+.icons i{
+  height:40px;
+  font-size:2rem;
+}
+
+#contact {
+  top:60em;
+  text-align:center;
+  width:100%;
+}
+
+form {
+  position:relative;
+  width:50%;
+  font-size: 20px;
+  left: 13rem;
+}
+
+}
+
+@media screen and (max-width:500px){
+  .container-fluid{
+    width: 100%;
+    margin-bottom: 5px;
+  }
+
+.banner-main .ban-text-middle {
+  bottom: 0;
+  color: #FFFFFF;
+  font-weight: bold;
+  height: 233px;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.37);
+  top: 50em;
+}
+
+#intro {
+  top:55rem;
+}
+
+#planet {
+  width: 100%;
+  position:relative;
+  top:50em;
+}
+
+#tuti_sticker {
+  height:15em;
+}
+#fp1 {
+  width:3em;
+}
+#fp2 {
+  left:-5em;
+  width:8em;
+}
+#fp3 {
+  top:0em;
+  left:8em;
+  width:8em;
+}
+#fp4{
+  top:-25em;
+  left:-20em;
+  width:8em;
+}
+#fp5 {
+  left:15rem;
+  top:-15rem;
+  width:5em;
+}
+
+#phone1 {
+  top:5em;
+  left:-23em;
+}
+
+#phone2 {
+  top:10em;
+  left:-13em;
+}
+.intro-list-item {
+  float:left;
+  text-align:left;
+  position:relative;
+  font-size: 1.3rem;
+  width:8em;
+}
+.intro-list .num{
+  position:relative;
+  width:4rem;
+  height:4rem;
+}
+
+#intro-text-center {
+  left:13rem;
+  top:3rem;
+}
+
+#intro-text-right {
+  left:17rem;
+  top:42rem;
+}
+
+#intro-text-left {
+  top:40rem;
+  left:-20rem;
+}
+
+.icons ul>li{
+  position:relative;
+  font-size: 1.75rem;
+  left:0rem;
+}
+
+.icons i{
+  height:40px;
+  font-size:2rem;
+}
+.report-btn-group button {
+  width:10rem;
+  text-align: center;
+  position:relative;
+  font-size: 1.5rem;
+  font-weight:bold;
+  margin:-2px;
+  left:0rem;
+}
+#report {
+  top:70em;
+}
+#contact {
+  top:70em;
+  text-align:center;
+  width:100%;
+}
+
+form {
+  position:relative;
+  width:50%;
+  font-size: 20px;
+  left: 10rem;
+}
+
+}
+
+@media screen and (max-width: 460px){
+  .container-fluid{
+    width: 100%;
+    margin-bottom: 5px;
+  }
+
+.banner-main .ban-text-middle {
+  bottom: 0;
+  color: #FFFFFF;
+  font-weight: bold;
+  height: 233px;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.37);
+  top: 50em;
+}
+
+#intro {
+  top:55rem;
+}
+
+#planet {
+  width: 100%;
+  position:relative;
+  top:50em;
+}
+
+#tuti_sticker {
+  height:15em;
+}
+#fp1 {
+  width:3em;
+}
+#fp2 {
+  left:-5em;
+  width:8em;
+}
+#fp3 {
+  top:0em;
+  left:8em;
+  width:8em;
+}
+#fp4{
+  top:-23em;
+  left:-20em;
+  width:8em;
+}
+#fp5 {
+  left:18rem;
+  top:-8rem;
+  width:5em;
+}
+
+#phone1 {
+  top:5em;
+  left:-23em;
+}
+
+#phone2 {
+  top:10em;
+  left:-13em;
+}
+.intro-list-item {
+  float:left;
+  text-align:left;
+  position:relative;
+  font-size: 1.3rem;
+  width:8em;
+}
+.intro-list .num{
+  position:relative;
+  width:4rem;
+  height:4rem;
+}
+
+#intro-text-center {
+  left:10rem;
+  top:3rem;
+}
+
+#intro-text-right {
+  left:15rem;
+  top:43rem;
+}
+
+#intro-text-left {
+  top:45rem;
+  left:-23rem;
+}
+
+.icons ul>li{
+  position:relative;
+  font-size: 1.75rem;
+  left:0rem;
+}
+
+.icons i{
+  height:40px;
+  font-size:2rem;
+}
+
+.report-btn-group button {
+  width:10rem;
+  text-align: center;
+  position:relative;
+  font-size: 1.5rem;
+  font-weight:bold;
+  margin:-2px;
+  left:0rem;
+}
+#report {
+  top:70em;
+}
+#contact {
+  top:70em;
+  text-align:center;
+  width:100%;
+}
+
+form {
+  position:relative;
+  width:50%;
+  font-size: 20px;
+  left: 10rem;
+}
+
+}
+
+/**iphone6 plus**/
+@media screen and (max-width: 414px){
+  #tuti {
+  display:none;
+}
+
+
+  #mini-bar {
+  display:inline-block;
+}
+  .container-fluid{
+    width: 100%;
+    margin-bottom: 5px;
+    background-image: url("../images/bg3.png");
+    background-size: 414px 536px;
+    background-repeat: no-repeat;
+  }
+
+#skill button {
+  display:inline-block;
+  margin:1rem;
+  width:10rem;
+}
+.banner-main .ban-text-middle {
+  bottom: 0;
+  color: #FFFFFF;
+  font-weight: bold;
+  height: 100px;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.37);
+  top: 20em;
+}
+
+.banner-main .ban-text-middle p{
+  display:none;
+}
+.banner-main .ban-text-middle h1{
+  font-size: 3rem;
+}
+
+#skill h1{
+  margin:10rem;
+  font-size: 2rem;
+}
+
+#intro {
+  top:40rem;
+}
+
+#planet {
+  width: 100%;
+  position:relative;
+  top:30em;
+}
+
+.fp {
+  display:none;
+}
+
+#tuti_sticker {
+  height:15em;
+  margin:2em;
+}
+
+#fp1 {
+  width:3em;
+}
+#fp2 {
+  left:-5em;
+  width:8em;
+}
+#fp3 {
+  top:0em;
+  left:8em;
+  width:8em;
+}
+#fp4{
+  top:-23em;
+  left:-20em;
+  width:8em;
+}
+#fp5 {
+  left:18rem;
+  top:-8rem;
+  width:5em;
+}
+
+#phone1 {
+  width:40%;
+  left:-1em;
+  top:15em;
+}
+
+#phone2 {
+width:40%;
+left:-1em;
+top:0em;
+}
+.intro-list-item {
+  float:none;
+  text-align: center;
+  position:relative;
+  font-size: 1.3rem;
+  width:15em;
+}
+
+.intro-list .num{
+  position:relative;
+  width:4rem;
+  height:4rem;
+}
+
+#intro-text-center {
+  top:-25em;
+  left:4em;
+}
+
+#intro-text-right {
+ left:4em;
+ top:8em;
+}
+
+#intro-text-left {
+  top:40em;
+  left:5em;
+}
+
+.icons ul>li{
+  position:relative;
+  font-size: 1.75rem;
+  left:0rem;
+}
+
+.icons i{
+  height:40px;
+  font-size:2rem;
+}
+.report-btn-group button {
+  width:10rem;
+  text-align: center;
+  position:relative;
+  font-size: 1.5rem;
+  font-weight:bold;
+  margin:-2px;
+  left:0rem;
+}
+
+#report {
+  top:50em;
+}
+
+#contact {
+  top:70em;
+  text-align:center;
+  width:100%;
+}
+
+form {
+  position:relative;
+  width:50%;
+  font-size: 20px;
+  left: 10rem;
+}
+
+}
+
+/**iphone6**/
+@media screen and (max-width: 375px){
+
+  #mini-bar {
+  display:inline-block;
+}
+
+  #tuti {
+  display:none;
+}
+  .container-fluid{
+    width: 100%;
+    margin-bottom: 5px;
+    background-image: url("../images/bg3.png");
+    background-size: 414px 536px;
+    background-repeat: no-repeat;
+  }
+
+#skill button {
+  display:inline-block;
+  margin:1rem;
+  width:10rem;
+}
+.banner-main .ban-text-middle {
+  bottom: 0;
+  color: #FFFFFF;
+  font-weight: bold;
+  height: 100px;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.37);
+  top: 20em;
+}
+
+.banner-main .ban-text-middle p{
+  display:none;
+}
+.banner-main .ban-text-middle h1{
+  font-size: 2.5rem;
+}
+
+#skill h1{
+  margin:10rem;
+  font-size: 1.5rem;
+}
+
+#intro {
+  top:40rem;
+}
+
+#planet {
+  width: 100%;
+  position:relative;
+  top:30em;
+}
+
+.fp {
+  display:none;
+}
+
+#tuti_sticker {
+  height:13em;
+  margin:2em;
+}
+
+#fp1 {
+  width:3em;
+}
+#fp2 {
+  left:-5em;
+  width:8em;
+}
+#fp3 {
+  top:0em;
+  left:8em;
+  width:8em;
+}
+#fp4{
+  top:-23em;
+  left:-20em;
+  width:8em;
+}
+#fp5 {
+  left:18rem;
+  top:-8rem;
+  width:5em;
+}
+
+#phone1 {
+  width:40%;
+  left:-1em;
+  top:15em;
+}
+
+#phone2 {
+width:40%;
+left:-1em;
+top:0em;
+}
+
+.intro-list-item {
+  float:none;
+  text-align: center;
+  position:relative;
+  font-size: 1.3rem;
+  width:15em;
+}
+
+.intro-list .num{
+  position:relative;
+  width:4rem;
+  height:4rem;
+}
+
+#intro-text-center {
+  top:-20em;
+  left:3em;
+}
+
+#intro-text-right {
+ left:3em;
+ top:8em;
+}
+
+#intro-text-left {
+  top:35em;
+  left:3em;
+}
+
+.icons ul>li{
+  position:relative;
+  font-size: 1.75rem;
+  left:0rem;
+}
+
+.icons i{
+  height:40px;
+  font-size:2rem;
+}
+.report-btn-group button {
+  width:10rem;
+  text-align: center;
+  position:relative;
+  font-size: 1.5rem;
+  font-weight:bold;
+  margin:-2px;
+  left:0rem;
+}
+#contact {
+  top:60em;
+  text-align:center;
+  width:100%;
+}
+
+form {
+  position:relative;
+  width:50%;
+  font-size: 20px;
+  left: 8rem;
+}
+
+}

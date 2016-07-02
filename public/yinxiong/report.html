@@ -1,0 +1,173 @@
+<html>
+<head>
+    <!--meta head-->
+    <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+    <meta name= "viewport" content = "width=device-width, initial-scale=1.0" />
+    <meta name="author" content = "Yinxiong.com">
+    <meta name = "description" content = "您随时随地的音乐私教">
+    <!--title-->
+    <title>成绩报告</title>
+    <link rel='icon' href='images/tuti.ico ' type=‘image/x-ico’ />
+    <!--bootstrap core css-->
+    <link type="text/css" href="css/bootstrap.min.css" rel="stylesheet"/>
+    <link type="text/css" href="css/font-awesome.min.css" rel="stylesheet"/>
+    <link type="text/css" href="css/mail-report.css" rel="stylesheet"/>
+</head>
+<body>
+<header>
+	<nav class="navbar navbar-default navbar-fixed-top">
+	    <div class=" nav-container">
+	        	<div class="navbar-header">
+	                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+	                    <span class="sr-only">Toggle navigation</span>
+	                    <span class="icon-bar"></span>
+	                    <span class="icon-bar"></span>
+	                </button>
+	                <a class="navbar-brand">音熊TUTI
+	                <img id="tuti"alt="Brand" src="images/tuti.png">
+	                </a>
+	        	</div><!--navbar-header-->
+	        	<div id="navbar" class="navbar-collapse collapse" data-toggle="collapse">
+	        		<ul class="nav navbar-nav">
+	        			<li class="nvb-label" id="nav-home"><a onclick="">今日练习报告</a></li>
+	            		<li class="nvb-label" id="nav-product"><a onclick="">数据统计</a></li>
+	            	</ul>
+	       		</div><!--/.nav-collapse -->
+	    </div><!--nav-container-->
+	</nav>
+</header>
+
+
+	<div id="report-form" class="container">
+	            <div class="report-title">
+	                <h1>今日练习报告</h1>
+	            </div><!--report-title-->
+	            <form action="" method="post">
+	                <div id="daily-form-group" class="is_visible">
+	                    <div class="daily-data-group">
+	                        <ul class="list-inline" id="daily-total">
+	                            <li><h3>今日累计练习时长:</h3><p>1：08：58</p></li> <!--时间替换-->
+	                            <li role="separator" class="divider"> | </li>
+	                            <li><h3>练习曲目总数：</h3><p>2首</p></li> <!--曲目总数2替换-->
+	                        </ul>
+	                    </div>
+	                    <ul>
+	                    	<li>详细
+	                    </ul>
+	                    <table border="1" class="table table-bordered table-striped" id="history-table"><tr>
+	                        <td>时间</td>
+	                        <td>曲目名称</td>
+	                        <td>曲目等级</td>
+	                        <td>练习时长</td>
+	                        <td>需要强化</td>
+	                        <td>节奏有误</td>
+	                        <td>试听</td></tr>
+	                        
+	                        <tr>
+	                        <td>07:02</td>
+	                        <td>七级：A大调音阶</td>
+	                        <td>5</td>
+	                        <td>20：46</td>
+	                        <td>13</td>
+	                        <td>7</td>
+	                        <td><button type="button" name="play"><img src="images/play.png"></button></td></tr>
+	                        
+	                        <tr>
+	                        <td>07:02</td>
+	                        <td>七级：A大调音阶</td>
+	                        <td>5</td>
+	                        <td>20：46</td>
+	                        <td>222</td>
+	                        <td>155</td>
+	                        <td><button type="button" name="play"><img src="images/play.png"></button></td></tr>
+	                        
+	                        <tr>
+	                        <td>07:02</td>
+	                        <td>七级：A大调音阶</td>
+	                        <td>99</td>
+	                        <td>1：08：08</td>
+	                        <td>199</td>
+	                        <td>211</td>
+	                        <td><button type="button" name="play"><img src="images/play.png"></button></td></tr>
+	                        
+	                        <tr>
+	                        <td>07:02</td>
+	                        <td>七级：A大调音阶</td>
+	                        <td>1</td>
+	                        <td>10：00</td>
+	                        <td>1</td>
+	                        <td>1</td>
+	                        <td><button type="button" name="play"><img src="images/play.png"></button></td></tr>
+	                        
+	                        <tr>
+	                        <td>07:02</td>
+	                        <td>致爱丽丝</td>
+	                        <td>3</td>
+	                        <td>20：00</td>
+	                        <td>6</td>
+	                        <td>13</td>
+	                        <td><button type="button" name="play"><img src="images/play.png"></button></td></tr>
+
+	                        <tr>
+	                        <td>07:02</td>
+	                        <td>致爱丽丝</td>
+	                        <td>3</td>
+	                        <td>20：23</td>
+	                        <td>3</td>
+	                        <td>3</td>
+	                        <td><button type="button" name="play"><img src="images/play.png"></button></td></tr>
+	                    </table><br>
+
+	                    <ul class="list-inline" id="pi-chart-group">
+	                    	<li>
+	                    		<div class="pie-chart-group" id="lianxishichang">
+		                    		<ul class="chart-tag">
+		                    			<li><img src="images/pi-chart/bluedot.png">七级：A大调音阶</li>
+		                    			<li><img src="images/pi-chart/purpledot.png">致爱丽丝</li>
+		                    		    <!--tag需要根据饼图的颜色变化-->
+		                    		</ul>
+
+	                    			<img src="images/pi-chart/pie1.png">
+	                    			<p>曲目练习时长</p>
+	                    		</div>
+	                    	</li>
+	                    	<li>
+	                    		<div class="pie-chart-group" id ="pingfen">
+	                    			<ul class="list-inline">
+	                    				<li>
+		                    				<select class="form-control">
+		   										<option value="致爱丽丝">致爱丽丝</option>
+		   										<option value="七级：A大调音阶">七级：A大调音阶</option>
+		                    				</select>
+
+	                    					<img src="images/pi-chart/pie2.png">
+	                    				</li>
+			                    		<li>
+			                    			<ul class="chart-tag">
+				                    			<li><img src="images/pi-chart/bluedot.png">一星</li>
+				                    			<li><img src="images/pi-chart/purpledot.png">二星</li>
+				                    			<li><img src="images/pi-chart/bluedot.png">三星</li>
+				                    			<li><img src="images/pi-chart/bluedot.png">四星</li>
+				                    			<li><img src="images/pi-chart/purpledot.png">五星</li>
+				                    			<li><img src="images/pi-chart/purpledot.png">六星</li>
+				                    			<li><img src="images/pi-chart/purpledot.png">七星</li>
+				                    		    <!--tag需要根据饼图的颜色变化-->
+				                    		</ul>
+				                    	</li>
+		                    		</ul>
+	                    	    </div>
+
+	                    	</li>
+	                    </ul>
+	                	<a href="#">更多往日联系情况>></a>
+	    			</div><!--daily-form-group-->
+	</div><!--report-form-->
+
+	<div id="activity-form" class="container">
+    </div>
+
+    
+    <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+</body>
+</html>
