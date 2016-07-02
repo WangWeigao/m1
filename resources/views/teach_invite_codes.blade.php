@@ -77,7 +77,9 @@
                     @foreach($result as $v)
                         <tr>
                             <td>
-                                <input type="checkbox" name="" value="{{ $v->id }}">
+                                <input type="checkbox" name="" value="{{ $v->id }}" @if($v->invite_code_status)
+                                    disabled
+                                @endif>
                             </td>
                             <td>
                                 {{ $v->name }}
@@ -106,15 +108,15 @@
             <div class="pull-right">
                 {{ $result->render() }}
             </div>
+            <div class="pull-left">
+                <button type="button" name="" class="btn btn-default" id="all_release">批量发行邀请码</button>
+                <button type="button" name="" data-target=".add_teacher" data-toggle="modal" class="btn btn-default">添加教师</button>
+            </div>
+            @include('addTeacher')
+            @include('editTeacher')
         @else
             <center style="margin-top: 100px;"><h3>暂无查询结果</h3></center>
         @endif
-        <div class="pull-left">
-            <button type="button" name="" class="btn btn-default" id="all_release">批量发行邀请码</button>
-            <button type="button" name="" data-target=".add_teacher" data-toggle="modal" class="btn btn-default">添加教师</button>
-        </div>
-        @include('addTeacher')
-        @include('editTeacher')
     </div>
 @endsection
 
@@ -173,7 +175,7 @@
         // 实现全选
         $("#all").click(function(event) {
             if ($("#all").prop('checked')) {
-                $("#list :checkbox").prop('checked', true);
+                $("#list :checkbox:not(:disabled)").prop('checked', true);
             }else {
                 $("#list :checkbox").prop('checked', false);
             }
@@ -184,12 +186,17 @@
             $("#list :checkbox:checked").each(function(i) {
                 id_arr[i] = $(this).val();
             });
-            $.post('/teachers/invite_code', {ids: id_arr,
-                                                 _method: 'put',
-                                                 _token: $("input[name=_token]").val()
-            }, function(data, textStatus, xhr) {
-                location.reload();
-            });
+            if (id_arr.length == 0) {
+                alert('请选择教师');
+                return;
+            } else {
+                $.post('/teachers/invite_code', {ids: id_arr,
+                    _method: 'put',
+                    _token: $("input[name=_token]").val()
+                }, function(data, textStatus, xhr) {
+                    location.reload();
+                });
+            }
         });
 
         // 完善全选checkbox状态
@@ -199,9 +206,9 @@
 
         // 检查是否处于全选状态
         function allchk() {
-            var chksum = $("#list :checkbox").size();
+            var chksum = $("#list :checkbox:not(:disabled)").size();
             var chk = 0;
-            $("#list :checkbox:checked").each(function(index, el) {
+            $("#list :checkbox:checked:not(:disabled)").each(function(index, el) {
                 chk++;
             });
             if (chksum == chk) {

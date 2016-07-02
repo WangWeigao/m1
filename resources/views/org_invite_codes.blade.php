@@ -86,7 +86,9 @@
                     @foreach($result as $v)
                         <tr>
                             <td>
-                                <input type="checkbox" name="" value="{{ $v->id }}">
+                                <input type="checkbox" name="" value="{{ $v->id }}" @if($v->invite_code_status)
+                                    disabled
+                                @endif>
                             </td>
                             <td>
                                 {{ $v->name }}
@@ -116,15 +118,15 @@
             <div class="pull-right">
                 {{ $result->render() }}
             </div>
+            <div class="pull-left">
+                <button type="button" name="" class="btn btn-default" id="all_release">批量发行邀请码</button>
+                <button type="button" name="" data-target=".add_institution" data-toggle="modal" class="btn btn-default">添加机构</button>
+            </div>
+            @include('addInstitution')
+            @include('editInstitution')
         @else
             <center style="margin-top: 100px;"><h3>暂无查询结果</h3></center>
         @endif
-        <div class="pull-left">
-            <button type="button" name="" class="btn btn-default" id="all_release">批量发行邀请码</button>
-            <button type="button" name="" data-target=".add_institution" data-toggle="modal" class="btn btn-default">添加机构</button>
-        </div>
-        @include('addInstitution')
-        @include('editInstitution')
     </div>
 @endsection
 
@@ -183,38 +185,43 @@
                   }
         });
 
-        // 实现全选
-        $("#all").click(function(event) {
-            if ($("#all").prop('checked')) {
-                $("#list :checkbox").prop('checked', true);
-            }else {
-                $("#list :checkbox").prop('checked', false);
-            }
-        });
-        // 获得选中项目的value
         $("#all_release").click(function() {
+            // 获得选中项目的value
             var id_arr = new Array;
             $("#list :checkbox:checked").each(function(i) {
                 id_arr[i] = $(this).val();
             });
-            $.post('/institutions/invite_code', {ids: id_arr,
-                                                 _method: 'put',
-                                                 _token: $("input[name=_token]").val()
-            }, function(data, textStatus, xhr) {
-                location.reload();
-            });
+            if (id_arr.length == 0) {
+                alert('请先选择机构');
+                return;
+            } else {
+                // 批量发行邀请码
+                $.post('/institutions/invite_code', {ids: id_arr,
+                    _method: 'put',
+                    _token: $("input[name=_token]").val()
+                }, function(data, textStatus, xhr) {
+                    location.reload();
+                });
+            }
         });
 
+        // 实现全选
+        $("#all").click(function(event) {
+            if ($("#all").prop('checked')) {
+                $("#list :checkbox:not(:disabled)").prop('checked', true);
+            }else {
+                $("#list :checkbox").prop('checked', false);
+            }
+        });
         // 完善全选checkbox状态
         $("#list :checkbox").click(function() {
             allchk();
         });
-
         // 检查是否处于全选状态
         function allchk() {
-            var chksum = $("#list :checkbox").size();
+            var chksum = $("#list :checkbox:not(:disabled)").size();
             var chk = 0;
-            $("#list :checkbox:checked").each(function(index, el) {
+            $("#list :checkbox:checked:not(:disabled)").each(function(index, el) {
                 chk++;
             });
             if (chksum == chk) {

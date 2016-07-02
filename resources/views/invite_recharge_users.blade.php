@@ -7,16 +7,15 @@
           <li>邀请用户列表</li>
         </ol>
         <div class="btn-group tab">
-            <a href="/invite_new_users" class="btn btn-default active">新用户</a>
-            <a href="/invite_recharge_users" class="btn btn-default">充值用户</a>
+            <a href="/invite_new_users" class="btn btn-default">新用户</a>
+            <a href="/invite_recharge_users" class="btn btn-default active">充值用户</a>
         </div>
-        <form class="" action="/invite_new_users" method="get">
+        <form class="" action="/invite_recharge_users" method="get">
             {{ csrf_field() }}
             <div class="form-group form-inline">
                 <label for="username">精确搜索</label>
                 <input class="form-control" type="text" name="keyword" value="{{ Input::get('keyword') }}" id="username" placeholder="请输入用户名">
-            </div>
-            <div class="form-group form-inline">
+
                 <label for="province" class="">地域</label>
                 <select class="form-control" name="province" id="province">
                     <option value="">不限</option>
@@ -55,81 +54,57 @@
                     <option value="33">澳门</option>
                     <option value="34">香港</option>
                 </select>
-                <label for="thirty_days_duration" class="">近30天使用时间</label>
-                <select class="form-control" name="thirty_days_duration" id="thirty_days_duration">
-                    <option value="">不限</option>
-                    <option value="large30min">30分钟以上</option>
-                    <option value="less30min">30分钟以下</option>
-                </select>
-            </div>
-            <div class="form-group form-inline">
+
                 <label for="payment_status">结算状态</label>
                 <select class="form-control" name="payment_status" id="payment_status">
                     <option value="all">全部</option>
                     <option value="non-payment">未结算</option>
                     <option value="paid">已结算</option>
-                    <option value="do_not_pay">不可结算</option>
-                </select>
-                <label for="thirty_days_boot_times">近30天启动次数</label>
-                <select class="form-control" name="thirty_days_boot_times" id="thirty_days_boot_times">
-                    <option value="">不限</option>
-                    <option value="more2times">2次以上</option>
-                    <option value="less2times">2次以下</option>
                 </select>
                 <button type="submit" class="btn btn-info">搜索</button>
             </div>
         </form>
         <hr>
-        @if(count($users) > 0)
+        @if(count($orders) > 0)
             <table class="table table-striped table-condensed table-bordered">
                 <thead>
                     <th>
                         <input type="checkbox" name="" id="all" value="">
                     </th>
                     <th>用户帐号</th>
-                    <th>被邀请时间</th>
+                    <th>充值日期</th>
                     <th>联系方式</th>
-                    <th>30天内使用时间</th>
-                    <th>30天内启动次数</th>
-                    <th>能否结算</th>
+                    <th>充值金额</th>
+                    <th>返额(10%)</th>
                     <th>结算状态</th>
-                    <th>结算金额</th>
                     <th>操作</th>
                 </thead>
                 <tbody id="list">
-                    @foreach($users as $user)
+                    @foreach($orders as $order)
                         <tr>
                             <td>
-                                <input type="checkbox" name="all" value="{{ $user->uid }}" @if(!($user->payable && $user->paid==0))
+                                <input type="checkbox" name="all" value="{{ $order->id }}" @if($order->paid)
                                     disabled
                                 @endif>
                             </td>
                             {{--  用户帐号 --}}
-                            <td>{{ $user->nickname or '-' }}</td>
-                            {{-- // 被邀请时间 --}}
-                            <td>{{ $user->regdate }}</td>
+                            <td>{{ $order->user->nickname or '-' }}</td>
+                            {{--  充值日期 --}}
+                            <td>{{ $order->pay_time }}</td>
                             {{--  联系方式 --}}
-                            <td>{{ $user->cellphone or '-' }}</td>
-                            {{--  30内使用时间 --}}
-                            <td>{{ (int)($user->practice_time_sum /60) }}时{{ (int)($user->practice_time_sum % 60) }}分</td>
-                            {{--  30内启动次数 --}}
-                            <td>{{ $user->boot_times }}</td>
-                            {{--  能否结算 --}}
-                            <td>{{ $user->payable ? '是' : '否' }}</td>
+                            <td>{{ $order->user->cellphone or '-' }}</td>
+                            {{--  充值金额 --}}
+                            <td>{{ $order->price }}</td>
+                            {{--  返额 --}}
+                            <td>{{ ($order->price)*0.1 }}</td>
                             {{--  结算状态 --}}
                             <td>
-                                @if($user->paid)
-                                    {{ $user->paid ? '已结算' : '' }}
-                                @else
-                                    {{ $user->payable ? '未结算' : '不可结算' }}
-                                @endif
+                                {{ $order->paid ? '已结算' : '未结算' }}
                                 <span class="" id="paid_result"></span>
                             </td>
-                            {{--  结算金额 --}}
-                            <td>10元</td>
                             <td>
-                                @if($user->paid == 0 && $user->payable == 1)
-                                    <button type="button" class="btn btn-xs btn-success payment" data-uid="{{ $user->uid }}">结算</button>
+                                @if(!($order->paid))
+                                    <button type="button" class="btn btn-success btn-xs payment" data-uid="{{ $order->id }}">结算</button>
                                 @endif
                             </td>
                         </tr>
@@ -138,7 +113,7 @@
             </table>
             <div class="form-group form-inline">
                 <div class="pull-right">
-                    {{ $users->render() }}
+                    {{ $orders->render() }}
                 </div>
                 <div class="pull-left">
                     <button type="button" class="btn btn-default" id="pay_all">批量结算</button>
@@ -161,17 +136,13 @@
     .tab {
         margin-bottom: 30px;
     }
-    label[for=province] {
-        margin-right: 28px;
-    }
-    #province {
-        margin-right: 120px;
-    }
+
     #payment_status {
         margin-right: 105px;
     }
-    button[type="submit"] {
-        margin-left: 120px;
+
+    input, select {
+        margin-right: 30px;
     }
     </style>
 @endsection
@@ -181,15 +152,13 @@
         $(document).ready(function() {
             // 给 select 赋值
             $("#province").val("{{ Input::get('province', '') }}");
-            $("#thirty_days_duration").val("{{ Input::get('thirty_days_duration', '') }}");
             $("#payment_status").val("{{ Input::get('payment_status', 'all') }}");
-            $("#thirty_days_boot_times").val("{{ Input::get('thirty_days_boot_times', '') }}");
             // 给已结算列添加样式
-            $("td:contains('已结算')>span").attr('class', 'glyphicon glyphicon-ok');
+            $("td:contains('已结算')>span").addClass('glyphicon glyphicon-ok');
 
             // 更新状态为已结算
             $(".payment").click(function(event) {
-                $.post('/invite_new_user/'+$(this).attr('data-uid'), { _token: $("input[name=_token]").val(), _method: 'put'}, function(data, textStatus, xhr) {
+                $.post('/invite_recharge_user/'+$(this).attr('data-uid'), { _token: $("input[name=_token]").val(), _method: 'put'}, function(data, textStatus, xhr) {
                     location.reload();
                 });
             });
@@ -231,7 +200,8 @@
                     alert('请先选择用户');
                     return;
                 } else {
-                    $.post('/invite_new_users', {ids: ids, _token: $("input[name=_token]").val(), _method: 'put'}, function(data, textStatus, xhr) {
+                    $.post('/invite_recharge_users', {ids: ids, _token: $("input[name=_token]").val(), _method: 'put'}, function(data, textStatus, xhr) {
+                        console.log(data);
                         location.reload();
                     });
                 }

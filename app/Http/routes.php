@@ -250,8 +250,19 @@ Route::group(['middleware' => 'web'], function () {
     // 更新单个机构信息
     Route::put('/teacher/{id}', 'TeacherInvitationController@updateInsInfo');
     // --------------------------------------邀请新用户--------------------------------------
+    // 查询结果界面
     Route::get('/invite_new_users', 'InviteNewUserController@getUserList');
+    // 更新用户标识为已经结算
+    Route::put('/invite_new_user/{id}', 'InviteNewUserController@updateNewUserPaid');
+    // 批量更新用户标识为已经结算
+    Route::put('/invite_new_users', 'InviteNewUserController@updateMultiNewUserPaid');
 
+    // --------------------------------------邀请充值用户--------------------------------------
+    Route::get('/invite_recharge_users', 'InvitRechargeUserController@getUserList');
+    // 更新用户标识为已经结算
+    Route::put('/invite_recharge_user/{id}', 'InvitRechargeUserController@updateUserPaid');
+    // 批量更新用户标识为已经结算
+    Route::put('/invite_recharge_users', 'InvitRechargeUserController@updateMultiUserPaid');
 
 
     // 测试路由

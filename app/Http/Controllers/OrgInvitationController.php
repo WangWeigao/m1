@@ -42,11 +42,7 @@ class OrgInvitationController extends Controller
         if (!empty($institution)) {
             $result->where('name', $institution);
         }
-        $result = $result->paginate(15)->appends([
-                                                'keyword' => $keyword,
-                                                'province' => $province,
-                                                'institution' => $institution
-                                            ]);
+        $result = $result->paginate(15)->appends($request->all());
         return view('org_invite_codes')->with(['result' => $result, 'institutions' => $institutions])->withInput($request->all());
     }
 

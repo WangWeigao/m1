@@ -82,6 +82,6 @@ class StudentUser extends Model
 
     public function orders()
     {
-        return $this->hasMany('App\RobotOrder', 'id', 'uid');
+        return $this->hasMany('App\RobotOrder', 'user_id', 'uid');
     }
 }
