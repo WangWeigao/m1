@@ -87,6 +87,9 @@
                                 <li><a href="/invite_new_users">邀请用户列表</a></li>
                             </ul>
                         </li>
+                        <li>
+                            <a href="/manage_update_version">版本升级管理</a>
+                        </li>
                         {{-- @can('access-finance')
                             <li class="disabled"><a href="#">结算系统</a></li>
                         @endif --}}
