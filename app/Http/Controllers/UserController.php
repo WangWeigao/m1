@@ -18,6 +18,9 @@ use App\Practice;
 use App\RobotOrder;
 use App\UserAction;
 use Redis;
+use App\UserPrevMonthPracticeTimeSum;
+use App\UserCurrMonthPracticeTimeSum;
+
 class UserController extends Controller
 {
     /**
@@ -303,82 +306,58 @@ class UserController extends Controller
             }
         }
 
-        /**
-         * "本月用户大幅变化"不为空
-         */
-        if (!empty($change_duration)) {
-            $appends_arr = array_merge($appends_arr, ['change_duration' => $change_duration]);
 
-            /**
-             * 取得当前年月，便于设置redis的key
-             */
-            $year  = Carbon::now('Asia/ShangHai')->year;
-            $month = Carbon::now('Asia/ShangHai')->month;
+// 更新计算方式，去掉redis
+switch ($change_duration) {
+    case 'up20h':
+    $compare_result = UserPrevMonthPracticeTimeSum::join('user_curr_month_practice_time_sum', 'user_prev_month_practice_time_sum.uid', '=', 'user_prev_month_practice_time_sum.uid')
+                                                  ->where('user_curr_month_practice_time_sum.sum_pre_month', '>', 'user_prev_month_practice_time_sum')->get()->toArray();
+        break;
 
-            /**
-             * 取出所有当前月份的key
-             */
-            $month_arr = Redis::keys("*.$year.$month");
-            foreach ($month_arr as $v) {
-                $month_arr_id[] = explode('.', $v)[0];
-            }
+    default:
+        # code...
+        break;
+}
+if (!empty($change_duration)) {
+    switch ($change_duration) {
+        case 'up20h':   // 这个月比上个月增加20个练习小时的用户的id
+        $compare_result = UserPrevMonthPracticeTimeSum::select('uid')->whereHas('user_curr_month_practice_time_sum', function($query) {
+            $query->whereRaw('user_curr_month_practice_time_sum.sum_pre_month > user_prev_month_practice_time_sum.sum_pre_month+20*60*60');
+        })->get()->toArray();
+        break;
+        case 'up30h':   // 这个月比上个月增加30个练习小时的用户的id
+        $compare_result = UserPrevMonthPracticeTimeSum::select('uid')->whereHas('user_curr_month_practice_time_sum', function($query) {
+            $query->whereRaw('user_curr_month_practice_time_sum.sum_pre_month > user_prev_month_practice_time_sum.sum_pre_month+30*60*60');
+        })->get()->toArray();
+        break;
+        case 'up50h':   // 这个月比上个月增加50个练习小时的用户的id
+        $compare_result = UserPrevMonthPracticeTimeSum::select('uid')->whereHas('user_curr_month_practice_time_sum', function($query) {
+            $query->whereRaw('user_curr_month_practice_time_sum.sum_pre_month > user_prev_month_practice_time_sum.sum_pre_month+50*60*60');
+        })->get()->toArray();
+        break;
+        case 'down20h':   // 这个月比上个月减少20个练习小时的用户的id
+        $compare_result = UserPrevMonthPracticeTimeSum::select('uid')->whereHas('user_curr_month_practice_time_sum', function($query) {
+            return $query->whereRaw('user_curr_month_practice_time_sum.sum_pre_month < user_prev_month_practice_time_sum.sum_pre_month-20*60*60');
+        })->get()->toArray();
+        // return $compare_result;
+        break;
+        case 'down30h':   // 这个月比上个月减少30个练习小时的用户的id
+        $compare_result = UserPrevMonthPracticeTimeSum::select('uid')->whereHas('user_curr_month_practice_time_sum', function($query) {
+            $query->whereRaw('user_curr_month_practice_time_sum.sum_pre_month < user_prev_month_practice_time_sum.sum_pre_month-30*60*60');
+        })->get()->toArray();
+        break;
+        case 'down50h':   // 这个月比上个月减少50个练习小时的用户的id
+        $compare_result = UserPrevMonthPracticeTimeSum::select('uid')->whereHas('user_curr_month_practice_time_sum', function($query) {
+            $query->whereRaw('user_curr_month_practice_time_sum.sum_pre_month < user_prev_month_practice_time_sum.sum_pre_month-50*60*60');
+        })->get()->toArray();
+        break;
+        default:
+        # code...
+        break;
+    }
+    $users->whereIn('uid', $compare_result);
+}
 
-            /**
-             * 取出前一个月份的key
-             */
-            $month_sub = $month-1;
-            $month_pre_arr = Redis::keys("*.$year.$month_sub");
-            foreach ($month_pre_arr as $v) {
-                $month_pre_arr_id[] = explode('.', $v)[0] or [];
-            }
-            /**
-             * 1. 合并前后2个月的key，确保涵盖2个月中所有的key
-             * 2.
-             */
-            $month_all = array_unique(array_merge($month_arr_id, $month_pre_arr_id));
-            $result = [];
-            foreach ($month_all as $v) {
-                $month_value     = Redis::get("$v.$year.$month") == null ? 0 : Redis::get("$v.$year.$month");
-                $month_pre_value = Redis::get("$v.$year.$month_sub") == null ? 0 : Redis::get("$v.$year.$month_sub");
-                switch ($change_duration) {
-                    case 'up20h':   // 这个月比上个月增加20个练习小时的用户的id
-                        if ($month_value - 20*60*60 > $month_pre_value) {
-                            $result[] = $v;
-                        }
-                        break;
-                    case 'up30h':   // 这个月比上个月增加30个练习小时的用户的id
-                        if ($month_value - 30*60*60 > $month_pre_value) {
-                            $result[] = $v;
-                        }
-                        break;
-                        case 'up50h':   // 这个月比上个月增加50个练习小时的用户的id
-                            if ($month_value - 50*60*60 > $month_pre_value) {
-                                $result[] = $v;
-                            }
-                        break;
-                        case 'down20h':   // 这个月比上个月减少20个练习小时的用户的id
-                            if ($month_value + 20*60*60 < $month_pre_value) {
-                                // dd($month_pre_value + 20*60*60);
-                                $result[] = $v;
-                            }
-                        break;
-                        case 'down30h':   // 这个月比上个月减少30个练习小时的用户的id
-                            if ($month_value + 30*60*60 < $month_pre_value) {
-                                $result[] = $v;
-                            }
-                        break;
-                        case 'down50h':   // 这个月比上个月减少50个练习小时的用户的id
-                            if ($month_value + 50*60*60 < $month_pre_value) {
-                                $result[] = $v;
-                            }
-                        break;
-                    default:
-                        # code...
-                        break;
-                }
-            }
-            $users->whereIn('uid', $result);
-        }
 
         /**
          * "活跃度"不为空
@@ -428,29 +407,6 @@ class UserController extends Controller
         }
 
 
-        /**
-         * 同时模糊匹配"用户名"和"电话号码"
-         * @var Object
-         */
-        // $users = StudentUser::where('usertype', 1);
-        //                         // ->orwhere('cellphone', 'like', "%$name%")
-        //                         // ->orwhere('nickname', 'like', "%$name%");
-        //                         // ->where('nickname', 'like', "%$name%");
-        //
-        // if (is_numeric($name)) {
-        //     $users->where('cellphone', 'like', "%$name%");
-        // }else {
-        //     $users->where('nickname', 'like', "%$name%");
-        // }
-        //
-        // $users = $users
-        //         ->leftjoin('orders', 'users.uid', '=', 'orders.student_uid')
-        //         ->select('users.uid', 'users.nickname', 'users.cellphone', 'users.email', 'users.regdate', 'users.lastlogin', 'users.isactive', DB::raw('count(orders.student_uid) as order_num'))
-        //         ->groupby('users.uid')
-        //         // ->orderby($field, $order)
-        //         // ->get();
-        //             //  由前端分页, 此处暂时用不到
-        //         ->paginate(15);
             $start_time = Carbon::now('Asia/ShangHai')->subMonth();
             $end_time   = Carbon::now('Asia/ShangHai')->endOfDay();
             $preMonth_start_time = Carbon::now('Asia/ShangHai')->subMonth(2);
@@ -492,7 +448,6 @@ class UserController extends Controller
             }
         }
         // var_dump(DB::getQueryLog());
-
         return view('user')->with('users', $users);
     }
 

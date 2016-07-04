@@ -288,4 +288,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/getchart', function() {
         return view('index');
     });
+
+    // 测试 取得"上个月练习时间之和"
+    Route::get('/getTable', 'test001Controller@getTable');
 });

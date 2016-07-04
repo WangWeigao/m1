@@ -84,4 +84,14 @@ class StudentUser extends Model
     {
         return $this->hasMany('App\RobotOrder', 'user_id', 'uid');
     }
+
+    public function user_prev_month_practice_time_sum()
+    {
+        return $this->belongTo('App\UserPrevMonthPracticeTimeSum', 'uid', 'uid');
+    }
+
+    public function user_curr_month_practice_time_sum()
+    {
+        return $this->belongTo('App\UserCurrMonthPracticeTimeSum', 'uid', 'uid');
+    }
 }

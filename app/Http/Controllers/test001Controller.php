@@ -11,6 +11,8 @@ use Redis;
 use DB;
 use App\Music;
 use App\Http\Models\Midi\MidiDuration;
+use App\UserPrevMonthPracticeTimeSum;
+use App\UserCurrMonthPracticeTimeSum;
 
 class test001Controller extends Controller
 {
@@ -168,6 +170,12 @@ class test001Controller extends Controller
 
         /* Render the picture (choose the best way) */
         $myPicture->autoOutput(public_path() . '/pictures/' . $pic_name);
+    }
+
+    public function getTable()
+    {
+        // return UserPrevMonthPracticeTimeSum::all();
+        return UserCurrMonthPracticeTimeSum::all();
     }
 
 }
