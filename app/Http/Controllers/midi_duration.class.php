@@ -10,9 +10,20 @@ require('midi.class.php');
  * @author Valentin Schmidt
  * @version 0.2
  */
- 
+
 class MidiDuration extends Midi{
-	
+
+/**
+ * Create a new controller instance.
+ *
+ * @return void
+ */
+public function __construct()
+{
+    $this->middleware('auth');
+}
+
+
 /**
  * returns duration in seconds
  *
@@ -49,5 +60,5 @@ function getDuration(){
 }
 
 } //END CLASS
-	
+
 ?>

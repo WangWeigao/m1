@@ -10,6 +10,16 @@ use App\Version;
 class ManageUpdateVersionController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
+    /**
      * 获取APP的版本信息
      * @method getVersion
      * @return [type]     [description]

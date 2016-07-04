@@ -10,10 +10,20 @@ You may use and modify this software as you wish.
 
 Last Changes:
     - added variable length encoding to Meta and SeqSpec Events
-    
+
 ****************************************************************************/
 
 class Midi{
+
+/**
+ * Create a new controller instance.
+ *
+ * @return void
+ */
+public function __construct()
+{
+    $this->middleware('auth');
+}
 
 //Private properties
 var $tracks;          //array of tracks, where each track is array of message strings
@@ -539,7 +549,7 @@ function getMid(){
 
 // A: IGNORE EVENTS WITH INCORRECT TIMESTAMP
 if ($dt<0) continue;
-	
+
 // B: THROW ERROR
 #if ($dt<0) $this->_err('incorrect timestamp!');
 
@@ -584,7 +594,7 @@ function playMidFile($file,$visible=true,$autostart=true,$loop=true,$player='def
 //---------------------------------------------------------------
 function downloadMidFile($output, $file=false){
 	ob_start("ob_gzhandler"); // for compressed output...
-	
+
 	//$mime_type = 'audio/midi';
 	$mime_type = 'application/octetstream'; // force download
 
@@ -592,7 +602,7 @@ function downloadMidFile($output, $file=false){
 	header('Expires: '.gmdate('D, d M Y H:i:s').' GMT');
 	header('Content-Disposition: attachment; filename="'.$output.'"');
 	header('Pragma: no-cache');
-	
+
 	if ($file){
 		$d=fopen($file,"rb");
 		fpassthru($d);
@@ -863,7 +873,7 @@ function _parseTrack($binStr, $tn){
   $time = 0;
   $track = array();
   while ($p<$trackLen){
-  	  	
+
 	  // timedelta
 	  $dt = $this->_readVarLen($binStr,$p);
 	  $time += $dt;
@@ -927,7 +937,7 @@ function _parseTrack($binStr, $tn){
 		  default:
 			  switch($byte){
 				  case 0xFF: // Meta
-					  $meta = ord($binStr[$p+1]);					  
+					  $meta = ord($binStr[$p+1]);
 					  switch ($meta){
 						  case 0x00: // sequence_number
 							  $tmp = ord($binStr[$p+2]);
@@ -992,7 +1002,7 @@ function _parseTrack($binStr, $tn){
 							  $m  = $len>1 ? ord($binStr[$p+4]) : 0;
 							  $s  = $len>2 ? ord($binStr[$p+5]) : 0;
 							  $f  = $len>3 ? ord($binStr[$p+6]) : 0;
-							  $fh = $len>4 ? ord($binStr[$p+7]) : 0;				  
+							  $fh = $len>4 ? ord($binStr[$p+7]) : 0;
 							  $track[] = "$time SMPTE $h $m $s $f $fh";
 							  $p+=(3+$len);
 							  break;
@@ -1007,10 +1017,10 @@ function _parseTrack($binStr, $tn){
 						  case 0x59: // KeySig
 						  	$len = ord($binStr[$p+2]); # should be: 0x02 => $p+=5
 							  $vz  = $len>0 ? ord($binStr[$p+3]) : 0;
-							  $g   = ($len<=1 || ord($binStr[$p+4])==0) ?'major':'minor'; 
+							  $g   = ($len<=1 || ord($binStr[$p+4])==0) ?'major':'minor';
 							  #$g = ord($binStr[$p+4])==0?'major':'minor';
 							  $track[] = "$time KeySig $vz $g";
-							  $p+=(3+$len);			   
+							  $p+=(3+$len);
 							  break;
 						  case 0x7F: // Sequencer specific data (string or hexString???)
 							  $p +=2;
@@ -1048,7 +1058,7 @@ function _parseTrack($binStr, $tn){
 					  $p+=$len;
 					  break;
 				  default: // Repetition of last event?
-					  switch (@$last){	  
+					  switch (@$last){
 						  case 'On':
 						  case 'Off':
 							  $note = ord($binStr[$p]);
@@ -1091,7 +1101,7 @@ function _parseTrack($binStr, $tn){
 						  default:
 // MM: ToDo: Repetition of SysEx and META-events? with <last>?? \n";
 							  $this->_err("unknown repetition: $last");
-							  
+
 					  }  // switch ($last)
 			  } // switch ($byte)
 	  } // switch ($high)
