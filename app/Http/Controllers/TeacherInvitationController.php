@@ -10,6 +10,17 @@ use App\TrainingInstitution;
 
 class TeacherInvitationController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * 获取搜索结果
      * @method getRsearchResult

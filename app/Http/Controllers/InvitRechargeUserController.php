@@ -9,6 +9,16 @@ use App\RobotOrder;
 
 class InvitRechargeUserController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function getUserList(Request $request)
     {
         $keyword        = $request->get('keyword', '');
