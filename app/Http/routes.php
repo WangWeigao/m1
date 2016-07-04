@@ -264,6 +264,13 @@ Route::group(['middleware' => 'web'], function () {
     // 批量更新用户标识为已经结算
     Route::put('/invite_recharge_users', 'InvitRechargeUserController@updateMultiUserPaid');
 
+    // --------------------------------------管理升级版本号--------------------------------------
+    // 获取所有平台版本信息
+    Route::get('/manage_update_version', 'ManageUpdateVersionController@getVersions');
+    // 获取某一个平台的版本信息
+    Route::get('/app_version/{id}', 'ManageUpdateVersionController@getVersion');
+    // 更新某一个平台的版本信息
+    Route::put('/app_version/{id}', 'ManageUpdateVersionController@updateVersion');
 
     // 测试路由
     Route::get('/test', 'test001Controller@test');
@@ -281,4 +288,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/getchart', function() {
         return view('index');
     });
+
+    // 测试 取得"上个月练习时间之和"
+    Route::get('/getTable', 'test001Controller@getTable');
 });
