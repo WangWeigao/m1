@@ -104,7 +104,7 @@
                     @endif
                     <tbody>
                         @forelse($musics as $item)
-                            <tr id="{{ $item->id or ''}}">
+                            <tr id="{{ $item->id or ''}}" class="list">
                                 <td><input type="checkbox" name="music_action[]"></td>
                                 <td class="{{ $item->instrument->id or '' }}">{{ $item->instrument->name or '' }}</td>
                                 <td>{{ $item->name or ''}}</td>

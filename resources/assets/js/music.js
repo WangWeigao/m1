@@ -325,13 +325,44 @@ $(document).ready(function() {
     /**
      * 全部选中，全部取消
      */
-    $("#checkAll").bind('click', function(event) {
-        if (this.checked) {
-            $("input[name='music_action[]']").prop("checked", true);
+    // $("#checkAll").bind('click', function(event) {
+    //     if (this.checked) {
+    //         $("input[name='music_action[]']").prop("checked", true);
+    //     }else {
+    //         $("input[name='music_action[]']").prop("checked", false);
+    //     }
+    // });
+
+
+    // 实现全选按钮功能
+    $("#checkAll").click(function(event) {
+        if ($("#checkAll").prop('checked')) {
+            $(".list :checkbox").prop('checked', true);
         }else {
-            $("input[name='music_action[]']").prop("checked", false);
+            $(".list :checkbox").prop('checked', false);
         }
     });
+
+    // 完善全选checkbox状态
+    $(".list :checkbox").click(function() {
+        allchk();
+    });
+
+    // 检查是否处于全选状态
+    function allchk() {
+        var chksum = $(".list :checkbox").size();
+        var chk = 0;
+        $(".list :checkbox:checked").each(function(index, el) {
+            chk++;
+        });
+        if (chksum == chk) {
+            $("#checkAll").prop('checked', true);
+        }else {
+            $("#checkAll").prop('checked', false);
+        }
+    }
+
+
 
     /**
      * 批量审核通过
