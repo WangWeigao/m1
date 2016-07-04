@@ -65,9 +65,9 @@
                         <input type="checkbox" name="date" id="date">
                         <label for="date">添加日期</label>
                         <span id="dateSelector" class="">
-                            <select class="date_select" id="idYear" data=""></select>年
-                            <select class="date_select" id="idMonth" data=""></select>月
-                            <select class="date_select" id="idDay" data=""></select>日
+                            <select class="date_select form-control" id="idYear" data=""></select>年
+                            <select class="date_select form-control" id="idMonth" data=""></select>月
+                            <select class="date_select form-control" id="idDay" data=""></select>日
                         </span>
                     </td>
                     <td>

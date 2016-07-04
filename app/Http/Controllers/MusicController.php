@@ -48,11 +48,11 @@ class MusicController extends Controller
         $operator   = $request->get('operator') or "";
         $date       = $request->get('date') or "";
 
-        if (empty($name) && empty($instrument) && empty($press)
-            && empty($category) && empty($onshelf) && empty($organizer)
-            && empty($operator) && empty($date)) {
-            return view('music');
-        }
+        // if (empty($name) && empty($instrument) && empty($press)
+        //     && empty($category) && empty($onshelf) && empty($organizer)
+        //     && empty($operator) && empty($date)) {
+        //     return view('music');
+        // }
         /**
          * 按传过来的参数不同，组合不同的查询语句
          * @var Music
