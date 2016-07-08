@@ -10,7 +10,7 @@
     <!-- Fonts -->
     {{-- <link href="http://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'> --}}
     {{-- <link href="http://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'> --}}
-    <link href="http://fonts.useso.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
+    {{-- <link href="http://fonts.useso.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'> --}}
     {{-- <link rel="stylesheet" href="/css/Lato.css" media="screen" title="no title" charset="utf-8"> --}}
 
     <!-- Styles -->
