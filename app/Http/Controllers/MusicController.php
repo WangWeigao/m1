@@ -120,7 +120,7 @@ class MusicController extends Controller
         // $operator   = $request->get('operator') or "";
         // $date       = $request->get('date') or "";
         $musics   = $musics->paginate(10)->appends($request->all());
-        $versions = Music::select('version')->distinct()->get();
+        $versions = Music::select('version')->where('version', '<>', '')->distinct()->get();
         /**
          * 将结果返回给视图
          */
