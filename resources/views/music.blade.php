@@ -12,7 +12,7 @@
                 {{-- <legend>曲目查询</legend> --}}
                 <div class="form-group form-inline">
                     {{-- <label for="">用户搜索</label> --}}
-                    <span>精确搜索: </span><input type="text" class="form-control" id="searchName" name="name" placeholder="请输入曲目名">
+                    <span>精确搜索: </span><input type="text" class="form-control" id="searchName" name="name" placeholder="请输入曲目名/作曲人">
                     <input type="hidden" name="field" value="uid">
                     <input type="hidden" name="order" value="asc">
                     <button type="submit" name="button" class= "btn btn-success" id="search">搜索</button>

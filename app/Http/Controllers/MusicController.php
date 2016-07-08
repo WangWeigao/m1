@@ -67,7 +67,8 @@ class MusicController extends Controller
                         ->with('editor');
 
         if (!empty($name)) {
-            $musics->where('name', 'like', "%$name%");
+            $musics->where('name', 'like', "%$name%")
+                   ->orWhere('composer', 'like', "%$name%");
         }
         if (!empty($instrument)) {
             $musics->where('instrument_id', '=', "$instrument");
