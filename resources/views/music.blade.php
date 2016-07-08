@@ -62,6 +62,32 @@
                         <select id="operator" class="form-control"></select>
                     </td>
                     <td>
+                        <input type="checkbox" name="version" id="input_version">
+                        <label for="input_version">版本</label>
+                        <select id="version" class="form-control">
+                            @foreach($versions as $v)
+                                <option value="{{ $v->version }}">{{ $v->version }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <input type="checkbox" name="level" id="input_level">
+                        <label for="input_level">级别</label>
+                        <select id="level" class="form-control">
+                            <option value="1">1级</option>
+                            <option value="2">2级</option>
+                            <option value="3">3级</option>
+                            <option value="4">4级</option>
+                            <option value="5">5级</option>
+                            <option value="6">6级</option>
+                            <option value="7">7级</option>
+                            <option value="8">8级</option>
+                            <option value="9">9级</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr class="form-inline">
+                    <td>
                         <input type="checkbox" name="date" id="date">
                         <label for="date">添加日期</label>
                         <span id="dateSelector" class="">

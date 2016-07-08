@@ -273,7 +273,7 @@
 </head>
 <body>
 
-	<div class="nav-container" id="nav">
+	{{-- <div class="nav-container" id="nav">
 		<ul class="nav-bar">
 			<li><a href="">今日练习报告</a></li>
 			<li><a href="">数据统计</a></li>
@@ -284,7 +284,7 @@
 				</form>
 			</li>
 		</ul>
-	</div>
+	</div> --}}
 
         <div id="report" class="container">
 	            <div class="report-title">

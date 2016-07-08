@@ -47,6 +47,8 @@ class MusicController extends Controller
         $organizer  = $request->get('organizer') or "";
         $operator   = $request->get('operator') or "";
         $date       = $request->get('date') or "";
+        $version    = $request->get('version') or "";
+        $level      = $request->get('level') or "";
 
         // if (empty($name) && empty($instrument) && empty($press)
         //     && empty($category) && empty($onshelf) && empty($organizer)
@@ -65,59 +67,64 @@ class MusicController extends Controller
                         ->with('editor');
 
         if (!empty($name)) {
-            $musics = $musics->where('name', 'like', "%$name%");
+            $musics->where('name', 'like', "%$name%");
         }
         if (!empty($instrument)) {
-            $musics = $musics->where('instrument_id', '=', "$instrument");
+            $musics->where('instrument_id', '=', "$instrument");
         }
         if (!empty($press)) {
-            $musics = $musics->where('press_id', '=', "$press");
+            $musics->where('press_id', '=', "$press");
         }
         if (!empty($category)) {
-            $musics = $musics->whereHas('tags', function ($query) use ($category) {
+            $musics->whereHas('tags', function ($query) use ($category) {
                 $query->where('id',"=", "$category");
             });
         }
         if (!empty($onshelf)) {
-            $musics = $musics->where('onshelf', '=', "$onshelf");
+            $musics->where('onshelf', '=', "$onshelf");
         }
         if (!empty($organizer)) {
-            $musics = $musics->where('organizer_id', '=', "$organizer");
+            $musics->where('organizer_id', '=', "$organizer");
         }
         if (!empty($operator)) {
-            $musics = $musics->where('operator', '=', "$operator");
+            $musics->where('operator', '=', "$operator");
         }
         if (!empty($date)) {
             $date_start = $date . " 00:00:00";
             $date_end = $date . " 23:23:59";
-            $musics = $musics->whereBetween('created_at', ["$date_start", "$date_end"]);
+            $musics->whereBetween('created_at', ["$date_start", "$date_end"]);
+        }
+        if (!empty($version)) {
+            $musics->where('version', $version);
+        }
+        if (!empty($level)) {
+            $musics->where('level', $level);
         }
 
-        $musics = $musics->paginate(10)->appends(
-                                                    ['name'      => $name,
-                                                    'instrument' => $instrument,
-                                                    'press'      => $press,
-                                                    'category'   => $category,
-                                                    'onshelf'    => $onshelf,
-                                                    'organizer'  => $organizer,
-                                                    'operator'   => $operator,
-                                                    'date'       => $date]
-                                                );
-        $name       = $request->get('name') or "";
-        $instrument = $request->get('instrument') or "";
-        $press      = $request->get('press') or 0;
-        $category   = $request->get('category') or "";
-        $onshelf    = $request->get('onshelf') or "";
-        $organizer  = $request->get('organizer') or "";
-        $operator   = $request->get('operator') or "";
-        $date       = $request->get('date') or "";
-        // $musics = Music::find(92)->press;
-        // return $musics;
-
+        // $musics = $musics->paginate(10)->appends(
+        //                                             ['name'      => $name,
+        //                                             'instrument' => $instrument,
+        //                                             'press'      => $press,
+        //                                             'category'   => $category,
+        //                                             'onshelf'    => $onshelf,
+        //                                             'organizer'  => $organizer,
+        //                                             'operator'   => $operator,
+        //                                             'date'       => $date]
+        //                                         );
+        // $name       = $request->get('name') or "";
+        // $instrument = $request->get('instrument') or "";
+        // $press      = $request->get('press') or 0;
+        // $category   = $request->get('category') or "";
+        // $onshelf    = $request->get('onshelf') or "";
+        // $organizer  = $request->get('organizer') or "";
+        // $operator   = $request->get('operator') or "";
+        // $date       = $request->get('date') or "";
+        $musics   = $musics->paginate(10)->appends($request->all());
+        $versions = Music::select('version')->distinct()->get();
         /**
          * 将结果返回给视图
          */
-        return view('music')->with(['musics' => $musics]);
+        return view('music')->with(['musics' => $musics, 'versions' => $versions]);
     }
 
     /**

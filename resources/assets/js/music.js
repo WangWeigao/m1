@@ -305,6 +305,21 @@ $(document).ready(function() {
         $("input[name=date]").prop('checked', true);
     }
 
+    // 保持“版本”的搜索条件
+    var version = $.getUrlParam('version');
+    if (version != '' && version != null) {
+        $("#version").val(version);
+        $("input[name=version]").val(version);
+        $("input[name=version]").prop('checked', true);
+    }
+
+    // 保持“钢琴等级”的搜索条件
+    var level = $.getUrlParam('level');
+    if (level != '' && level != null) {
+        $("#level").val(level);
+        $("input[name=level]").val(level);
+        $("input[name=level]").prop('checked', true);
+    }
     /**
      * select中选择值改变的时候，同步给select的value赋值
      */
@@ -314,6 +329,14 @@ $(document).ready(function() {
             console.log($(el).val());
         });
     });
+
+    // 如果点击checkbox时，value值为空，则将子option中的第一个赋值给他
+        $(":checkbox").each(function(index, el) {
+            if ($(el).val() == "on") {
+                $(el).val($(el).siblings('select').val());
+                console.log($(el).siblings('select').val());
+            }
+        });
 
     /**
      * 点击“添加多个乐曲”跳转到指定页面
