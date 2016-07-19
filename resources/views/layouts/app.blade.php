@@ -62,6 +62,7 @@
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="/music">曲库查询</a></li>
                                 <li><a href="/music/musicStatistics">曲库统计</a></li>
+                                <li><a href="/instrument">添加乐器</a></li>
                             </ul>
                         </li>
                         <li id="user-manager" class="dropdown">
