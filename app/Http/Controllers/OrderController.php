@@ -95,12 +95,12 @@ class OrderController extends Controller
         /**
          * 如果没有查询条件，返回空array
          */
-        if (empty($order_num_or_username) && empty($order_type)
-            && empty($vendor) && empty($order_status)
-            && empty($from_time)) {
-            return view('order')->with(['orders' => array(),
-                                        'is_start' => true]);
-        }
+        // if (empty($order_num_or_username) && empty($order_type)
+        //     && empty($vendor) && empty($order_status)
+        //     && empty($from_time)) {
+        //     return view('order')->with(['orders' => array(),
+        //                                 'is_start' => true]);
+        // }
 
 
         $orders = DB::table('robot_orders')

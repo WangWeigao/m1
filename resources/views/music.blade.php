@@ -12,7 +12,7 @@
                 {{-- <legend>曲目查询</legend> --}}
                 <div class="form-group form-inline">
                     {{-- <label for="">用户搜索</label> --}}
-                    <span>精确搜索: </span><input type="text" class="form-control" id="searchName" name="name" placeholder="请输入曲目名">
+                    <span>精确搜索: </span><input type="text" class="form-control" id="searchName" name="name" placeholder="请输入曲目名/作曲人">
                     <input type="hidden" name="field" value="uid">
                     <input type="hidden" name="order" value="asc">
                     <button type="submit" name="button" class= "btn btn-success" id="search">搜索</button>
@@ -62,12 +62,38 @@
                         <select id="operator" class="form-control"></select>
                     </td>
                     <td>
+                        <input type="checkbox" name="version" id="input_version">
+                        <label for="input_version">版本</label>
+                        <select id="version" class="form-control">
+                            @foreach($versions as $v)
+                                <option value="{{ $v->version }}">{{ $v->version }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <input type="checkbox" name="level" id="input_level">
+                        <label for="input_level">级别</label>
+                        <select id="level" class="form-control">
+                            <option value="1">1级</option>
+                            <option value="2">2级</option>
+                            <option value="3">3级</option>
+                            <option value="4">4级</option>
+                            <option value="5">5级</option>
+                            <option value="6">6级</option>
+                            <option value="7">7级</option>
+                            <option value="8">8级</option>
+                            <option value="9">9级</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr class="form-inline">
+                    <td>
                         <input type="checkbox" name="date" id="date">
                         <label for="date">添加日期</label>
                         <span id="dateSelector" class="">
-                            <select class="date_select" id="idYear" data=""></select>年
-                            <select class="date_select" id="idMonth" data=""></select>月
-                            <select class="date_select" id="idDay" data=""></select>日
+                            <select class="date_select form-control" id="idYear" data=""></select>年
+                            <select class="date_select form-control" id="idMonth" data=""></select>月
+                            <select class="date_select form-control" id="idDay" data=""></select>日
                         </span>
                     </td>
                     <td>
@@ -104,7 +130,7 @@
                     @endif
                     <tbody>
                         @forelse($musics as $item)
-                            <tr id="{{ $item->id or ''}}">
+                            <tr id="{{ $item->id or ''}}" class="list">
                                 <td><input type="checkbox" name="music_action[]"></td>
                                 <td class="{{ $item->instrument->id or '' }}">{{ $item->instrument->name or '' }}</td>
                                 <td>{{ $item->name or ''}}</td>

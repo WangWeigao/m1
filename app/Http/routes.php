@@ -33,9 +33,7 @@ Route::group(['middleware' => 'web'], function () {
     /**
      * Root directory of Web
      */
-    Route::get('/', function () {
-        return redirect('home');
-    });
+    Route::get('/', 'HomeController@index');
 
     // --------------------------------------乐曲路由----------------------------------------------
     /**
@@ -88,6 +86,8 @@ Route::group(['middleware' => 'web'], function () {
      * Default Route, useless.
      */
     Route::get('/home', 'HomeController@index');
+    // 添加乐器的UI界面
+    Route::resource('instrument', 'InstrumentController');
     // --------------------------------------用户路由----------------------------------------------
 
     /**
@@ -272,22 +272,25 @@ Route::group(['middleware' => 'web'], function () {
     // 更新某一个平台的版本信息
     Route::put('/app_version/{id}', 'ManageUpdateVersionController@updateVersion');
 
+    // --------------------------------------WAV自动化匹配测试--------------------------------------
+    Route::resource('auto_test_wav', 'AutoTestController');
+
     // 测试路由
     Route::get('/test', 'test001Controller@test');
     // 测试路由
     Route::get('/getPic', 'test001Controller@getPic');
     // Email发送成绩报告
     Route::get('/report', 'ReportListController@sendReport');
-    Route::get('/reportView', function() {return view('emails.test');});
+    // Route::get('/reportView', function() {return view('emails.test');});
     // 添加midi文件播放时长
     Route::get('/addMidiDuration', 'test001Controller@addDuration');
     // 获得midi文件的轨道数
     Route::get('/getTrackCount', 'test001Controller@getTrackCount');
 
     // 苗鹏测试通过URL生成图片
-    Route::get('/getchart', function() {
-        return view('index');
-    });
+    // Route::get('/getchart', function() {
+    //     return view('index');
+    // });
 
     // 测试 取得"上个月练习时间之和"
     Route::get('/getTable', 'test001Controller@getTable');

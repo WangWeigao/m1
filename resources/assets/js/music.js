@@ -305,6 +305,21 @@ $(document).ready(function() {
         $("input[name=date]").prop('checked', true);
     }
 
+    // 保持“版本”的搜索条件
+    var version = $.getUrlParam('version');
+    if (version != '' && version != null) {
+        $("#version").val(version);
+        $("input[name=version]").val(version);
+        $("input[name=version]").prop('checked', true);
+    }
+
+    // 保持“钢琴等级”的搜索条件
+    var level = $.getUrlParam('level');
+    if (level != '' && level != null) {
+        $("#level").val(level);
+        $("input[name=level]").val(level);
+        $("input[name=level]").prop('checked', true);
+    }
     /**
      * select中选择值改变的时候，同步给select的value赋值
      */
@@ -314,6 +329,14 @@ $(document).ready(function() {
             console.log($(el).val());
         });
     });
+
+    // 如果点击checkbox时，value值为空，则将子option中的第一个赋值给他
+        $(":checkbox").each(function(index, el) {
+            if ($(el).val() == "on") {
+                $(el).val($(el).siblings('select').val());
+                console.log($(el).siblings('select').val());
+            }
+        });
 
     /**
      * 点击“添加多个乐曲”跳转到指定页面
@@ -325,13 +348,44 @@ $(document).ready(function() {
     /**
      * 全部选中，全部取消
      */
-    $("#checkAll").bind('click', function(event) {
-        if (this.checked) {
-            $("input[name='music_action[]']").prop("checked", true);
+    // $("#checkAll").bind('click', function(event) {
+    //     if (this.checked) {
+    //         $("input[name='music_action[]']").prop("checked", true);
+    //     }else {
+    //         $("input[name='music_action[]']").prop("checked", false);
+    //     }
+    // });
+
+
+    // 实现全选按钮功能
+    $("#checkAll").click(function(event) {
+        if ($("#checkAll").prop('checked')) {
+            $(".list :checkbox").prop('checked', true);
         }else {
-            $("input[name='music_action[]']").prop("checked", false);
+            $(".list :checkbox").prop('checked', false);
         }
     });
+
+    // 完善全选checkbox状态
+    $(".list :checkbox").click(function() {
+        allchk();
+    });
+
+    // 检查是否处于全选状态
+    function allchk() {
+        var chksum = $(".list :checkbox").size();
+        var chk = 0;
+        $(".list :checkbox:checked").each(function(index, el) {
+            chk++;
+        });
+        if (chksum == chk) {
+            $("#checkAll").prop('checked', true);
+        }else {
+            $("#checkAll").prop('checked', false);
+        }
+    }
+
+
 
     /**
      * 批量审核通过

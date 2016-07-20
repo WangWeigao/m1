@@ -10,7 +10,7 @@
     <!-- Fonts -->
     {{-- <link href="http://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'> --}}
     {{-- <link href="http://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'> --}}
-    <link href="http://fonts.useso.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
+    {{-- <link href="http://fonts.useso.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'> --}}
     {{-- <link rel="stylesheet" href="/css/Lato.css" media="screen" title="no title" charset="utf-8"> --}}
 
     <!-- Styles -->
@@ -62,6 +62,7 @@
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="/music">曲库查询</a></li>
                                 <li><a href="/music/musicStatistics">曲库统计</a></li>
+                                <li><a href="/instrument">添加乐器</a></li>
                             </ul>
                         </li>
                         <li id="user-manager" class="dropdown">
@@ -89,6 +90,13 @@
                         </li>
                         <li>
                             <a href="/manage_update_version">版本升级管理</a>
+                        </li>
+                        <li>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">自动测试<span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="/auto_test_wav">结果查询</a></li>
+                                <li><a href="/auto_test_wav/create">调整匹配参数</a></li>
+                            </ul>
                         </li>
                         {{-- @can('access-finance')
                             <li class="disabled"><a href="#">结算系统</a></li>
