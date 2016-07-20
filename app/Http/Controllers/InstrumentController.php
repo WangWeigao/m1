@@ -75,7 +75,7 @@ class InstrumentController extends Controller
      */
     public function edit($id)
     {
-        $instrument = Instrument::find($id);
+        $instrument = Instrument::findOrFail($id);
         $name = $instrument->name;
         return view('instrument.edit')->with(['name' => $name, 'id' => $id]);
     }
@@ -89,9 +89,11 @@ class InstrumentController extends Controller
      */
     public function update(UpdateInstrumentPutRequest $request, $id)
     {
-        $instrument = Instrument::find($id);
+        $instrument = Instrument::findOrFail($id);
         $instrument->name = $request->name;
-        return redirect('/instrument');
+        if ($instrument->save()) {
+            return redirect('/instrument');
+        }
     }
 
     /**
