@@ -91,7 +91,7 @@ class test001Controller extends Controller
 
     public function test()
     {
-        return view('test');
+        return bcrypt('fwhkggyn');
     }
 
 

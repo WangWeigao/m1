@@ -157,6 +157,7 @@
                     <th><input type="checkbox" id="checkAll"></th>
                     <th>编号</th>
                     <th>用户账号</th>
+                    <th>第三方唯一标识</th>
                     <th>手机号</th>
                     <th>电子邮箱</th>
                     <th>地区</th>
@@ -184,21 +185,23 @@
                     <td><input type="checkbox" name="user_action[]"></td>
                     <input type="hidden" name="user_id" value="{{ $user->uid }}">
                     {{-- 编号 --}}
-                    <td>{{ $user->seq_num }}</td>
+                    <td>{{ $user->seq_num or '' }}</td>
                     {{-- 用户帐号 --}}
-                    <td><a href="{{ url('/user/basicinfo/' . $user->uid) }}" target="_blank">{{ $user->nickname }}</a></td>
+                    <td><a href="{{ url('/user/basicinfo/' . $user->uid) }}" target="_blank">{{ $user->nickname or '' }}</a></td>
+                    {{-- 第三方登录，用户获得的唯一字符串标识 --}}
+                    <td><a href="{{ url('/user/basicinfo/' . $user->uid) }}" target="_blank">{{ $user->device or '' }}</a></td>
                     {{-- 电话号码 --}}
-                    <td>{{ $user->cellphone }}</td>
+                    <td>{{ $user->cellphone or '' }}</td>
                     {{-- 电子邮箱 --}}
-                    <td>{{ $user->email }}</td>
+                    <td>{{ $user->email or '' }}</td>
                     {{-- 地区 --}}
-                    <td>{{ $user->city_id }}</td>
+                    <td>{{ $user->city_id or '' }}</td>
                     {{-- 性别 --}}
-                    <td>{{ $user->sex }}</td>
+                    <td>{{ $user->sex or '' }}</td>
                     {{-- 学龄 --}}
-                    <td>{{ $user->study_age }}</td>
+                    <td>{{ $user->study_age or '' }}</td>
                     {{-- 水平等级 --}}
-                    <td>{{ $user->user_grade }}</td>
+                    <td>{{ $user->user_grade or '' }}</td>
                     {{-- 指定乐器 --}}
                     <td>
                         {{-- @if(!empty($user->instrument_id))
