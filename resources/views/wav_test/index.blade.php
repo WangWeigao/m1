@@ -41,46 +41,48 @@
                         <td><button class="btn btn-success" data-pid="{{ $practice->pid }}" data-uid="{{ $practice->uid }}" name="sub_match">匹配一次</button></td>
                     </tr>
                 </table>
+                <!-- 若存在测试记录，则显示 -->
+                @if(count($results) > 0)
+                    <table class="table table-striped">
+                        <tr>
+                            <th>n</th>
+                            <th>s</th>
+                            <th>c</th>
+                            <th>w</th>
+                            <th>源MIDI文件路径</th>
+                            <th>匹配后的MIDI文件路径</th>
+                            <th>匹配分</th>
+                            <th>BPM分</th>
+                            <th>时间</th>
+                        </tr>
+                        @foreach($results as $result)
+                            <tr>
+                                <td>{{ $result->param_n or '' }}</td>
+                                <td>{{ $result->param_s or '' }}</td>
+                                <td>{{ $result->param_c or '' }}</td>
+                                <td>{{ $result->param_w or '' }}</td>
+                                <td><a href="{{ $result->origin_midi_path or '' }}">{{ $result->origin_midi_path or '' }}</a></td>
+                                <td><a href="{{ $result->midi_path or '' }}">{{ $result->midi_path or '' }}</a></td>
+                                <td>{{ $result->match_score or '' }}</td>
+                                <td>{{ $result->bpm_score or '' }}</td>
+                                <td>{{ $result->created_at or '' }}</td>
+                            </tr>
+                        @endforeach
+                    </table>
+                    <center>
+                        {{ $results->render() }}
+                    </center>
+                @else
+                    <center>
+                        <h3>没有查询到相关的测试数据</h3>
+                    </center>
+                @endif
+            @elseif(!is_null($practice))
+
             @else
                 <center>
                     <h3>没有这条练习记录，调整查询条件再试试吧</h3>
                 </center>
-            @endif
-
-            @if(count($results) > 0)
-                <table class="table table-striped">
-                    <tr>
-                        <th>n</th>
-                        <th>s</th>
-                        <th>c</th>
-                        <th>w</th>
-                        <th>源MIDI文件路径</th>
-                        <th>匹配后的MIDI文件路径</th>
-                        <th>匹配分</th>
-                        <th>BPM分</th>
-                        <th>时间</th>
-                    </tr>
-                    @foreach($results as $result)
-                        <tr>
-                            <td>{{ $result->param_n or '' }}</td>
-                            <td>{{ $result->param_s or '' }}</td>
-                            <td>{{ $result->param_c or '' }}</td>
-                            <td>{{ $result->param_w or '' }}</td>
-                            <td><a href="{{ $result->origin_midi_path or '' }}">{{ $result->origin_midi_path or '' }}</a></td>
-                            <td><a href="{{ $result->midi_path or '' }}">{{ $result->midi_path or '' }}</a></td>
-                            <td>{{ $result->match_score or '' }}</td>
-                            <td>{{ $result->bpm_score or '' }}</td>
-                            <td>{{ $result->created_at or '' }}</td>
-                        </tr>
-                    @endforeach
-                </table>
-                <center>
-                    {{ $results->render() }}
-                </center>
-            @else
-                {{-- <center>
-                    <h3>没有查询到相关的测试数据</h3>
-                </center> --}}
             @endif
         </div>
     </div>
@@ -92,11 +94,11 @@
         $(".btn-success").click(function() {
             console.log('点击按钮');
             function open() {
-                $("center").slideDown(1000);
+                $(".alert").slideDown(1000);
             }
             // $("center").slideDown('slow');
             function close1() {
-                $("center").slideUp(1000);
+                $(".alert").slideUp(1000);
             }
             $.ajax({
                 // url: 'http://120.26.243.208/AIPianoBear/api/waon',
