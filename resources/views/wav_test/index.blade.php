@@ -3,6 +3,7 @@
 @section('content')
     <div class="container">
         <form class="" action="/auto_test_wav" method="get">
+            {{ csrf_field() }}
             <div class="form-group">
               <label for="user_id">用户ID</label>
               <input type="text" class="form-control" id="user_id" name="user_id" placeholder="请填写用户ID, 如 666" value="{{ $user_id or '' }}">
@@ -92,7 +93,6 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $(".btn-success").click(function() {
-            console.log('点击按钮');
             function open() {
                 $(".alert").slideDown(1000);
             }
@@ -101,14 +101,16 @@
                 $(".alert").slideUp(1000);
             }
             $.ajax({
-                // url: 'http://120.26.243.208/AIPianoBear/api/waon',
-                url: "{{ url('/AIPianoBear/api/waon') }}",
+                url: "{{ url('/auto_test_wav/requestMatch') }}",
                 type: 'POST',
                 dataType: 'json',
                 data: {
                     wav: "{{ $wav_name or '' }}",
                     uid: $(".btn-success").attr('data-uid'),
                     pid: $(".btn-success").attr('data-pid')
+                },
+                headers: {
+                    'X-CSRF-Token': $("input[name=_token]").val()
                 }
             })
             .done(function() {
@@ -119,7 +121,7 @@
                 }
                 setTimeout(removeAttr, 10000);
             })
-            .fail(function() {
+            .fail(function(data) {
                 // 禁用"匹配一次"按钮10秒
                 $("button[name=sub_match]").attr('disabled', true);
                 function removeAttr() {
@@ -130,6 +132,7 @@
                 // 修改提示信息
                 $("h4").html('啊哦，服务器出错了，稍等一会再试吧');
                 $("h4").parent().attr('class', 'alert alert-danger');
+                console.log(data);
             })
             .always(function() {
                 // 显示提示信息
