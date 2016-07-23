@@ -94,7 +94,6 @@ class test001Controller extends Controller
         return bcrypt('fwhkggyn');
     }
 
-
     public function getPic(Request $request)
     {
         $id = 468;

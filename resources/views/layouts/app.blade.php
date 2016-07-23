@@ -92,11 +92,7 @@
                             <a href="/manage_update_version">版本升级管理</a>
                         </li>
                         <li>
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">自动测试<span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="/auto_test_wav">结果查询</a></li>
-                                <li><a href="/auto_test_wav/create">调整匹配参数</a></li>
-                            </ul>
+                            <a href="/auto_test_wav">自动测试</a>
                         </li>
                         {{-- @can('access-finance')
                             <li class="disabled"><a href="#">结算系统</a></li>

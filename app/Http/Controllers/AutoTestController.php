@@ -28,10 +28,13 @@ class AutoTestController extends Controller
             $wav_name = $request->get('wav_name');
 
             // 查找practice表的信息
-            $practice = Practice::with('music', 'user')
-                                    ->where('uid', $user_id)
-                                    ->where('wav_path', 'like', "%$wav_name%")
-                                    ->first();
+            $practice = Practice::with([
+                                    'user' => function($query) { $query->select('uid', 'nickname'); },
+                                    'music' => function($query) { $query->select('id', 'name'); }
+                                ])
+                                ->where('uid', $user_id)
+                                ->where('wav_path', '/midis/' . $user_id . '/' . $wav_name)
+                                ->first();
 
             // 查找match_for_tests表的信息
             $results = MatchForTest::where('practice_id', $practice['pid'])
