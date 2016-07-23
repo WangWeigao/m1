@@ -99,7 +99,8 @@
                 $("center").slideUp(1000);
             }
             $.ajax({
-                url: 'http://120.26.243.208/AIPianoBear/api/waon',
+                // url: 'http://120.26.243.208/AIPianoBear/api/waon',
+                url: "{{ url('/AIPianoBear/api/waon') }}",
                 type: 'POST',
                 dataType: 'json',
                 data: {
