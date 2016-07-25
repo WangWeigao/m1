@@ -56,14 +56,67 @@ class AutoTestController extends Controller
         }
     }
 
+
+public function generateAndMatchMidi(Request $request)
+{
+    $midi_exists = self::midiExists($request);
+    if (!$midi_exists) {
+        self::midiExists($request);
+    }
+    return self::matchMidi($request);
+}
+
+
 /**
- * 生成midi文件
+* midi文件是否存在
+* @param  Request $request [description]
+* @return [type]           [description]
+*/
+private static function midiExists(Request $request)
+{
+    $wav = $request->input('wav');
+    $uid = $request->input('uid');
+    $pid = $request->input('pid');
+
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => "http://120.26.243.208/AIPianoBear/api/waonOver",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 180,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "POST",
+        CURLOPT_POSTFIELDS => "-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"wav\"\r\n\r\n\"" . $wav . "\"\r\n-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"uid\"\r\n\r\n" . $uid . "\r\n-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"pid\"\r\n\r\n" . $pid . "\r\n-----011000010111000001101001--",
+        CURLOPT_HTTPHEADER => array(
+            "cache-control: no-cache",
+            "content-type: multipart/form-data; boundary=---011000010111000001101001",
+            "postman-token: bc0ae2c8-dbe8-648f-0c21-bac2fb184a20"
+        ),
+    ));
+
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+
+    curl_close($curl);
+
+    if ($err) {
+        return  "cURL Error #:" . $err;
+    } else {
+        return $response;
+    }
+}
+
+
+/**
+ * 生成midi文件(wav转midi)
  * @param  [string] $wav [用来生成midi的wav文件名称]
  * @param  [int] $uid [practice表中wav文件所属的uid]
  * @param  [int] $pid [practice表中wav文件所属的pid]
  * @return [boolean]      [生成结果]
  */
-public function midiIsGenerated(Request $request)
+private static function midiIsGenerated(Request $request)
 {
     $wav = $request->input('wav');
     $uid = $request->input('uid');
@@ -101,52 +154,10 @@ public function midiIsGenerated(Request $request)
 
 
 /**
- * midi文件是否存在
- * @param  Request $request [description]
- * @return [type]           [description]
- */
-private function midiExists(Request $request)
-{
-    $wav = $request->input('wav');
-    $uid = $request->input('uid');
-    $pid = $request->input('pid');
-
-    $curl = curl_init();
-
-    curl_setopt_array($curl, array(
-      CURLOPT_URL => "http://120.26.243.208/AIPianoBear/api/waonOver",
-      CURLOPT_RETURNTRANSFER => true,
-      CURLOPT_ENCODING => "",
-      CURLOPT_MAXREDIRS => 10,
-      CURLOPT_TIMEOUT => 180,
-      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-      CURLOPT_CUSTOMREQUEST => "POST",
-      CURLOPT_POSTFIELDS => "-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"wav\"\r\n\r\n\"" . $wav . "\"\r\n-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"uid\"\r\n\r\n" . $uid . "\r\n-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"pid\"\r\n\r\n" . $pid . "\r\n-----011000010111000001101001--",
-      CURLOPT_HTTPHEADER => array(
-        "cache-control: no-cache",
-        "content-type: multipart/form-data; boundary=---011000010111000001101001",
-        "postman-token: bc0ae2c8-dbe8-648f-0c21-bac2fb184a20"
-      ),
-    ));
-
-    $response = curl_exec($curl);
-    $err = curl_error($curl);
-
-    curl_close($curl);
-
-    if ($err) {
-      return  "cURL Error #:" . $err;
-    } else {
-      return $response;
-    }
-}
-
-
-/**
  * 执行midi匹配
  * @param Request $request [description]
  */
-public function WaonInterface(Request $request)
+public function matchMidi(Request $request)
 {
     $wav = $request->get('wav');
     $uid = $request->get('uid');

@@ -274,9 +274,7 @@ Route::group(['middleware' => 'web'], function () {
 
     // --------------------------------------WAV自动化匹配测试--------------------------------------
     // 匹配midi
-    Route::post('/auto_test_wav/requestMatch', 'AutoTestController@WaonInterface');
-    // 查看midi是否存在
-    Route::post('/auto_test_wav/midiIsGenerated', 'AutoTestController@midiIsGenerated');
+    Route::post('/auto_test_wav/generateAndMatchMidi', 'AutoTestController@generateAndMatchMidi');
     // resource路由
     Route::resource('auto_test_wav', 'AutoTestController');
 

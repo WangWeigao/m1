@@ -40,8 +40,8 @@
                         <td><a href="{{ $practice->wav_path or '' }}">{{ $practice->wav_path or '' }}</a></td>
                         <td>{{ $practice->practice_date or '' }}</td>
                         <td>
-                            <button class="btn btn-success" data-pid="{{ $practice->pid }}" data-uid="{{ $practice->uid }}" name="generate_midi" {{ $midi_exists ? 'disabled' : '' }}>生成midi</button>
-                            <button class="btn btn-success" data-pid="{{ $practice->pid }}" data-uid="{{ $practice->uid }}" name="sub_match" {{ $midi_exists ? '' : 'disabled' }}>匹配一次</button>
+                            {{-- <button class="btn btn-success" data-pid="{{ $practice->pid }}" data-uid="{{ $practice->uid }}" name="generate_midi" {{ $midi_exists ? 'disabled' : '' }}>生成midi</button> --}}
+                            <button class="btn btn-success" data-pid="{{ $practice->pid }}" data-uid="{{ $practice->uid }}" name="sub_match">匹配一次</button>
                         </td>
                     </tr>
                 </table>
@@ -95,59 +95,59 @@
 @section('js')
 <script type="text/javascript">
     $(document).ready(function() {
-        // 生成midi
-        $("button[name=generate_midi]").click(function() {
-            // 显示提示框
-            function open() {
-                $(".alert").slideDown(1000);
-            }
-
-            // 关闭提示框
-            function close() {
-                $(".alert").slideUp(1000);
-            }
-
-            // 更改按钮显示信息
-            $("button[name=generate_midi]").html('正在生成midi...');
-            // 禁用按钮
-            $("button[name=generate_midi]").prop('disabled', true);
-
-            $.ajax({
-                url: "{{ url('/auto_test_wav/midiIsGenerated') }}",
-                type: 'POST',
-                // dataType: 'default: Intelligent Guess (Other values: xml, json, script, or html)',
-                dataType: 'json',
-                data: {
-                    wav: "{{ $wav_name or '' }}",
-                    uid: $(".btn-success").attr('data-uid'),
-                    pid: $(".btn-success").attr('data-pid')
-                },
-                headers: {
-                    'X-CSRF-Token': $("input[name=_token]").val()
-                }
-            })
-            .done(function(data) {
-                // 更改提示信息
-                $(".alert h4").html('已经生成MIDI文件');
-                // 更改"匹配一次"按钮的状态
-                $("button[name=sub_match]").removeAttr('disabled');
-            })
-            .fail(function() {
-                // 显示错误信息，并将类更改成alert-danger
-                $(".alert h4").html('生成MIDI失败');
-                $(".alert").attr('class', 'alert alert-danger');
-                // 生成midi失败，允许再次执行此操作
-                $("button[name=generate_midi]").removeAttr('disabled');
-            })
-            .always(function() {
-                // 恢复按钮的文字
-                $("button[name=generate_midi]").html('生成midi');
-                // 显示提示信息
-                open();
-                setTimeout(close, 5000)
-            });
-
-        });
+        // // 生成midi
+        // $("button[name=generate_midi]").click(function() {
+        //     // 显示提示框
+        //     function open() {
+        //         $(".alert").slideDown(1000);
+        //     }
+        //
+        //     // 关闭提示框
+        //     function close() {
+        //         $(".alert").slideUp(1000);
+        //     }
+        //
+        //     // 更改按钮显示信息
+        //     $("button[name=generate_midi]").html('正在生成midi...');
+        //     // 禁用按钮
+        //     $("button[name=generate_midi]").prop('disabled', true);
+        //
+        //     $.ajax({
+        //         url: "{{ url('/auto_test_wav/midiIsGenerated') }}",
+        //         type: 'POST',
+        //         // dataType: 'default: Intelligent Guess (Other values: xml, json, script, or html)',
+        //         dataType: 'json',
+        //         data: {
+        //             wav: "{{ $wav_name or '' }}",
+        //             uid: $(".btn-success").attr('data-uid'),
+        //             pid: $(".btn-success").attr('data-pid')
+        //         },
+        //         headers: {
+        //             'X-CSRF-Token': $("input[name=_token]").val()
+        //         }
+        //     })
+        //     .done(function(data) {
+        //         // 更改提示信息
+        //         $(".alert h4").html('已经生成MIDI文件');
+        //         // 更改"匹配一次"按钮的状态
+        //         $("button[name=sub_match]").removeAttr('disabled');
+        //     })
+        //     .fail(function() {
+        //         // 显示错误信息，并将类更改成alert-danger
+        //         $(".alert h4").html('生成MIDI失败');
+        //         $(".alert").attr('class', 'alert alert-danger');
+        //         // 生成midi失败，允许再次执行此操作
+        //         $("button[name=generate_midi]").removeAttr('disabled');
+        //     })
+        //     .always(function() {
+        //         // 恢复按钮的文字
+        //         $("button[name=generate_midi]").html('生成midi');
+        //         // 显示提示信息
+        //         open();
+        //         setTimeout(close, 5000)
+        //     });
+        //
+        // });
 
 
 
@@ -172,7 +172,7 @@
             }
 
             $.ajax({
-                url: "{{ url('/auto_test_wav/requestMatch') }}",
+                url: "{{ url('/auto_test_wav/generateAndMatchMidi') }}",
                 type: 'POST',
                 dataType: 'json',
                 data: {
@@ -205,7 +205,7 @@
 
                 // 显示提示信息, 5秒后关闭
                 open();
-                setTimeout(close, 5000);
+                setTimeout(close, 9000);
             });
         });
     });
