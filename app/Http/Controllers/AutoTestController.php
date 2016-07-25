@@ -51,6 +51,18 @@ class AutoTestController extends Controller
 
 public function generateAndMatchMidi(Request $request)
 {
+    echo 'true';
+
+    // =======这部分是将输出内容刷新到用户浏览器并断开和浏览器的连接=====
+    // 如果使用的是php-fpm
+    if(function_exists('fastcgi_finish_request')){
+        // 刷新buffer
+        ob_flush();
+        flush();
+        // 断开浏览器连接
+        fastcgi_finish_request();
+    }
+    // ========下面是后台要继续执行的内容========
     // 查看midi是否已经存在
     $midi_exists = self::midiExists($request);
     // 若midi不存在，执行wav转midi
@@ -60,7 +72,6 @@ public function generateAndMatchMidi(Request $request)
     // 匹配midi
     self::matchMidi($request);
     // 由于'wav转midi'和'匹配midi'花费时间较长，此处不判断，直接返回true
-    return 'true';
 }
 
 
