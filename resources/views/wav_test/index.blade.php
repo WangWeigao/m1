@@ -18,7 +18,7 @@
         </form>
         <br>
         <center>
-            <div class="alert alert-success"><h4>请稍候刷新页面查询结果</h4></div>
+            <div class="alert alert-success"><h4></h4></div>
         </center>
         <div class="">
             @if(count($practice) > 0)
@@ -39,7 +39,10 @@
                         <td>{{ $practice->practice_time or '' }}</td>
                         <td><a href="{{ $practice->wav_path or '' }}">{{ $practice->wav_path or '' }}</a></td>
                         <td>{{ $practice->practice_date or '' }}</td>
-                        <td><button class="btn btn-success" data-pid="{{ $practice->pid }}" data-uid="{{ $practice->uid }}" name="sub_match">匹配一次</button></td>
+                        <td>
+                            <button class="btn btn-success" data-pid="{{ $practice->pid }}" data-uid="{{ $practice->uid }}" name="generate_midi" {{ $midi_exists ? 'disabled' : '' }}>生成midi</button>
+                            <button class="btn btn-success" data-pid="{{ $practice->pid }}" data-uid="{{ $practice->uid }}" name="sub_match" {{ $midi_exists ? '' : 'disabled' }}>匹配一次</button>
+                        </td>
                     </tr>
                 </table>
                 <!-- 若存在测试记录，则显示 -->
@@ -92,14 +95,81 @@
 @section('js')
 <script type="text/javascript">
     $(document).ready(function() {
-        $(".btn-success").click(function() {
+        // 生成midi
+        $("button[name=generate_midi]").click(function() {
+            // 显示提示框
             function open() {
                 $(".alert").slideDown(1000);
             }
-            // $("center").slideDown('slow');
-            function close1() {
+
+            // 关闭提示框
+            function close() {
                 $(".alert").slideUp(1000);
             }
+
+            // 更改按钮显示信息
+            $("button[name=generate_midi]").html('正在生成midi...');
+            // 禁用按钮
+            $("button[name=generate_midi]").prop('disabled', true);
+
+            $.ajax({
+                url: "{{ url('/auto_test_wav/midiIsGenerated') }}",
+                type: 'POST',
+                // dataType: 'default: Intelligent Guess (Other values: xml, json, script, or html)',
+                dataType: 'json',
+                data: {
+                    wav: "{{ $wav_name or '' }}",
+                    uid: $(".btn-success").attr('data-uid'),
+                    pid: $(".btn-success").attr('data-pid')
+                },
+                headers: {
+                    'X-CSRF-Token': $("input[name=_token]").val()
+                }
+            })
+            .done(function(data) {
+                // 更改提示信息
+                $(".alert h4").html('已经生成MIDI文件');
+                // 更改"匹配一次"按钮的状态
+                $("button[name=sub_match]").removeAttr('disabled');
+            })
+            .fail(function() {
+                // 显示错误信息，并将类更改成alert-danger
+                $(".alert h4").html('生成MIDI失败');
+                $(".alert").attr('class', 'alert alert-danger');
+                // 生成midi失败，允许再次执行此操作
+                $("button[name=generate_midi]").removeAttr('disabled');
+            })
+            .always(function() {
+                // 恢复按钮的文字
+                $("button[name=generate_midi]").html('生成midi');
+                // 显示提示信息
+                open();
+                setTimeout(close, 5000)
+            });
+
+        });
+
+
+
+        // 匹配一次
+        $("button[name=sub_match]").click(function() {
+            // 禁用按钮
+            $("button[name=sub_match]").attr('disabled', true);
+
+            // 打开提示框
+            function open() {
+                $(".alert").slideDown(1000);
+            }
+            // 关闭提示框
+            function close() {
+                $(".alert").slideUp(1000);
+            }
+
+            // 移除disabled属性，恢复按钮可点击状态
+            function removeAttr() {
+                $("button[name=sub_match]").removeAttr('disabled');
+            }
+
             $.ajax({
                 url: "{{ url('/auto_test_wav/requestMatch') }}",
                 type: 'POST',
@@ -114,30 +184,24 @@
                 }
             })
             .done(function() {
-                // 禁用"匹配一次"按钮10秒
-                $("button[name=sub_match]").attr('disabled', true);
-                function removeAttr() {
-                    $("button[name=sub_match]").removeAttr('disabled');
-                }
+                // 禁用"匹配一次"按钮，10秒后恢复
                 setTimeout(removeAttr, 10000);
+
+                // 添加提示信息
+                $(".alert h4").html('请稍候刷新页面查询结果');
             })
-            .fail(function(data) {
-                // 禁用"匹配一次"按钮10秒
-                $("button[name=sub_match]").attr('disabled', true);
-                function removeAttr() {
-                    $("button[name=sub_match]").removeAttr('disabled');
-                }
+            .fail(function() {
+                // 禁用"匹配一次"按钮，2秒后恢复
                 setTimeout(removeAttr, 2000);
 
-                // 修改提示信息
+                // 添加提示信息
                 $("h4").html('啊哦，服务器出错了，稍等一会再试吧');
-                $("h4").parent().attr('class', 'alert alert-danger');
-                console.log(data);
+                $(".alert").attr('class', 'alert alert-danger');
             })
             .always(function() {
-                // 显示提示信息
+                // 显示提示信息, 5秒后关闭
                 open();
-                setTimeout(close1, 5000);
+                setTimeout(close, 5000);
             });
         });
     });

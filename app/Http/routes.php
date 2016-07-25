@@ -273,7 +273,11 @@ Route::group(['middleware' => 'web'], function () {
     Route::put('/app_version/{id}', 'ManageUpdateVersionController@updateVersion');
 
     // --------------------------------------WAV自动化匹配测试--------------------------------------
+    // 匹配midi
     Route::post('/auto_test_wav/requestMatch', 'AutoTestController@WaonInterface');
+    // 查看midi是否存在
+    Route::post('/auto_test_wav/midiIsGenerated', 'AutoTestController@midiIsGenerated');
+    // resource路由
     Route::resource('auto_test_wav', 'AutoTestController');
 
     // 测试路由
