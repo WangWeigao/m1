@@ -190,6 +190,7 @@
 
                 // 添加提示信息
                 $(".alert h4").html('请稍候刷新页面查询结果');
+                $(".alert").attr('class', 'alert alert-success');
             })
             .fail(function() {
                 // 禁用"匹配一次"按钮，2秒后恢复

@@ -38,19 +38,11 @@ class AutoTestController extends Controller
 
             // 查找match_for_tests表的信息
             $results = MatchForTest::where('practice_id', $practice['pid'])
-                                    ->orderBy('created_at', 'desc')
+                                    ->orderBy('id', 'desc')
                                     ->paginate(100)
                                     ->appends($request->all());
 
-            $view = view('wav_test.index')->with($request->all())->with('results', $results)->with('practice', $practice);
-
-            // 判断midi文件是否已经生成
-            if (!is_null($practice)) {
-                $midi_exists = $this->midiExists(new Request(['wav' => $wav_name, 'uid' => $user_id, 'pid' => $practice->pid]));
-                $view = $view->with('midi_exists', $midi_exists);
-            }
-
-            return $view;
+            return view('wav_test.index')->with($request->all())->with('results', $results)->with('practice', $practice);
         } else {
             return view('wav_test.index')->with('practice', []);
         }
@@ -59,11 +51,16 @@ class AutoTestController extends Controller
 
 public function generateAndMatchMidi(Request $request)
 {
+    // 查看midi是否已经存在
     $midi_exists = self::midiExists($request);
+    // 若midi不存在，执行wav转midi
     if (!$midi_exists) {
         self::midiExists($request);
     }
-    return self::matchMidi($request);
+    // 匹配midi
+    self::matchMidi($request);
+    // 由于'wav转midi'和'匹配midi'花费时间较长，此处不判断，直接返回true
+    return 'true';
 }
 
 
