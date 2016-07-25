@@ -155,6 +155,7 @@
         $("button[name=sub_match]").click(function() {
             // 禁用按钮
             $("button[name=sub_match]").attr('disabled', true);
+            $("button[name=sub_match]").html('正在匹配...');
 
             // 打开提示框
             function open() {
@@ -199,6 +200,9 @@
                 $(".alert").attr('class', 'alert alert-danger');
             })
             .always(function() {
+                // 恢复"匹配一次"按钮状态
+                $("button[name=sub_match]").html('匹配一次');
+
                 // 显示提示信息, 5秒后关闭
                 open();
                 setTimeout(close, 5000);
