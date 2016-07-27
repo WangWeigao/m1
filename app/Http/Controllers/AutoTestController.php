@@ -9,6 +9,7 @@ use App\Http\Requests\QueryWavGetRequest;
 use App\MatchForTest;
 use App\Practice;
 use Log;
+use GuzzleHttp\Client;
 
 class AutoTestController extends Controller
 {
@@ -72,7 +73,7 @@ public function generateAndMatchMidi(Request $request)
     if ($midi_exists == 'false') {
         Log::info('[转换 midi] ' . $request->uid . '/' . $request->pid . '/' . $request->wav);
         // wav转midi
-        self::midiIsGenerated($request);
+        $this->midiIsGenerated($request);
     } else {
         Log::info('[匹配 midi] ' . $request->uid . '/' . $request->pid . '/' . $request->wav);
         // 匹配midi
@@ -86,40 +87,24 @@ public function generateAndMatchMidi(Request $request)
 * @param  Request $request [description]
 * @return [type]           [description]
 */
-private static function midiExists(Request $request)
+public function midiExists(Request $request)
 {
     $wav = $request->input('wav');
     $uid = $request->input('uid');
     $pid = $request->input('pid');
 
-    $curl = curl_init();
+    $client = new Client(['base_uri' => 'http://120.26.243.208/AIPianoBear/api/']);
+    $response = $client->request('POST', 'waonOver', [
+        'form_params' => [
+            'wav' => $wav,
+            'uid' => $uid,
+            'pid' => $pid
+        ]
+    ]);
+    $result = $response->getBody()->getContents();
 
-    curl_setopt_array($curl, array(
-        CURLOPT_URL => "http://120.26.243.208/AIPianoBear/api/waonOver",
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => "",
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 180,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => "POST",
-        CURLOPT_POSTFIELDS => "-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"wav\"\r\n\r\n\"" . $wav . "\"\r\n-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"uid\"\r\n\r\n" . $uid . "\r\n-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"pid\"\r\n\r\n" . $pid . "\r\n-----011000010111000001101001--",
-        CURLOPT_HTTPHEADER => array(
-            "cache-control: no-cache",
-            "content-type: multipart/form-data; boundary=---011000010111000001101001",
-            "postman-token: bc0ae2c8-dbe8-648f-0c21-bac2fb184a20"
-        ),
-    ));
+    return $result;
 
-    $response = curl_exec($curl);
-    $err = curl_error($curl);
-
-    curl_close($curl);
-
-    if ($err) {
-        return  "cURL Error #:" . $err;
-    } else {
-        return $response;
-    }
 }
 
 
@@ -136,34 +121,17 @@ private static function midiIsGenerated(Request $request)
     $uid = $request->input('uid');
     $pid = $request->input('pid');
 
-    $curl = curl_init();
+    $client = new Client(['base_uri' => 'http://120.26.243.208/AIPianoBear/api/']);
+    $response = $client->request('POST', 'waon', [
+        'form_params' => [
+            'wav' => $wav,
+            'uid' => $uid,
+            'pid' => $pid
+        ]
+    ]);
+    $result = $response->getBody()->getContents();
 
-    curl_setopt_array($curl, array(
-      CURLOPT_URL => "http://120.26.243.208/AIPianoBear/api/waon",
-      CURLOPT_RETURNTRANSFER => true,
-      CURLOPT_ENCODING => "",
-      CURLOPT_MAXREDIRS => 10,
-      CURLOPT_TIMEOUT => 180,
-      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-      CURLOPT_CUSTOMREQUEST => "POST",
-      CURLOPT_POSTFIELDS => "-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"wav\"\r\n\r\n\"" . $wav . "\"\r\n-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"uid\"\r\n\r\n" . $uid . "\r\n-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"pid\"\r\n\r\n" . $pid . "\r\n-----011000010111000001101001--",
-      CURLOPT_HTTPHEADER => array(
-        "cache-control: no-cache",
-        "content-type: multipart/form-data; boundary=---011000010111000001101001",
-        "postman-token: bc0ae2c8-dbe8-648f-0c21-bac2fb184a20"
-      ),
-    ));
-
-    $response = curl_exec($curl);
-    $err = curl_error($curl);
-
-    curl_close($curl);
-
-    if ($err) {
-      return "cURL Error #:" . $err;
-    } else {
-      return $response;
-    }
+    return $result;
 }
 
 
@@ -173,38 +141,21 @@ private static function midiIsGenerated(Request $request)
  */
 public function matchMidi(Request $request)
 {
-    $wav = $request->get('wav');
-    $uid = $request->get('uid');
-    $pid = $request->get('pid');
+    $wav = $request->input('wav');
+    $uid = $request->input('uid');
+    $pid = $request->input('pid');
 
-    $curl = curl_init();
+    $client = new Client(['base_uri' => 'http://120.26.243.208/AIPianoBear/api/']);
+    $response = $client->request('POST', 'match', [
+        'form_params' => [
+            'wav' => $wav,
+            'uid' => $uid,
+            'pid' => $pid
+        ]
+    ]);
+    $result = $response->getBody()->getContents();
 
-    curl_setopt_array($curl, array(
-      CURLOPT_URL => "http://120.26.243.208/AIPianoBear/api/match",
-      CURLOPT_RETURNTRANSFER => true,
-      CURLOPT_ENCODING => "",
-      CURLOPT_MAXREDIRS => 10,
-      CURLOPT_TIMEOUT => 180,
-      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-      CURLOPT_CUSTOMREQUEST => "POST",
-      CURLOPT_POSTFIELDS => "-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"wav\"\r\n\r\n\"" . $wav . "\"\r\n-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"uid\"\r\n\r\n" . $uid . "\r\n-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"pid\"\r\n\r\n" . $pid . "\r\n-----011000010111000001101001--",
-      CURLOPT_HTTPHEADER => array(
-        "cache-control: no-cache",
-        "content-type: multipart/form-data; boundary=---011000010111000001101001",
-        "postman-token: bc0ae2c8-dbe8-648f-0c21-bac2fb184a20"
-      ),
-    ));
-
-    $response = curl_exec($curl);
-    $err = curl_error($curl);
-
-    curl_close($curl);
-
-    if ($err) {
-      return "cURL Error #:" . $err;
-    } else {
-      return $response;
-    }
+    return $result;
 }
 
 
