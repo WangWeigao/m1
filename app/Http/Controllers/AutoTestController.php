@@ -63,15 +63,17 @@ public function generateAndMatchMidi(Request $request)
         fastcgi_finish_request();
     }
     // ========下面是后台要继续执行的内容========
+
     // 查看midi是否已经存在
     $midi_exists = self::midiExists($request);
-    // 若midi不存在，执行wav转midi
+    // 若midi不存在，执行wav转midi, 否则执行匹配midi
     if (!$midi_exists) {
+        // wav转midi
         self::midiExists($request);
+    } else {
+        // 匹配midi
+        self::matchMidi($request);
     }
-    // 匹配midi
-    self::matchMidi($request);
-    // 由于'wav转midi'和'匹配midi'花费时间较长，此处不判断，直接返回true
 }
 
 

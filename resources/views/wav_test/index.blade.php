@@ -35,7 +35,7 @@
                     <tr>
                         <td>{{ $practice->music->name or '' }}</td>
                         <td>{{ $practice->user->nickname or '' }}</td>
-                        <td>{{ $practice->user->uid or '' }}</td>
+                        <td>{{ $practice->uid or '' }}</td>
                         <td>{{ $practice->practice_time or '' }}</td>
                         <td><a href="{{ $practice->wav_path or '' }}">{{ $practice->wav_path or '' }}</a></td>
                         <td>{{ $practice->practice_date or '' }}</td>
@@ -53,8 +53,8 @@
                             <th>s</th>
                             <th>c</th>
                             <th>w</th>
-                            <th>源MIDI文件路径</th>
-                            <th>匹配后的MIDI文件路径</th>
+                            {{-- <th>源MIDI文件路径</th> --}}
+                            <th>转换后的MIDI文件路径</th>
                             <th>匹配分</th>
                             <th>BPM分</th>
                             <th>时间</th>
@@ -65,8 +65,8 @@
                                 <td>{{ $result->param_s or '' }}</td>
                                 <td>{{ $result->param_c or '' }}</td>
                                 <td>{{ $result->param_w or '' }}</td>
-                                <td><a href="{{ $result->origin_midi_path or '' }}">{{ $result->origin_midi_path or '' }}</a></td>
-                                <td><a href="{{ $result->midi_path or '' }}">{{ $result->midi_path or '' }}</a></td>
+                                {{-- <td><a href="{{ $result->origin_midi_path or '' }}">{{ $result->origin_midi_path or '' }}</a></td> --}}
+                                <td><a href="/midis/{{ $practice->uid }}/{{ $result->midi_path or '' }}">{{ $result->midi_path or '' }}</a></td>
                                 <td>{{ $result->match_score or '' }}</td>
                                 <td>{{ $result->bpm_score or '' }}</td>
                                 <td>{{ $result->created_at or '' }}</td>
