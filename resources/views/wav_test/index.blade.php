@@ -66,7 +66,7 @@
                                 <td>{{ $result->param_c or '' }}</td>
                                 <td>{{ $result->param_w or '' }}</td>
                                 {{-- <td><a href="{{ $result->origin_midi_path or '' }}">{{ $result->origin_midi_path or '' }}</a></td> --}}
-                                <td><a href="/midis/{{ $practice->uid }}/{{ $result->midi_path or '' }}">{{ $result->midi_path or '' }}</a></td>
+                                <td><a href="http://120.26.243.208/midis/{{ $result->midi_path or '' }}">{{ $result->midi_path or '' }}</a></td>
                                 <td>{{ $result->match_score or '' }}</td>
                                 <td>{{ $result->bpm_score or '' }}</td>
                                 <td>{{ $result->created_at or '' }}</td>
