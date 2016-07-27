@@ -37,7 +37,7 @@
                         <td>{{ $practice->user->nickname or '' }}</td>
                         <td>{{ $practice->uid or '' }}</td>
                         <td>{{ $practice->practice_time or '' }}</td>
-                        <td><a href="{{ $practice->wav_path or '' }}">{{ $practice->wav_path or '' }}</a></td>
+                        <td><a href="http://120.26.243.208{{ $practice->wav_path or '' }}">{{ $practice->wav_path or '' }}</a></td>
                         <td>{{ $practice->practice_date or '' }}</td>
                         <td>
                             {{-- <button class="btn btn-success" data-pid="{{ $practice->pid }}" data-uid="{{ $practice->uid }}" name="generate_midi" {{ $midi_exists ? 'disabled' : '' }}>生成midi</button> --}}
