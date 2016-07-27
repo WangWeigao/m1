@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Requests\QueryWavGetRequest;
 use App\MatchForTest;
 use App\Practice;
+use Log;
 
 class AutoTestController extends Controller
 {
@@ -66,11 +67,14 @@ public function generateAndMatchMidi(Request $request)
 
     // 查看midi是否已经存在
     $midi_exists = self::midiExists($request);
+    Log::info('[查询 midi是否生成] ' . $midi_exists);
     // 若midi不存在，执行wav转midi, 否则执行匹配midi
-    if (!$midi_exists) {
+    if ($midi_exists == 'false') {
+        Log::info('[转换 midi] ' . $request->uid . '/' . $request->pid . '/' . $request->wav);
         // wav转midi
-        self::midiExists($request);
+        self::midiIsGenerated($request);
     } else {
+        Log::info('[匹配 midi] ' . $request->uid . '/' . $request->pid . '/' . $request->wav);
         // 匹配midi
         self::matchMidi($request);
     }
