@@ -86,10 +86,11 @@ class UserController extends Controller
          * 按字段不为这的情况，进行SQL语句拼接
          * "用户名"不为空
          */
-        $users = StudentUser::where(function ($query) {
-            $query->where('usertype', '=', 1)
-                  ->orWhere('usertype', '<>', 1);
-        });
+        // $users = StudentUser::where(function ($query) {
+        //     $query->where('usertype', '=', 1)
+        //           ->orWhere('usertype', '<>', 1);
+        // });
+        $users = new StudentUser;
         if (!empty($user_cellphone_email)) {
             $appends_arr = array_merge($appends_arr, ['user_cellphone_email' => $user_cellphone_email]);
             $users->where(function  ($query) use ($user_cellphone_email) {
