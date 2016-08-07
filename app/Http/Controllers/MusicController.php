@@ -122,10 +122,13 @@ class MusicController extends Controller
         // $date       = $request->get('date') or "";
         $musics   = $musics->paginate(10)->appends($request->all());
         $versions = Music::select('version')->where('version', '<>', '')->distinct()->get();
+        $data_condition = $this->getCondations();
+        // return $request->all();
         /**
          * 将结果返回给视图
          */
-        return view('music')->with(['musics' => $musics, 'versions' => $versions]);
+        return view('music')->with(['musics' => $musics, 'versions' => $versions, 'data_condition' => $data_condition])
+                            ->withInput($request->all());
     }
 
     /**

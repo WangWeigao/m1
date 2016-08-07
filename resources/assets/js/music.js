@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
     /**
      * 点击"创建"按钮(相当于点击"新建"之后的保存)
      */
@@ -84,8 +85,8 @@ $(document).ready(function() {
             $("#edit_version").val($(el).closest('tr').find('td:eq(4)').text());                    // 版本
             $("#edit_press").val($(el).closest('tr').find('td:eq(5)').attr('class'));               // 出版社
             $("#edit_organizer").val($(el).closest('tr').find('td:eq(6)').attr('class'));           // 主办机构
-            // $("#edit_category").val($(el).closest('tr').find('td:eq(7) span').attr('class'));       // 乐曲类别
-            $("#edit_level").val($(el).closest('tr').find('td:eq(7)').attr('class'));          // 乐曲等级
+            // $("#edit_category").val($(el).closest('tr').find('td:eq(7) span').attr('class'));    // 乐曲类别
+            $("#edit_level").val($(el).closest('tr').find('td:eq(7)').attr('class'));               // 乐曲等级
             $("#edit_category_old").val($(el).closest('tr').find('td:eq(7) span').attr('class'))    // 改变之前的"乐曲类别"
             $("#edit_section_duration").val($.trim($(el).closest('tr').find('td:eq(13)').text()));  // 分段时间
             $("#edit_track").val($.trim($(el).closest('tr').find('td:eq(14)').text()));             // 轨道
@@ -162,7 +163,7 @@ $(document).ready(function() {
                     }
                 })
                 .done(function() {
-                    console.log("success");
+                    // console.log("success");
                     $(el).closest('tr').remove();
 
                 });
@@ -170,173 +171,32 @@ $(document).ready(function() {
         });
     });
 
-    /**
-     * 自动拉取筛选条件列表
-     */
-    $.ajax({
-        url: '/music/condations',
-        type: 'GET',
-        dataType: 'json',
-        headers : {
-            'X-CSRF-TOKEN': $('input[name="_token"]').val()
-        }
-    })
-    .done(function(data) {
-        /**
-         * 拉取“乐器”列表
-         */
-        $.each(data.instrument, function(n, value) {
-            var $str = "";
-            $str = "<option value=" + value.id + ">" + value.name + "</option>";
-            $("#instrument").append($str);
-            $("#instrument").val("1");
-            $("#edit_instrument").append($str);
-            $("#add_instrument").append($str);
-            // 保持搜索条件
-            if (instrument != '' && instrument != null) {
-                $("#instrument").val(instrument);
-                $("input[name=instrument]").val(instrument);
-                $("input[name=instrument]").prop('checked', true);
-            }
-        });
-
-        /**
-         * 拉取"出版社"列表
-         */
-        $.each(data.press, function(n, value) {
-            var $str = "";
-            $str = "<option value=" + value.id + ">" + value.name + "</option>";
-            $("#press").append($str);
-            $("#edit_press").append($str);
-            $("#add_press").append($str);
-            // 保持搜索条件
-            if (press != '' && press != null) {
-                $("#press").val(press);
-                $("input[name=press]").val(press);
-                $("input[name=press]").prop('checked', true);
-            }
-        });
-
-        /**
-         * 拉取"乐曲类别"列表
-         */
-        $.each(data.tag, function(n, value) {
-            var $str = "";
-            $str = "<option value=" + value.id + ">" + value.name + "</option>";
-            $("#category").append($str);
-            $("#edit_category").append($str);
-            $("#add_category").append($str);
-            // 保持搜索条件
-            if (category != '' && category != null) {
-                $("#category").val(category);
-                $("input[name=category]").val(category);
-                $("input[name=category]").prop('checked', true);
-            }
-        });
-
-        /**
-         * 拉取"主办机构"列表
-         */
-        $.each(data.organizer, function(n, value) {
-            var $str = "";
-            $str = "<option value=" + value.id + ">" + value.name + "</option>";
-            $("#organizer").append($str);
-            $("#edit_organizer").append($str);
-            $("#add_organizer").append($str);
-            // 保持搜索条件
-            if (organizer != '' && organizer != null) {
-                $("#organizer").val(organizer);
-                $("input[name=organizer]").val(organizer);
-                $("input[name=organizer]").prop('checked', true);
-            }
-        });
-
-        /**
-         * 拉取"操作人"列表
-         */
-        $.each(data.operator, function(n, value) {
-            var $str = "";
-            $str = "<option value=" + value.id + ">" + value.name + "</option>";
-            $("#operator").append($str);
-            // 保持搜索条件
-            if (operator != '' && operator != null) {
-                $("#operator").val(operator);
-                $("input[name=operator]").val(operator);
-                $("input[name=operator]").prop('checked', true);
-            }
-        });
-    })
-    .fail(function(data) {
-        console.log(data);
-    });
 
     /**
      * select下拉式日期选择器
      */
-     var myDate = new Date();
-     $("#dateSelector").DateSelector({
-     ctlYearId: 'idYear',
-     ctlMonthId: 'idMonth',
-     ctlDayId: 'idDay',
-     defYear: myDate.getFullYear(),
-     defMonth: (myDate.getMonth() + 1),
-     defDay: myDate.getDate(),
-     minYear: 2015,
-     maxYear: (myDate.getFullYear() + 1)
-     });
+    //  var myDate = new Date();
+    //  $("#dateSelector").DateSelector({
+    //      ctlYearId: 'idYear',
+    //      ctlMonthId: 'idMonth',
+    //      ctlDayId: 'idDay',
+    //      defYear: myDate.getFullYear(),
+    //      defMonth: (myDate.getMonth() + 1),
+    //      defDay: myDate.getDate(),
+    //      minYear: 2015,
+    //      maxYear: (myDate.getFullYear() + 1)
+    //  });
 
-    $("#date").val($("#idYear").val() + '-' + $("#idMonth").val() + '-' + $("#idDay").val());
-    $(".date_select").each(function(index, el) {
-        $(el).bind('change', function() {
-            // $(el).closest('input').val($(el).val());
-            // $(el).siblings('input').val($(el).val());
-            if ($(el).attr('id') === 'idYear' || $(el).attr('id') === 'idMonth' || $(el).attr('id') === 'idDay') {
-                $("#date").val($("#idYear").val() + '-' + $("#idMonth").val() + '-' + $("#idDay").val());
-            }
-        });
-    });
-    // 保持搜索条件
-    var date = $.getUrlParam('date');
-    if (date != '' && date != null) {
-        $("#idYear").val(date.split('-')[0]);
-        $("#idMonth").val(date.split('-')[1]);
-        $("#idDay").val(date.split('-')[2]);
-        $("input[name=date]").val(date);
-        $("input[name=date]").prop('checked', true);
-    }
-
-    // 保持“版本”的搜索条件
-    var version = $.getUrlParam('version');
-    if (version != '' && version != null) {
-        $("#version").val(version);
-        $("input[name=version]").val(version);
-        $("input[name=version]").prop('checked', true);
-    }
-
-    // 保持“钢琴等级”的搜索条件
-    var level = $.getUrlParam('level');
-    if (level != '' && level != null) {
-        $("#level").val(level);
-        $("input[name=level]").val(level);
-        $("input[name=level]").prop('checked', true);
-    }
-    /**
-     * select中选择值改变的时候，同步给select的value赋值
-     */
-    $("select").each(function(index, el) {
-        $(el).bind('change', function(event) {
-            $(el).siblings('input').val($(el).val());
-            console.log($(el).val());
-        });
-    });
-
-    // 如果点击checkbox时，value值为空，则将子option中的第一个赋值给他
-        $(":checkbox").each(function(index, el) {
-            if ($(el).val() == "on") {
-                $(el).val($(el).siblings('select').val());
-                console.log($(el).siblings('select').val());
-            }
-        });
+    // $("#date").val($("#idYear").val() + '-' + $("#idMonth").val() + '-' + $("#idDay").val());
+    // $(".date_select").each(function(index, el) {
+    //     $(el).bind('change', function() {
+    //         // $(el).closest('input').val($(el).val());
+    //         // $(el).siblings('input').val($(el).val());
+    //         if ($(el).attr('id') === 'idYear' || $(el).attr('id') === 'idMonth' || $(el).attr('id') === 'idDay') {
+    //             $("#date").val($("#idYear").val() + '-' + $("#idMonth").val() + '-' + $("#idDay").val());
+    //         }
+    //     });
+    // });
 
     /**
      * 点击“添加多个乐曲”跳转到指定页面
@@ -344,17 +204,6 @@ $(document).ready(function() {
     $("#add_multi_musics").bind('click', function(event) {
         window.location.href = "/music/create";
     });
-
-    /**
-     * 全部选中，全部取消
-     */
-    // $("#checkAll").bind('click', function(event) {
-    //     if (this.checked) {
-    //         $("input[name='music_action[]']").prop("checked", true);
-    //     }else {
-    //         $("input[name='music_action[]']").prop("checked", false);
-    //     }
-    // });
 
 
     // 实现全选按钮功能
@@ -420,7 +269,7 @@ $(document).ready(function() {
         $("input[name='music_action[]']:checked").each(function(index, el) {
             ids.push($(el).closest('tr').attr('id'));
         });
-        $confirm = confirm('确认要批量下回所选乐曲?');
+        $confirm = confirm('确认要批量下架所选乐曲?');
         if ($confirm) {
             $.ajax({
                 url: '/music/offshelfMany',
@@ -438,22 +287,34 @@ $(document).ready(function() {
 
     });
 
-    // 获取 URL 中的参数
-    var name       = $.getUrlParam('name');
-    var instrument = $.getUrlParam('instrument');
-    var press      = $.getUrlParam('press');
-    var category   = $.getUrlParam('category');
-    var onshelf    = $.getUrlParam('onshelf');
-    var organizer  = $.getUrlParam('organizer');
-    var operator   = $.getUrlParam('operator');
-    console.log(name);
-    if (name != '' && name != null) {
-        $("input[name=name]").val(name);
-    }
 
-    if (onshelf != '' && onshelf != null) {
-        $("#onshelf").val(onshelf);
-        $("input[name=onshelf]").val(onshelf);
-        $("input[name=onshelf]").prop('checked', true);
-    }
+    $('.form_date').datetimepicker({
+        // language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		minView: 2,
+		forceParse: 0
+    });
+    // var d = new Date();
+    // console.log(d.getFullYear());
+    // $('.form_date input').val(d.getFullYear()+'-'+parseInt(d.getMonth()+1)+'-'+d.getDate());
 });
+// 对筛选条件进行数据绑定
+var vm = new Vue({
+    el: "#query_condition",
+    data: {
+        // 获取查询后返回的条件, 以便对页面进行设置, 保持查询条件不被重置
+        instrument: $("#instrument").attr('data-value') ? $("#instrument").attr('data-value')   : $("#instrument").val(),
+        press:      $("#press").attr('data-value')      ? $("#press").attr('data-value')        : $("#press").val(),
+        category:   $("#category").attr('data-value')   ? $("#category").attr('data-value')     : $("#category").val(),
+        organizer:  $("#organizer").attr('data-value')  ? $("#organizer").attr('data-value')    : $("#organizer").val(),
+        operator:   $("#operator").attr('data-value')   ? $("#operator").attr('data-value')     : $("#operator").val(),
+        onshelf:    $("#onshelf").attr('data-value')    ? $("#onshelf").attr('data-value')      : $("#onshelf").val(),
+        version:    $("#version").attr('data-value')    ? $("#version").attr('data-value')      : $("#version").val(),
+        level:      $("#level").attr('data-value')      ? $("#level").attr('data-value')        : $("#level").val(),
+        date1: false
+    }
+})

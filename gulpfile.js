@@ -27,7 +27,7 @@ elixir(function(mix) {
     //     // 'dataTables.bootstrap.min.css', // 表格排序
     //     // 'jquery.dataTables_themeroller.css',    //表格排序
     // ])
-    mix.styles('music.css', 'public/css/music.css')
+    mix.styles(['bootstrap-datetimepicker.min.css', 'music.css'], 'public/css/music.css')
         .styles('user.css', 'public/css/user.css')
         .styles('userrecordhistory.css', 'public/css/userrecordhistory.css')
         .styles('orderStatistics.css', 'public/css/orderStatistics.css')
@@ -56,7 +56,7 @@ elixir(function(mix) {
     //     'rbac_user.js',     // rbac中的user页面的js
     // ])
     mix.scripts('app.js', 'public/js/app.js')
-    .scripts(['music.js', 'dateSelector.js', 'jquery.form.js', 'getUrlParam.js'], 'public/js/music.js')
+    .scripts(['bootstrap-datetimepicker.min.js', 'jquery.form.js', 'getUrlParam.js', 'vue.min.js', 'music.js'], 'public/js/music.js')
     .scripts(['musicStatistics.js'], 'public/js/musicStatistics.js')
     .scripts(['userUsageStatics.js'], 'public/js/userUsageStatics.js')
     .scripts(['user.js', 'dateSelector.js', 'jquery.form.js', 'getUrlParam.js'], 'public/js/user.js')
