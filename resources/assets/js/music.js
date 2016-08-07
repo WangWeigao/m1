@@ -175,17 +175,17 @@ $(document).ready(function() {
     /**
      * select下拉式日期选择器
      */
-     var myDate = new Date();
-     $("#dateSelector").DateSelector({
-         ctlYearId: 'idYear',
-         ctlMonthId: 'idMonth',
-         ctlDayId: 'idDay',
-         defYear: myDate.getFullYear(),
-         defMonth: (myDate.getMonth() + 1),
-         defDay: myDate.getDate(),
-         minYear: 2015,
-         maxYear: (myDate.getFullYear() + 1)
-     });
+    //  var myDate = new Date();
+    //  $("#dateSelector").DateSelector({
+    //      ctlYearId: 'idYear',
+    //      ctlMonthId: 'idMonth',
+    //      ctlDayId: 'idDay',
+    //      defYear: myDate.getFullYear(),
+    //      defMonth: (myDate.getMonth() + 1),
+    //      defDay: myDate.getDate(),
+    //      minYear: 2015,
+    //      maxYear: (myDate.getFullYear() + 1)
+    //  });
 
     // $("#date").val($("#idYear").val() + '-' + $("#idMonth").val() + '-' + $("#idDay").val());
     // $(".date_select").each(function(index, el) {
@@ -287,26 +287,20 @@ $(document).ready(function() {
 
     });
 
-    // 获取 URL 中的参数
-    // var name       = $.getUrlParam('name');
-    // var instrument = $.getUrlParam('instrument');
-    // var press      = $.getUrlParam('press');
-    // var category   = $.getUrlParam('category');
-    // var onshelf    = $.getUrlParam('onshelf');
-    // var organizer  = $.getUrlParam('organizer');
-    // var operator   = $.getUrlParam('operator');
-    // // console.log(name);
-    // if (name != '' && name != null) {
-    //     $("input[name=name]").val(name);
-    // }
-    //
-    // if (onshelf != '' && onshelf != null) {
-    //     $("#onshelf").val(onshelf);
-    //     $("input[name=onshelf]").val(onshelf);
-    //     $("input[name=onshelf]").prop('checked', true);
-    // }
 
-
+    $('.form_date').datetimepicker({
+        // language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		minView: 2,
+		forceParse: 0
+    });
+    // var d = new Date();
+    // console.log(d.getFullYear());
+    // $('.form_date input').val(d.getFullYear()+'-'+parseInt(d.getMonth()+1)+'-'+d.getDate());
 });
 // 对筛选条件进行数据绑定
 var vm = new Vue({
@@ -321,23 +315,6 @@ var vm = new Vue({
         onshelf:    $("#onshelf").attr('data-value')    ? $("#onshelf").attr('data-value')      : $("#onshelf").val(),
         version:    $("#version").attr('data-value')    ? $("#version").attr('data-value')      : $("#version").val(),
         level:      $("#level").attr('data-value')      ? $("#level").attr('data-value')        : $("#level").val(),
-        // date:       $("#dateSelector").attr('data-value')       ? $("#dateSelector").attr('data-value')                    : $("#idYear").val(),
-        // year:       $("#dateSelector").attr('data-value')       ? $("#dateSelector").attr('data-value').split('-')[0]      : $("#idYear").val(),
-        // month:      $("#dateSelector").attr('data-value')       ? $("#dateSelector").attr('data-value').split('-')[1]      : $("#idMonth").val(),
-        // day:        $("#dateSelector").attr('data-value')       ? $("#dateSelector").attr('data-value').split('-')[2]      : $("#idDay").val(),
-    },
-    computed: {
-        date: function () {
-            return this.year + '-' + this.month + '-' + this.day
-        },
-        year: function () {
-            return $("#dateSelector").attr('data-value').split('-')[0]
-        },
-        month: function () {
-            return $("#dateSelector").attr('data-value').split('-')[1]
-        },
-        day: function () {
-            return  $("#dateSelector").attr('data-value').split('-')[2]
-        }
+        date1: false
     }
 })

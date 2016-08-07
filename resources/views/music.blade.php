@@ -12,16 +12,16 @@
                 {{-- <legend>曲目查询</legend> --}}
                 <div class="form-group form-inline">
                     {{-- <label for="">用户搜索</label> --}}
-                    <span>精确搜索: </span><input type="text" class="form-control" id="searchName" name="name" placeholder="请输入曲目名/作曲人">
+                    <span>精确搜索: </span><input type="text" class="form-control" id="searchName" name="name" placeholder="请输入曲目名/作曲人" value="{{ Input::get('name') }}">
                     <input type="hidden" name="field" value="uid">
                     <input type="hidden" name="order" value="asc">
                     <button type="submit" name="button" class= "btn btn-success" id="search">搜索</button>
                 </div>
             {{-- </fieldset> --}}
         </form>
-        <form action="/music" method="get">
+        <form action="/music" method="get" id="query_condition">
             {!! csrf_field() !!}
-            <table class="table" class="form-group" id="query_condition">
+            <table class="table" class="form-group">
                 <td>
                     <span>筛选待件:</span>
                 </td>
@@ -106,21 +106,21 @@
                         </select>
                     </td>
                 </tr>
-                <tr class="form-inline">
-                    <td>
-                        <input type="checkbox" name="date" id="date" value="@{{ date }}" {{  Input::get('date') ? 'checked' : ''}}>
-                        <label for="date">添加日期</label>
-                        <span id="dateSelector" class="" data-value="{{ Input::get('date') }}">
-                            <select class="date_select form-control" id="idYear"  v-model="year"></select>年
-                            <select class="date_select form-control" id="idMonth" v-model="month"></select>月
-                            <select class="date_select form-control" id="idDay"   v-model="day"></select>日
-                        </span>
-                    </td>
-                    <td>
-                        <button type="submit" id="condation_search" class="btn btn-success form-control">搜索</button>
-                    </td>
-                </tr>
             </table>
+            <div class="form-horizontal">
+                <input type="checkbox" id="date" v-model="date1" {{  Input::get('date') ? 'checked' : ''}}>
+                <label for="date">添加日期</label>
+                <div class="form-group">
+                    <div class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy MM dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                        <input class="form-control" size="16" type="text" value="{{ Input::get('date') }}" readonly="">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+                    <input type="hidden" id="dtp_input2" v-if="date1" name="date"><br>
+                </div>
+                <button type="submit" id="condation_search" class="btn btn-success">搜索</button>
+
+            </div>
         </form>
         @if(isset($musics))
                 <table class="table table-hover">
