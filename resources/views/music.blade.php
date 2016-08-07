@@ -21,30 +21,42 @@
         </form>
         <form action="/music" method="get">
             {!! csrf_field() !!}
-            <table class="table" class="form-group">
+            <table class="table" class="form-group" id="query_condition">
                 <td>
                     <span>筛选待件:</span>
                 </td>
                 <tr class="form-inline">
                     <td class="col-sm-3">
-                        <input type="checkbox" name="instrument" id="input_instrument" value="1">
+                        <input type="checkbox" name="instrument" id="input_instrument" value="@{{ instrument }}" {{ Input::get('instrument') ? 'checked' : '' }}>
                         <label for="input_instrument">乐器</label>
-                        <select id="instrument" class="form-control"></select>
+                        <select id="instrument" class="form-control" v-model="instrument" data-value="{{ Input::get('instrument') }}">
+                            @foreach($data_condition['instrument'] as $item)
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
                     </td>
                     <td class="col-sm-3">
-                        <input type="checkbox" name="press" id="input_press" value="1">
+                        <input type="checkbox" name="press" id="input_press" value="@{{ press }}" {{ Input::get('press') ? 'checked' : '' }}>
                         <label for="input_press">出版社</label>
-                        <select id="press" class="form-control"></select>
+                        <select id="press" class="form-control" v-model="press" data-value="{{ Input::get('press') }}">
+                            @foreach($data_condition['press'] as $item)
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
                     </td>
                     <td class="col-sm-3">
-                        <input type="checkbox" name="category" id="input_category" value="1">
+                        <input type="checkbox" name="category" id="input_category" value="@{{ category }}" {{ Input::get('category') ? 'checked' : '' }}>
                         <label for="input_category">乐曲类别</label>
-                        <select id="category" class="form-control"></select>
+                        <select id="category" class="form-control" v-model="category" data-value="{{ Input::get('category') }}">
+                            @foreach($data_condition['tag'] as $item)
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
                     </td>
                     <td class="col-sm-3">
-                        <input type="checkbox" name="onshelf" id="input_onshelf" value="2">
+                        <input type="checkbox" name="onshelf" id="input_onshelf" value="@{{ onshelf }}" {{ Input::get('onshelf') ? 'checked' : '' }}>
                         <label for="input_onshelf">乐曲状态</label>
-                        <select id="onshelf" class="form-control">
+                        <select id="onshelf" class="form-control" v-model="onshelf" data-value="{{ Input::get('onshelf') }}">
                             <option value="2">已上架</option>
                             <option value="1">待审核</option>
                         </select>
@@ -52,28 +64,36 @@
                 </tr>
                 <tr class="form-inline">
                     <td>
-                        <input type="checkbox" name="organizer" id="input_organizer" value="1">
+                        <input type="checkbox" name="organizer" id="input_organizer" value="@{{ organizer }}" {{ Input::get('organizer') ? 'checked' : '' }}>
                         <label for="input_organizer">主办机构</label>
-                        <select id="organizer" class="form-control"></select>
+                        <select id="organizer" class="form-control" v-model="organizer" data-value="{{ Input::get('organizer') }}">
+                            @foreach($data_condition['organizer'] as $item)
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
                     </td>
                     <td>
-                        <input type="checkbox" name="operator" id="input_operator" value="2">
+                        <input type="checkbox" name="operator" id="input_operator" value="@{{ operator }}" {{ Input::get('operator') ? 'checked' : '' }}>
                         <label for="input_operator">操作人</label>
-                        <select id="operator" class="form-control"></select>
+                        <select id="operator" class="form-control" v-model="operator" data-value="{{ Input::get('operator') }}">
+                            @foreach($data_condition['operator'] as $item)
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
                     </td>
                     <td>
-                        <input type="checkbox" name="version" id="input_version">
+                        <input type="checkbox" name="version" id="input_version" value="@{{ version }}"  {{  Input::get('version') ? 'checked' : ''}}>
                         <label for="input_version">版本</label>
-                        <select id="version" class="form-control">
+                        <select id="version" class="form-control" v-model="version" data-value="{{ Input::get('version') }}">
                             @foreach($versions as $v)
                                 <option value="{{ $v->version }}">{{ $v->version }}</option>
                             @endforeach
                         </select>
                     </td>
                     <td>
-                        <input type="checkbox" name="level" id="input_level">
+                        <input type="checkbox" name="level" id="input_level" value="@{{ level }}"  {{  Input::get('level') ? 'checked' : ''}}>
                         <label for="input_level">级别</label>
-                        <select id="level" class="form-control">
+                        <select id="level" class="form-control" v-model="level" data-value="{{ Input::get('level') }}">
                             <option value="1">1级</option>
                             <option value="2">2级</option>
                             <option value="3">3级</option>
@@ -88,12 +108,12 @@
                 </tr>
                 <tr class="form-inline">
                     <td>
-                        <input type="checkbox" name="date" id="date">
+                        <input type="checkbox" name="date" id="date" value="@{{ date }}" {{  Input::get('date') ? 'checked' : ''}}>
                         <label for="date">添加日期</label>
-                        <span id="dateSelector" class="">
-                            <select class="date_select form-control" id="idYear" data=""></select>年
-                            <select class="date_select form-control" id="idMonth" data=""></select>月
-                            <select class="date_select form-control" id="idDay" data=""></select>日
+                        <span id="dateSelector" class="" data-value="{{ Input::get('date') }}">
+                            <select class="date_select form-control" id="idYear"  v-model="year"></select>年
+                            <select class="date_select form-control" id="idMonth" v-model="month"></select>月
+                            <select class="date_select form-control" id="idDay"   v-model="day"></select>日
                         </span>
                     </td>
                     <td>
@@ -299,8 +319,7 @@
                         <div class="form-group">
                             <label for="add_instrument" class="col-sm-2 control-label">乐器</label>
                             <div class="col-sm-10">
-                                <select class="form-control" id="add_instrument" name="instrument">
-                                </select>
+                                <select class="form-control" id="add_instrument" name="instrument"></select>
                             </div>
                         </div>
                         <div class="form-group">
@@ -419,5 +438,6 @@
     {{-- <script src="http://hayageek.github.io/jQuery-Upload-File/4.0.10/jquery.uploadfile.min.js"></script> --}}
     {{-- <script src="http://cdn.staticfile.org/moment.js/2.10.6/moment.min.js"></script> --}}
     {{-- <script src="http://cdn.staticfile.org/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script> --}}
+    {{-- <script src="/js/vue.min.js"></script> --}}
     <script src="{{ elixir('js/music.js') }}"></script>
 @endsection

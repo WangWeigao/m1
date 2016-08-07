@@ -25,7 +25,7 @@
   "js/jquery.validate.min.js": "js/jquery.validate.min-24ae1ca673.js",
   "js/messages_cn.js": "js/messages_cn-616f21a7f7.js",
   "js/moment.min.js": "js/moment.min-dab771be07.js",
-  "js/music.js": "js/music-712a8ecce8.js",
+  "js/music.js": "js/music-91516b73b6.js",
   "js/musicStatistics.js": "js/musicStatistics-d0a639b7ee.js",
   "js/musicadd.js": "js/musicadd-49e9cacecc.js",
   "js/new_music.js": "js/new_music-3502b33950.js",
@@ -36,5 +36,6 @@
   "js/reset.js": "js/reset-dc906c659c.js",
   "js/user.js": "js/user-0b90a2ccf6.js",
   "js/userUsageStatics.js": "js/userUsageStatics-625a54611d.js",
-  "js/userbasicinfo.js": "js/userbasicinfo-1650094ab4.js"
+  "js/userbasicinfo.js": "js/userbasicinfo-1650094ab4.js",
+  "js/vue.min.js": "js/vue.min-a43164fe16.js"
 }

@@ -1568,26 +1568,68 @@ $(document).ready(function() {
      */
      var myDate = new Date();
      $("#dateSelector").DateSelector({
-         ctlYearId: 'idYear',
-         ctlMonthId: 'idMonth',
-         ctlDayId: 'idDay',
-         defYear: myDate.getFullYear(),
-         defMonth: (myDate.getMonth() + 1),
-         defDay: myDate.getDate(),
-         minYear: 2015,
-         maxYear: (myDate.getFullYear() + 1)
+     ctlYearId: 'idYear',
+     ctlMonthId: 'idMonth',
+     ctlDayId: 'idDay',
+     defYear: myDate.getFullYear(),
+     defMonth: (myDate.getMonth() + 1),
+     defDay: myDate.getDate(),
+     minYear: 2015,
+     maxYear: (myDate.getFullYear() + 1)
      });
 
-    // $("#date").val($("#idYear").val() + '-' + $("#idMonth").val() + '-' + $("#idDay").val());
-    // $(".date_select").each(function(index, el) {
-    //     $(el).bind('change', function() {
-    //         // $(el).closest('input').val($(el).val());
-    //         // $(el).siblings('input').val($(el).val());
-    //         if ($(el).attr('id') === 'idYear' || $(el).attr('id') === 'idMonth' || $(el).attr('id') === 'idDay') {
-    //             $("#date").val($("#idYear").val() + '-' + $("#idMonth").val() + '-' + $("#idDay").val());
-    //         }
+    $("#date").val($("#idYear").val() + '-' + $("#idMonth").val() + '-' + $("#idDay").val());
+    $(".date_select").each(function(index, el) {
+        $(el).bind('change', function() {
+            // $(el).closest('input').val($(el).val());
+            // $(el).siblings('input').val($(el).val());
+            if ($(el).attr('id') === 'idYear' || $(el).attr('id') === 'idMonth' || $(el).attr('id') === 'idDay') {
+                $("#date").val($("#idYear").val() + '-' + $("#idMonth").val() + '-' + $("#idDay").val());
+            }
+        });
+    });
+    // // 保持搜索条件
+    // var date = $.getUrlParam('date');
+    // if (date != '' && date != null) {
+    //     $("#idYear").val(date.split('-')[0]);
+    //     $("#idMonth").val(date.split('-')[1]);
+    //     $("#idDay").val(date.split('-')[2]);
+    //     $("input[name=date]").val(date);
+    //     $("input[name=date]").prop('checked', true);
+    // }
+    //
+    // // 保持“版本”的搜索条件
+    // var version = $.getUrlParam('version');
+    // if (version != '' && version != null) {
+    //     $("#version").val(version);
+    //     $("input[name=version]").val(version);
+    //     $("input[name=version]").prop('checked', true);
+    // }
+    //
+    // // 保持“钢琴等级”的搜索条件
+    // var level = $.getUrlParam('level');
+    // if (level != '' && level != null) {
+    //     $("#level").val(level);
+    //     $("input[name=level]").val(level);
+    //     $("input[name=level]").prop('checked', true);
+    // }
+    // /**
+    //  * select中选择值改变的时候，同步给select的value赋值
+    //  */
+    // $("select").each(function(index, el) {
+    //     $(el).bind('change', function(event) {
+    //         $(el).siblings('input').val($(el).val());
+    //         console.log($(el).val());
     //     });
     // });
+    //
+    // // 如果点击checkbox时，value值为空，则将子option中的第一个赋值给他
+    //     $(":checkbox").each(function(index, el) {
+    //         if ($(el).val() == "on") {
+    //             $(el).val($(el).siblings('select').val());
+    //             console.log($(el).siblings('select').val());
+    //         }
+    //     });
 
     /**
      * 点击“添加多个乐曲”跳转到指定页面
@@ -1595,6 +1637,17 @@ $(document).ready(function() {
     $("#add_multi_musics").bind('click', function(event) {
         window.location.href = "/music/create";
     });
+
+    /**
+     * 全部选中，全部取消
+     */
+    // $("#checkAll").bind('click', function(event) {
+    //     if (this.checked) {
+    //         $("input[name='music_action[]']").prop("checked", true);
+    //     }else {
+    //         $("input[name='music_action[]']").prop("checked", false);
+    //     }
+    // });
 
 
     // 实现全选按钮功能
@@ -1679,23 +1732,23 @@ $(document).ready(function() {
     });
 
     // 获取 URL 中的参数
-    // var name       = $.getUrlParam('name');
-    // var instrument = $.getUrlParam('instrument');
-    // var press      = $.getUrlParam('press');
-    // var category   = $.getUrlParam('category');
-    // var onshelf    = $.getUrlParam('onshelf');
-    // var organizer  = $.getUrlParam('organizer');
-    // var operator   = $.getUrlParam('operator');
-    // // console.log(name);
-    // if (name != '' && name != null) {
-    //     $("input[name=name]").val(name);
-    // }
-    //
-    // if (onshelf != '' && onshelf != null) {
-    //     $("#onshelf").val(onshelf);
-    //     $("input[name=onshelf]").val(onshelf);
-    //     $("input[name=onshelf]").prop('checked', true);
-    // }
+    var name       = $.getUrlParam('name');
+    var instrument = $.getUrlParam('instrument');
+    var press      = $.getUrlParam('press');
+    var category   = $.getUrlParam('category');
+    var onshelf    = $.getUrlParam('onshelf');
+    var organizer  = $.getUrlParam('organizer');
+    var operator   = $.getUrlParam('operator');
+    // console.log(name);
+    if (name != '' && name != null) {
+        $("input[name=name]").val(name);
+    }
+
+    if (onshelf != '' && onshelf != null) {
+        $("#onshelf").val(onshelf);
+        $("input[name=onshelf]").val(onshelf);
+        $("input[name=onshelf]").prop('checked', true);
+    }
 
 
 });
@@ -1704,32 +1757,14 @@ var vm = new Vue({
     el: "#query_condition",
     data: {
         // 获取查询后返回的条件, 以便对页面进行设置, 保持查询条件不被重置
-        instrument: $("#instrument").attr('data-value') ? $("#instrument").attr('data-value')   : $("#instrument").val(),
-        press:      $("#press").attr('data-value')      ? $("#press").attr('data-value')        : $("#press").val(),
-        category:   $("#category").attr('data-value')   ? $("#category").attr('data-value')     : $("#category").val(),
-        organizer:  $("#organizer").attr('data-value')  ? $("#organizer").attr('data-value')    : $("#organizer").val(),
-        operator:   $("#operator").attr('data-value')   ? $("#operator").attr('data-value')     : $("#operator").val(),
-        onshelf:    $("#onshelf").attr('data-value')    ? $("#onshelf").attr('data-value')      : $("#onshelf").val(),
-        version:    $("#version").attr('data-value')    ? $("#version").attr('data-value')      : $("#version").val(),
-        level:      $("#level").attr('data-value')      ? $("#level").attr('data-value')        : $("#level").val(),
-        // date:       $("#dateSelector").attr('data-value')       ? $("#dateSelector").attr('data-value')                    : $("#idYear").val(),
-        // year:       $("#dateSelector").attr('data-value')       ? $("#dateSelector").attr('data-value').split('-')[0]      : $("#idYear").val(),
-        // month:      $("#dateSelector").attr('data-value')       ? $("#dateSelector").attr('data-value').split('-')[1]      : $("#idMonth").val(),
-        // day:        $("#dateSelector").attr('data-value')       ? $("#dateSelector").attr('data-value').split('-')[2]      : $("#idDay").val(),
-    },
-    computed: {
-        date: function () {
-            return this.year + '-' + this.month + '-' + this.day
-        },
-        year: function () {
-            return $("#dateSelector").attr('data-value').split('-')[0]
-        },
-        month: function () {
-            return $("#dateSelector").attr('data-value').split('-')[1]
-        },
-        day: function () {
-            return  $("#dateSelector").attr('data-value').split('-')[2]
-        }
+        instrument: $("#instrument").attr('data-value') ? $("#instrument").attr('data-value') : 1,
+        press: $("#press").attr('data-value') ? $("#press").attr('data-value') : 1,
+        category: $("#category").attr('data-value') ? $("#category").attr('data-value') : 1,
+        organizer: $("#organizer").attr('data-value') ? $("#organizer").attr('data-value') : 1,
+        operator: $("#operator").attr('data-value') ? $("#operator").attr('data-value') : 2,
+        onshelf: $("#onshelf").attr('data-value') ? $("#onshelf").attr('data-value') : 1,
+        version: $("#version").attr('data-value') ? $("#version").attr('data-value') : 1,
+        level: $("#level").attr('data-value') ? $("#level").attr('data-value') : 
     }
 })
 

@@ -86,11 +86,10 @@ class UserController extends Controller
          * 按字段不为这的情况，进行SQL语句拼接
          * "用户名"不为空
          */
-        // $users = StudentUser::where(function ($query) {
-        //     $query->where('usertype', '=', 1)
-        //           ->orWhere('usertype', '<>', 1);
-        // });
-        $users = new StudentUser;
+        $users = StudentUser::where(function ($query) {
+            $query->where('usertype', '=', 1)
+                  ->orWhere('usertype', '<>', 1);
+        });
         if (!empty($user_cellphone_email)) {
             $appends_arr = array_merge($appends_arr, ['user_cellphone_email' => $user_cellphone_email]);
             $users->where(function  ($query) use ($user_cellphone_email) {
@@ -99,7 +98,6 @@ class UserController extends Controller
                         ->orWhere('email', 'like', "%{$user_cellphone_email}%");
             });
         }
-
         /**
          * "地域"不为空
          */
@@ -415,7 +413,7 @@ if (!empty($change_duration)) {
 
             // $users->select('*');
             $users->orderBy($field, $order);
-            $users = $users->paginate(10)->appends($appends_arr);
+            $users = $users->paginate(10)->appends($request->all());
         // return $users;
         foreach ($users as $key => $v) {
             if (!$v->isactive) {

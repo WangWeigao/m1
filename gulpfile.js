@@ -56,7 +56,7 @@ elixir(function(mix) {
     //     'rbac_user.js',     // rbac中的user页面的js
     // ])
     mix.scripts('app.js', 'public/js/app.js')
-    .scripts(['music.js', 'dateSelector.js', 'jquery.form.js', 'getUrlParam.js'], 'public/js/music.js')
+    .scripts(['dateSelector.js', 'jquery.form.js', 'getUrlParam.js', 'vue.min.js', 'music.js'], 'public/js/music.js')
     .scripts(['musicStatistics.js'], 'public/js/musicStatistics.js')
     .scripts(['userUsageStatics.js'], 'public/js/userUsageStatics.js')
     .scripts(['user.js', 'dateSelector.js', 'jquery.form.js', 'getUrlParam.js'], 'public/js/user.js')
