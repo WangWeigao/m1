@@ -21,15 +21,13 @@
         </form>
         <form action="/music" method="get" id="query_condition">
             {!! csrf_field() !!}
-            <table class="table" class="form-group">
-                <td>
-                    <span>筛选待件:</span>
-                </td>
-                <tr class="form-inline">
-                    <td class="col-sm-3">
+            <div>
+                <div class="h5">筛选待件:</div>
+                <div class="form-inline form-group row">
+                    <div class="col-md-3">
                         <div class="checkbox">
-                            <label>
-                                <input type="checkbox" name="instrument" id="input_instrument" value="@{{ instrument }}" {{ Input::get('instrument') ? 'checked' : '' }}>乐器&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label id="need-indent">
+                                <input type="checkbox" name="instrument" id="input_instrument" value="@{{ instrument }}" {{ Input::get('instrument') ? 'checked' : '' }}>乐器
                             </label>
                         </div>
                         <select id="instrument" class="form-control" v-model="instrument" data-value="{{ Input::get('instrument') }}">
@@ -37,8 +35,8 @@
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
-                    </td>
-                    <td class="col-sm-3">
+                    </div>
+                    <div class="col-md-3">
                         <div class="checkbox">
                             <label>
                                 <input type="checkbox" name="press" id="input_press" value="@{{ press }}" {{ Input::get('press') ? 'checked' : '' }}>出版社
@@ -49,8 +47,8 @@
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
-                    </td>
-                    <td class="col-sm-3">
+                    </div>
+                    <div class="col-md-3">
                         <div class="checkbox">
                             <label>
                                 <input type="checkbox" name="category" id="input_category" value="@{{ category }}" {{ Input::get('category') ? 'checked' : '' }}>乐曲类别
@@ -61,8 +59,8 @@
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
-                    </td>
-                    <td class="col-sm-3">
+                    </div>
+                    <div class="col-md-3">
                         <div class="checkbox">
                             <label>
                                 <input type="checkbox" name="onshelf" id="input_onshelf" value="@{{ onshelf }}" {{ Input::get('onshelf') ? 'checked' : '' }}>乐曲状态
@@ -72,10 +70,10 @@
                             <option value="2">已上架</option>
                             <option value="1">待审核</option>
                         </select>
-                    </td>
-                </tr>
-                <tr class="form-inline">
-                    <td>
+                    </div>
+                </div>
+                <div class="form-inline form-group row">
+                    <div class="col-md-3">
                         <div class="checkbox">
                             <label>
                                 <input type="checkbox" name="organizer" id="input_organizer" value="@{{ organizer }}" {{ Input::get('organizer') ? 'checked' : '' }}>主办机构
@@ -86,8 +84,8 @@
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
-                    </td>
-                    <td>
+                    </div>
+                    <div class="col-md-3">
                         <div class="checkbox">
                             <label>
                                 <input type="checkbox" name="operator" id="input_operator" value="@{{ operator }}" {{ Input::get('operator') ? 'checked' : '' }}>操作人
@@ -98,11 +96,11 @@
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
-                    </td>
-                    <td>
-                        <div class="checkbox">
+                    </div>
+                    <div class="col-md-3">
+                        <div class="checkbox"id="need-indent" >
                             <label>
-                                <input type="checkbox" name="version" id="input_version" value="@{{ version }}"  {{  Input::get('version') ? 'checked' : ''}}>版本&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="checkbox" name="version" id="input_version" value="@{{ version }}"  {{  Input::get('version') ? 'checked' : ''}}>版本
                             </label>
                         </div>
                         <select id="version" class="form-control" v-model="version" data-value="{{ Input::get('version') }}">
@@ -110,11 +108,11 @@
                                 <option value="{{ $v->version }}">{{ $v->version }}</option>
                             @endforeach
                         </select>
-                    </td>
-                    <td>
+                    </div>
+                    <div class="col-md-3">
                         <div class="checkbox">
-                            <label>
-                                <input type="checkbox" name="level" id="input_level" value="@{{ level }}"  {{  Input::get('level') ? 'checked' : ''}}>级别&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label id="need-indent">
+                                <input type="checkbox" name="level" id="input_level" value="@{{ level }}"  {{  Input::get('level') ? 'checked' : ''}}>级别
                             </label>
                         </div>
                         <select id="level" class="form-control" v-model="level" data-value="{{ Input::get('level') }}">
@@ -128,9 +126,9 @@
                             <option value="8">8级</option>
                             <option value="9">9级</option>
                         </select>
-                    </td>
-                </tr>
-            </table>
+                    </div>
+                </div>
+            </div>
             <div class="form-inline" style="padding: 8px;">
                 <div class="checkbox">
                     <label>
