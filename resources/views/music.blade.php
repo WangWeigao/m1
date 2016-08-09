@@ -129,7 +129,7 @@
                     </div>
                 </div>
             </div>
-            <div class="form-inline" style="padding: 8px;">
+            <div class="form-inline">
                 <div class="checkbox">
                     <label>
                         <input type="checkbox" id="date" v-model="date1" {{  Input::get('date') ? 'checked' : ''}}>添加日期
