@@ -1,7 +1,7 @@
 {
   "css/Lato.css": "css/Lato-e5cd78187e.css",
   "css/all.css": "css/all-613b2a1e9f.css",
-  "css/music.css": "css/music-281adc9f1f.css",
+  "css/music.css": "css/music-ede5a676c2.css",
   "css/order.css": "css/order-1edd51fa35.css",
   "css/orderStatistics.css": "css/orderStatistics-34cf03785c.css",
   "css/playRecords.css": "css/playRecords-895067ffee.css",
@@ -34,7 +34,7 @@
   "js/playRecords.js": "js/playRecords-369445a8a2.js",
   "js/rbac_user.js": "js/rbac_user-d27103d98d.js",
   "js/reset.js": "js/reset-dc906c659c.js",
-  "js/user.js": "js/user-0b90a2ccf6.js",
+  "js/user.js": "js/user-feb63a2cad.js",
   "js/userUsageStatics.js": "js/userUsageStatics-625a54611d.js",
   "js/userbasicinfo.js": "js/userbasicinfo-1650094ab4.js",
   "js/vue.min.js": "js/vue.min-0665aea3b5.js"

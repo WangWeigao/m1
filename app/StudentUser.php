@@ -94,4 +94,27 @@ class StudentUser extends Model
     {
         return $this->belongTo('App\UserCurrMonthPracticeTimeSum', 'uid', 'uid');
     }
+
+    public function getChannelAttribute($value)
+    {
+        switch ($value) {
+            case '0':
+                $user_type = '手机';
+                break;
+            case '1':
+                $user_type = '微信';
+                break;
+            case '2':
+                $user_type = 'QQ';
+                break;
+            case '3':
+                $user_type = '微博';
+                break;
+            default:
+                $user_type = '';
+                break;
+        }
+        return $user_type;
+    }
+
 }

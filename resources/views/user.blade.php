@@ -130,6 +130,15 @@
                 </select>
             </div>
             <div class="form-group form-inline">
+                {{-- 用户类别 --}}
+                <input type="checkbox" name="user_type" value="@{{ user_type }}" id="l_user_type">
+                <label for="l_user_type">登录方式</label>
+                <select class="" name="" id="user_type" v-model="user_type">
+                    <option value="0">手机</option>
+                    <option value="1">微信</option>
+                    <option value="2">QQ</option>
+                    <option value="3">微博</option>
+                </select>
                 {{-- 注册时间段 --}}
                 <input type="checkbox" name="reg_start_time" value="" id="l_reg_timezone">
                 <label for="l_reg_timezone">注册时间段</label>
@@ -158,6 +167,7 @@
                     <th>编号</th>
                     <th>用户账号</th>
                     <th>第三方唯一标识</th>
+                    <th>登录方式</th>
                     <th>手机号</th>
                     <th>电子邮箱</th>
                     <th>地区</th>
@@ -190,6 +200,8 @@
                     <td><a href="{{ url('/user/basicinfo/' . $user->uid) }}" target="_blank">{{ $user->nickname or '' }}</a></td>
                     {{-- 第三方登录，用户获得的唯一字符串标识 --}}
                     <td><a href="{{ url('/user/basicinfo/' . $user->uid) }}" target="_blank">{{ $user->device or '' }}</a></td>
+                    {{-- 登录方式 --}}
+                    <td>{{ $user->channel }}</td>
                     {{-- 电话号码 --}}
                     <td>{{ $user->cellphone or '' }}</td>
                     {{-- 电子邮箱 --}}

@@ -42,20 +42,21 @@ class UserController extends Controller
     public function index(Request $request)
     {
         // DB::connection()->enableQueryLog();
-        $user_cellphone_email = $request->get('user_cellphone_email', '');  // 用户名|手机号|邮箱
-        $city_id              = $request->get('area', '');                  // 地域(城市ID)
-        $user_grade           = $request->get('user_grade', '');            // 水平等级
-        $reg_time             = $request->get('reg_time', '');              // 注册时间
-        $account_grade        = $request->get('account_grade', '');         // 账号级别
-        $account_end_at       = $request->get('account_end_at', '');        // 账号截止日期
-        $month_duration       = $request->get('month_duration', '');        // 本月使用时长
-        $account_status       = $request->get('account_status', '');        // 账号状态
-        $change_duration      = $request->get('change_duration', '');       // 本月用时大幅变化
-        $liveness             = $request->get('liveness', '');              // 活跃度
-        $reg_start_time       = $request->get('reg_start_time', '');        // 注册时间段 > 开始时间
-        $reg_end_time         = $request->get('reg_end_time', '');          // 注册时间段 > 结束时间
-        $field                = $request->get('field', 'uid');                     // 排序字段
-        $order                = $request->get('order', 'asc');                     // 排序方式
+        $user_cellphone_email= $request->get('user_cellphone_email', '');  // 用户名|手机号|邮箱
+        $city_id=              $request->get('area', '');                  // 地域(城市ID)
+        $user_grade=           $request->get('user_grade', '');            // 水平等级
+        $reg_time=             $request->get('reg_time', '');              // 注册时间
+        $account_grade=        $request->get('account_grade', '');         // 账号级别
+        $account_end_at=       $request->get('account_end_at', '');        // 账号截止日期
+        $month_duration=       $request->get('month_duration', '');        // 本月使用时长
+        $account_status=       $request->get('account_status', '');        // 账号状态
+        $change_duration=      $request->get('change_duration', '');       // 本月用时大幅变化
+        $liveness=             $request->get('liveness', '');              // 活跃度
+        $reg_start_time=       $request->get('reg_start_time', '');        // 注册时间段 > 开始时间
+        $reg_end_time=         $request->get('reg_end_time', '');          // 注册时间段 > 结束时间
+        $field=                $request->get('field', 'uid');              // 排序字段
+        $order=                $request->get('order', 'asc');              // 排序方式
+        $user_type=            $request->get('user_type', '');          // 用户类型(手机号, 微信, QQ, 微博)
 
         $appends_arr = ['field' => $field, 'order' => $order];
         /**
@@ -408,6 +409,9 @@ if (!empty($change_duration)) {
             $preMonth_start_time = Carbon::now('Asia/ShangHai')->subMonth(2);
             $preMonth_end_time   = Carbon::now('Asia/ShangHai')->subMonth()->endOfDay();
 
+        if (!empty($user_type) || $user_type == 0) {
+            $users->where('channel', $user_type);
+        }
             // $users->select('*');
             $users->orderBy($field, $order);
             $users = $users->paginate(10)->appends($request->all());
@@ -443,6 +447,7 @@ if (!empty($change_duration)) {
                 }
             }
         }
+
         // var_dump(DB::getQueryLog());
         return view('user')->with('users', $users);
     }

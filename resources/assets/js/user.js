@@ -275,6 +275,7 @@ $(document).ready(function() {
      var reg_end_time         = $.getUrlParam('reg_end_time');
      var field                = $.getUrlParam('field');
      var order                = $.getUrlParam('order');
+     var user_type            = $.getUrlParam('user_type');
 
      if (user_cellphone_email != '' && user_grade != null) {
         $("input[name=user_cellphone_email]").val(user_cellphone_email);
@@ -348,6 +349,12 @@ $(document).ready(function() {
          $("#idDay2").val(reg_end_time.split('-')[2]);
          $("input[name=reg_end_time]").val(reg_end_time);
          $("input[name=reg_end_time]").prop('checked', true);
+     }
+
+     if (user_type != '' && user_type != null) {
+         $("#user_type").val(user_type);
+         $("input[name=user_type]").val(user_type);
+         $("input[name=user_type]").prop('checked', true);
      }
 
      if (field != '' && field != null) {
@@ -661,3 +668,10 @@ $(document).ready(function() {
      });
 
 });
+var vm = new Vue({
+    el:'body',
+    data: {
+        user_type: 0,
+        user_type_checked: false
+    }
+})
