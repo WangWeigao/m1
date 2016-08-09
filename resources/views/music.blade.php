@@ -27,8 +27,11 @@
                 </td>
                 <tr class="form-inline">
                     <td class="col-sm-3">
-                        <input type="checkbox" name="instrument" id="input_instrument" value="@{{ instrument }}" {{ Input::get('instrument') ? 'checked' : '' }}>
-                        <label for="input_instrument">乐器</label>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="instrument" id="input_instrument" value="@{{ instrument }}" {{ Input::get('instrument') ? 'checked' : '' }}>乐器&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </label>
+                        </div>
                         <select id="instrument" class="form-control" v-model="instrument" data-value="{{ Input::get('instrument') }}">
                             @foreach($data_condition['instrument'] as $item)
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -36,8 +39,11 @@
                         </select>
                     </td>
                     <td class="col-sm-3">
-                        <input type="checkbox" name="press" id="input_press" value="@{{ press }}" {{ Input::get('press') ? 'checked' : '' }}>
-                        <label for="input_press">出版社</label>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="press" id="input_press" value="@{{ press }}" {{ Input::get('press') ? 'checked' : '' }}>出版社
+                            </label>
+                        </div>
                         <select id="press" class="form-control" v-model="press" data-value="{{ Input::get('press') }}">
                             @foreach($data_condition['press'] as $item)
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -45,8 +51,11 @@
                         </select>
                     </td>
                     <td class="col-sm-3">
-                        <input type="checkbox" name="category" id="input_category" value="@{{ category }}" {{ Input::get('category') ? 'checked' : '' }}>
-                        <label for="input_category">乐曲类别</label>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="category" id="input_category" value="@{{ category }}" {{ Input::get('category') ? 'checked' : '' }}>乐曲类别
+                            </label>
+                        </div>
                         <select id="category" class="form-control" v-model="category" data-value="{{ Input::get('category') }}">
                             @foreach($data_condition['tag'] as $item)
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -54,8 +63,11 @@
                         </select>
                     </td>
                     <td class="col-sm-3">
-                        <input type="checkbox" name="onshelf" id="input_onshelf" value="@{{ onshelf }}" {{ Input::get('onshelf') ? 'checked' : '' }}>
-                        <label for="input_onshelf">乐曲状态</label>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="onshelf" id="input_onshelf" value="@{{ onshelf }}" {{ Input::get('onshelf') ? 'checked' : '' }}>乐曲状态
+                            </label>
+                        </div>
                         <select id="onshelf" class="form-control" v-model="onshelf" data-value="{{ Input::get('onshelf') }}">
                             <option value="2">已上架</option>
                             <option value="1">待审核</option>
@@ -64,8 +76,11 @@
                 </tr>
                 <tr class="form-inline">
                     <td>
-                        <input type="checkbox" name="organizer" id="input_organizer" value="@{{ organizer }}" {{ Input::get('organizer') ? 'checked' : '' }}>
-                        <label for="input_organizer">主办机构</label>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="organizer" id="input_organizer" value="@{{ organizer }}" {{ Input::get('organizer') ? 'checked' : '' }}>主办机构
+                            </label>
+                        </div>
                         <select id="organizer" class="form-control" v-model="organizer" data-value="{{ Input::get('organizer') }}">
                             @foreach($data_condition['organizer'] as $item)
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -73,8 +88,11 @@
                         </select>
                     </td>
                     <td>
-                        <input type="checkbox" name="operator" id="input_operator" value="@{{ operator }}" {{ Input::get('operator') ? 'checked' : '' }}>
-                        <label for="input_operator">操作人</label>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="operator" id="input_operator" value="@{{ operator }}" {{ Input::get('operator') ? 'checked' : '' }}>操作人
+                            </label>
+                        </div>
                         <select id="operator" class="form-control" v-model="operator" data-value="{{ Input::get('operator') }}">
                             @foreach($data_condition['operator'] as $item)
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -82,8 +100,11 @@
                         </select>
                     </td>
                     <td>
-                        <input type="checkbox" name="version" id="input_version" value="@{{ version }}"  {{  Input::get('version') ? 'checked' : ''}}>
-                        <label for="input_version">版本</label>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="version" id="input_version" value="@{{ version }}"  {{  Input::get('version') ? 'checked' : ''}}>版本&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </label>
+                        </div>
                         <select id="version" class="form-control" v-model="version" data-value="{{ Input::get('version') }}">
                             @foreach($versions as $v)
                                 <option value="{{ $v->version }}">{{ $v->version }}</option>
@@ -91,8 +112,11 @@
                         </select>
                     </td>
                     <td>
-                        <input type="checkbox" name="level" id="input_level" value="@{{ level }}"  {{  Input::get('level') ? 'checked' : ''}}>
-                        <label for="input_level">级别</label>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="level" id="input_level" value="@{{ level }}"  {{  Input::get('level') ? 'checked' : ''}}>级别&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </label>
+                        </div>
                         <select id="level" class="form-control" v-model="level" data-value="{{ Input::get('level') }}">
                             <option value="1">1级</option>
                             <option value="2">2级</option>
@@ -107,21 +131,24 @@
                     </td>
                 </tr>
             </table>
-            <div class="form-horizontal">
-                <input type="checkbox" id="date" v-model="date1" {{  Input::get('date') ? 'checked' : ''}}>
-                <label for="date">添加日期</label>
+            <div class="form-inline" style="padding: 8px;">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="date" v-model="date1" {{  Input::get('date') ? 'checked' : ''}}>添加日期
+                    </label>
+                </div>
                 <div class="form-group">
-                    <div class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy MM dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
-                        <input class="form-control" size="16" type="text" value="{{ Input::get('date') }}" readonly="">
+                    <div class="input-group date form_date" data-date="" data-date-format="yyyy MM dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                        <input class="form-control" size="20" type="text" value="{{ Input::get('date') }}" readonly="">
                         <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                     </div>
                     <input type="hidden" id="dtp_input2" v-if="date1" name="date"><br>
                 </div>
                 <button type="submit" id="condation_search" class="btn btn-success">搜索</button>
-
             </div>
         </form>
+        <hr>
         @if(isset($musics))
                 <table class="table table-hover">
                     @if(count($musics) > 0)
@@ -198,8 +225,9 @@
                         @empty
                             {{-- @if(Input::get()) --}}
                             {{-- @else --}}
+                            <br>
                             <div class="text-center blockquote">
-                                没有查到相关结果，更换搜索关键词再试试吧
+                                <h3>没有查到相关结果，更换搜索关键词再试试吧</h3>
                             </div>
                             <br>
                             {{-- @endif --}}

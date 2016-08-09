@@ -3,7 +3,7 @@
     <div class="container">
         <ol class="breadcrumb">
             <li>用户管理</li>
-            <li>学生列表</li>
+            <li><a href="/user">学生列表</a></li>
             <li class="active">活动历史</li>
         </ol>
 

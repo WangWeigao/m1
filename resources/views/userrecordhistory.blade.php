@@ -4,7 +4,7 @@
     <div class="container">
         <ol class="breadcrumb">
           <li>用户管理</li>
-          <li>学生列表</li>
+          <li><a href="/user">学生列表</a></li>
           <li class="active">用户详情</li>
         </ol>
         {{-- 标签栏 --}}
