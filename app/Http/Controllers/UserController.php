@@ -409,7 +409,7 @@ if (!empty($change_duration)) {
             $preMonth_start_time = Carbon::now('Asia/ShangHai')->subMonth(2);
             $preMonth_end_time   = Carbon::now('Asia/ShangHai')->subMonth()->endOfDay();
 
-        if (!empty($user_type) || $user_type === 0) {
+        if ($user_type === '0' || !empty($user_type)) {
             $users->where('channel', $user_type);
         }
             // $users->select('*');
