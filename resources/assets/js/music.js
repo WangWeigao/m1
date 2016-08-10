@@ -3,9 +3,9 @@ $(document).ready(function() {
     $('#datepicker').datepicker({
         format: "yyyy/mm/dd",
         todayBtn: "linked",
-        clearBtn: true,
+        todayHighlight: true,
         language: "zh-CN",
-        todayHighlight: true
+        autoclose: true
     });
     // $('#datepicker').datepicker({
     //     format: "yyyy/mm/dd",
@@ -318,6 +318,6 @@ var vm = new Vue({
         onshelf:    $("#onshelf").attr('data-value')    ? $("#onshelf").attr('data-value')      : $("#onshelf").val(),
         version:    $("#version").attr('data-value')    ? $("#version").attr('data-value')      : $("#version").val(),
         level:      $("#level").attr('data-value')      ? $("#level").attr('data-value')        : $("#level").val(),
-        date1: false
+        date:       $("#datepicker").attr('data-value') ? $("#datepicker").attr('data-value')   : $("#datepicker").val(),
     }
 })

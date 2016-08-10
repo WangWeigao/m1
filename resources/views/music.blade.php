@@ -132,11 +132,11 @@
             <div class="form-inline">
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox" id="date" v-model="date1" {{  Input::get('date') ? 'checked' : ''}}>添加日期
+                        <input type="checkbox" name="date" value="@{{ date }}" {{  Input::get('date') ? 'checked' : ''}}>添加日期
                     </label>
                 </div>
 
-                  <input type="text" class="form-control" id="datepicker" name="date" value="{{ Input::get('date') }}">
+                  <input type="text" class="form-control" id="datepicker" v-model="date" data-value="{{ Input::get('date') }}">
 
                 <button type="submit" id="condation_search" class="btn btn-success">搜索</button>
             </div>
