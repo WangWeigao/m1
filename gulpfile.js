@@ -27,11 +27,11 @@ elixir(function(mix) {
     //     // 'dataTables.bootstrap.min.css', // 表格排序
     //     // 'jquery.dataTables_themeroller.css',    //表格排序
     // ])
-    mix.styles(['bootstrap-datetimepicker.min.css', 'music.css'], 'public/css/music.css')
+    mix.styles(['bootstrap-datepicker.css', 'music.css'], 'public/css/music.css')
         .styles('user.css', 'public/css/user.css')
         .styles('userrecordhistory.css', 'public/css/userrecordhistory.css')
         .styles('orderStatistics.css', 'public/css/orderStatistics.css')
-        .styles(['bootstrap-datetimepicker.css', 'order.css'], 'public/css/order.css')
+        .styles(['bootstrap-datetimepicker.css', 'bootstrap.min.css', 'order.css'], 'public/css/order.css')
         .styles(['bootstrap-datetimepicker.css', 'bootstrap.min.css'], 'public/css/playRecords.css');
 
     /**
@@ -56,14 +56,14 @@ elixir(function(mix) {
     //     'rbac_user.js',     // rbac中的user页面的js
     // ])
     mix.scripts('app.js', 'public/js/app.js')
-    .scripts(['bootstrap-datetimepicker.min.js', 'jquery.form.js', 'getUrlParam.js', 'vue.min.js', 'music.js'], 'public/js/music.js')
+    .scripts(['bootstrap-datepicker.min.js', 'jquery.form.js', 'getUrlParam.js', 'vue.min.js', 'music.js'], 'public/js/music.js')
     .scripts(['musicStatistics.js'], 'public/js/musicStatistics.js')
     .scripts(['userUsageStatics.js'], 'public/js/userUsageStatics.js')
     .scripts(['dateSelector.js', 'jquery.form.js', 'getUrlParam.js', 'vue.min.js', 'user.js'], 'public/js/user.js')
     .scripts(['musicadd.js'], 'public/js/musicadd.js')
     .scripts(['userbasicinfo.js'], 'public/js/userbasicinfo.js')
     .scripts(['orderStatistics.js'], 'public/js/orderStatistics.js')
-    .scripts(['moment.min.js', 'bootstrap-datetimepicker.min.js', 'order.js', 'getUrlParam.js'], 'public/js/order.js')
+    .scripts(['moment.min.js', 'bootstrap-datetimepicker.min.js', 'getUrlParam.js', 'order.js'], 'public/js/order.js')
     .scripts(['moment.min.js', 'bootstrap-datetimepicker.min.js', 'getUrlParam.js', 'playRecords.js'], 'public/js/playRecords.js');
     /**
      * 添加时间戳

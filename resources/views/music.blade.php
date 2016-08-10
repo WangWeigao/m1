@@ -135,14 +135,9 @@
                         <input type="checkbox" id="date" v-model="date1" {{  Input::get('date') ? 'checked' : ''}}>添加日期
                     </label>
                 </div>
-                <div class="form-group">
-                    <div class="input-group date form_date" data-date="" data-date-format="yyyy MM dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
-                        <input class="form-control" size="20" type="text" value="{{ Input::get('date') }}" readonly="">
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                    </div>
-                    <input type="hidden" id="dtp_input2" v-if="date1" name="date"><br>
-                </div>
+
+                  <input type="text" class="form-control" id="datepicker" name="date" value="{{ Input::get('date') }}">
+
                 <button type="submit" id="condation_search" class="btn btn-success">搜索</button>
             </div>
         </form>

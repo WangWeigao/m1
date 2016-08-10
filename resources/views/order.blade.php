@@ -41,11 +41,35 @@
                 </select>
             </div>
 
-            <div class="form-group">
-                <input type="checkbox" name="data_str" value="" id="data_str">
-                <label for="data_str">订单生成日期</label>
-            </div>
             <div class="form-group form-inline">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="data_str" value="" id="data_str">订单生成日期
+                    </label>
+                </div>
+                <div class="col-md-3 col-md-offset-1 date_left">
+                    <div class="form-group">
+                        <div class='input-group date' id='datetimepicker6'>
+                            <input type='text' class="form-control" name="from_time" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class='col-md-3 date_right'>
+                    <div class="form-group">
+                        <div class='input-group date' id='datetimepicker7'>
+                            <input type='text' class="form-control" name="to_time"/>
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- <div class="form-group form-inline">
                 <div class='col-md-3'>
                     <div class="form-group">
                         <div class='input-group date' id='datetimepicker6'>
@@ -65,9 +89,8 @@
                             </span>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
-            </div>
             <div class="col-md-2">
                 <div class="form-group">
                     <button type="submit" name="button" class="btn btn-info" id="search">查询</button>

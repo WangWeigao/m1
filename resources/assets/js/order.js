@@ -1,4 +1,5 @@
-$(function () {
+$(document).ready(function() {
+
     var dt     = new Date();
     var year   = dt.getFullYear()
     var month  = dt.getMonth()
@@ -26,6 +27,8 @@ $(function () {
     $("#datetimepicker7").on("dp.change", function (e) {
         $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
     });
+
+
 
     // 设置日期选择器的日期
     var from_time = $.getUrlParam('from_time');

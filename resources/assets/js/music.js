@@ -1,6 +1,20 @@
 $(document).ready(function() {
-
-    /**
+    // 时间插件
+    $('#datepicker').datepicker({
+        format: "yyyy/mm/dd",
+        todayBtn: "linked",
+        clearBtn: true,
+        language: "zh-CN",
+        todayHighlight: true
+    });
+    // $('#datepicker').datepicker({
+    //     format: "yyyy/mm/dd",
+    //     todayBtn: "linked",
+    //     clearBtn: true,
+    //     language: "zh-CN",
+    //     todayHighlight: true
+    // });
+/**
      * 点击"创建"按钮(相当于点击"新建"之后的保存)
      */
     $("#createMusic").click(function() {
@@ -287,17 +301,6 @@ $(document).ready(function() {
 
     });
 
-
-    $('.form_date').datetimepicker({
-        // language:  'fr',
-        weekStart: 1,
-        todayBtn:  1,
-		autoclose: 1,
-		todayHighlight: 1,
-		startView: 2,
-		minView: 2,
-		forceParse: 0
-    });
     // var d = new Date();
     // console.log(d.getFullYear());
     // $('.form_date input').val(d.getFullYear()+'-'+parseInt(d.getMonth()+1)+'-'+d.getDate());

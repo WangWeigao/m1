@@ -865,8 +865,8 @@ if (!empty($change_duration)) {
     {
         $name             = $request->get('name', '');
         $search_condition = $request->get('search_condition', '');
-        $from_time        = $request->get('from_time', null);
-        $to_time          = $request->get('to_time', null);
+        $from_time        = $request->get('from_time', '');
+        $to_time          = $request->get('to_time', '');
         // dd($from_time);
         /**
          * 获取所有弹奏记录
@@ -880,6 +880,7 @@ if (!empty($change_duration)) {
                 $play_records->whereHas('music', function($query) use ($name) {
                     $query->where('name', 'like', "%$name%")->withTrashed();
                 });
+                // return $play_records->get();
                 break;
             case 'origin_midi_path':
                 $play_records->where('origin_midi_path', 'like', "%$name%");
@@ -892,10 +893,9 @@ if (!empty($change_duration)) {
                 break;
         }
 
-        if (!is_null($from_time) && !is_null($to_time)) {
+        if (!empty($from_time) && !empty($to_time)) {
             $play_records->whereBetween('practice_date', [$from_time, $to_time]);
         }
-
            $play_records = $play_records->orderBy('practice_date', 'desc')
                                         ->paginate(10)
                                         ->appends(['name' => $name,
