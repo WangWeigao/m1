@@ -195,7 +195,7 @@
                     <td><input type="checkbox" name="user_action[]"></td>
                     <input type="hidden" name="user_id" value="{{ $user->uid }}">
                     {{-- 编号 --}}
-                    <td>{{ $user->seq_num or '' }}</td>
+                    <td>{{ $user->uid or '' }}</td>
                     {{-- 用户帐号 --}}
                     <td><a href="{{ url('/user/basicinfo/' . $user->uid) }}" target="_blank">{{ $user->nickname or '' }}</a></td>
                     {{-- 第三方登录，用户获得的唯一字符串标识 --}}
