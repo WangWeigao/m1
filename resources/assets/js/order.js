@@ -7,44 +7,15 @@ $(document).ready(function() {
     var hour   = dt.getHours()
     var minute = dt.getMinutes()
     var second = dt.getSeconds()
-    $('#datetimepicker6').datetimepicker({
-        // useCurrent: true,
-        format: 'YYYY-MM-DD HH:mm:ss',
-        viewMode: 'days',
-        dayViewHeaderFormat: 'YYYY-MM-DD HH:mm:ss',
-        defaultDate: new Date(year,month,day,0,0,0)
-    });
-    $('#datetimepicker7').datetimepicker({
-        // useCurrent: true, //Important! See issue #1075
-        format: 'YYYY-MM-DD HH:mm:ss',
-        viewMode: 'days',
-        dayViewHeaderFormat: 'YYYY-MM-DD HH:mm:ss',
-        defaultDate: new Date()
-    });
-    $("#datetimepicker6").on("dp.change", function (e) {
-        $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
-    });
-    $("#datetimepicker7").on("dp.change", function (e) {
-        $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+
+    $('#datepicker').datepicker({
+        format: "yyyy/mm/dd",
+        todayBtn: "linked",
+        language: "zh-CN",
+        autoclose: true,
+        todayHighlight: true
     });
 
-
-
-    // 设置日期选择器的日期
-    var from_time = $.getUrlParam('from_time');
-    if (from_time != null) {
-        from_time = from_time.replace("+", " ");
-        from_time = from_time.replace(/%3A/g, ":");
-    }
-    var to_time   = $.getUrlParam('to_time');
-    if (to_time != null) {
-        to_time = to_time.replace("+", " ");
-        to_time = to_time.replace(/%3A/g, ":");
-    }
-    if (from_time != null && from_time != '') {
-        $("#from_time").val(from_time);
-        $("#to_time").val(to_time);
-    }
 
     // 设置订单类型初始值
     $("input[name=order_type]").val(1);
@@ -92,22 +63,21 @@ $(document).ready(function() {
         $("#s_data_str").val(data_str);
     }
 
-    if ($("#data_str").prop('checked')) {
-        $("#from_time").attr('name', 'from_time');
-        $("#to_time").attr('name', 'to_time');
-    } else {
-        $("#from_time").attr('name', '');
-        $("#to_time").attr('name', '');
+
+});
+// 获得当前日期
+months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+var d=new Date()
+var day=d.getDate()
+var month=months[d.getMonth()]
+var year=d.getFullYear()
+var fullDate = year+'/'+month+'/'+day
+
+var vm = new Vue({
+    el: "#form",
+    data: {
+        checked: false,
+        from_time: $("#from_time").attr('data-value') ? $("#from_time").attr('data-value') : '2016/01/01',
+        to_time: $("#to_time").attr('data-value') ? $("#to_time").attr('data-value') : fullDate,
     }
-
-    $("#data_str").bind('change', function(event) {
-        if ($("#data_str").prop('checked')) {
-            $("#from_time").attr('name', 'from_time');
-            $("#to_time").attr('name', 'to_time');
-        } else {
-            $("#from_time").attr('name', '');
-            $("#to_time").attr('name', '');
-        }
-    });
-
 });

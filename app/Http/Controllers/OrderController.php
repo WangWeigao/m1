@@ -31,7 +31,6 @@ class OrderController extends Controller
          * 视图中用于分页链接的参数数组
          * @var [type]
          */
-        $query_string = [];
         $order_num_or_username = $request->get('order_num_or_username');
         // $order_type            = $request->get('order_type');
         // $vendor                = $request->get('vendor');
@@ -51,14 +50,10 @@ class OrderController extends Controller
                  ->join('users', 'robot_orders.user_id', '=', 'users.uid')
                  ->where('robot_orders.id', '=', $order_num_or_username)
                  ->orWhere('users.nickname', 'like', "%$order_num_or_username%")
-                 ->paginate();
-                 // 分页参数
-                 $query_string = array_merge($query_string,
-                                    ['order_num_or_username' => $order_num_or_username]);
+                 ->paginate(10);
 
-                 return view('order')->with(['orders' => $orders,
-                                             'query_string' => $query_string,
-                                             'order_num_or_username' => $order_num_or_username]);
+                 return view('order')->with('orders', $orders)
+                                     ->withInput($request->all());
              }
         }
 
@@ -113,8 +108,6 @@ class OrderController extends Controller
          */
         if (!empty($from_time) && !empty($to_time)) {
             $orders->whereBetween('robot_orders.pay_time', [$from_time, $to_time]);
-            $query_string = array_merge($query_string, ['from_time' => $from_time],
-                                                        ['to_time' => $to_time]);
         }
 
         /**
@@ -140,17 +133,15 @@ class OrderController extends Controller
          * 存储变量作为view中分页链接的参数
          */
         if (!empty($order_status)) {
-            $query_string = array_merge(['order_status' => $order_status]);
             $orders->where('robot_orders.status', $order_status);
         }
 
-        $orders = $orders->paginate(10);
-// return $orders;
-        /**
-         * 携带 from_time 和 to_time 以便进行分页, 点击其它页娄时将数据带到跳转的页面
-         */
-        return view('order')->with(['orders' => $orders,
-                                    'query_string' => $query_string]);
+        $orders = $orders->orderBy('pay_time', 'desc')
+                         ->paginate(10)
+                         ->appends($request->all());
+
+        return view('order')->with('orders', $orders)
+                            ->withInput($request->all());
     }
 
 

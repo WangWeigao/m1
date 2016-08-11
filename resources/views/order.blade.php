@@ -15,7 +15,7 @@
         </form>
         <hr>
 
-        <form class="" action="/order" method="get">
+        <form class="" action="/order" method="get" id="form">
             {!! csrf_field() !!}
             <div class="form-group form-inline">
                 <div class="col-md-1">筛选条件</div>
@@ -40,60 +40,23 @@
                     <option value="3">已付款</option>
                 </select>
             </div>
-
-            <div class="form-group form-inline">
+            <div class="form-group form-inline col-md-offset-1">
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox" name="data_str" value="" id="data_str">订单生成日期
+                        <input type="checkbox" v-model="checked" id="data_str" {{ Input::get('from_time') ? 'checked' : ''}}>订单生成日期
                     </label>
                 </div>
-                <div class="col-md-3 col-md-offset-1 date_left">
-                    <div class="form-group">
-                        <div class='input-group date' id='datetimepicker6'>
-                            <input type='text' class="form-control" name="from_time" />
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class='col-md-3 date_right'>
-                    <div class="form-group">
-                        <div class='input-group date' id='datetimepicker7'>
-                            <input type='text' class="form-control" name="to_time"/>
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
-                        </div>
-                    </div>
+                <div class="input-daterange input-group" id="datepicker">
+                    <input type="text" id="from_time" class="form-control" v-model="from_time" name="@{{ checked ? 'from_time' : '' }}" data-value="{{ Input::get('from_time') }}"/>
+                    <span class="input-group-addon">to</span>
+                    <input type="text" id="to_time" class="form-control" v-model="to_time"   name="@{{ checked ? 'to_time' : '' }}" data-value="{{ Input::get('to_time') }}"/>
                 </div>
             </div>
 
-            {{-- <div class="form-group form-inline">
-                <div class='col-md-3'>
-                    <div class="form-group">
-                        <div class='input-group date' id='datetimepicker6'>
-                            <input type='text' class="form-control" name="" id="from_time"/>
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class='col-md-3'>
-                    <div class="form-group">
-                        <div class='input-group date' id='datetimepicker7'>
-                            <input type='text' class="form-control" name="" id="to_time"/>
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
-                        </div>
-                    </div>
-                </div> --}}
 
-            <div class="col-md-2">
+            <div class="col-md-offset-1">
                 <div class="form-group">
-                    <button type="submit" name="button" class="btn btn-info" id="search">查询</button>
+                    <button type="submit" class="btn btn-info" id="search">查询</button>
                 </div>
             </div>
         </form>
@@ -119,13 +82,16 @@
                         <tbody>
                             @foreach($orders as $order)
                                 <tr>
+                                    {{-- 用户账号 --}}
                                     @if(!empty($order->user))
                                         <td>{{ $order->user->nickname or '-' }}</td>
                                     @else
                                         <td>{{ $order->nickname or '-' }}</td>
                                     @endif
+                                    {{-- 订单号 --}}
                                     <td>{{ $order->id }}</td>
                                     <td>
+                                        {{-- 发货商 --}}
                                         @if($order->channel == 1)
                                             APP Store
                                         @elseif($order->channel == 2)
@@ -137,16 +103,21 @@
                                         @endif
                                     </td>
                                     <td>
+                                        {{-- 订单类型 --}}
                                         @if($order->account_grade == 1)
                                             VIP1
                                         @elseif($order->account_grade == 2)
                                             VIP2
                                         @endif
                                     </td>
+                                    {{-- 金额 --}}
                                     <td>{{ $order->price or '-' }}</td>
+                                    {{-- 开始时间 --}}
                                     <td>{{ $order->pay_time }}</td>
+                                    {{-- 截止日期 --}}
                                     <td>{{ $order->account_end_at }}</td>
                                     <td>
+                                        {{-- 订单状态 --}}
                                         @if($order->status == 1)
                                             待付款
                                         @elseif($order->status == 2)
@@ -159,70 +130,20 @@
                                     </td>
                                     <td>操作</td>
                                     <td>
+                                        {{-- 客服内容备注 --}}
                                         @if(!empty($order->operator))
                                             {{ $order->operator }}:{{ $order->notes }}
                                         @else
                                             -
                                         @endif
                                     </td>
-                                    {{-- <td> --}}
-                                    {{-- <div class=""> --}}
-                                    {{-- <button type="button" id="{{ $order->oid }}" class="btn btn-info btn-sm lockorder" >锁定</button> --}}
-                                    {{-- <button type="button" class="btn btn-info btn-sm cancleorder" >取消</button> --}}
-                                    {{-- 调用模态框 --}}
-                                    {{-- <button type="button" id="{{ $order->oid }}" class="btn btn-info btn-xs detail" data-toggle="modal" data-target="#order_detail">查看</button> --}}
-                                    {{-- 模态框 --}}
-                                    {{-- <div class="modal fade" id="order_detail" tabindex="-1" role="dialog" aria-labelledby="order_detailLabel" aria-hidden="true"> --}}
-                                    {{-- <div class="modal-dialog" style="width: auto"> --}}
-                                    {{-- <div class="modal-content"> --}}
-                                    {{-- <div class="modal-header"> --}}
-                                    {{-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> --}}
-                                    {{-- <h4 class="modal-title" id="order_detailLabel">订单详细信息</h4> --}}
-                                    {{-- </div> --}}
-                                    {{-- <div class="modal-body"> --}}
-                                    {{-- <table class="table table-striped table-hover"> --}}
-                                    {{-- <thead> --}}
-                                    {{-- <tr> --}}
-                                    {{-- <th>订单 ID</th> --}}
-                                    {{-- <th>课程 ID</th> --}}
-                                    {{-- <th>用户 ID</th> --}}
-                                    {{-- <th>授课方式</th> --}}
-                                    {{-- <th>课时数量</th> --}}
-                                    {{-- <th>提交时间</th> --}}
-                                    {{-- <th>订单价格</th> --}}
-                                    {{-- <th>状态</th> --}}
-                                    {{-- </tr> --}}
-                                    {{-- </thead> --}}
-                                    {{-- <tbody> --}}
-                                    {{-- <tr> --}}
-                                    {{-- <td></td> --}}
-                                    {{-- <td></td> --}}
-                                    {{-- <td></td> --}}
-                                    {{-- <td></td> --}}
-                                    {{-- <td></td> --}}
-                                    {{-- <td></td> --}}
-                                    {{-- <td></td> --}}
-                                    {{-- <td></td> --}}
-                                    {{-- </tr> --}}
-                                    {{-- </tbody> --}}
-                                    {{-- </table> --}}
-                                    {{-- </div> --}}
-                                    {{-- <div class="modal-footer"> --}}
-                                    {{-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> --}}
-                                    {{-- <button type="button" class="btn btn-primary">保存修改</button> --}}
-                                    {{-- </div> --}}
-                                    {{-- </div> --}}
-                                    {{-- </div> --}}
-                                    {{-- </div> --}}
-                                    {{-- </div> --}}
-                                    {{-- </td> --}}
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
                 <div class="text-center">
-                    {!! $orders->appends($query_string)->render() !!}
+                    {!! $orders->render() !!}
                 </div>
             @else
                 {{-- @if(!empty($is_start) || $order_num_or_username == '') --}}
@@ -237,9 +158,9 @@
 @endsection
 
 @section('css')
-    <link rel="stylesheet" href="/css/order.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="{{ elixir('css/order.css') }}">
 @endsection
 
 @section('js')
-    <script src="js/order.js"></script>
+    <script type="text/javascript" src=" {{ elixir('js/order.js') }}"></script>
 @endsection
