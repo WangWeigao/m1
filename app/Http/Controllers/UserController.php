@@ -59,29 +59,6 @@ class UserController extends Controller
         $user_type=            $request->get('user_type', '');          // 用户类型(手机号, 微信, QQ, 微博)
 
         $appends_arr = ['field' => $field, 'order' => $order];
-        /**
-         * 用来排序的字段
-         */
-        // $field = $request->get('field');
-        // $order = $request->get('order');
-
-        /**
-         * 如果查询字段$name为空，则不进行查询
-         */
-        // if (empty($user_cellphone_email)
-        //     && empty($city_id)
-        //     && empty($user_grade)
-        //     && empty($reg_time)
-        //     && empty($account_grade)
-        //     && empty($account_end_at)
-        //     && empty($month_duration)
-        //     && empty($account_status)
-        //     && empty($change_duration)
-        //     && empty($liveness)
-        //     && empty($reg_start_time)
-        //     && empty($reg_end_time)) {
-        //         return view('user');
-        // }
 
         /**
          * 按字段不为这的情况，进行SQL语句拼接
@@ -880,7 +857,6 @@ if (!empty($change_duration)) {
                 $play_records->whereHas('music', function($query) use ($name) {
                     $query->where('name', 'like', "%$name%")->withTrashed();
                 });
-                // return $play_records->get();
                 break;
             case 'origin_midi_path':
                 $play_records->where('origin_midi_path', 'like', "%$name%");

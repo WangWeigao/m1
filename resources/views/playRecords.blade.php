@@ -14,7 +14,7 @@
                     <option value="origin_midi_path">源MIDI路径</option>
                     <option value="match_midi_path">匹配后MIDI路径</option>
                 </select>
-                &nbsp;<input type="text" class="form-control col-md-1" id="searchName" v-model="checked" placeholder="请输入曲目名">
+                &nbsp;<input type="text" class="form-control col-md-1" id="searchName" name="name" placeholder="请输入曲目名">
                 <input type="hidden" name="field" value="uid">
                 <input type="hidden" name="order" value="asc">
 
