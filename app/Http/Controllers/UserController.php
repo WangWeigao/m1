@@ -52,10 +52,10 @@ class UserController extends Controller
         $account_status=       $request->get('account_status', '');        // 账号状态
         $change_duration=      $request->get('change_duration', '');       // 本月用时大幅变化
         $liveness=             $request->get('liveness', '');              // 活跃度
-        $reg_start_time=       $request->get('reg_start_time', '');        // 注册时间段 > 开始时间
-        $reg_end_time=         $request->get('reg_end_time', '');          // 注册时间段 > 结束时间
-        $field=                $request->get('field', 'uid');              // 排序字段
-        $order=                $request->get('order', 'asc');              // 排序方式
+        $reg_start_time=       $request->get('from_time', '');        // 注册时间段 > 开始时间
+        $reg_end_time=         $request->get('to_time', '');          // 注册时间段 > 结束时间
+        $field=                $request->get('field', 'regdate');              // 排序字段
+        $order=                $request->get('order', 'desc');              // 排序方式
         $user_type=            $request->get('user_type', '');          // 用户类型(手机号, 微信, QQ, 微博)
 
         $appends_arr = ['field' => $field, 'order' => $order];

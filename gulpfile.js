@@ -28,7 +28,7 @@ elixir(function(mix) {
     //     // 'jquery.dataTables_themeroller.css',    //表格排序
     // ])
     mix.styles(['bootstrap-datepicker.css', 'music.css'], 'public/css/music.css')
-        .styles('user.css', 'public/css/user.css')
+        .styles(['bootstrap-datepicker.css', 'user.css'], 'public/css/user.css')
         .styles('userrecordhistory.css', 'public/css/userrecordhistory.css')
         .styles('orderStatistics.css', 'public/css/orderStatistics.css')
         .styles(['bootstrap-datetimepicker.css', 'bootstrap.min.css', 'order.css'], 'public/css/order.css')

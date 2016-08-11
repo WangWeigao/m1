@@ -19,21 +19,31 @@
             {!! csrf_field() !!}
             <div class="form-group form-inline">
                 <div class="col-md-1">筛选条件</div>
-                <input type="checkbox" name="order_type" value="" class="" id="order_type">
-                <label for="order_type">订单类型</label>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="order_type" value="" class="" id="order_type">订单类型
+                    </label>
+                </div>
                 <select class="form-control" name="" id="s_order_type">
                     <option value="1">VIP1</option>
                     <option value="2">VIP2</option>
                 </select>
-                <input type="checkbox" name="vendor" value="" class="" id="vendor">
-                <label for="vendor">发货商</label>
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="vendor" value="" class="" id="vendor">发货商
+                    </label>
+                </div>
                 <select class="form-control" name="" id="s_vendor">
                     <option value="1">App Store</option>
                     <option value="2">Android</option>
                     <option value="3">Card</option>
                 </select>
-                <input type="checkbox" name="order_status" value="" class="" id="order_status">
-                <label for="order_status">订单状态</label>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="order_status" value="" class="" id="order_status">订单状态
+                    </label>
+                </div>
                 <select class="form-control" name="" id="s_order_status">
                     <option value="1">未付款</option>
                     <option value="2">取消订单</option>

@@ -1,5 +1,12 @@
 $(document).ready(function() {
-
+// 日期插件
+$("#datepicker").datepicker({
+    format: "yyyy/mm/dd",
+    todayBtn: "linked",
+    language: "zh-CN",
+    autoclose: true,
+    todayHighlight: true
+})
 
     /**
      * 点击搜索按钮，只搜索输入的关键字，不匹配下面的筛选条件
@@ -15,32 +22,32 @@ $(document).ready(function() {
     /**
      * select下拉式日期选择器(注册时间段的开始时间)
      */
-     var myDate = new Date();
-     $("#date_start").DateSelector({
-         ctlYearId: 'idYear',
-         ctlMonthId: 'idMonth',
-         ctlDayId: 'idDay',
-         defYear: myDate.getFullYear(),
-         defMonth: (myDate.getMonth() + 1),
-         defDay: myDate.getDate(),
-         minYear: 2015,
-         maxYear: (myDate.getFullYear() + 1)
-     });
+    //  var myDate = new Date();
+    //  $("#date_start").DateSelector({
+    //      ctlYearId: 'idYear',
+    //      ctlMonthId: 'idMonth',
+    //      ctlDayId: 'idDay',
+    //      defYear: myDate.getFullYear(),
+    //      defMonth: (myDate.getMonth() + 1),
+    //      defDay: myDate.getDate(),
+    //      minYear: 2015,
+    //      maxYear: (myDate.getFullYear() + 1)
+    //  });
 
      /**
       * select下拉式日期选择器(注册时间段的结束时间)
       */
-     var myDate2 = new Date();
-     $("#date_end").DateSelector({
-         ctlYearId: 'idYear2',
-         ctlMonthId: 'idMonth2',
-         ctlDayId: 'idDay2',
-         defYear: myDate2.getFullYear(),
-         defMonth: (myDate2.getMonth() + 1),
-         defDay: myDate2.getDate(),
-         minYear: 2015,
-         maxYear: (myDate2.getFullYear() + 1)
-     });
+    //  var myDate2 = new Date();
+    //  $("#date_end").DateSelector({
+    //      ctlYearId: 'idYear2',
+    //      ctlMonthId: 'idMonth2',
+    //      ctlDayId: 'idDay2',
+    //      defYear: myDate2.getFullYear(),
+    //      defMonth: (myDate2.getMonth() + 1),
+    //      defDay: myDate2.getDate(),
+    //      minYear: 2015,
+    //      maxYear: (myDate2.getFullYear() + 1)
+    //  });
 
     /**
      * "地域"中的省份显示
@@ -104,13 +111,7 @@ $(document).ready(function() {
         // 把select的值赋给对应的input
         $("input[name='area']").val($("#city").val());
     });
-    // $("input[name='area']").bind('click', function () {
-    //     if ($("input[name='area']").prop('checked')) {
-    //         $("input[name='province']").prop('checked', true);
-    //     } else {
-    //         $("input[name='province']").prop('checked', false);
-    //     }
-    // });
+
     /**
      * "水平等级"改变时修改 input 的 value
      */
@@ -183,32 +184,6 @@ $(document).ready(function() {
          $("input[name='liveness']").val($("#liveness").val());
      })
 
-    /**
-     * "注册时间段"被修改时(开始时间)
-     */
-    $str = $("#idYear").val() + '-'
-            + $("#idMonth").val() + '-'
-            + $("#idDay").val();
-    $("input[name='reg_start_time']").val($str);
-    $("#idYear,#idMonth,#idDay").bind('change', function(event) {
-        $str = $("#idYear").val() + '-'
-                + $("#idMonth").val() + '-'
-                + $("#idDay").val();
-        $("input[name='reg_start_time']").val($str);
-    });
-    /**
-     * "注册时间段"被修改时(截止时间)
-     */
-    $str = $("#idYear2").val() + '-'
-            + $("#idMonth2").val() + '-'
-            + $("#idDay2").val();
-    $("input[name='reg_end_time']").val($str);
-    $("#idYear2,#idMonth2,#idDay2").bind('change', function(event) {
-        $str = $("#idYear2").val() + '-'
-                + $("#idMonth2").val() + '-'
-                + $("#idDay2").val();
-    $("input[name='reg_end_time']").val($str);
-    });
 
     /**
      * 若"注册时间段"被选中,则同时选中"截止时间", 取消时也一样
@@ -668,10 +643,21 @@ $(document).ready(function() {
      });
 
 });
+// 获取当前日期
+var months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+var d = new Date()
+var year = d.getFullYear()
+var month = months[d.getMonth()]
+var day = d.getDate()
+var fullDate = year+'/'+month+'/'+day
+
 var vm = new Vue({
     el:'body',
     data: {
         user_type: 0,
-        user_type_checked: false
+        user_type_checked: false,
+        reg_timezone_checked: false,
+        from_time: $("#from_time").attr('data-value') ? $("#from_time").attr('data-value') : '2016/01/01',
+        to_time: $("#to_time").attr('data-value') ? $("#to_time").attr('data-value') : fullDate
     }
 })
