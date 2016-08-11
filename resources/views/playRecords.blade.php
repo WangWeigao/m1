@@ -34,8 +34,8 @@
             @if($index === 0)
                 <tr>
                     <th>乐曲名</th>
+                    <th>用户ID</th>
                     <th>用户姓名</th>
-                    {{-- <th>用户ID</th> --}}
                     <th>WAV文件路径</th>
                     <th>源MIDI文件路径</th>
                     <th>匹配后的MIDI文件路径</th>
@@ -46,7 +46,8 @@
             @endif
             <tr>
                 <td>{{ $item->music->name or '-' }}</td>
-                <td><a href="basicinfo/{{ $item->uid or '#' }}">{{ $item->user->nickname or $item->uid }}</a></td>
+                <td><a href="basicinfo/{{ $item->uid or '#' }}">{{ $item->uid }}</a></td>
+                <td><a href="basicinfo/{{ $item->uid or '#' }}">{{ $item->user->nickname or '-' }}</a></td>
                 <td><a href="http://120.26.243.208{{ $item->wav_path }}">{{ $item->wav_path }}</a></td>
                 <td>
                     @forelse($item->origin_midi_path as $item_midi)
