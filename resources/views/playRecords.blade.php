@@ -30,17 +30,20 @@
             <!-- </div> -->
         </form>
     <table class="table table-bordered table-hover">
-        <tr>
-            <th>乐曲名</th>
-            <th>用户姓名</th>
-            {{-- <th>用户ID</th> --}}
-            <th>WAV文件路径</th>
-            <th>源MIDI文件路径</th>
-            <th>匹配后的MIDI文件路径</th>
-            <th>弹奏时间</th>
-            <th>日期</th>
-        </tr>
-        @forelse($play_records as $item)
+        @forelse($play_records as $index => $item)
+            @if($index === 0)
+                <tr>
+                    <th>乐曲名</th>
+                    <th>用户姓名</th>
+                    {{-- <th>用户ID</th> --}}
+                    <th>WAV文件路径</th>
+                    <th>源MIDI文件路径</th>
+                    <th>匹配后的MIDI文件路径</th>
+                    <th>弹奏时间</th>
+                    <th>日期</th>
+                </tr>
+
+            @endif
             <tr>
                 <td>{{ $item->music->name or '-' }}</td>
                 <td><a href="basicinfo/{{ $item->uid or '#' }}">{{ $item->user->nickname or $item->uid }}</a></td>
@@ -65,7 +68,10 @@
                 </td>
             </tr>
         @empty
-
+            <center>
+                <br>
+                <h3>暂无查询结果</h3>
+            </center>
         @endforelse
     </table>
     <div class="text-center">
