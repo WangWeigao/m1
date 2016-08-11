@@ -33,7 +33,7 @@
                 @foreach($records as $record)
                     <tr>
                         <td>{{ $record->practice_date }}</td>
-                        <td>{{ $record->music_id }}</td>
+                        <td>{{ $record->music->name or '曲目已经被删除了' }}</td>
                         <td>{{ $record->practice_time }}</td>
                         <td>{{ $record->expiration }}</td>
                         <td>

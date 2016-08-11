@@ -574,7 +574,7 @@ if (!empty($change_duration)) {
      */
     public function showRecordHistory($id)
     {
-        $records = Practice::where('uid', $id)->paginate(10);
+        $records = Practice::where('uid', $id)->with('music')->paginate(10);
 
         return view('userrecordhistory')
                 ->with(['records' => $records, 'user_id' => $id]);
