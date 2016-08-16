@@ -856,7 +856,7 @@ if (!empty($change_duration)) {
             switch ($search_condition) {
                 case 'user_name':
                 $play_records->whereHas('user', function($query) use ($name) {
-                    $query->where('nickname', "%$name%");
+                    $query->where('nickname', "$name");
                 });
                 break;
                 case 'music_name':
