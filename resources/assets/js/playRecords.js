@@ -10,7 +10,7 @@ $(document).ready(function() {
     /**
      * 保存select中的搜索条件，页面刷新后不变
      */
-    var search_condition = $.getUrlParam('search_condition') ? $.getUrlParam('search_condition') : 'music_name';
+    var search_condition = $.getUrlParam('search_condition') ? $.getUrlParam('search_condition') : 'user_name';
     var name = $.getUrlParam('name');
 
     $("select[name='search_condition']").val(search_condition);

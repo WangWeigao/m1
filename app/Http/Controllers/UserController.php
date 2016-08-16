@@ -840,7 +840,7 @@ if (!empty($change_duration)) {
      */
     public function playRecords(Request $request)
     {
-        $name             = $request->get('name', '');
+        $name             = trim($request->get('name', ''));
         $search_condition = $request->get('search_condition', '');
         $from_time        = $request->get('from_time', '');
         $to_time          = $request->get('to_time', '');
@@ -852,26 +852,28 @@ if (!empty($change_duration)) {
             $query->withTrashed();
         }])->with('user');
 
-        switch ($search_condition) {
-            case 'user_name':
+        if (!empty($name)) {
+            switch ($search_condition) {
+                case 'user_name':
                 $play_records->whereHas('user', function($query) use ($name) {
-                    $query->where('nickname', 'like', "%$name%");
+                    $query->where('nickname', "%$name%");
                 });
                 break;
-            case 'music_name':
+                case 'music_name':
                 $play_records->whereHas('music', function($query) use ($name) {
                     $query->where('name', 'like', "%$name%")->withTrashed();
                 });
                 break;
-            case 'origin_midi_path':
+                case 'origin_midi_path':
                 $play_records->where('origin_midi_path', 'like', "%$name%");
                 break;
-            case 'match_midi_path':
+                case 'match_midi_path':
                 $play_records->where('midi_path', 'like', "%$name%");
                 break;
-            default:
+                default:
                 # code...
                 break;
+            }
         }
 
         if (!empty($from_time) && !empty($to_time)) {
