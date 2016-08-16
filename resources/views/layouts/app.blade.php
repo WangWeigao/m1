@@ -89,6 +89,9 @@
                             </ul>
                         </li>
                         <li>
+                            <a href="/manage_feedback">反馈管理</a>
+                        </li>
+                        <li>
                             <a href="/manage_update_version">版本升级管理</a>
                         </li>
                         <li>

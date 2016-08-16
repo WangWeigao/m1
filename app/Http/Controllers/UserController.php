@@ -853,6 +853,11 @@ if (!empty($change_duration)) {
         }])->with('user');
 
         switch ($search_condition) {
+            case 'user_name':
+                $play_records->whereHas('user', function($query) use ($name) {
+                    $query->where('nickname', 'like', "%$name%");
+                });
+                break;
             case 'music_name':
                 $play_records->whereHas('music', function($query) use ($name) {
                     $query->where('name', 'like', "%$name%")->withTrashed();

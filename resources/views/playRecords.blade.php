@@ -10,6 +10,7 @@
             <div class="form-group form-inline">
                 <div class="">精确搜索: </div>
                 <select class="form-control col-md-1" name="search_condition">
+                    <option value="user_name">用户名</option>
                     <option value="music_name">乐曲名</option>
                     <option value="origin_midi_path">源MIDI路径</option>
                     <option value="match_midi_path">匹配后MIDI路径</option>
