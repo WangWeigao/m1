@@ -340,7 +340,11 @@
                         <div class="form-group">
                             <label for="add_instrument" class="col-sm-2 control-label">乐器</label>
                             <div class="col-sm-10">
-                                <select class="form-control" id="add_instrument" name="instrument"></select>
+                                <select class="form-control" id="add_instrument" name="instrument">
+                                    @foreach($data_condition['instrument'] as $item)
+                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
@@ -365,7 +369,10 @@
                             <label for="add_press" class="col-sm-2 control-label">出版社</label>
                             <div class="col-sm-10">
                                 <select class="form-control" id="add_press" name="press">
-                                    <option value="0">请选择</option>
+                                    <option>请选择出版社</option>
+                                    @foreach($data_condition['press'] as $item)
+                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -373,7 +380,10 @@
                             <label for="add_organizer" class="col-sm-2 control-label">主办单位</label>
                             <div class="col-sm-10">
                                 <select class="form-control" id="add_organizer" name="organizer">
-                                    <option value="0">请选择</option>
+                                    <option>请选择主办单位</option>
+                                    @foreach($data_condition['organizer'] as $item)
+                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
