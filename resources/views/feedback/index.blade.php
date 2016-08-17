@@ -34,15 +34,43 @@
             </div>
         </form>
         <hr>
-        <ul>
-            @foreach($feedbacks as $f)
-                <li>{{ $f->id }}: {{ str_limit($f->content, 20) }} -----
-                                  {{ str_limit($f->reply, 20) }} -----
-                                  {{ $f->user->nickname }} -----
-                                  {{ $f->user->cellphone }} -----
-                                  {{ $f->user->email }}</li>
-            @endforeach
-        </ul>
+        <table class="table table-bordered table-striped">
+            @forelse($feedbacks as $index => $feedback)
+                @if($index === 0)
+                    <tr>
+                        <th>全部</th>
+                        <th>日期</th>
+                        <th>用户账号</th>
+                        <th>手机号</th>
+                        <th>邮箱</th>
+                        <th>最新反馈内容</th>
+                        <th>最新回复</th>
+                        <th>操作</th>
+                    </tr>
+                @endif
+                <tr>
+                    <td><input type="checkbox" name="" id=""></td>
+                    <td>{{ $feedback->created_at }}</td>
+                    <td>{{ $feedback->user->nickname }}</td>
+                    <td>{{ $feedback->user->cellphone }}</td>
+                    <td>{{ $feedback->user->email }}</td>
+                    <td><abbr title="{{ $feedback->content }}">{{ str_limit($feedback->content, 15) }}</abbr></td>
+                    <td><abbr title="{{ $feedback->reply }}">{{ str_limit($feedback->reply, 15) }}</abbr></td>
+                    <td>
+                        <select class="form-control" name="">
+                            <option value="">回复</option>
+                            <option value="">谢谢您的反馈,我们会尽快完善曲库</option>
+                            <option value="">谢谢您的反馈,我们会尽快解决您的问题</option>
+                            <option value="">我们已添加您所需的曲目,请尽快享用</option>
+                            <option value="">手动回复</option>
+                        </select>
+                    </td>
+                </tr>
+
+            @empty
+                <blockquote>没有查询结果</blockquote>
+            @endforelse
+        </table>
         {{ $feedbacks->render() }}
     </div>
 @endsection

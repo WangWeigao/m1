@@ -20,16 +20,22 @@ class ManageFeedbackController extends Controller
         $keyword     = trim($request->input('keyword'));
         $field_date  = trim($request->input('field_date')) ? 'desc' : 'asc';
         $field_today = trim($request->input('field_today')) ? true : false;
-// return $field_date;
+
+        // 在用户昵称, 手机号, 电子邮箱中查询关键字
         $feedbacks = Feedback::WhereHas('user', function($query) use ($keyword) {
                         $query->where('nickname', 'like', "%$keyword%")
                               ->orWhere('cellphone', 'like', "%$keyword%")
                               ->orWhere('email', 'like', "%$keyword%");
                     });
+
+        // 在当天中查找记录
         if ($field_today) {
             $feedbacks->whereBetween('created_at', [Carbon::now()->startOfDay(), Carbon::now()->endOfDay()]);
         }
+
+        // 按创建时间排序并分页
         $feedbacks = $feedbacks->orderBy('created_at', $field_date)->paginate(10);
+        
         return view('feedback.index', compact('feedbacks'));
     }
 

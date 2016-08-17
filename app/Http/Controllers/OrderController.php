@@ -40,22 +40,23 @@ class OrderController extends Controller
         /**
          * 按 订单号/用户名 进行查询
          */
-         if (isset($order_num_or_username)) {
-             if (empty($order_num_or_username)) {
+         if (!empty($order_num_or_username)) {
+             $orders = RobotOrder::select('id', 'user_id', 'operator', 'order_num',
+                                          'channel', 'type', 'price', 'pay_time',
+                                          'status', 'notes')
+                                 ->whereHas('user', function($query) use ($order_num_or_username) {
+                                     $query->where('nickname', 'like', "%$order_num_or_username%");
+                                 })
+                                 ->with(['user' => function($query) {
+                                         $query->select('uid', 'nickname', 'account_end_at');
+                                     }, 'operator_user' => function($query) {
+                                         $query->select('id', 'name');
+                                     }])
+                                ->paginate(10);
 
-                 return view('order')->with(['orders' => [],
-                                             'order_num_or_username' => '']);
-             }else {
-                 $orders =  DB::table('robot_orders')
-                 ->join('users', 'robot_orders.user_id', '=', 'users.uid')
-                 ->where('robot_orders.id', '=', $order_num_or_username)
-                 ->orWhere('users.nickname', 'like', "%$order_num_or_username%")
-                 ->paginate(10);
-
-                 return view('order')->with('orders', $orders)
-                                     ->withInput($request->all());
-             }
-        }
+             return view('order')->with('orders', $orders)
+                                 ->withInput($request->all());
+         }
 
         /**
          * 订单类型
@@ -98,11 +99,18 @@ class OrderController extends Controller
         // }
 
 
-        $orders = DB::table('robot_orders')
-                    ->join('users', 'robot_orders.user_id', '=', 'users.uid')
-                    ->select('robot_orders.*', 'users.nickname',
-                             'users.account_grade', 'account_end_at');
-
+        // $orders = DB::table('robot_orders')
+        //             ->join('users', 'robot_orders.user_id', '=', 'users.uid')
+        //             ->select('robot_orders.*', 'users.nickname',
+        //                      'users.account_grade', 'account_end_at');
+        $orders = RobotOrder::select('id', 'user_id', 'operator', 'order_num',
+                                     'channel', 'type', 'price', 'pay_time',
+                                     'status', 'notes')
+                            ->with(['user' => function($query) {
+                                    $query->select('uid', 'nickname', 'account_end_at');
+                                }, 'operator_user' => function($query) {
+                                    $query->select('id', 'name');
+                                }]);
         /**
          * 按时间跨度查询订单
          */

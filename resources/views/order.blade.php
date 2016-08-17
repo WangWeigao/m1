@@ -100,49 +100,23 @@
                                     @endif
                                     {{-- 订单号 --}}
                                     <td>{{ $order->id }}</td>
-                                    <td>
-                                        {{-- 发货商 --}}
-                                        @if($order->channel == 1)
-                                            APP Store
-                                        @elseif($order->channel == 2)
-                                            Android
-                                        @elseif($order->channel == 3)
-                                            Card
-                                        @else
-                                            -
-                                        @endif
-                                    </td>
-                                    <td>
-                                        {{-- 订单类型 --}}
-                                        @if($order->account_grade == 1)
-                                            VIP1
-                                        @elseif($order->account_grade == 2)
-                                            VIP2
-                                        @endif
-                                    </td>
+                                    {{-- 发货商 --}}
+                                    <td>{{ $order->channel }}</td>
+                                    {{-- 订单类型 --}}
+                                    <td>{{ $order->type }}</td>
                                     {{-- 金额 --}}
                                     <td>{{ $order->price or '-' }}</td>
                                     {{-- 开始时间 --}}
                                     <td>{{ $order->pay_time }}</td>
                                     {{-- 截止日期 --}}
-                                    <td>{{ $order->account_end_at }}</td>
-                                    <td>
-                                        {{-- 订单状态 --}}
-                                        @if($order->status == 1)
-                                            待付款
-                                        @elseif($order->status == 2)
-                                            取消订单
-                                        @elseif($order->status == 3)
-                                            已付款
-                                        @else
-                                            -
-                                        @endif
-                                    </td>
+                                    <td>{{ $order->user->account_end_at }}</td>
+                                    {{-- 订单状态 --}}
+                                    <td>{{ $order->status }}</td>
                                     <td>操作</td>
                                     <td>
                                         {{-- 客服内容备注 --}}
                                         @if(!empty($order->operator))
-                                            {{ $order->operator }}:{{ $order->notes }}
+                                            <abbr title="{{ $order->operator }}:{{ $order->notes }}">{{ $order->operator }}:{{ str_limit($order->notes, 15) }}</abbr>
                                         @else
                                             -
                                         @endif
