@@ -124,7 +124,7 @@ class OrderController extends Controller
          */
         if (!empty($order_type)) {
             $query_string = array_merge(['order_type' => $order_type]);
-            $orders->where('users.account_grade', $order_type);
+            $orders->where('type', $order_type);
         }
 
         /**
