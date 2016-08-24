@@ -269,16 +269,28 @@
                           <form id="save_detail">
                               <input type="hidden" id="edit_id">
                               <td>
-                                  <select id="edit_instrument" class="form-control"></select>
+                                  <select id="edit_instrument" class="form-control">
+                                      @foreach($data_condition['instrument'] as $i)
+                                          <option value="{{ $i->id }}">{{ $i->name }}</option>
+                                      @endforeach
+                                  </select>
                               </td>
                               <td><input class="form-control" type="text" id="edit_name"></td>
                               <td><input class="form-control" type="text" id="edit_composer"></td>
                               <td><input class="form-control" type="text" id="edit_version"></td>
                               <td>
-                                  <select id="edit_press" class="form-control"></select>
+                                  <select id="edit_press" class="form-control">
+                                      @foreach($data_condition['press'] as $p)
+                                          <option value="{{ $p->id }}">{{ $p->name }}</option>
+                                      @endforeach
+                                  </select>
                               </td>
                               <td>
-                                  <select id="edit_organizer" class="form-control"></select>
+                                  <select id="edit_organizer" class="form-control">
+                                      @foreach($data_condition['organizer'] as $o)
+                                          <option value="{{ $o->id }}">{{ $o->name }}</option>
+                                      @endforeach
+                                  </select>
                               </td>
                               {{-- <td>
                                   <select id="edit_category" class="form-control"></select>

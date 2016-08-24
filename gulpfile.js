@@ -77,7 +77,8 @@ elixir(function(mix) {
     .scripts(['userbasicinfo.js'], 'public/js/userbasicinfo.js')
     .scripts(['orderStatistics.js'], 'public/js/orderStatistics.js')
     .scripts(['vue.min.js', 'getUrlParam.js', 'order.js'], 'public/js/order.js')
-    .scripts(['vue.min.js', 'getUrlParam.js', 'playRecords.js'], 'public/js/playRecords.js');
+    .scripts(['vue.min.js', 'getUrlParam.js', 'playRecords.js'], 'public/js/playRecords.js')
+    .scripts(['vue.min.js', 'vue-resource.min.js', 'feedback.js'], 'public/js/feedback.js');
     /**
      * 添加时间戳
      */

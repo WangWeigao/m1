@@ -30,10 +30,12 @@
                     </div>
                 </div>
                 <button type="submit" class="col-md-offset-1 btn btn-info">搜索</button>
-                <a href="#" class="btn btn-warning" onclick="myFunction()">点我</a>
             </div>
         </form>
         <hr>
+        @include('feedback.templates.success')
+        @include('feedback.templates.error')
+        @include('feedback.replyContent')
         <table class="table table-bordered table-striped">
             @forelse($feedbacks as $index => $feedback)
                 @if($index === 0)
@@ -57,13 +59,14 @@
                     <td><abbr title="{{ $feedback->content }}">{{ str_limit($feedback->content, 15) }}</abbr></td>
                     <td><abbr title="{{ $feedback->reply }}">{{ str_limit($feedback->reply, 15) }}</abbr></td>
                     <td>
-                        <select class="form-control" name="">
+                        {{-- <select class="form-control" name="">
                             <option value="">回复</option>
-                            <option value="">谢谢您的反馈,我们会尽快完善曲库</option>
-                            <option value="">谢谢您的反馈,我们会尽快解决您的问题</option>
-                            <option value="">我们已添加您所需的曲目,请尽快享用</option>
-                            <option value="">手动回复</option>
-                        </select>
+                            <option value="1">谢谢您的反馈,我们会尽快完善曲库</option>
+                            <option value="2">谢谢您的反馈,我们会尽快解决您的问题</option>
+                            <option value="3">我们已添加您所需的曲目,请尽快享用</option>
+                            <option value="4">手动回复</option>
+                        </select> --}}
+                        <a class="btn btn-default operate_reply" data-toggle="modal" data-target="#replyContent" data-value="{{ $feedback->id }}">回复</a>
                     </td>
                 </tr>
 
@@ -76,46 +79,5 @@
 @endsection
 
 @section('js')
-    <script type="text/javascript">
-    $(document).ready(function() {
-        // 搜索关键字
-        if (localStorage.keyword) {
-            $("input[name=keyword]").val(localStorage.keyword);
-        }
-
-        // 按时间排序
-        if (localStorage.field_date) {
-            $("input[name=field_date]").prop('checked', true);
-        }
-
-        // 搜索当天结果
-        if (localStorage.field_today) {
-            $("input[name=field_today]").prop('checked', true);
-        }
-
-        $("button").click(function(event) {
-            // 搜索关键字
-            if ($("input[name=keyword]").val()) {
-                localStorage.keyword = $("input[name=keyword]").val();
-            } else {
-                localStorage.removeItem('keyword');
-            }
-
-            // 按时间排序
-            if ($("input[name=field_date]").prop('checked')) {
-                localStorage.field_date = $("input[name=field_date]").val(true);
-            } else {
-                localStorage.removeItem('field_date');
-            }
-
-            // 搜索当天结果
-            if ($("input[name=field_today]").prop('checked')) {
-                localStorage.field_today = $("input[name=field_today]").val(true);
-            } else {
-                localStorage.removeItem('field_today');
-            }
-
-        });
-    });
-    </script>
+    <script type="text/javascript" src="{{ elixir('js/feedback.js') }}"></script>
 @endsection

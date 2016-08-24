@@ -219,7 +219,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/getPic', 'test001Controller@getPic');
     // Email发送成绩报告
     Route::get('/report', 'ReportListController@sendReport');
-    // Route::get('/reportView', function() {return view('emails.test');});
+    Route::get('/reportView', function() {return view('emails.test');});
     // 添加midi文件播放时长
     Route::get('/addMidiDuration', 'test001Controller@addDuration');
     // 获得midi文件的轨道数

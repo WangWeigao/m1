@@ -35,7 +35,7 @@ class ManageFeedbackController extends Controller
 
         // 按创建时间排序并分页
         $feedbacks = $feedbacks->orderBy('created_at', $field_date)->paginate(10);
-        
+
         return view('feedback.index', compact('feedbacks'));
     }
 
@@ -91,7 +91,7 @@ class ManageFeedbackController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return $request->all();
     }
 
     /**

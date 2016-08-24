@@ -15,6 +15,7 @@
   "js/dataTables.bootstrap.min.js": "js/dataTables.bootstrap.min-8d0245440c.js",
   "js/dataTables.jqueryui.min.js": "js/dataTables.jqueryui.min-9264afd900.js",
   "js/dateSelector.js": "js/dateSelector-c1072d041a.js",
+  "js/feedback.js": "js/feedback-4d58ae76c7.js",
   "js/getUrlParam.js": "js/getUrlParam-33a3672099.js",
   "js/getorders.js": "js/getorders-4b554c16ee.js",
   "js/getteachers.js": "js/getteachers-6db3c3fe1c.js",
