@@ -37,12 +37,16 @@ class SendReminderEmail extends Job implements ShouldQueue
         $tm_email = new TMEmail;
         $tm_email->from = 'emailuser001@163.com';
         // $tm_email->to = $this->user->email;
-        $tm_email->to = 'emailuser001@163.com';
-        $tm_email->subject = '测试邮件' . '-' . mt_rand() . '-' . $this->user->email;
+        // $tm_email->to = '168792316@qq.com'; // 董扬的QQ邮箱
+        $tm_email->to = 'wangweigao@gmail.com';
+        // $tm_email->cc = 'wangweigao@gmail.com';
+
+        $tm_email->subject = '成绩报告(推送家长)' . '-' . mt_rand() . '-' . $this->user->email;
         // $mailer->send('emails.test', ['user' => $this->user], function ($m) use ($tm_email) {
-        $mailer->send('emails.mail-report', ['root' => $request->root()], function ($m) use ($tm_email) {
+        $mailer->send('emails.mail-report-new', ['root' => $request->root()], function ($m) use ($tm_email) {
             $m->from($tm_email->from, '音熊');
             $m->to($tm_email->to);
+            // $m->cc($tm_email->cc);
             $m->subject($tm_email->subject);
         });
     }

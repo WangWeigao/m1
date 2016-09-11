@@ -61,12 +61,22 @@ if (isset($_POST['send'])) {
     <div id="loginWindow" class="modal fade in" data-backdrop="static" role="dialog" aria-labelledby="modal-label" style="display:none;">
         <div class="modal-dialog" role="document">
         <div class="modal-content">
-        
+
         <div class="modal-header">
             <a class="close" data-dismiss="modal"><img src="images/login/login_n_signup/close.png"></a>
         </div><!--modal-header-->
 
         <div class="modal-body">
+            <div>
+                <h3>登录</h3>
+                <input type="text" class="form-control" placeholder="帐号: 手机号" style="margin-bottom: 20px;">
+                <input type="password" class="form-control" placeholder="密码: 请输入8-16位字符">
+                <a href="" class="pull-right">忘记密码</a>
+                <div style="margin-bottom: 40px;"></div>
+                <button type="button" class="btn btn-info" style="width: 14rem;border-radius:25px;-moz-border-radius:25px;position: relative;right: 1rem;">登录</button>
+                <button type="button" class="btn btn-default" style="width: 14rem;border-radius:25px;-moz-border-radius:25px;position: relative;left: 1rem;">注册</button>
+
+            </div>
 
             <div id="login-form" class="visible">
                 <form class="form-horizontal" action="" method="post">

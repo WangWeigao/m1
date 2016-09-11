@@ -7,7 +7,7 @@
     <meta name = "description" content = "您随时随地的音乐私教">
     <!--title-->
     <title>成绩报告</title>
-    <link rel='icon' href='{{$root}}/yinxiong/images/tuti.ico ' type=‘image/x-ico’ />
+    {{-- <link rel='icon' href='{{$root}}/yinxiong/images/tuti.ico ' type=‘image/x-ico’ /> --}}
     <!-- <link type="text/css" href="css/mail-report.css" rel="stylesheet"/> -->
     <style media="screen">
     body {
@@ -308,7 +308,7 @@
 	                    	</script>
 	                    </ul>
 	                    </ul>
-	                    <table class="table" id="history-table"><tr>
+	                    <table class="table" id="history-table" style="width: 996px;"><tr>
 	                        <td>时间</td>
 	                        <td>曲目名称</td>
 	                        <td>曲目等级</td>
@@ -325,7 +325,7 @@
 	                        <td>20：46</td>
 	                        <td>13</td>
 	                        <td>7</td>
-	                        <td><button type="button" name="body"><img src="{{$root}}/yinxiong/images/play.png"></button></td></tr>
+	                        {{-- <td><button type="button" name="body"><img src="{{$root}}/yinxiong/images/play.png"></button></td></tr> --}}
 
 	                        <tr>
 	                        <td>07:02</td>
@@ -335,7 +335,7 @@
 	                        <td>20：46</td>
 	                        <td>222</td>
 	                        <td>155</td>
-	                        <td><button type="button" name="play"><img src="{{$root}}/yinxiong/images/play.png"></button></td></tr>
+	                        {{-- <td><button type="button" name="play"><img src="{{$root}}/yinxiong/images/play.png"></button></td></tr> --}}
 
 	                        <tr>
 	                        <td>07:02</td>
@@ -345,7 +345,7 @@
 	                        <td>1：08：08</td>
 	                        <td>199</td>
 	                        <td>211</td>
-	                        <td><button type="button" name="play"><img src="{{$root}}/yinxiong/images/play.png"></button></td></tr>
+	                        {{-- <td><button type="button" name="play"><img src="{{$root}}/yinxiong/images/play.png"></button></td></tr> --}}
 
 	                        <tr>
 	                        <td>07:02</td>
@@ -355,7 +355,7 @@
 	                        <td>10：00</td>
 	                        <td>1</td>
 	                        <td>1</td>
-	                        <td><button type="button" name="play"><img src="{{$root}}/yinxiong/images/play.png"></button></td></tr>
+	                        {{-- <td><button type="button" name="play"><img src="{{$root}}/yinxiong/images/play.png"></button></td></tr> --}}
 
 	                        <tr>
 	                        <td>07:02</td>
@@ -365,7 +365,7 @@
 	                        <td>20：00</td>
 	                        <td>6</td>
 	                        <td>13</td>
-	                        <td><button type="button" name="play"><img src="{{$root}}/yinxiong/images/play.png"></button></td></tr>
+	                        {{-- <td><button type="button" name="play"><img src="{{$root}}/yinxiong/images/play.png"></button></td></tr> --}}
 
 	                        <tr>
 	                        <td>07:02</td>
@@ -375,19 +375,19 @@
 	                        <td>20：23</td>
 	                        <td>3</td>
 	                        <td>3</td>
-	                        <td><button type="button" name="play"><img src="{{$root}}/yinxiong/images/play.png"></button></td></tr>
+	                        {{-- <td><button type="button" name="play"><img src="{{$root}}/yinxiong/images/play.png"></button></td></tr> --}}
 	                    </table><br>
 
 	                    <ul class="list-inline" id="pi-chart-group">
 	                    	<li>
 	                    		<div class="report-pie-chart-group" id="lianxishichang">
 		                    		<ul class="chart-tag" id="lianxi-chart-tag">
-		                    			<li><img src="{{$root}}/yinxiong/images/pi-chart/bluedot.png">七级：A大调音阶</li>
-		                    			<li><img src="{{$root}}/yinxiong/images/pi-chart/purpledot.png">致爱丽丝</li>
+		                    			{{-- <li><img src="{{$root}}/yinxiong/images/pi-chart/bluedot.png">七级：A大调音阶</li> --}}
+		                    			{{-- <li><img src="{{$root}}/yinxiong/images/pi-chart/purpledot.png">致爱丽丝</li> --}}
 		                    		    <!--tag需要根据饼图的颜色变化-->
 		                    		</ul>
 
-	                    			<img src="{{$root}}/yinxiong/images/pi-chart/pie1.png" id="report-pie1">
+	                    			{{-- <img src="{{$root}}/yinxiong/images/pi-chart/pie1.png" id="report-pie1"> --}}
 	                    			<p>曲目练习时长</p>
 	                    		</div>
 	                    	</li>
@@ -395,22 +395,22 @@
 	                    		<div class="report-pie-chart-group" id="pingfen">
 	                    			<ul class="list-inline">
 	                    				<li>
-		                    				<select class="form-control" id="pingfen-choose-song">
+		                    				{{-- <select class="form-control" id="pingfen-choose-song">
 		   										<option value="致爱丽丝">致爱丽丝</option>
 		   										<option value="七级：A大调音阶">七级：A大调音阶</option>
-		                    				</select>
+		                    				</select> --}}
 
-	                    					<img src="{{$root}}/yinxiong/images/pi-chart/pie2.png" id="report-pie2">
+	                    					{{-- <img src="{{$root}}/yinxiong/images/pi-chart/pie2.png" id="report-pie2"> --}}
 	                    				</li>
 			                    		<li>
 			                    			<ul class="chart-tag" id="pingfen-chart-tag">
-				                    			<li><img src="{{$root}}/yinxiong/images/pi-chart/bluedot.png">一星</li>
-				                    			<li><img src="{{$root}}/yinxiong/images/pi-chart/purpledot.png">二星</li>
-				                    			<li><img src="{{$root}}/yinxiong/images/pi-chart/bluedot.png">三星</li>
-				                    			<li><img src="{{$root}}/yinxiong/images/pi-chart/bluedot.png">四星</li>
-				                    			<li><img src="{{$root}}/yinxiong/images/pi-chart/purpledot.png">五星</li>
-				                    			<li><img src="{{$root}}/yinxiong/images/pi-chart/purpledot.png">六星</li>
-				                    			<li><img src="{{$root}}/yinxiong/images/pi-chart/purpledot.png">七星</li>
+				                    			{{-- <li><img src="{{$root}}/yinxiong/images/pi-chart/bluedot.png">一星</li> --}}
+				                    			{{-- <li><img src="{{$root}}/yinxiong/images/pi-chart/purpledot.png">二星</li> --}}
+				                    			{{-- <li><img src="{{$root}}/yinxiong/images/pi-chart/bluedot.png">三星</li> --}}
+				                    			{{-- <li><img src="{{$root}}/yinxiong/images/pi-chart/bluedot.png">四星</li> --}}
+				                    			{{-- <li><img src="{{$root}}/yinxiong/images/pi-chart/purpledot.png">五星</li> --}}
+				                    			{{-- <li><img src="{{$root}}/yinxiong/images/pi-chart/purpledot.png">六星</li> --}}
+				                    			{{-- <li><img src="{{$root}}/yinxiong/images/pi-chart/purpledot.png">七星</li> --}}
 				                    			<li id="score-times"><p>共评分36次</p></li>
 				                    		    <!--tag需要根据饼图的颜色变化-->
 				                    		</ul>
@@ -429,7 +429,7 @@
 	<div id="activity-form" class="container">
 		<table class="table table-hover" id="activity">
 			<tr>
-	            <td><img id="act_icon" src="{{$root}}/yinxiong/images/report/activity_icon.png">活动</td>
+	            {{-- <td><img id="act_icon" src="{{$root}}/yinxiong/images/report/activity_icon.png">活动</td> --}}
 	        </tr>
 
 	        <tr>

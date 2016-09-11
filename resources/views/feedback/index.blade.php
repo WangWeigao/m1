@@ -56,8 +56,8 @@
                     <td>{{ $feedback->user->nickname }}</td>
                     <td>{{ $feedback->user->cellphone }}</td>
                     <td>{{ $feedback->user->email }}</td>
-                    <td><abbr title="{{ $feedback->content }}">{{ str_limit($feedback->content, 15) }}</abbr></td>
-                    <td><abbr title="{{ $feedback->reply }}">{{ str_limit($feedback->reply, 15) }}</abbr></td>
+                    <td><a href="#" data-toggle="tooltip" data-placement="top" title="{{ $feedback->content }}">{{ str_limit($feedback->content, 15) }}</a></td>
+                    <td><a href="#" data-toggle="tooltip" data-placement="top" title="{{ $feedback->reply }}">{{ str_limit($feedback->reply, 15) }}</a></td>
                     <td>
                         {{-- <select class="form-control" name="">
                             <option value="">回复</option>
@@ -80,4 +80,9 @@
 
 @section('js')
     <script type="text/javascript" src="{{ elixir('js/feedback.js') }}"></script>
+    <script type="text/javascript">
+        $(function() {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
 @endsection

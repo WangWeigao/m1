@@ -1,4 +1,4 @@
-jQuery(document).ready(function($)) {
+jQuery(document).ready(function($) {
 	var $form_modal = $('.modal'),
 	    $form_login = $form_modal.find('#login-form'),
 	    $form_signup = $form_modal.find('#signup-form'),
@@ -17,4 +17,4 @@ jQuery(document).ready(function($)) {
 		$form_signup.addClass('.visible');
 		$form_signup.removeClass('.invisible');
 	}
-}
+});
