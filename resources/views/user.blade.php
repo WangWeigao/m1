@@ -18,135 +18,197 @@
                 <input type="text" class="form-control" id="user_cellphone_email" placeholder="请输入用户名/手机号/电子邮件">
                 <button type="button" name="button" class="btn btn-success" id="search">搜索</button>
             </div>
-            <div class="form-group form-inline">
                 <div>筛选待件</div>
+                <div class="row form-inline">
                 {{-- 地域 --}}
-                <input type="checkbox" name="area" value="" id="area">
-                <input type="checkbox" name="province" value="" id="" style="display:none">
-                <label for="area">地域</label>
-                <select class="" id="province">
-                    <option>省份</option>
-                </select>
-                <select class="" id="city">
-                    <option>城市</option>
-                </select>
+                <div class="col-md-3">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="area" value="" id="area"><span>地域</span>
+                        </label>
+                    </div>
+                    <select class="" id="province" class="form-control">
+                        <option>省份</option>
+                    </select>
+                    <select class="" id="city" class="form-control">
+                        <option>城市</option>
+                    </select>
+                </div>
+
                 {{-- 水平等级 --}}
-                <input type="checkbox" name="user_grade" value="" id="l-user-grade">
-                <label for="l-user-grade">水平等级</label>
-                <select class="" id="user_grade">
-                    <option value="0">水平等级</option>
-                    <option value="1">业余1级</option>
-                    <option value="2">业余2级</option>
-                    <option value="3">业余3级</option>
-                    <option value="4">业余4级</option>
-                    <option value="5">业余5级</option>
-                    <option value="6">业余6级</option>
-                    <option value="7">业余7级</option>
-                    <option value="8">业余8级</option>
-                    <option value="9">业余9级</option>
-                    <option value="10">业余10级</option>
-                    <option value="11">专业1级</option>
-                    <option value="12">专业2级</option>
-                    <option value="13">专业3级</option>
-                    <option value="14">专业4级</option>
-                    <option value="15">专业5级</option>
-                    <option value="16">专业6级</option>
-                    <option value="17">专业7级</option>
-                    <option value="18">专业8级</option>
-                    <option value="19">专业9级</option>
-                    <option value="20">专业10级</option>
-                </select>
-                {{-- 注册时间 --}}
-                <input type="checkbox" name="reg_time" value="" id="l-reg-time">
-                <label for="l-reg-time">注册时间</label>
-                <select class="" id="reg_time">
-                    <option value="day">新用户</option>
-                    <option value="week">一周内</option>
-                    <option value="month">一月内</option>
-                    <option value="half_year">半年内</option>
-                    <option value="year">一年内</option>
-                    <option value="one_more_year">一年以上</option>
-                </select>
-                {{-- 帐号级别 --}}
-                <input type="checkbox" name="account_grade" value="" id="l_account_grade">
-                <label for="l_account_grade">帐号级别</label>
-                <select class="" name="" id="account_grade">
-                    <option value="vip1">VIP1</option>
-                    <option value="vip2">VIP2</option>
-                    <option value="free">免费</option>
-                    <option value="all">全部</option>
-                </select>
+                <div class="col-md-3">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="user_grade" value="" id="l-user-grade"><span>水平等级</span>
+                        </label>
+                    </div>
+                    <select class="form-control" id="user_grade">
+                        <option value="0">水平等级</option>
+                        <option value="1">业余1级</option>
+                        <option value="2">业余2级</option>
+                        <option value="3">业余3级</option>
+                        <option value="4">业余4级</option>
+                        <option value="5">业余5级</option>
+                        <option value="6">业余6级</option>
+                        <option value="7">业余7级</option>
+                        <option value="8">业余8级</option>
+                        <option value="9">业余9级</option>
+                        <option value="10">业余10级</option>
+                        <option value="11">专业1级</option>
+                        <option value="12">专业2级</option>
+                        <option value="13">专业3级</option>
+                        <option value="14">专业4级</option>
+                        <option value="15">专业5级</option>
+                        <option value="16">专业6级</option>
+                        <option value="17">专业7级</option>
+                        <option value="18">专业8级</option>
+                        <option value="19">专业9级</option>
+                        <option value="20">专业10级</option>
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    {{-- 注册时间 --}}
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="reg_time" value="" id="l-reg-time"><span>注册时间</span>
+                        </label>
+                    </div>
+                    <select class="form-control" id="reg_time">
+                        <option value="day">新用户</option>
+                        <option value="week">一周内</option>
+                        <option value="month">一月内</option>
+                        <option value="half_year">半年内</option>
+                        <option value="year">一年内</option>
+                        <option value="one_more_year">一年以上</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    {{-- 帐号级别 --}}
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="account_grade" value="" id="l_account_grade">帐号级别
+                        </label>
+                    </div>
+                    <select class="form-control" name="" id="account_grade">
+                        <option value="vip1">VIP1</option>
+                        <option value="vip2">VIP2</option>
+                        <option value="free">免费</option>
+                        <option value="all">全部</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- 筛选条件的第二行 -->
+            <div class="row form-inline">
                 {{-- 帐号截止日期 --}}
-                <input type="checkbox" name="account_end_at" value="" id="l_account_end_at">
-                <label for="l_account_end_at">帐号截止日期</label>
-                <select class="" name="" id="account_end_at">
-                    <option value="week">一周内</option>
-                    <option value="month">一个月内</option>
-                    <option value="two_months">二个月内</option>
-                </select>
-                <input type="hidden" name="field" value="uid">
-                <input type="hidden" name="order" value="asc">
-            </div>
-            <div class="form-group form-inline">
+                <div class="col-md-3">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="account_end_at" value="" id="l_account_end_at">帐号截止日期
+                        </label>
+                    </div>
+                    <select class="form-control" name="" id="account_end_at">
+                        <option value="week">一周内</option>
+                        <option value="month">一个月内</option>
+                        <option value="two_months">二个月内</option>
+                    </select>
+                    <input type="hidden" name="field" value="uid">
+                    <input type="hidden" name="order" value="asc">
+                </div>
                 {{-- 本月使用时长 --}}
-                <input type="checkbox" name="month_duration" value="" id="l_month_duration">
-                <label for="l_month_duration">本月使用时长</label>
-                <select class="" name="" id="month_duration">
-                    <option value="1h">1小时以内的</option>
-                    <option value="5h">5小时以内的</option>
-                    <option value="10h">10小时以内的</option>
-                    <option value="30h">30小时以内的</option>
-                    <option value="60h">60小时以内的</option>
-                    <option value="60h_more">60小时以上</option>
-                    <option value="0h">未使用</option>
-                </select>
+                <div class="col-md-3">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="month_duration" value="" id="l_month_duration">本月使用时长
+                        </label>
+                    </div>
+                    <select class="form-control" name="" id="month_duration">
+                        <option value="1h">1小时以内的</option>
+                        <option value="5h">5小时以内的</option>
+                        <option value="10h">10小时以内的</option>
+                        <option value="30h">30小时以内的</option>
+                        <option value="60h">60小时以内的</option>
+                        <option value="60h_more">60小时以上</option>
+                        <option value="0h">未使用</option>
+                    </select>
+                </div>
                 {{-- 帐号状态 --}}
-                <input type="checkbox" name="account_status" value="" id="l_account_status">
-                <label for="l_account_status">帐号状态</label>
-                <select class="" name="" id="account_status">
-                    <option value="near_expire">帐号到期</option>
-                    <option value="lock">锁定</option>
-                    <option value="normal">正常</option>
-                    <option value="expire">未续费</option>
-                </select>
+                <div class="col-md-3">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="account_status" value="" id="l_account_status"><span>帐号状态</span>
+                        </label>
+                    </div>
+                    <select class="form-control" name="" id="account_status">
+                        <option value="near_expire">帐号到期</option>
+                        <option value="lock">锁定</option>
+                        <option value="normal">正常</option>
+                        <option value="expire">未续费</option>
+                    </select>
+                </div>
                 {{-- 本月用时大幅变化 --}}
-                <input type="checkbox" name="change_duration" value="" id="l_change_duration">
-                <label for="l_change_duration">本月用户大幅变化</label>
-                <select class="" name="" id="change_duration">
-                    <option value="up20h">上升20小时以上</option>
-                    <option value="up30h">上升30小时以上</option>
-                    <option value="up50h">上升50小时以上</option>
-                    <option value="down20h">下降20小时以上</option>
-                    <option value="down30h">下降30小时以上</option>
-                    <option value="down50h">下降50小时以上</option>
-                </select>
+                <div class="col-md-3">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="change_duration" value="" id="l_change_duration">本月变化
+                        </label>
+                    </div>
+                    <select class="form-control" name="" id="change_duration">
+                        <option value="up20h">上升20小时以上</option>
+                        <option value="up30h">上升30小时以上</option>
+                        <option value="up50h">上升50小时以上</option>
+                        <option value="down20h">下降20小时以上</option>
+                        <option value="down30h">下降30小时以上</option>
+                        <option value="down50h">下降50小时以上</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row form-inline">
                 {{-- 活跃度 --}}
-                <input type="checkbox" name="liveness" value="" id="l_liveness">
-                <label for="l_liveness">活跃度</label>
-                <select class="" name="" id="liveness">
-                    <option value="active_user">活跃用户</option>
-                    <option value="sleep_user">休眠用户</option>
-                    <option value="death_user">死亡用户</option>
-                </select>
-            </div>
-            <div class="form-group form-inline">
+                <div class="col-md-3">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="liveness" value="" id="l_liveness"><span>活跃度</span>
+                        </label>
+                    </div>
+                    <select class="form-control" name="" id="liveness">
+                        <option value="active_user">活跃用户</option>
+                        <option value="sleep_user">休眠用户</option>
+                        <option value="death_user">死亡用户</option>
+                    </select>
+                </div>
+                {{-- 用户类别 --}}
+                <div class="col-md-3">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="user_type" value="@{{ user_type }}" id="l_user_type"><span>登录方式</span>
+                        </label>
+                    </div>
+                    <select class="form-control" name="" id="user_type" v-model="user_type">
+                        <option value="0">手机</option>
+                        <option value="1">微信</option>
+                        <option value="2">QQ</option>
+                        <option value="3">微博</option>
+                    </select>
+                </div>
                 {{-- 注册时间段 --}}
-                <input type="checkbox" name="reg_start_time" value="" id="l_reg_timezone">
-                <label for="l_reg_timezone">注册时间段</label>
-                <span id="date_start" class="" id="l_reg_timezone">
-                    <select class="date_select" id="idYear" data=""></select>年
-                    <select class="date_select" id="idMonth" data=""></select>月
-                    <select class="date_select" id="idDay" data=""></select>日
-                </span>
-                <span>到</span>
-                <input type="checkbox" name="reg_end_time" value="" style="display: none">
-                <span id="date_end" class="">
-                    <select class="date_select2" id="idYear2" data=""></select>年
-                    <select class="date_select2" id="idMonth2" data=""></select>月
-                    <select class="date_select2" id="idDay2" data=""></select>日
-                </span>
-                <button type="submit" class="btn btn-success" id="search_condition">搜索</button>
+                <div class="col-md-6">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" value="" id="l_reg_timezone" v-model="reg_timezone_checked" {{ Input::get('from_time') ? 'checked' : '' }}>注册时间段
+                        </label>
+                    </div>
+
+                    <div class="form-group input-group input-daterange" id="datepicker">
+                        <input type="text" class="form-control" name="@{{ reg_timezone_checked ? 'from_time' : '' }}" id="from_time" v-model="from_time" data-value="{{ Input::get('from_time') }}">
+                        <span class="input-group-addon">-</span>
+                        <input type="text" class="form-control" name="@{{ reg_timezone_checked ? 'to_time' : '' }}" id="to_time" v-model="to_time" data-value="{{ Input::get('to_time') }}">
+                    </div>
+                </div>
             </div>
+            <button type="submit" class="btn btn-success " id="search_condition">搜索</button>
         {{-- </fieldset> --}}
     </form>
 @if(!empty($users))
@@ -158,6 +220,7 @@
                     <th>编号</th>
                     <th>用户账号</th>
                     <th>第三方唯一标识</th>
+                    <th>登录方式</th>
                     <th>手机号</th>
                     <th>电子邮箱</th>
                     <th>地区</th>
@@ -185,11 +248,13 @@
                     <td><input type="checkbox" name="user_action[]"></td>
                     <input type="hidden" name="user_id" value="{{ $user->uid }}">
                     {{-- 编号 --}}
-                    <td>{{ $user->seq_num or '' }}</td>
+                    <td>{{ $user->uid or '' }}</td>
                     {{-- 用户帐号 --}}
                     <td><a href="{{ url('/user/basicinfo/' . $user->uid) }}" target="_blank">{{ $user->nickname or '' }}</a></td>
                     {{-- 第三方登录，用户获得的唯一字符串标识 --}}
                     <td><a href="{{ url('/user/basicinfo/' . $user->uid) }}" target="_blank">{{ $user->device or '' }}</a></td>
+                    {{-- 登录方式 --}}
+                    <td>{{ $user->channel }}</td>
                     {{-- 电话号码 --}}
                     <td>{{ $user->cellphone or '' }}</td>
                     {{-- 电子邮箱 --}}

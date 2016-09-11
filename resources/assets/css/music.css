@@ -1,3 +1,7 @@
 th, tr, td {
     white-space:nowrap;
 }
+/*为了使"筛选条件"中的8个条件两两对齐, 所以对"乐器", "版本", "级别"后的select进行缩进*/
+#need-indent {
+    margin-right: 2em;
+}

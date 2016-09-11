@@ -1,6 +1,14 @@
 $(document).ready(function() {
+    // 时间插件
+    $('#datepicker').datepicker({
+        format: "yyyy/mm/dd",
+        todayBtn: "linked",
+        todayHighlight: true,
+        language: "zh-CN",
+        autoclose: true
+    });
 
-    /**
+/**
      * 点击"创建"按钮(相当于点击"新建"之后的保存)
      */
     $("#createMusic").click(function() {
@@ -171,33 +179,6 @@ $(document).ready(function() {
         });
     });
 
-
-    /**
-     * select下拉式日期选择器
-     */
-    //  var myDate = new Date();
-    //  $("#dateSelector").DateSelector({
-    //      ctlYearId: 'idYear',
-    //      ctlMonthId: 'idMonth',
-    //      ctlDayId: 'idDay',
-    //      defYear: myDate.getFullYear(),
-    //      defMonth: (myDate.getMonth() + 1),
-    //      defDay: myDate.getDate(),
-    //      minYear: 2015,
-    //      maxYear: (myDate.getFullYear() + 1)
-    //  });
-
-    // $("#date").val($("#idYear").val() + '-' + $("#idMonth").val() + '-' + $("#idDay").val());
-    // $(".date_select").each(function(index, el) {
-    //     $(el).bind('change', function() {
-    //         // $(el).closest('input').val($(el).val());
-    //         // $(el).siblings('input').val($(el).val());
-    //         if ($(el).attr('id') === 'idYear' || $(el).attr('id') === 'idMonth' || $(el).attr('id') === 'idDay') {
-    //             $("#date").val($("#idYear").val() + '-' + $("#idMonth").val() + '-' + $("#idDay").val());
-    //         }
-    //     });
-    // });
-
     /**
      * 点击“添加多个乐曲”跳转到指定页面
      */
@@ -287,21 +268,18 @@ $(document).ready(function() {
 
     });
 
-
-    $('.form_date').datetimepicker({
-        // language:  'fr',
-        weekStart: 1,
-        todayBtn:  1,
-		autoclose: 1,
-		todayHighlight: 1,
-		startView: 2,
-		minView: 2,
-		forceParse: 0
-    });
     // var d = new Date();
     // console.log(d.getFullYear());
     // $('.form_date input').val(d.getFullYear()+'-'+parseInt(d.getMonth()+1)+'-'+d.getDate());
 });
+
+// 为获取当前日期定义变量
+months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+var d=new Date()
+var day=d.getDate()
+var month=months[d.getMonth()]
+var year=d.getFullYear()
+
 // 对筛选条件进行数据绑定
 var vm = new Vue({
     el: "#query_condition",
@@ -315,6 +293,6 @@ var vm = new Vue({
         onshelf:    $("#onshelf").attr('data-value')    ? $("#onshelf").attr('data-value')      : $("#onshelf").val(),
         version:    $("#version").attr('data-value')    ? $("#version").attr('data-value')      : $("#version").val(),
         level:      $("#level").attr('data-value')      ? $("#level").attr('data-value')        : $("#level").val(),
-        date1: false
+        date:       $("#datepicker").attr('data-value') ? $("#datepicker").attr('data-value')   : year+'/'+month+'/'+day,
     }
 })

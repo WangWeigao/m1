@@ -31,6 +31,7 @@ class User extends Authenticatable
     protected $table = 'admin_users';
 
 
+
     /**
      * 用户角色
      * @method roles

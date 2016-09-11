@@ -1,8 +1,16 @@
 $(document).ready(function() {
+    // 日期插件
+    $("#datepicker").datepicker({
+        format: "yyyy/mm/dd",
+        todayBtn: "linked",
+        language: "zh-CN",
+        autoclose: true,
+        todayHighlight: true
+    });
     /**
      * 保存select中的搜索条件，页面刷新后不变
      */
-    var search_condition = $.getUrlParam('search_condition') ? $.getUrlParam('search_condition') : 'music_name';
+    var search_condition = $.getUrlParam('search_condition') ? $.getUrlParam('search_condition') : 'user_name';
     var name = $.getUrlParam('name');
 
     $("select[name='search_condition']").val(search_condition);
@@ -15,26 +23,6 @@ $(document).ready(function() {
     var hour   = dt.getHours()
     var minute = dt.getMinutes()
     var second = dt.getSeconds()
-    $('#datetimepicker6').datetimepicker({
-        // useCurrent: true,
-        format: 'YYYY-MM-DD HH:mm:ss',
-        viewMode: 'days',
-        dayViewHeaderFormat: 'YYYY-MM-DD HH:mm:ss',
-        defaultDate: new Date(year,month,day,0,0,0)
-    });
-    $('#datetimepicker7').datetimepicker({
-        // useCurrent: true, //Important! See issue #1075
-        format: 'YYYY-MM-DD HH:mm:ss',
-        viewMode: 'days',
-        dayViewHeaderFormat: 'YYYY-MM-DD HH:mm:ss',
-        defaultDate: new Date()
-    });
-    $("#datetimepicker6").on("dp.change", function (e) {
-        $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
-    });
-    $("#datetimepicker7").on("dp.change", function (e) {
-        $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
-    });
 
 
     // 设置日期选择器的日期
@@ -48,10 +36,22 @@ $(document).ready(function() {
         to_time = to_time.replace("+", " ");
         to_time = to_time.replace(/%3A/g, ":");
     }
-    console.log(from_time);
-    console.log(to_time);
+
     if (from_time != null && from_time != '') {
         $("input[name='from_time']").val(from_time);
         $("input[name='to_time']").val(to_time);
     }
 });
+months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+var d = new Date()
+var year = d.getFullYear()
+var month = months[d.getMonth()]
+var day = d.getDate()
+var fullDate = year+'/'+month+'/'+day
+var vm = new Vue({
+    el: '#datepicker',
+    data: {
+        from_time: $('input[name=from_time]').attr('data-value') ? $('input[name=from_time]').attr('data-value') : '2016/01/01',
+        to_time: $('input[name=to_time]').attr('data-value') ? $('input[name=to_time]').attr('data-value') : fullDate
+    }
+})

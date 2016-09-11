@@ -42,54 +42,29 @@ class UserController extends Controller
     public function index(Request $request)
     {
         // DB::connection()->enableQueryLog();
-        $user_cellphone_email = $request->get('user_cellphone_email', '');  // 用户名|手机号|邮箱
-        $city_id              = $request->get('area', '');                  // 地域(城市ID)
-        $user_grade           = $request->get('user_grade', '');            // 水平等级
-        $reg_time             = $request->get('reg_time', '');              // 注册时间
-        $account_grade        = $request->get('account_grade', '');         // 账号级别
-        $account_end_at       = $request->get('account_end_at', '');        // 账号截止日期
-        $month_duration       = $request->get('month_duration', '');        // 本月使用时长
-        $account_status       = $request->get('account_status', '');        // 账号状态
-        $change_duration      = $request->get('change_duration', '');       // 本月用时大幅变化
-        $liveness             = $request->get('liveness', '');              // 活跃度
-        $reg_start_time       = $request->get('reg_start_time', '');        // 注册时间段 > 开始时间
-        $reg_end_time         = $request->get('reg_end_time', '');          // 注册时间段 > 结束时间
-        $field                = $request->get('field', 'uid');                     // 排序字段
-        $order                = $request->get('order', 'asc');                     // 排序方式
+        $user_cellphone_email= $request->get('user_cellphone_email', '');  // 用户名|手机号|邮箱
+        $city_id=              $request->get('area', '');                  // 地域(城市ID)
+        $user_grade=           $request->get('user_grade', '');            // 水平等级
+        $reg_time=             $request->get('reg_time', '');              // 注册时间
+        $account_grade=        $request->get('account_grade', '');         // 账号级别
+        $account_end_at=       $request->get('account_end_at', '');        // 账号截止日期
+        $month_duration=       $request->get('month_duration', '');        // 本月使用时长
+        $account_status=       $request->get('account_status', '');        // 账号状态
+        $change_duration=      $request->get('change_duration', '');       // 本月用时大幅变化
+        $liveness=             $request->get('liveness', '');              // 活跃度
+        $reg_start_time=       $request->get('from_time', '');        // 注册时间段 > 开始时间
+        $reg_end_time=         $request->get('to_time', '');          // 注册时间段 > 结束时间
+        $field=                $request->get('field', 'regdate');              // 排序字段
+        $order=                $request->get('order', 'desc');              // 排序方式
+        $user_type=            $request->get('user_type', '');          // 用户类型(手机号, 微信, QQ, 微博)
 
         $appends_arr = ['field' => $field, 'order' => $order];
-        /**
-         * 用来排序的字段
-         */
-        // $field = $request->get('field');
-        // $order = $request->get('order');
-
-        /**
-         * 如果查询字段$name为空，则不进行查询
-         */
-        // if (empty($user_cellphone_email)
-        //     && empty($city_id)
-        //     && empty($user_grade)
-        //     && empty($reg_time)
-        //     && empty($account_grade)
-        //     && empty($account_end_at)
-        //     && empty($month_duration)
-        //     && empty($account_status)
-        //     && empty($change_duration)
-        //     && empty($liveness)
-        //     && empty($reg_start_time)
-        //     && empty($reg_end_time)) {
-        //         return view('user');
-        // }
 
         /**
          * 按字段不为这的情况，进行SQL语句拼接
          * "用户名"不为空
          */
-        $users = StudentUser::where(function ($query) {
-            $query->where('usertype', '=', 1)
-                  ->orWhere('usertype', '<>', 1);
-        });
+        $users = StudentUser::select('*');
         if (!empty($user_cellphone_email)) {
             $appends_arr = array_merge($appends_arr, ['user_cellphone_email' => $user_cellphone_email]);
             $users->where(function  ($query) use ($user_cellphone_email) {
@@ -411,6 +386,9 @@ if (!empty($change_duration)) {
             $preMonth_start_time = Carbon::now('Asia/ShangHai')->subMonth(2);
             $preMonth_end_time   = Carbon::now('Asia/ShangHai')->subMonth()->endOfDay();
 
+        if ($user_type === '0' || !empty($user_type)) {
+            $users->where('channel', $user_type);
+        }
             // $users->select('*');
             $users->orderBy($field, $order);
             $users = $users->paginate(10)->appends($request->all());
@@ -446,6 +424,7 @@ if (!empty($change_duration)) {
                 }
             }
         }
+
         // var_dump(DB::getQueryLog());
         return view('user')->with('users', $users);
     }
@@ -595,7 +574,7 @@ if (!empty($change_duration)) {
      */
     public function showRecordHistory($id)
     {
-        $records = Practice::where('uid', $id)->paginate(10);
+        $records = Practice::where('uid', $id)->with('music')->paginate(10);
 
         return view('userrecordhistory')
                 ->with(['records' => $records, 'user_id' => $id]);
@@ -861,10 +840,10 @@ if (!empty($change_duration)) {
      */
     public function playRecords(Request $request)
     {
-        $name             = $request->get('name', '');
+        $name             = trim($request->get('name', ''));
         $search_condition = $request->get('search_condition', '');
-        $from_time        = $request->get('from_time', null);
-        $to_time          = $request->get('to_time', null);
+        $from_time        = $request->get('from_time', '');
+        $to_time          = $request->get('to_time', '');
         // dd($from_time);
         /**
          * 获取所有弹奏记录
@@ -873,27 +852,33 @@ if (!empty($change_duration)) {
             $query->withTrashed();
         }])->with('user');
 
-        switch ($search_condition) {
-            case 'music_name':
+        if (!empty($name)) {
+            switch ($search_condition) {
+                case 'user_name':
+                $play_records->whereHas('user', function($query) use ($name) {
+                    $query->where('nickname', "$name");
+                });
+                break;
+                case 'music_name':
                 $play_records->whereHas('music', function($query) use ($name) {
                     $query->where('name', 'like', "%$name%")->withTrashed();
                 });
                 break;
-            case 'origin_midi_path':
+                case 'origin_midi_path':
                 $play_records->where('origin_midi_path', 'like', "%$name%");
                 break;
-            case 'match_midi_path':
+                case 'match_midi_path':
                 $play_records->where('midi_path', 'like', "%$name%");
                 break;
-            default:
+                default:
                 # code...
                 break;
+            }
         }
 
-        if (!is_null($from_time) && !is_null($to_time)) {
+        if (!empty($from_time) && !empty($to_time)) {
             $play_records->whereBetween('practice_date', [$from_time, $to_time]);
         }
-
            $play_records = $play_records->orderBy('practice_date', 'desc')
                                         ->paginate(10)
                                         ->appends(['name' => $name,

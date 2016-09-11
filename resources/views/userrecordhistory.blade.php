@@ -4,7 +4,7 @@
     <div class="container">
         <ol class="breadcrumb">
           <li>用户管理</li>
-          <li>学生列表</li>
+          <li><a href="/user">学生列表</a></li>
           <li class="active">用户详情</li>
         </ol>
         {{-- 标签栏 --}}
@@ -33,7 +33,7 @@
                 @foreach($records as $record)
                     <tr>
                         <td>{{ $record->practice_date }}</td>
-                        <td>{{ $record->music_id }}</td>
+                        <td>{{ $record->music->name or '曲目已经被删除了' }}</td>
                         <td>{{ $record->practice_time }}</td>
                         <td>{{ $record->expiration }}</td>
                         <td>

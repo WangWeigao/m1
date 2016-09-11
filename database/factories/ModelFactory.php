@@ -120,3 +120,189 @@ $factory->define(App\Practice::class, function (Faker\Generator $faker) {
         'rating'         => mt_rand(1, 10)
     ];
 });
+$factory->define(App\City::class, function (Faker\Generator $faker) {
+    return [
+        'cid' =>  $faker->randomNumber() ,
+        'name' =>  $faker->name ,
+        'pid' =>  $faker->randomNumber() ,
+    ];
+});
+
+$factory->define(App\Feedback::class, function (Faker\Generator $faker) {
+    return [
+        'user_id' =>  $faker->randomNumber() ,
+        'content' =>  $faker->text ,
+        'reply' =>  $faker->text ,
+    ];
+});
+
+$factory->define(App\Instrument::class, function (Faker\Generator $faker) {
+    return [
+        'name' =>  $faker->name ,
+    ];
+});
+
+$factory->define(App\Lesson::class, function (Faker\Generator $faker) {
+    return [
+        'teacher_uid' =>  function () {
+             return factory(App\StudentUser::class)->create()->uid;
+        } ,
+        'title' =>  $faker->word ,
+        'type' =>  $faker->boolean ,
+        'price' =>  $faker->randomFloat() ,
+        'count' =>  $faker->randomNumber() ,
+        'valid' =>  $faker->boolean ,
+    ];
+});
+
+$factory->define(App\MatchForTest::class, function (Faker\Generator $faker) {
+    return [
+        'practice_id' =>  $faker->randomNumber() ,
+        'param_n' =>  $faker->word ,
+        'param_s' =>  $faker->word ,
+        'param_c' =>  $faker->word ,
+        'param_w' =>  $faker->word ,
+        'origin_midi_path' =>  $faker->word ,
+        'midi_path' =>  $faker->word ,
+        'match_score' =>  $faker->randomNumber() ,
+        'bpm_score' =>  $faker->randomNumber() ,
+        'user_id' =>  function () {
+             return factory(App\Practice::class)->create()->pid;
+        } ,
+    ];
+});
+
+$factory->define(App\Note::class, function (Faker\Generator $faker) {
+    return [
+        'content' =>  $faker->word ,
+        'user_id' =>  $faker->randomNumber() ,
+        'music_id' =>  $faker->randomNumber() ,
+    ];
+});
+
+$factory->define(App\Notification::class, function (Faker\Generator $faker) {
+    return [
+        'user_id' =>  $faker->randomNumber() ,
+        'message' =>  $faker->word ,
+        'read' =>  $faker->boolean ,
+    ];
+});
+
+$factory->define(App\Order::class, function (Faker\Generator $faker) {
+    return [
+        'teacher_uid' =>  function () {
+             return factory(App\StudentUser::class)->create()->uid;
+        } ,
+    ];
+});
+
+$factory->define(App\Organizer::class, function (Faker\Generator $faker) {
+    return [
+        'name' =>  $faker->name ,
+    ];
+});
+
+$factory->define(App\Play_record::class, function (Faker\Generator $faker) {
+    return [
+        'music_id' =>  function () {
+             return factory(App\Music::class)->create()->id;
+        } ,
+    ];
+});
+
+$factory->define(App\Press::class, function (Faker\Generator $faker) {
+    return [
+        'name' =>  $faker->name ,
+    ];
+});
+
+$factory->define(App\Province::class, function (Faker\Generator $faker) {
+    return [
+        'pid' =>  $faker->randomNumber() ,
+        'name' =>  $faker->name ,
+    ];
+});
+
+$factory->define(App\RobotDuration::class, function (Faker\Generator $faker) {
+    return [
+        'user_id' =>  $faker->randomNumber() ,
+        'duration' =>  $faker->randomNumber() ,
+    ];
+});
+
+$factory->define(App\Role::class, function (Faker\Generator $faker) {
+    return [
+        'name' =>  $faker->name ,
+    ];
+});
+
+$factory->define(App\Tag::class, function (Faker\Generator $faker) {
+    return [
+        'name' =>  $faker->name ,
+    ];
+});
+
+$factory->define(App\TrainingInstitution::class, function (Faker\Generator $faker) {
+    return [
+        'name' =>  $faker->name ,
+        'subbranch' =>  $faker->word ,
+        'province' =>  $faker->randomNumber() ,
+        'cell_phone' =>  $faker->word ,
+        'address' =>  $faker->word ,
+        'email' =>  $faker->safeEmail ,
+        'invite_code' =>  $faker->word ,
+        'bank_name' =>  $faker->word ,
+        'payment_account' =>  $faker->word ,
+        'invite_code_status' =>  $faker->boolean ,
+    ];
+});
+
+$factory->define(App\TrainingTeacher::class, function (Faker\Generator $faker) {
+    return [
+        'name' =>  $faker->name ,
+        'province' =>  $faker->randomNumber() ,
+        'cell_phone' =>  $faker->word ,
+        'email' =>  $faker->safeEmail ,
+        'invite_code' =>  $faker->word ,
+        'invite_code_status' =>  $faker->boolean ,
+        'bank_name' =>  $faker->word ,
+        'payment_account' =>  $faker->word ,
+    ];
+});
+
+$factory->define(App\User::class, function (Faker\Generator $faker) {
+    return [
+        'name' =>  $faker->name ,
+        'email' =>  $faker->safeEmail ,
+        'password' =>  bcrypt($faker->password) ,
+        'remember_token' =>  str_random(10) ,
+        'type' =>  $faker->randomNumber() ,
+    ];
+});
+
+$factory->define(App\UserCurrMonthPracticeTimeSum::class, function (Faker\Generator $faker) {
+    return [
+        'uid' =>  $faker->randomNumber() ,
+        'practice_date' =>  $faker->dateTimeBetween() ,
+        'sum_pre_month' =>  $faker->randomFloat() ,
+    ];
+});
+
+$factory->define(App\UserPrevMonthPracticeTimeSum::class, function (Faker\Generator $faker) {
+    return [
+        'uid' =>  $faker->randomNumber() ,
+        'practice_date' =>  $faker->dateTimeBetween() ,
+        'sum_pre_month' =>  $faker->randomFloat() ,
+    ];
+});
+
+$factory->define(App\Version::class, function (Faker\Generator $faker) {
+    return [
+        'version' =>  $faker->word ,
+        'url' =>  $faker->url ,
+        'detail' =>  $faker->text ,
+        'type' =>  $faker->boolean ,
+        'force_update' =>  $faker->boolean ,
+    ];
+});
+

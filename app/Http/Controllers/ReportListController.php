@@ -29,7 +29,7 @@ class ReportListController extends Controller
      */
     public function sendReport(Request $request)
     {
-        $id = 468;
+        $id = 661;
         $user = \App\StudentUser::findOrFail($id);  // 获取用户
         $job = new \App\Jobs\SendReminderEmail($user);    // 创建任务
         $this->dispatch($job);  // 将任务推送到队列
